@@ -38,7 +38,7 @@ const cardVariants = {
 
 export default function Projects() {
   return (
-    <div className="bg-dark text-white relative overflow-hidden" id="projects">
+    <div className="bg-[#0a0a0a] text-white relative overflow-hidden" id="projects">
       <div className="absolute -left-[200px] bottom-0 w-[500px] h-[500px] bg-accent/4 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute inset-0 grid-bg opacity-15" />
 
@@ -93,10 +93,10 @@ export default function Projects() {
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <motion.div
-                className="bg-dark-2 rounded-[14px] overflow-hidden border border-border-dark group cursor-pointer relative"
+                className="bg-[#1a1a1a] rounded-[14px] overflow-hidden border border-border-dark group cursor-pointer relative"
                 whileHover={{
                   y: -8,
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+                  boxShadow: "0 20px 60px rgba(255,255,255,0.05)",
                   transition: { duration: 0.4 },
                 }}
               >
@@ -107,11 +107,7 @@ export default function Projects() {
                     alt={project.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-
-                  {/* Hover overlay */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-500" />
-
-                  {/* View button on hover */}
                   <motion.div
                     className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   >

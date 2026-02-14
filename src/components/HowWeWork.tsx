@@ -44,7 +44,7 @@ const cardVariants = {
 
 export default function HowWeWork() {
   return (
-    <div className="bg-white relative overflow-hidden">
+    <div className="bg-[#111111] relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/2 rounded-full blur-[200px] pointer-events-none" />
 
       <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12 relative z-2">

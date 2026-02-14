@@ -40,13 +40,13 @@ export default function Partners() {
           {[...partners, ...partners, ...partners, ...partners].map((p, i) => (
             <div
               key={`${p.name}-${i}`}
-              className="flex items-center gap-3 px-8 lg:px-12 shrink-0 cursor-default group"
+              className="flex items-center gap-3 px-10 lg:px-14 shrink-0 cursor-default group"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={p.logo}
                 alt={p.name}
-                className="h-6 lg:h-7 w-auto opacity-30 group-hover:opacity-60 transition-opacity duration-500 [filter:brightness(0)_invert(1)] group-hover:[filter:brightness(0)_invert(1)_sepia(1)_saturate(5)_hue-rotate(165deg)]"
+                className="h-8 lg:h-10 w-auto opacity-30 group-hover:opacity-60 transition-opacity duration-500 [filter:brightness(0)_invert(1)] group-hover:[filter:brightness(0)_invert(1)_sepia(1)_saturate(5)_hue-rotate(165deg)]"
               />
             </div>
           ))}

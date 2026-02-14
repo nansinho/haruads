@@ -37,8 +37,8 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         className={`fixed top-[3px] left-0 right-0 z-100 flex items-center justify-between px-5 py-3 lg:px-12 transition-all duration-500 ${
           scrolled
-            ? "lg:py-3 bg-[rgba(1,8,23,0.95)] backdrop-blur-[20px] border-b border-accent/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
-            : "lg:py-4 bg-[rgba(1,8,23,0.85)] backdrop-blur-[16px] border-b border-border-dark"
+            ? "lg:py-3 bg-[rgba(10,10,10,0.95)] backdrop-blur-[20px] border-b border-accent/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
+            : "lg:py-4 bg-[rgba(10,10,10,0.85)] backdrop-blur-[16px] border-b border-border-dark"
         }`}
       >
         <a href="#" className="flex items-center gap-2 font-bold text-[1.05rem] text-white group">
@@ -93,26 +93,17 @@ export default function Navbar() {
         >
           <motion.span
             className="absolute w-[22px] h-[2px] bg-white rounded-full"
-            animate={{
-              rotate: menuOpen ? 45 : 0,
-              y: menuOpen ? 0 : -6,
-            }}
+            animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 0 : -6 }}
             transition={{ duration: 0.3 }}
           />
           <motion.span
             className="absolute w-[22px] h-[2px] bg-white rounded-full"
-            animate={{
-              opacity: menuOpen ? 0 : 1,
-              x: menuOpen ? 10 : 0,
-            }}
+            animate={{ opacity: menuOpen ? 0 : 1, x: menuOpen ? 10 : 0 }}
             transition={{ duration: 0.3 }}
           />
           <motion.span
             className="absolute w-[22px] h-[2px] bg-white rounded-full"
-            animate={{
-              rotate: menuOpen ? -45 : 0,
-              y: menuOpen ? 0 : 6,
-            }}
+            animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? 0 : 6 }}
             transition={{ duration: 0.3 }}
           />
         </button>
@@ -124,7 +115,7 @@ export default function Navbar() {
               animate={{ opacity: 1, height: "auto", y: 0 }}
               exit={{ opacity: 0, height: 0, y: -10 }}
               transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="absolute top-full left-0 right-0 flex flex-col gap-1 list-none bg-[rgba(1,8,23,0.98)] backdrop-blur-[20px] p-5 px-8 border-b border-accent/10 lg:hidden overflow-hidden"
+              className="absolute top-full left-0 right-0 flex flex-col gap-1 list-none bg-[rgba(10,10,10,0.98)] backdrop-blur-[20px] p-5 px-8 border-b border-accent/10 lg:hidden overflow-hidden"
             >
               {navLinks.map((link, i) => (
                 <motion.li

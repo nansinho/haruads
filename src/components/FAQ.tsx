@@ -27,7 +27,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <div className="bg-white border-t border-border-light relative">
+    <div className="bg-[#0a0a0a] border-t border-border-light relative">
       <div className="max-w-[780px] mx-auto px-5 py-[88px] lg:px-12">
         <ScrollReveal className="text-center" animation="blur">
           <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight text-text-primary">
