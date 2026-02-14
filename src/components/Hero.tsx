@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import HeroCarousel from "./HeroCarousel";
 
 const ease: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
@@ -136,7 +137,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right — Visual with parallax (opposite direction) */}
+          {/* Right — Project Carousel with parallax */}
           <motion.div
             className="relative hidden lg:block"
             initial={{ opacity: 0, x: 60 }}
@@ -146,15 +147,8 @@ export default function Hero() {
           >
             <div className="absolute -top-8 -right-8 w-[80%] h-[80%] bg-accent/10 rounded-3xl" />
             <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/20 rounded-2xl" />
-
-            <div className="relative rounded-2xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.5)]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/projects/project-dashboard.jpg"
-                alt="Projet Agence HDS"
-                className="w-full h-auto"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/40 to-transparent" />
+            <div className="relative">
+              <HeroCarousel />
             </div>
           </motion.div>
         </div>
