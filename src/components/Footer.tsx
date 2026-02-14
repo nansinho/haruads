@@ -50,7 +50,7 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h5 className="text-[0.8rem] font-bold mb-4 text-white/40 uppercase tracking-wider">Navigation</h5>
+            <h5 className="text-[0.8rem] font-medium mb-4 text-white/40 uppercase tracking-wider">Navigation</h5>
             <ul className="list-none">
               {links.navigation.map((link) => (
                 <li key={link.label} className="mb-2.5">
@@ -60,7 +60,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h5 className="text-[0.8rem] font-bold mb-4 text-white/40 uppercase tracking-wider">Entreprise</h5>
+            <h5 className="text-[0.8rem] font-medium mb-4 text-white/40 uppercase tracking-wider">Entreprise</h5>
             <ul className="list-none">
               {links.company.map((link) => (
                 <li key={link.label} className="mb-2.5">
@@ -70,7 +70,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h5 className="text-[0.8rem] font-bold mb-4 text-white/40 uppercase tracking-wider">Contact</h5>
+            <h5 className="text-[0.8rem] font-medium mb-4 text-white/40 uppercase tracking-wider">Contact</h5>
             <ul className="list-none">
               {links.contact.map((link) => (
                 <li key={link.label} className="mb-2.5">

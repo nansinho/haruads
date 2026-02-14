@@ -11,9 +11,13 @@
   --color-text-primary: #ffffff;
   --color-text-secondary: #a1a1aa;
   --color-text-muted: #52525b;
+  --color-light: #f8f8f8;
+  --color-text-dark: #1a1a1a;
+  --color-text-body: #6b7280;
   --color-border-dark: rgba(255, 255, 255, 0.06);
 
   --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "DM Serif Display", serif;
   --font-mono: "Space Mono", monospace;
 
   --animate-fade-up: fade-up 0.7s ease forwards;

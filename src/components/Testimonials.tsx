@@ -6,17 +6,17 @@ import ScrollReveal from "./ScrollReveal";
 
 const testimonials = [
   {
-    text: "L'agence a parfaitement compris nos besoins. Le resultat depasse nos attentes. Un vrai partenaire digital.",
+    text: "L\u2019agence a parfaitement compris nos besoins. Le r\u00e9sultat d\u00e9passe nos attentes. Un vrai partenaire digital.",
     name: "Laurent A.",
     role: "Directeur, StartupTech",
   },
   {
-    text: "Expertise technique remarquable. Nos conversions ont augmente de 40% depuis le lancement du nouveau site.",
+    text: "Expertise technique remarquable. Nos conversions ont augment\u00e9 de 40% depuis le lancement du nouveau site.",
     name: "Marie C.",
     role: "Fondatrice, BelleMode",
   },
   {
-    text: "Livraison dans les temps, communication excellente et un suivi apres projet impeccable. Je recommande a 100%.",
+    text: "Livraison dans les temps, communication excellente et un suivi apr\u00e8s projet impeccable. Je recommande \u00e0 100%.",
     name: "Pierre D.",
     role: "CEO, FormaPro",
   },
@@ -26,18 +26,7 @@ export default function Testimonials() {
   const [current, setCurrent] = useState(0);
 
   return (
-    <div className="bg-dark-2 text-white relative overflow-hidden">
-      {/* Glow orbs */}
-      <motion.div
-        className="absolute top-[30%] left-[-5%] w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)",
-        }}
-        animate={{ scale: [1, 1.1, 1], x: [0, 20, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      {/* Dot grid */}
+    <section className="bg-dark text-white relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-[0.02] pointer-events-none"
         style={{
@@ -50,24 +39,17 @@ export default function Testimonials() {
         <ScrollReveal>
           <div className="max-w-[900px] mx-auto">
             <div className="text-center mb-12">
-              <div className="text-[0.7rem] uppercase tracking-[3px] text-accent font-semibold mb-4">
-                Temoignages
-              </div>
-              <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] font-extrabold leading-[1.08] tracking-[-0.02em]">
-                Ce que disent{" "}
-                <span className="text-gradient">nos clients.</span>
+              <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
+                T&eacute;moignages
+              </span>
+              <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] leading-[1.08] tracking-[-0.02em] mt-4">
+                <span className="font-light">Ce que disent </span>
+                <span className="font-serif italic text-accent">nos clients.</span>
               </h2>
             </div>
 
-            {/* Large quote icon */}
-            <div className="mb-6">
-              <svg viewBox="0 0 24 24" className="w-10 h-10 fill-accent/15">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-            </div>
-
             {/* Quote carousel */}
-            <div className="min-h-[200px] relative">
+            <div className="min-h-[220px] relative">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={current}
@@ -76,15 +58,15 @@ export default function Testimonials() {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <p className="text-[1.3rem] sm:text-[1.6rem] lg:text-[2rem] font-bold leading-[1.35] tracking-[-0.01em]">
+                  <p className="text-[1.3rem] sm:text-[1.6rem] lg:text-[2rem] font-serif italic leading-[1.4] text-white/80">
                     &ldquo;{testimonials[current].text}&rdquo;
                   </p>
                   <div className="mt-8 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-cyan flex items-center justify-center text-dark font-bold text-[0.9rem]">
+                    <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-dark font-semibold text-[0.9rem]">
                       {testimonials[current].name.charAt(0)}
                     </div>
                     <div>
-                      <div className="text-[0.9rem] font-semibold">
+                      <div className="text-[0.9rem] font-medium">
                         {testimonials[current].name}
                       </div>
                       <div className="text-[0.78rem] text-white/35">
@@ -104,7 +86,7 @@ export default function Testimonials() {
                   onClick={() => setCurrent(i)}
                   className={`h-1.5 rounded-full transition-all duration-300 border-none cursor-pointer ${
                     i === current
-                      ? "w-8 bg-accent shadow-[0_0_10px_rgba(249,115,22,0.4)]"
+                      ? "w-8 bg-accent"
                       : "w-4 bg-white/10 hover:bg-white/20"
                   }`}
                 />
@@ -113,6 +95,6 @@ export default function Testimonials() {
           </div>
         </ScrollReveal>
       </div>
-    </div>
+    </section>
   );
 }
