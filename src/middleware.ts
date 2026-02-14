@@ -7,8 +7,30 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Dynamic import of auth will be handled when AUTH_SECRET is set
-  // For now, just pass through
+  const { pathname } = request.nextUrl;
+
+  // Check for NextAuth v5 session cookie
+  const sessionToken =
+    request.cookies.get("authjs.session-token")?.value ||
+    request.cookies.get("__Secure-authjs.session-token")?.value;
+
+  const isAuthenticated = !!sessionToken;
+
+  // Protected routes: redirect to login if not authenticated
+  if (
+    (pathname.startsWith("/admin") || pathname.startsWith("/espace-client")) &&
+    !isAuthenticated
+  ) {
+    const loginUrl = new URL("/auth/login", request.url);
+    loginUrl.searchParams.set("callbackUrl", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Already authenticated: redirect away from login page
+  if (pathname.startsWith("/auth/login") && isAuthenticated) {
+    return NextResponse.redirect(new URL("/admin", request.url));
+  }
+
   return NextResponse.next();
 }
 

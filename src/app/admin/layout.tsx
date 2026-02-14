@@ -3,13 +3,22 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import GlassSidebar from "@/components/admin/GlassSidebar";
-import { Menu, Home, ChevronRight, Globe } from "lucide-react";
+import { Menu, Home, ChevronRight, Globe, Loader2 } from "lucide-react";
 
 function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const { status } = useSession({ required: true });
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-dark flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-accent animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-dark text-text-primary">
