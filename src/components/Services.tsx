@@ -10,7 +10,7 @@ const itemVariants = { hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x:
 
 export default function Services() {
   return (
-    <div className="bg-dark text-white relative overflow-hidden" id="services">
+    <div className="bg-gray-bg text-white relative overflow-hidden" id="services">
       <div className="absolute -right-[200px] top-1/4 w-[500px] h-[500px] bg-accent/4 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute inset-0 grid-bg opacity-15" />
 
@@ -47,7 +47,7 @@ export default function Services() {
 
           <ScrollReveal animation="fadeRight" delay={200}>
             <p className="text-[0.82rem] text-white/50 leading-[1.75] max-w-[440px] mb-5">Nos services ameliorent votre visibilite en ligne et accelerent votre croissance digitale.</p>
-            <motion.div className="w-full h-[260px] rounded-2xl bg-gradient-to-br from-[#0a1628] to-[#060e1e] flex items-center justify-center overflow-hidden relative group border border-border-dark" whileHover={{ scale: 1.02 }} transition={{ duration: 0.4 }}>
+            <motion.div className="w-full h-[260px] rounded-2xl bg-gradient-to-br from-[#1a1a1a] to-[#111111] flex items-center justify-center overflow-hidden relative group border border-border-dark" whileHover={{ scale: 1.02 }} transition={{ duration: 0.4 }}>
               <div className="absolute inset-0 grid-bg opacity-50" />
               <motion.span className="text-[4.5rem] font-black text-accent/8 font-mono relative z-2 select-none" animate={{ textShadow: ["0 0 20px rgba(14,165,233,0)", "0 0 40px rgba(14,165,233,0.15)", "0 0 20px rgba(14,165,233,0)"] }} transition={{ duration: 3, repeat: Infinity }}>{"</>"}</motion.span>
               <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-accent/15 rounded-tl-md" />

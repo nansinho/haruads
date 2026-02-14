@@ -44,7 +44,7 @@ const cardVariants = {
 
 export default function Testimonials() {
   return (
-    <div className="bg-dark text-white relative overflow-hidden">
+    <div className="bg-[#111111] text-white relative overflow-hidden">
       <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-accent/4 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute inset-0 grid-bg opacity-15" />
 
@@ -81,10 +81,10 @@ export default function Testimonials() {
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <motion.div
-                className="bg-dark-2 rounded-[14px] p-[26px] border border-border-dark relative group"
+                className="bg-[#1a1a1a] rounded-[14px] p-[26px] border border-border-dark relative group"
                 whileHover={{
                   y: -6,
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
+                  boxShadow: "0 20px 60px rgba(255,255,255,0.04)",
                   borderColor: "rgba(14, 165, 233, 0.2)",
                   transition: { duration: 0.3 },
                 }}

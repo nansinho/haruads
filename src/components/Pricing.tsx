@@ -103,7 +103,7 @@ export default function Pricing() {
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <motion.div
-                className={`bg-white rounded-[18px] p-[26px] pt-[34px] border flex flex-col relative overflow-hidden ${
+                className={`bg-[#1a1a1a] rounded-[18px] p-[26px] pt-[34px] border flex flex-col relative overflow-hidden ${
                   plan.featured
                     ? "border-accent shadow-[0_0_0_1px_var(--color-accent)]"
                     : "border-border-light"
@@ -112,7 +112,7 @@ export default function Pricing() {
                   y: -6,
                   boxShadow: plan.featured
                     ? "0 20px 60px rgba(14, 165, 233, 0.15), 0 0 0 1px rgba(14, 165, 233, 0.5)"
-                    : "0 20px 60px rgba(0, 0, 0, 0.08)",
+                    : "0 20px 60px rgba(255, 255, 255, 0.05)",
                   transition: { duration: 0.3 },
                 }}
               >

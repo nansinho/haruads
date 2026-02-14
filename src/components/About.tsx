@@ -58,7 +58,7 @@ export default function About() {
   const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.98]);
 
   return (
-    <div className="bg-dark text-white relative overflow-hidden" id="about" ref={sectionRef}>
+    <div className="bg-[#111111] text-white relative overflow-hidden" id="about" ref={sectionRef}>
       <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute inset-0 grid-bg opacity-15" />
 
