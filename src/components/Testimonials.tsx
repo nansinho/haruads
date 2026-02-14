@@ -31,7 +31,7 @@ export default function Testimonials() {
       <motion.div
         className="absolute top-[30%] left-[-5%] w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)",
         }}
         animate={{ scale: [1, 1.1, 1], x: [0, 20, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
@@ -104,7 +104,7 @@ export default function Testimonials() {
                   onClick={() => setCurrent(i)}
                   className={`h-1.5 rounded-full transition-all duration-300 border-none cursor-pointer ${
                     i === current
-                      ? "w-8 bg-accent shadow-[0_0_10px_rgba(59,130,246,0.4)]"
+                      ? "w-8 bg-accent shadow-[0_0_10px_rgba(249,115,22,0.4)]"
                       : "w-4 bg-white/10 hover:bg-white/20"
                   }`}
                 />

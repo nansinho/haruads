@@ -72,7 +72,7 @@ export default function Navbar() {
         <motion.a
           href="#contact"
           className="hidden lg:flex items-center gap-2 bg-accent text-dark px-5 py-2.5 rounded-full font-semibold text-[0.8rem] cursor-pointer relative overflow-hidden"
-          whileHover={{ scale: 1.03, boxShadow: "0 0 30px rgba(59,130,246,0.4), 0 0 60px rgba(59,130,246,0.1)" }}
+          whileHover={{ scale: 1.03, boxShadow: "0 0 30px rgba(249,115,22,0.4), 0 0 60px rgba(249,115,22,0.1)" }}
           whileTap={{ scale: 0.97 }}
         >
           <span className="relative z-10">Contactez-nous</span>

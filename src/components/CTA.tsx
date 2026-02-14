@@ -11,7 +11,7 @@ export default function CTA() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(59,130,246,0.1) 0%, rgba(59,130,246,0.03) 40%, transparent 70%)",
+            "radial-gradient(circle, rgba(249,115,22,0.1) 0%, rgba(249,115,22,0.03) 40%, transparent 70%)",
         }}
         animate={{
           scale: [1, 1.15, 1],
@@ -46,7 +46,7 @@ export default function CTA() {
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-accent text-dark font-bold text-[0.9rem] cursor-pointer relative overflow-hidden"
                 whileHover={{
                   scale: 1.04,
-                  boxShadow: "0 0 50px rgba(59,130,246,0.3), 0 0 100px rgba(59,130,246,0.1)",
+                  boxShadow: "0 0 50px rgba(249,115,22,0.3), 0 0 100px rgba(249,115,22,0.1)",
                 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -58,7 +58,7 @@ export default function CTA() {
               </motion.a>
               <motion.a
                 href="mailto:contact@agencehds.fr"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-transparent text-white font-semibold text-[0.9rem] border border-white/10 cursor-pointer hover:border-accent/40 hover:text-accent hover:shadow-[0_0_20px_rgba(59,130,246,0.1)] transition-all duration-300"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-transparent text-white font-semibold text-[0.9rem] border border-white/10 cursor-pointer hover:border-accent/40 hover:text-accent hover:shadow-[0_0_20px_rgba(249,115,22,0.1)] transition-all duration-300"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
               >

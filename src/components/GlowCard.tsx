@@ -32,7 +32,7 @@ export default function GlowCard({
         className="pointer-events-none absolute inset-0 transition-opacity duration-500"
         style={{
           opacity: isFocused ? 1 : 0,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(59,130,246,0.07), transparent 40%)`,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(249,115,22,0.07), transparent 40%)`,
         }}
       />
       <div className="relative z-[2]">{children}</div>

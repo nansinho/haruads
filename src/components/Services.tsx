@@ -58,7 +58,7 @@ export default function Services() {
       <motion.div
         className="absolute top-[30%] left-[-5%] w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)",
         }}
         animate={{ y: [0, -30, 0], scale: [1, 1.05, 1] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}

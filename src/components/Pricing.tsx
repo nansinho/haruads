@@ -59,7 +59,7 @@ export default function Pricing() {
       <motion.div
         className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(249,115,22,0.05) 0%, transparent 70%)",
         }}
         animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
@@ -120,7 +120,7 @@ export default function Pricing() {
                   <motion.button
                     className={`w-full py-3.5 rounded-full font-semibold text-[0.85rem] cursor-pointer transition-all duration-300 border ${
                       plan.featured
-                        ? "bg-accent border-accent text-dark hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+                        ? "bg-accent border-accent text-dark hover:shadow-[0_0_30px_rgba(249,115,22,0.3)]"
                         : "bg-transparent border-white/10 text-white hover:bg-white/5 hover:border-accent/30 hover:text-accent"
                     }`}
                     whileHover={{ scale: 1.02 }}

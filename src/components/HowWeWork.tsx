@@ -58,7 +58,7 @@ export default function HowWeWork() {
       <motion.div
         className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(249,115,22,0.05) 0%, transparent 70%)",
         }}
         animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
@@ -105,7 +105,7 @@ export default function HowWeWork() {
             <motion.a
               href="#contact"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-accent text-dark font-bold text-[0.85rem] cursor-pointer"
-              whileHover={{ scale: 1.04, boxShadow: "0 0 40px rgba(59,130,246,0.3)" }}
+              whileHover={{ scale: 1.04, boxShadow: "0 0 40px rgba(249,115,22,0.3)" }}
               whileTap={{ scale: 0.97 }}
             >
               Commencer votre projet
