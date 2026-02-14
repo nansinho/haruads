@@ -34,7 +34,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-sans antialiased bg-white text-text-primary">
+      <body className="font-sans antialiased bg-dark text-text-primary">
         {children}
       </body>
     </html>
