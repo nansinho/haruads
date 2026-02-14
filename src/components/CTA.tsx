@@ -18,7 +18,7 @@ export default function CTA() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center mt-10">
               <motion.a
-                href="#"
+                href="/contact"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-accent font-medium text-[0.9rem] cursor-pointer"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}

@@ -70,7 +70,7 @@ export default function Services() {
         <ScrollReveal delay={400}>
           <div className="text-center mt-14">
             <motion.a
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-text-dark/15 text-text-dark font-medium text-[0.85rem] hover:border-accent hover:text-accent transition-all duration-300"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}

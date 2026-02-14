@@ -4,14 +4,14 @@ import { motion } from "framer-motion";
 
 const links = {
   navigation: [
-    { label: "Accueil", href: "#home" },
-    { label: "Services", href: "#services" },
-    { label: "Projets", href: "#projects" },
-    { label: "Tarifs", href: "#pricing" },
+    { label: "Accueil", href: "/" },
+    { label: "Services", href: "/services" },
+    { label: "Projets", href: "/projets" },
+    { label: "Tarifs", href: "/tarifs" },
   ],
   company: [
-    { label: "A Propos", href: "#about" },
-    { label: "Blog", href: "#" },
+    { label: "A Propos", href: "/a-propos" },
+    { label: "Blog", href: "/blog" },
     { label: "Carrieres", href: "#" },
     { label: "Mentions Legales", href: "#" },
   ],

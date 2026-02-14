@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 
 const navLinks = [
-  { label: "Accueil", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Projets", href: "#projects" },
-  { label: "Tarifs", href: "#pricing" },
-  { label: "A Propos", href: "#about" },
+  { label: "Accueil", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Projets", href: "/projets" },
+  { label: "Tarifs", href: "/tarifs" },
+  { label: "A Propos", href: "/a-propos" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export default function Navbar() {
@@ -50,7 +51,7 @@ export default function Navbar() {
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
         )}
 
-        <a href="#" className="flex items-center gap-2.5 group relative">
+        <a href="/" className="flex items-center gap-2.5 group relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/logos/logo-hds.svg" alt="Agence HDS" className="h-8 w-auto" />
         </a>
@@ -70,7 +71,7 @@ export default function Navbar() {
         </ul>
 
         <motion.a
-          href="#contact"
+          href="/contact"
           className="hidden lg:flex items-center gap-2 bg-accent text-dark px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer relative overflow-hidden"
           whileHover={{ scale: 1.03, boxShadow: "0 0 30px rgba(249,115,22,0.4), 0 0 60px rgba(249,115,22,0.1)" }}
           whileTap={{ scale: 0.97 }}
@@ -135,7 +136,7 @@ export default function Navbar() {
                 ))}
               </ul>
               <a
-                href="#contact"
+                href="/contact"
                 className="block mt-4 bg-accent text-dark px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center relative z-10"
                 onClick={() => setMenuOpen(false)}
               >

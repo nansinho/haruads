@@ -131,7 +131,7 @@ export default function Projects() {
         <ScrollReveal delay={300}>
           <div className="text-center mt-14">
             <motion.a
-              href="#contact"
+              href="/projets"
               className="inline-flex items-center gap-2 text-[0.85rem] text-accent font-medium hover:gap-3 transition-all duration-300"
               whileHover={{ x: 4 }}
             >
