@@ -44,33 +44,29 @@ const cardVariants = {
 
 export default function Testimonials() {
   return (
-    <div className="bg-white relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[150px] pointer-events-none" />
+    <div className="bg-dark text-white relative overflow-hidden">
+      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-accent/4 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute inset-0 grid-bg opacity-15" />
 
       <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12 relative z-2">
-        {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-9 lg:gap-12 mb-12 items-start">
           <ScrollReveal>
             <div className="text-[0.67rem] uppercase tracking-[2.5px] text-accent font-semibold mb-2.5 flex items-center gap-2">
               <span className="inline-block w-6 h-px bg-accent" />
               Temoignages
             </div>
-            <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight text-text-primary">
-              What People{" "}
-              <span className="text-gradient-animated font-mono font-normal">Says</span>
-              <br />
-              About us
+            <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight">
+              Ce Que Disent{" "}
+              <span className="text-gradient-animated font-mono font-normal">Nos Clients</span>
             </h2>
           </ScrollReveal>
           <ScrollReveal animation="fadeRight">
-            <p className="text-[0.82rem] text-text-secondary leading-[1.75] max-w-[440px]">
+            <p className="text-[0.82rem] text-white/50 leading-[1.75] max-w-[440px]">
               Satisfaction client au coeur de chaque projet.
             </p>
           </ScrollReveal>
         </div>
 
-        {/* Cards */}
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           variants={containerVariants}
@@ -85,20 +81,18 @@ export default function Testimonials() {
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <motion.div
-                className="bg-white rounded-[14px] p-[26px] border border-border-light relative group"
+                className="bg-dark-2 rounded-[14px] p-[26px] border border-border-dark relative group"
                 whileHover={{
                   y: -6,
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.06)",
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
                   borderColor: "rgba(14, 165, 233, 0.2)",
                   transition: { duration: 0.3 },
                 }}
               >
-                {/* Quote decoration */}
                 <div className="absolute top-4 right-4 text-[2.5rem] font-serif text-accent/10 leading-none select-none">
                   &ldquo;
                 </div>
 
-                {/* Stars */}
                 <div className="flex gap-[3px] mb-3">
                   {Array.from({ length: 5 }).map((_, j) => (
                     <motion.div
@@ -112,7 +106,7 @@ export default function Testimonials() {
                     </motion.div>
                   ))}
                 </div>
-                <p className="text-[0.82rem] text-text-secondary leading-[1.7] mb-[18px] italic">
+                <p className="text-[0.82rem] text-white/60 leading-[1.7] mb-[18px] italic">
                   &ldquo;{t.text}&rdquo;
                 </p>
                 <div className="flex items-center gap-2.5">
@@ -123,10 +117,10 @@ export default function Testimonials() {
                     {t.initials}
                   </motion.div>
                   <div>
-                    <div className="text-[0.85rem] font-semibold text-text-primary group-hover:text-accent transition-colors duration-300">
+                    <div className="text-[0.85rem] font-semibold text-white group-hover:text-accent transition-colors duration-300">
                       {t.name}
                     </div>
-                    <div className="text-[0.72rem] text-text-muted">
+                    <div className="text-[0.72rem] text-white/40">
                       {t.role}
                     </div>
                   </div>
@@ -135,6 +129,18 @@ export default function Testimonials() {
             </motion.div>
           ))}
         </motion.div>
+
+        <ScrollReveal animation="fadeUp" delay={300}>
+          <div className="text-center mt-10">
+            <motion.button
+              className="px-7 py-3 rounded-lg bg-transparent text-white font-semibold text-[0.85rem] border border-white/20 cursor-pointer hover:border-accent hover:text-accent transition-colors duration-300"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              Rejoignez nos clients satisfaits &#8594;
+            </motion.button>
+          </div>
+        </ScrollReveal>
       </div>
     </div>
   );

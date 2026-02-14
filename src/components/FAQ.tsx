@@ -6,19 +6,19 @@ import ScrollReveal from "./ScrollReveal";
 
 const faqs = [
   {
-    q: "What is Agence HDS ?",
+    q: "Qu'est-ce que l'Agence HDS ?",
     a: "Agence web specialisee en creation de sites, applications et e-commerce sur mesure.",
   },
   {
-    q: "What benefits can be provided by Agence HDS ?",
+    q: "Quels avantages offre l'Agence HDS ?",
     a: "Developpement web, design UI/UX, branding, SEO et maintenance personnalises.",
   },
   {
-    q: "How long does it take to complete a project ?",
+    q: "Combien de temps faut-il pour realiser un projet ?",
     a: "Site vitrine 2-4 semaines, application 6-12 semaines, e-commerce 8-16 semaines.",
   },
   {
-    q: "What to do if you are not satisfied with the work ?",
+    q: "Que faire si le resultat ne vous convient pas ?",
     a: "Revisions incluses. Validations a chaque etape pour garantir votre satisfaction.",
   },
 ];
@@ -31,9 +31,9 @@ export default function FAQ() {
       <div className="max-w-[780px] mx-auto px-5 py-[88px] lg:px-12">
         <ScrollReveal className="text-center" animation="blur">
           <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight text-text-primary">
-            Frequently Asked{" "}
+            Questions{" "}
             <span className="text-gradient-animated font-mono font-normal">
-              Questions
+              Frequentes
             </span>
           </h2>
         </ScrollReveal>
@@ -93,6 +93,21 @@ export default function FAQ() {
             </motion.div>
           ))}
         </div>
+
+        <ScrollReveal animation="fadeUp" delay={300}>
+          <div className="text-center mt-10">
+            <p className="text-[0.85rem] text-text-secondary">
+              Vous avez d&apos;autres questions ?{" "}
+              <motion.a
+                href="#"
+                className="text-accent font-semibold hover:underline"
+                whileHover={{ scale: 1.02 }}
+              >
+                Contactez-nous &#8594;
+              </motion.a>
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
     </div>
   );

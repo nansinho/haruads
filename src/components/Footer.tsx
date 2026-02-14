@@ -48,7 +48,6 @@ const SocialIcon = ({ children, href }: { children: React.ReactNode; href: strin
 export default function Footer() {
   return (
     <footer className="bg-dark-2 border-t border-border-dark pt-[52px] px-5 lg:px-12 text-white relative overflow-hidden">
-      {/* Subtle background accent */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-accent/3 rounded-full blur-[120px] pointer-events-none" />
 
       <motion.div
@@ -58,7 +57,6 @@ export default function Footer() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
       >
-        {/* Brand */}
         <motion.div variants={itemVariants} transition={{ duration: 0.5 }}>
           <a href="#" className="flex items-center gap-2 font-bold text-[1.05rem] text-white group">
             <motion.div
@@ -98,10 +96,9 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* Quick Links */}
         <motion.div variants={itemVariants} transition={{ duration: 0.5 }}>
           <h5 className="text-[0.88rem] font-bold mb-[18px] text-white">
-            Quick Link
+            Liens Rapides
           </h5>
           <ul className="list-none">
             {quickLinks.map((link) => (
@@ -119,10 +116,9 @@ export default function Footer() {
           </ul>
         </motion.div>
 
-        {/* Company */}
         <motion.div variants={itemVariants} transition={{ duration: 0.5 }}>
           <h5 className="text-[0.88rem] font-bold mb-[18px] text-white">
-            Company
+            Entreprise
           </h5>
           <ul className="list-none">
             {company.map((link) => (
@@ -140,10 +136,9 @@ export default function Footer() {
           </ul>
         </motion.div>
 
-        {/* Office */}
         <motion.div variants={itemVariants} transition={{ duration: 0.5 }}>
           <h5 className="text-[0.88rem] font-bold mb-[18px] text-white">
-            Office
+            Bureau
           </h5>
           <ul className="list-none">
             {office.map((link) => (
@@ -162,7 +157,6 @@ export default function Footer() {
         </motion.div>
       </motion.div>
 
-      {/* Bottom */}
       <motion.div
         className="max-w-[1280px] mx-auto mt-9 py-5 border-t border-border-dark flex flex-col sm:flex-row items-center justify-between text-[0.72rem] text-white/35 gap-2 relative z-2"
         initial={{ opacity: 0 }}
