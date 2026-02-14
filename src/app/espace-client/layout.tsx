@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { SessionProvider, signOut, useSession } from "next-auth/react";
 import {
   LayoutDashboard,
   FolderKanban,
@@ -58,7 +58,7 @@ const navigation = [
   },
 ];
 
-export default function EspaceClientLayout({
+function EspaceClientLayoutInner({
   children,
 }: {
   children: React.ReactNode;
@@ -205,5 +205,17 @@ export default function EspaceClientLayout({
         <main className="p-4 lg:p-8">{children}</main>
       </div>
     </div>
+  );
+}
+
+export default function EspaceClientLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <SessionProvider>
+      <EspaceClientLayoutInner>{children}</EspaceClientLayoutInner>
+    </SessionProvider>
   );
 }
