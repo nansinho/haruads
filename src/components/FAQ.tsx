@@ -27,11 +27,24 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <div className="bg-light relative border-t border-border-light">
-      <div className="max-w-[800px] mx-auto px-5 py-[100px] lg:px-12">
+    <div className="bg-dark-2 text-white relative overflow-hidden">
+      {/* Glow orb */}
+      <motion.div
+        className="absolute top-[40%] right-[-10%] w-[400px] h-[400px] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
+        }}
+        animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="max-w-[800px] mx-auto px-5 py-[100px] lg:px-12 relative z-2">
         <ScrollReveal>
           <div className="text-center mb-12">
-            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[2.8rem] font-extrabold leading-[1.08] tracking-[-0.02em] text-text-primary">
+            <div className="text-[0.7rem] uppercase tracking-[3px] text-accent font-semibold mb-4">
+              FAQ
+            </div>
+            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[2.8rem] font-extrabold leading-[1.08] tracking-[-0.02em]">
               Questions <span className="text-gradient">frequentes.</span>
             </h2>
           </div>
@@ -41,7 +54,7 @@ export default function FAQ() {
           {faqs.map((faq, i) => (
             <motion.div
               key={i}
-              className="border-b border-border-light"
+              className="border-b border-white/[0.06]"
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -49,12 +62,14 @@ export default function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
-                className="w-full py-5 flex items-center justify-between bg-transparent border-none text-text-primary text-[0.95rem] font-semibold text-left font-sans hover:text-accent transition-colors cursor-pointer"
+                className="w-full py-5 flex items-center justify-between bg-transparent border-none text-white text-[0.95rem] font-semibold text-left font-sans hover:text-accent transition-colors cursor-pointer group"
               >
                 {faq.q}
                 <motion.span
-                  className={`w-6 h-6 rounded-full border flex items-center justify-center text-[0.9rem] font-light shrink-0 ml-4 transition-colors duration-300 ${
-                    openIndex === i ? "bg-accent border-accent text-dark" : "border-border-light text-text-muted"
+                  className={`w-7 h-7 rounded-full border flex items-center justify-center text-[0.9rem] font-light shrink-0 ml-4 transition-all duration-300 ${
+                    openIndex === i
+                      ? "bg-accent border-accent text-dark shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+                      : "border-white/10 text-white/30 group-hover:border-accent/30 group-hover:text-accent"
                   }`}
                   animate={{ rotate: openIndex === i ? 45 : 0 }}
                   transition={{ duration: 0.3 }}
@@ -71,7 +86,7 @@ export default function FAQ() {
                     transition={{ duration: 0.35 }}
                     className="overflow-hidden"
                   >
-                    <p className="text-[0.82rem] text-text-muted leading-[1.7] pb-5">
+                    <p className="text-[0.82rem] text-white/35 leading-[1.7] pb-5">
                       {faq.a}
                     </p>
                   </motion.div>
