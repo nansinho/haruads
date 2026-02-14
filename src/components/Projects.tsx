@@ -8,22 +8,19 @@ const projects = [
     title: "Finance Mobile App",
     desc: "Dashboard interactif et analyses temps reel.",
     tags: ["Next.js", "Supabase"],
-    gradient: "from-[#011025] to-[#010918]",
-    accent: "from-accent/0 to-accent/10",
+    image: "/images/projects/project-dashboard.jpg",
   },
   {
     title: "E-learning Dashboard",
     desc: "Formation avec suivi des progres.",
     tags: ["React", "Node.js"],
-    gradient: "from-[#010c1a] to-[#010818]",
-    accent: "from-blue-500/0 to-blue-500/10",
+    image: "/images/projects/neuralia-project.webp",
   },
   {
     title: "Landing Page",
     desc: "Page de vente optimisee pour la conversion.",
     tags: ["HTML/CSS", "GSAP"],
-    gradient: "from-[#0a0830] to-[#080620]",
-    accent: "from-indigo-500/0 to-indigo-500/10",
+    image: "/images/projects/project-landing.jpg",
   },
 ];
 
@@ -103,12 +100,21 @@ export default function Projects() {
                   transition: { duration: 0.4 },
                 }}
               >
-                <div className={`h-[185px] bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
-                  <div className="absolute inset-0 grid-bg opacity-30" />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${project.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                  <div className="absolute top-3 left-3 w-6 h-6 border-l border-t border-white/10 rounded-tl-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute bottom-3 right-3 w-6 h-6 border-r border-b border-white/10 rounded-br-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <motion.div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="h-[185px] relative overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-500" />
+
+                  {/* View button on hover */}
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  >
                     <div className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[0.75rem] font-semibold">
                       Voir le projet &#8594;
                     </div>

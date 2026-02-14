@@ -11,6 +11,7 @@ export const metadata: Metadata = {
       "Solutions digitales modernes et performantes pour propulser votre entreprise.",
     type: "website",
     locale: "fr_FR",
+    images: ["/og-image.jpg"],
   },
 };
 
