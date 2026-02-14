@@ -86,7 +86,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 1.0, ease }}
             >
               <motion.a
-                href="#contact"
+                href="/contact"
                 className="px-8 py-4 rounded-full bg-accent text-dark font-medium text-[0.9rem] cursor-pointer inline-flex items-center gap-2"
                 whileHover={{
                   scale: 1.04,
@@ -102,7 +102,7 @@ export default function Hero() {
                 </svg>
               </motion.a>
               <motion.a
-                href="#projects"
+                href="/projets"
                 className="px-8 py-4 rounded-full bg-transparent text-white font-medium text-[0.9rem] border border-white/15 cursor-pointer hover:border-white/30 transition-all duration-300"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
