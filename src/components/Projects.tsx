@@ -9,6 +9,7 @@ const projects = [
     desc: "Migration WooCommerce vers Next.js + Supabase avec paiement Monetico.",
     tags: ["Next.js", "Supabase", "E-Commerce"],
     image: "/images/projects/project-dashboard.jpg",
+    alt: "Dashboard e-commerce AIAKO - Migration WooCommerce vers Next.js",
     featured: true,
   },
   {
@@ -16,18 +17,21 @@ const projects = [
     desc: "Plateforme SaaS de formation multi-tenant.",
     tags: ["React", "Node.js"],
     image: "/images/projects/neuralia-project.webp",
+    alt: "Dashboard SaaS C&CO Formation - Plateforme multi-tenant",
   },
   {
     title: "Landing Fintech",
     desc: "Refonte UI/UX et design system complet.",
     tags: ["Figma", "GSAP"],
     image: "/images/projects/project-landing.jpg",
+    alt: "Landing page Fintech - Refonte UI/UX par Agence HDS",
   },
   {
-    title: "Syst\u00e8me de R\u00e9servation",
-    desc: "Calendrier de booking avec paiement int\u00e9gr\u00e9.",
+    title: "Système de Réservation",
+    desc: "Calendrier de booking avec paiement intégré.",
     tags: ["Next.js", "Stripe"],
     image: "/images/projects/reservation-system.webp",
+    alt: "Système de réservation en ligne avec calendrier et paiement Stripe",
   },
 ];
 
@@ -65,7 +69,8 @@ export default function Projects() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={featured.image}
-                alt={featured.title}
+                alt={featured.alt || featured.title}
+                loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent" />
@@ -100,7 +105,8 @@ export default function Projects() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={project.alt || project.title}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent" />
