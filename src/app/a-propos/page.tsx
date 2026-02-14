@@ -231,7 +231,7 @@ export default function AProposPage() {
                 <div className="w-16 h-16 rounded-full bg-accent mx-auto flex items-center justify-center text-dark text-[1.3rem] font-serif mb-8">
                   H
                 </div>
-                <p className="text-[1.3rem] sm:text-[1.5rem] lg:text-[1.8rem] font-serif italic text-white/80 leading-[1.5]">
+                <p className="text-fluid-h3 font-serif italic text-white/80 leading-[1.5]">
                   &ldquo;Notre mission est de rendre le digital accessible à
                   toutes les entreprises, avec des solutions qui font vraiment
                   la différence.&rdquo;
@@ -254,7 +254,7 @@ export default function AProposPage() {
           <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto">
-                <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] leading-[1.08] tracking-[-0.02em]">
+                <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em]">
                   <span className="font-light">Envie de </span>
                   <span className="font-serif italic">collaborer ?</span>
                 </h2>

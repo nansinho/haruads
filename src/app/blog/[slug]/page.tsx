@@ -278,7 +278,7 @@ export default function BlogArticle() {
                   {article.date} &bull; {article.readTime} de lecture
                 </span>
               </div>
-              <h1 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[2.8rem] leading-[1.15] tracking-[-0.02em] font-serif">
+              <h1 className="text-fluid-h2 leading-[1.15] tracking-[-0.02em] font-serif">
                 {article.title}
               </h1>
               <div className="flex items-center gap-3 mt-6">

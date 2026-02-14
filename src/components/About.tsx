@@ -1,6 +1,7 @@
 "use client";
 
 import ScrollReveal from "./ScrollReveal";
+import CountUp from "./CountUp";
 
 const stats = [
   { num: "50+", label: "Projets r\u00e9alis\u00e9s" },
@@ -32,7 +33,7 @@ export default function About() {
               <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
                 &Agrave; Propos
               </span>
-              <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] leading-[1.1] tracking-[-0.02em] mt-4">
+              <h2 className="text-fluid-h2 leading-[1.1] tracking-[-0.02em] mt-4">
                 <span className="font-light">Une agence </span>
                 <span className="font-serif italic text-accent">&agrave; taille humaine.</span>
               </h2>
@@ -42,13 +43,14 @@ export default function About() {
                 cr&eacute;ativit&eacute; et expertise technique pour des r&eacute;sultats concrets.
               </p>
 
-              {/* Stats grid */}
+              {/* Stats grid with CountUp */}
               <div className="grid grid-cols-2 gap-6 mt-10">
                 {stats.map((stat) => (
                   <div key={stat.label}>
-                    <span className="text-[2.2rem] lg:text-[2.8rem] font-serif text-accent leading-none">
-                      {stat.num}
-                    </span>
+                    <CountUp
+                      value={stat.num}
+                      className="text-[2.2rem] lg:text-[2.8rem] font-serif text-accent leading-none"
+                    />
                     <span className="block text-[0.8rem] text-text-body mt-1">
                       {stat.label}
                     </span>

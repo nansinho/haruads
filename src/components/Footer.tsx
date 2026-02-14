@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Logo from "./Logo";
 
 const links = {
   navigation: [
@@ -29,8 +30,7 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto px-5 pt-14 pb-8 lg:px-12 relative z-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
           <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/logos/logo-hds.svg" alt="Agence HDS" className="h-8 w-auto mb-4" />
+            <Logo className="h-8 w-auto mb-4" />
             <p className="text-[0.8rem] text-white/25 leading-[1.7] max-w-[260px]">
               Agence web creative specialisee en developpement web et solutions digitales sur mesure.
             </p>

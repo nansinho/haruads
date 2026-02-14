@@ -128,7 +128,7 @@ export default function ProjetsPage() {
           <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto">
-                <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] leading-[1.08] tracking-[-0.02em]">
+                <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em]">
                   <span className="font-light">Votre projet </span>
                   <span className="font-serif italic">est le prochain ?</span>
                 </h2>

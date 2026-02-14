@@ -9,7 +9,7 @@ export default function CTA() {
       <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12">
         <ScrollReveal animation="scaleUp">
           <div className="text-center max-w-[700px] mx-auto">
-            <h2 className="text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] leading-[1.08] tracking-[-0.02em]">
+            <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em]">
               <span className="font-light">Pr&ecirc;t &agrave; cr&eacute;er quelque chose d&apos;</span>
               <span className="font-serif italic">exceptionnel ?</span>
             </h2>

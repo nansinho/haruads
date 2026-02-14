@@ -51,7 +51,7 @@ export default function Projects() {
             <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
               Projets
             </span>
-            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] leading-[1.08] tracking-[-0.02em] mt-4">
+            <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em] mt-4">
               <span className="font-light">Nos derni&egrave;res </span>
               <span className="font-serif italic text-accent">r&eacute;alisations.</span>
             </h2>

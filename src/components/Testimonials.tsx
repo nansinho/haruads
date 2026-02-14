@@ -42,7 +42,7 @@ export default function Testimonials() {
               <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
                 T&eacute;moignages
               </span>
-              <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] leading-[1.08] tracking-[-0.02em] mt-4">
+              <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em] mt-4">
                 <span className="font-light">Ce que disent </span>
                 <span className="font-serif italic text-accent">nos clients.</span>
               </h2>
@@ -58,7 +58,7 @@ export default function Testimonials() {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <p className="text-[1.3rem] sm:text-[1.6rem] lg:text-[2rem] font-serif italic leading-[1.4] text-white/80">
+                  <p className="text-fluid-h3 font-serif italic leading-[1.4] text-white/80">
                     &ldquo;{testimonials[current].text}&rdquo;
                   </p>
                   <div className="mt-8 flex items-center gap-4">

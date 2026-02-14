@@ -52,7 +52,19 @@
 }
 
 html { scroll-behavior: smooth; }
-body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #0a0a0a; }
+body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #0a0a0a; font-size: 16px; }
+
+/* Fluid typography utilities */
+.text-fluid-hero { font-size: clamp(2.2rem, 5vw + 1rem, 4.8rem); }
+.text-fluid-h2 { font-size: clamp(1.6rem, 3vw + 0.5rem, 3rem); }
+.text-fluid-h3 { font-size: clamp(1.1rem, 1.5vw + 0.5rem, 1.8rem); }
+.text-fluid-body { font-size: clamp(0.85rem, 0.5vw + 0.7rem, 1.05rem); }
+
+/* Touch-friendly targets */
+@media (pointer: coarse) {
+  a, button { min-height: 44px; min-width: 44px; }
+  nav a { padding-block: 0.5rem; }
+}
 
 ::selection { background: rgba(249, 115, 22, 0.3); color: #fff; }
 
@@ -68,6 +80,41 @@ body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #0a0
   background-clip: text;
   animation: text-gradient-shift 5s ease infinite;
 }
+
+/* ===== Accessibility modes ===== */
+
+/* High contrast */
+.a11y-high-contrast body { background: #000 !important; }
+.a11y-high-contrast * { border-color: #fff !important; }
+.a11y-high-contrast p, .a11y-high-contrast span, .a11y-high-contrast a,
+.a11y-high-contrast li, .a11y-high-contrast h1, .a11y-high-contrast h2,
+.a11y-high-contrast h3, .a11y-high-contrast h4, .a11y-high-contrast h5 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+/* Dyslexia-friendly font */
+.a11y-dyslexia * {
+  font-family: "Comic Sans MS", "OpenDyslexic", sans-serif !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+  line-height: 1.8 !important;
+}
+
+/* Reduced motion */
+.a11y-reduced-motion *,
+.a11y-reduced-motion *::before,
+.a11y-reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Color filters for colorblindness */
+html[data-color-filter="grayscale"] { filter: grayscale(100%); }
+html[data-color-filter="protanopia"] { filter: url('#protanopia'); }
+html[data-color-filter="deuteranopia"] { filter: url('#deuteranopia'); }
+html[data-color-filter="tritanopia"] { filter: url('#tritanopia'); }
 
 .noise-overlay::after {
   content: '';
