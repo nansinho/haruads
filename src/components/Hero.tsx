@@ -37,7 +37,7 @@ export default function Hero() {
         className="absolute top-[-20%] left-[20%] w-[800px] h-[800px] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(59,130,246,0.08) 0%, rgba(59,130,246,0.02) 40%, transparent 70%)",
+            "radial-gradient(circle, rgba(249,115,22,0.08) 0%, rgba(249,115,22,0.02) 40%, transparent 70%)",
         }}
         animate={{
           x: [0, 80, -40, 0],
@@ -50,7 +50,7 @@ export default function Hero() {
         className="absolute top-[40%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(34,211,238,0.06) 0%, rgba(34,211,238,0.01) 40%, transparent 70%)",
+            "radial-gradient(circle, rgba(251,146,60,0.06) 0%, rgba(251,146,60,0.01) 40%, transparent 70%)",
         }}
         animate={{
           x: [0, -60, 40, 0],
@@ -160,7 +160,7 @@ export default function Hero() {
             whileHover={{
               scale: 1.04,
               boxShadow:
-                "0 0 60px rgba(59,130,246,0.35), 0 0 120px rgba(59,130,246,0.1)",
+                "0 0 60px rgba(249,115,22,0.35), 0 0 120px rgba(249,115,22,0.1)",
             }}
             whileTap={{ scale: 0.97 }}
           >
@@ -175,7 +175,7 @@ export default function Hero() {
           </motion.a>
           <motion.a
             href="#projects"
-            className="px-8 py-4 rounded-full bg-transparent text-white font-semibold text-[0.9rem] border border-white/10 cursor-pointer hover:border-accent/40 hover:text-accent hover:shadow-[0_0_25px_rgba(59,130,246,0.1)] transition-all duration-300"
+            className="px-8 py-4 rounded-full bg-transparent text-white font-semibold text-[0.9rem] border border-white/10 cursor-pointer hover:border-accent/40 hover:text-accent hover:shadow-[0_0_25px_rgba(249,115,22,0.1)] transition-all duration-300"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
           >

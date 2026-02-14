@@ -32,7 +32,7 @@ export default function FAQ() {
       <motion.div
         className="absolute top-[40%] right-[-10%] w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(249,115,22,0.05) 0%, transparent 70%)",
         }}
         animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
@@ -69,7 +69,7 @@ export default function FAQ() {
                 <motion.span
                   className={`w-7 h-7 rounded-full border flex items-center justify-center text-[0.9rem] font-light shrink-0 ml-4 transition-all duration-300 ${
                     openIndex === i
-                      ? "bg-accent border-accent text-dark shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+                      ? "bg-accent border-accent text-dark shadow-[0_0_15px_rgba(249,115,22,0.3)]"
                       : "border-white/10 text-white/30 group-hover:border-accent/30 group-hover:text-accent"
                   }`}
                   animate={{ rotate: openIndex === i ? 45 : 0 }}
