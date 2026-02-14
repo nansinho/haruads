@@ -19,6 +19,7 @@ import {
   ChevronRight,
   Bell,
   Globe,
+  Loader2,
 } from "lucide-react";
 
 const navigation = [
@@ -34,7 +35,15 @@ const navigation = [
 function EspaceClientLayoutInner({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession({ required: true });
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-dark flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-cyan-400 animate-spin" />
+      </div>
+    );
+  }
 
   const isActive = (href: string) => {
     if (href === "/espace-client") return pathname === "/espace-client";
