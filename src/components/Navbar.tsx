@@ -33,13 +33,16 @@ export default function Navbar() {
     >
       <a href="#" className="flex items-center gap-2 font-bold text-[1.05rem] text-white group">
         <motion.div
-          className="w-8 h-8 rounded-full bg-accent text-dark flex items-center justify-center font-extrabold text-[0.85rem]"
-          whileHover={{ scale: 1.1, rotate: 360 }}
-          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
         >
-          H
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/logos/logo-hds.svg"
+            alt="Agence HDS"
+            className="h-8 w-auto"
+          />
         </motion.div>
-        <span className="group-hover:text-accent transition-colors duration-300">Agence HDS</span>
       </a>
 
       {/* Desktop nav */}

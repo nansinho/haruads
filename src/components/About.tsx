@@ -22,29 +22,16 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-9 lg:gap-16 items-center">
           <ScrollReveal animation="fadeLeft">
             <motion.div
-              className="rounded-[18px] h-[300px] lg:h-[400px] bg-gradient-to-br from-[#e8f0f8] to-[#d0e0f0] relative overflow-hidden"
+              className="rounded-[18px] h-[300px] lg:h-[400px] relative overflow-hidden"
               style={{ y: imageY, scale: imageScale }}
             >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(14,165,233,0.15),transparent_60%)]" />
-
-              {/* Decorative floating elements */}
-              <motion.div
-                className="absolute top-8 right-8 w-16 h-16 rounded-xl border-2 border-accent/20"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/why-choose.jpg"
+                alt="Pourquoi choisir Agence HDS"
+                className="w-full h-full object-cover"
               />
-              <motion.div
-                className="absolute bottom-12 left-12 w-10 h-10 rounded-full bg-accent/10"
-                animate={{ y: [0, -15, 0], scale: [1, 1.2, 1] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <span className="text-[4rem] font-black text-accent/10 font-mono">HDS</span>
-              </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </motion.div>
           </ScrollReveal>
 

@@ -5,28 +5,28 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
-    image: "https://picsum.photos/id/1/1280/500",
+    image: "/images/projects/project-dashboard.jpg",
     tag: "Video",
     title: "Creation d'un site e-commerce pour AIAKO",
     desc: "Migration WooCommerce vers Next.js + Supabase avec paiement Monetico.",
     cta: "Voir le projet",
   },
   {
-    image: "https://picsum.photos/id/60/1280/500",
+    image: "/images/projects/neuralia-project.webp",
     tag: "Article",
     title: "Dashboard de formation C&CO",
     desc: "Plateforme SaaS multi-tenant avec gestion des programmes et des utilisateurs.",
     cta: "Lire l'article",
   },
   {
-    image: "https://picsum.photos/id/180/1280/500",
+    image: "/images/projects/project-landing.jpg",
     tag: "Video",
     title: "Refonte UI/UX pour une application fintech",
     desc: "Design system complet et prototypage interactif avec Figma.",
     cta: "Voir le projet",
   },
   {
-    image: "https://picsum.photos/id/119/1280/500",
+    image: "/images/projects/reservation-system.webp",
     tag: "Article",
     title: "Landing page haute conversion pour startup",
     desc: "Optimisation SEO et animations GSAP pour un taux de conversion record.",
