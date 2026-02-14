@@ -46,6 +46,11 @@
   100% { background-position: 200% 0; }
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 html { scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #0a0a0a; }
 
