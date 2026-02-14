@@ -49,7 +49,7 @@ export default function Hero() {
             </motion.div>
 
             <motion.h1
-              className="text-[2.5rem] sm:text-[3.2rem] lg:text-[4rem] xl:text-[4.8rem] leading-[1.05] tracking-[-0.03em]"
+              className="text-fluid-hero leading-[1.05] tracking-[-0.03em]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}

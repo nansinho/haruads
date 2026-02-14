@@ -1,0 +1,20 @@
+/* TEAM */
+
+Agence: Agence HDS
+Site: https://agencehds.fr
+Localisation: Aix-en-Provence, France
+Contact: contact@agencehds.fr
+
+/* SITE */
+
+Standards: HTML5, CSS3, JavaScript ES2024
+Framework: Next.js 16, React 19
+Styling: Tailwind CSS 4
+Animations: Framer Motion
+Typographies: DM Serif Display, Plus Jakarta Sans, Space Mono
+Langage: TypeScript
+Hébergement: Hostinger VPS + Coolify
+
+/* MERCI */
+
+Dernière mise à jour: 2026-02-14

@@ -1,0 +1,112 @@
+# Agence HDS — Documentation complète
+
+> Agence web créative basée à Aix-en-Provence, spécialisée en développement web, solutions SaaS, intelligence artificielle, design UI/UX, e-commerce et branding. Plus de 50 projets réalisés avec un taux de satisfaction de 100%.
+
+## À Propos
+
+L'Agence HDS accompagne les entreprises dans leur transformation digitale depuis plus de 3 ans. Nous combinons créativité et expertise technique pour des résultats concrets. Notre mission est de rendre le digital accessible à toutes les entreprises, avec des solutions qui font vraiment la différence.
+
+Basée à Aix-en-Provence, nous travaillons avec des clients de toute la France.
+
+## Services détaillés
+
+### 01 — Développement Web
+Sites vitrines, applications web et landing pages performantes avec React, Next.js et les technologies modernes.
+- Sites vitrines responsive et optimisés
+- Applications web complexes (React, Next.js)
+- Landing pages à haute conversion
+- Intégration API et services tiers
+- Technologies : React, Next.js, TypeScript, Tailwind CSS, Supabase
+
+### 02 — Solutions SaaS
+Plateformes SaaS multi-tenant, dashboards admin et outils métier sur mesure. Architecture scalable et sécurisée.
+- Plateformes multi-tenant
+- Dashboards admin personnalisés
+- Outils métier sur mesure
+- Architecture scalable avec Supabase
+- Authentification et gestion des rôles
+
+### 03 — Intelligence Artificielle
+Chatbots IA, automatisation des processus et intégration d'API IA (OpenAI, Claude) pour booster votre productivité.
+- Chatbots intelligents
+- Automatisation de processus métier
+- Intégration API OpenAI, Claude, etc.
+- Analyse de données et recommandations
+- IA générative pour le contenu
+
+### 04 — Design UI/UX
+Interfaces intuitives et expériences utilisateur mémorables. Maquettes Figma, prototypes interactifs, design systems.
+- Maquettes haute fidélité (Figma)
+- Prototypes interactifs
+- Design systems complets
+- Tests utilisateurs et optimisation
+- Responsive design mobile-first
+
+### 05 — E-Commerce
+Boutiques en ligne sur mesure avec WooCommerce, Stripe et des solutions de paiement sécurisées et performantes.
+- Boutiques WooCommerce personnalisées
+- Intégration Stripe / Monetico
+- Gestion de catalogue et stocks
+- Optimisation du tunnel de conversion
+- Solutions de paiement sécurisées
+
+### 06 — Branding & SEO
+Identité visuelle forte et référencement naturel pour une visibilité maximale sur Google et les réseaux sociaux.
+- Création d'identité visuelle
+- Charte graphique complète
+- SEO technique et sémantique
+- Stratégie de contenu
+- Audit et optimisation continue
+
+## Tarifs
+
+- **Essentiel** (80€/mois) : Site vitrine responsive, jusqu'à 5 pages, formulaire de contact, SEO de base, hébergement inclus.
+- **Avancé** (299€/mois) : Application web sur mesure, dashboard admin, base de données Supabase, authentification, support 6 mois.
+- **Premium** (349€/mois) : E-commerce complet, paiement en ligne, multi-langue, API personnalisées, maintenance 12 mois.
+
+Devis personnalisé disponible sur demande.
+
+## Processus de travail
+
+1. **Brief & Stratégie** : Analyse de vos besoins, objectifs et cibles pour définir une stratégie sur mesure.
+2. **Conception** : Maquettes, prototypes interactifs et validation du design avant développement.
+3. **Développement** : Code propre avec les meilleures technologies pour performance et scalabilité.
+4. **Livraison & Suivi** : Déploiement, formation et suivi pour une mise en production sans accroc.
+
+## Projets réalisés
+
+- **AIAKO E-Commerce** : Migration WooCommerce vers Next.js + Supabase avec paiement Monetico.
+- **Dashboard C&CO** : Plateforme SaaS de formation multi-tenant.
+- **Landing Fintech** : Refonte UI/UX et design system complet.
+- **Système de Réservation** : Calendrier de booking avec paiement intégré.
+
+## FAQ
+
+**Qu'est-ce que l'Agence HDS ?**
+Agence web basée à Aix-en-Provence, spécialisée en création de sites, applications web et solutions e-commerce sur mesure.
+
+**Quels services proposez-vous ?**
+Développement web, design UI/UX, solutions SaaS, intelligence artificielle, branding, e-commerce, SEO et maintenance. Chaque service est adapté à vos besoins spécifiques.
+
+**Combien de temps pour un projet ?**
+Site vitrine : 2-4 semaines. Application web : 6-12 semaines. E-commerce : 8-16 semaines. Chaque projet est planifié avec un calendrier clair.
+
+**Que se passe-t-il si le résultat ne convient pas ?**
+Des révisions sont incluses à chaque étape. Nous validons ensemble chaque phase pour garantir votre satisfaction avant de passer à la suivante.
+
+## Contact
+
+- Email : contact@agencehds.fr
+- Localisation : Aix-en-Provence, Provence-Alpes-Côte d'Azur, France
+- Site web : https://agencehds.fr
+- Premier rendez-vous gratuit et sans engagement
+
+## Liens
+
+- [Accueil](https://agencehds.fr)
+- [Services](https://agencehds.fr/services)
+- [Projets](https://agencehds.fr/projets)
+- [Tarifs](https://agencehds.fr/tarifs)
+- [À Propos](https://agencehds.fr/a-propos)
+- [Blog](https://agencehds.fr/blog)
+- [Contact](https://agencehds.fr/contact)

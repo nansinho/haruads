@@ -1,0 +1,30 @@
+# Agence HDS
+
+> Agence web créative basée à Aix-en-Provence, spécialisée en développement web, solutions SaaS, intelligence artificielle, design UI/UX, e-commerce et branding.
+
+## Services
+
+- [Développement Web](https://agencehds.fr/services/developpement-web): Sites vitrines, applications web et landing pages performantes avec React, Next.js et les technologies modernes.
+- [Solutions SaaS](https://agencehds.fr/services/solutions-saas): Plateformes SaaS multi-tenant, dashboards admin et outils métier sur mesure. Architecture scalable et sécurisée.
+- [Intelligence Artificielle](https://agencehds.fr/services/intelligence-artificielle): Chatbots IA, automatisation des processus et intégration d'API IA (OpenAI, Claude) pour booster votre productivité.
+- [Design UI/UX](https://agencehds.fr/services/design-ui-ux): Interfaces intuitives et expériences utilisateur mémorables. Maquettes Figma, prototypes interactifs, design systems.
+- [E-Commerce](https://agencehds.fr/services/e-commerce): Boutiques en ligne sur mesure avec WooCommerce, Stripe et des solutions de paiement sécurisées et performantes.
+- [Branding & SEO](https://agencehds.fr/services/branding-seo): Identité visuelle forte et référencement naturel pour une visibilité maximale.
+
+## Informations clés
+
+- Localisation : Aix-en-Provence, France
+- Contact : contact@agencehds.fr
+- Technologies : Next.js, React, Supabase, WordPress, WooCommerce, Stripe, Figma
+- Expérience : 50+ projets réalisés, 30+ clients actifs, 3+ ans d'expertise
+
+## Liens
+
+- [Accueil](https://agencehds.fr)
+- [Services](https://agencehds.fr/services)
+- [Projets](https://agencehds.fr/projets)
+- [Tarifs](https://agencehds.fr/tarifs)
+- [À Propos](https://agencehds.fr/a-propos)
+- [Blog](https://agencehds.fr/blog)
+- [Contact](https://agencehds.fr/contact)
+- [llms-full.txt](https://agencehds.fr/llms-full.txt)
