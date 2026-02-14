@@ -1,111 +1,75 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
-function CountUp({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          const duration = 2000;
-          const start = performance.now();
-          const animate = (now: number) => {
-            const elapsed = now - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.floor(eased * value));
-            if (progress < 1) requestAnimationFrame(animate);
-          };
-          requestAnimationFrame(animate);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [value]);
-
-  return (
-    <div ref={ref} className="text-center">
-      <div className="text-[2rem] lg:text-[2.5rem] font-extrabold text-white">
-        {count}<span className="text-gradient-animated">{suffix}</span>
-      </div>
-      <div className="text-[0.75rem] text-white/40 mt-1">{label}</div>
-    </div>
-  );
-}
-
-const aboutStats = [
-  { value: 50, suffix: "+", label: "Projets realises" },
-  { value: 30, suffix: "+", label: "Clients satisfaits" },
-  { value: 3, suffix: "+", label: "Ans d'expertise" },
-  { value: 100, suffix: "%", label: "Satisfaction" },
-];
-
 export default function About() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.98]);
-
   return (
-    <div className="bg-[#111111] text-white relative overflow-hidden" id="about" ref={sectionRef}>
-      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute inset-0 grid-bg opacity-15" />
+    <div className="bg-light text-text-primary relative overflow-hidden" id="about">
+      <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
+        <ScrollReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start mb-16">
+            <div>
+              <div className="text-[0.7rem] uppercase tracking-[3px] text-text-muted font-semibold mb-4 flex items-center gap-2.5">
+                <span className="w-8 h-px bg-accent" />
+                A Propos
+              </div>
+              <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[2.8rem] font-extrabold leading-[1.08] tracking-[-0.02em]">
+                Une agence a taille humaine,{" "}
+                <span className="text-gradient">des ambitions digitales.</span>
+              </h2>
+            </div>
+            <div className="lg:pt-4">
+              <p className="text-[0.9rem] text-text-secondary leading-[1.8]">
+                Basee a Aix-en-Provence, l&apos;Agence HDS accompagne les entreprises dans leur transformation digitale. De la conception au deploiement, nous creons des experiences web qui convertissent et qui durent.
+              </p>
+            </div>
+          </div>
+        </ScrollReveal>
 
-      <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12 relative z-2">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-9 lg:gap-16 items-center">
-          <ScrollReveal animation="fadeLeft">
-            <motion.div
-              className="rounded-[18px] h-[300px] lg:h-[400px] relative overflow-hidden"
-              style={{ y: imageY, scale: imageScale }}
-            >
+        {/* Bento grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+          <ScrollReveal className="col-span-2 row-span-2">
+            <motion.div className="rounded-2xl overflow-hidden h-full min-h-[300px] lg:min-h-[400px] relative group" whileHover={{ scale: 0.98 }} transition={{ duration: 0.4 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/why-choose.jpg"
-                alt="Pourquoi choisir Agence HDS"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              <img src="/images/why-choose.jpg" alt="Equipe Agence HDS" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5">
+                <div className="text-[0.72rem] text-white/60 uppercase tracking-wider">Notre equipe</div>
+                <div className="text-white font-bold text-[1.1rem] mt-1">Creativite & Expertise</div>
+              </div>
             </motion.div>
           </ScrollReveal>
 
-          <ScrollReveal animation="fadeRight" delay={200}>
-            <div className="text-[0.67rem] uppercase tracking-[2.5px] text-accent font-semibold mb-2.5 flex items-center gap-2">
-              <span className="inline-block w-6 h-px bg-accent" />
-              A Propos
-            </div>
-            <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight">
-              Pourquoi Choisir<br />
-              <span className="text-gradient-animated font-mono font-normal">Agence HDS</span>
-            </h2>
-            <p className="text-[0.82rem] text-white/55 leading-[1.75] max-w-[440px] mt-4">
-              Nous sommes une agence digitale specialisee en developpement web, design UI/UX et solutions e-commerce sur mesure. Notre approche combine creativite et expertise technique.
-            </p>
-            <motion.button className="mt-6 px-7 py-3 rounded-lg bg-accent text-dark font-bold text-[0.85rem] border-none cursor-pointer" whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(14,165,233,0.4)" }} whileTap={{ scale: 0.97 }}>
-              Decouvrir notre equipe &#8594;
-            </motion.button>
+          <ScrollReveal delay={100}>
+            <motion.div className="rounded-2xl bg-dark text-white p-6 flex flex-col justify-between h-full min-h-[180px]" whileHover={{ scale: 0.97 }} transition={{ duration: 0.3 }}>
+              <div className="text-[2.5rem] lg:text-[3rem] font-extrabold leading-none">50<span className="text-accent">+</span></div>
+              <div className="text-[0.75rem] text-white/40 mt-2">Projets realises avec succes</div>
+            </motion.div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={200}>
+            <motion.div className="rounded-2xl bg-accent text-dark p-6 flex flex-col justify-between h-full min-h-[180px]" whileHover={{ scale: 0.97 }} transition={{ duration: 0.3 }}>
+              <div className="text-[2.5rem] lg:text-[3rem] font-extrabold leading-none">100%</div>
+              <div className="text-[0.75rem] text-dark/60 mt-2">Taux de satisfaction client</div>
+            </motion.div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={150}>
+            <motion.div className="rounded-2xl overflow-hidden h-full min-h-[180px] relative" whileHover={{ scale: 0.97 }} transition={{ duration: 0.3 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/founder-with-mother.jpg" alt="Fondateur" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/50 to-transparent" />
+            </motion.div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={250}>
+            <motion.div className="rounded-2xl bg-dark-2 text-white p-6 flex flex-col justify-between h-full min-h-[180px] border border-border-dark" whileHover={{ scale: 0.97 }} transition={{ duration: 0.3 }}>
+              <div className="text-[2.5rem] lg:text-[3rem] font-extrabold leading-none">3<span className="text-accent">+</span></div>
+              <div className="text-[0.75rem] text-white/40 mt-2">Annees d&apos;expertise digitale</div>
+            </motion.div>
           </ScrollReveal>
         </div>
-
-        <ScrollReveal animation="fadeUp" delay={300}>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16 pt-12 border-t border-border-dark">
-            {aboutStats.map((stat, i) => (
-              <motion.div key={stat.label} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15, duration: 0.6 }}>
-                <CountUp value={stat.value} suffix={stat.suffix} label={stat.label} />
-              </motion.div>
-            ))}
-          </div>
-        </ScrollReveal>
       </div>
     </div>
   );

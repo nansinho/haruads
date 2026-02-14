@@ -4,128 +4,52 @@ import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
 const steps = [
-  {
-    icon: "01",
-    title: "Brief",
-    desc: "Analyse de vos besoins et objectifs pour definir le perimetre du projet.",
-    color: "from-accent/20 to-accent/5",
-  },
-  {
-    icon: "02",
-    title: "Conception",
-    desc: "Maquettes et prototypes pour valider l'architecture et le design.",
-    color: "from-blue-400/20 to-blue-400/5",
-  },
-  {
-    icon: "03",
-    title: "Developpement",
-    desc: "Developpement avec les meilleures technologies pour votre projet.",
-    color: "from-cyan-400/20 to-cyan-400/5",
-  },
-  {
-    icon: "04",
-    title: "Livraison",
-    desc: "Tests, deploiement et formation pour une mise en production reussie.",
-    color: "from-sky-400/20 to-sky-400/5",
-  },
+  { num: "01", title: "Brief & Strategie", desc: "Analyse de vos besoins, objectifs et cibles pour definir une strategie sur mesure." },
+  { num: "02", title: "Conception", desc: "Maquettes, prototypes interactifs et validation du design avant developpement." },
+  { num: "03", title: "Developpement", desc: "Code propre avec les meilleures technologies pour performance et scalabilite." },
+  { num: "04", title: "Livraison & Suivi", desc: "Deploiement, formation et suivi pour une mise en production sans accroc." },
 ];
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1 },
-};
 
 export default function HowWeWork() {
   return (
-    <div className="bg-[#111111] relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/2 rounded-full blur-[200px] pointer-events-none" />
-
-      <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12 relative z-2">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-9 lg:gap-12 mb-[60px] items-end">
-          <ScrollReveal>
-            <div className="text-[0.67rem] uppercase tracking-[2.5px] text-accent font-semibold mb-2.5 flex items-center gap-2">
-              <span className="inline-block w-6 h-px bg-accent" />
+    <div className="bg-light relative overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
+        <ScrollReveal>
+          <div className="text-center max-w-[600px] mx-auto mb-16">
+            <div className="text-[0.7rem] uppercase tracking-[3px] text-text-muted font-semibold mb-4">
               Notre Processus
             </div>
-            <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight text-text-primary">
-              Comment Nous{" "}
-              <span className="text-gradient-animated font-mono font-normal">Travaillons</span>
+            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[2.8rem] font-extrabold leading-[1.08] tracking-[-0.02em] text-text-primary">
+              Du brief a la <span className="text-gradient">mise en ligne.</span>
             </h2>
-          </ScrollReveal>
-          <ScrollReveal animation="fadeRight">
-            <p className="text-[0.82rem] text-text-secondary leading-[1.75] max-w-[440px]">
-              Un processus structure pour transformer vos idees en realite.
-              Chaque etape garantit qualite et satisfaction.
-            </p>
-          </ScrollReveal>
-        </div>
-
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <div className="hidden lg:block absolute top-[50px] left-[12.5%] right-[12.5%] h-px">
-            <motion.div
-              className="h-full bg-gradient-to-r from-transparent via-accent/20 to-transparent"
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            />
           </div>
+        </ScrollReveal>
 
-          {steps.map((step) => (
-            <motion.div
-              key={step.title}
-              variants={cardVariants}
-              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
+          {steps.map((step, i) => (
+            <ScrollReveal key={step.num} delay={i * 100}>
               <motion.div
-                className="text-center px-3.5 py-6 rounded-2xl relative group cursor-default"
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                className="relative group"
+                whileHover={{ y: -6, transition: { duration: 0.3 } }}
               >
-                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-b ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                <div className="relative z-2">
-                  <motion.div
-                    className="w-[50px] h-[50px] rounded-[14px] bg-accent/8 mx-auto mb-3.5 flex items-center justify-center text-accent font-mono font-bold text-[0.9rem] border border-accent/10"
-                    whileHover={{ scale: 1.1, rotate: -5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {step.icon}
-                  </motion.div>
-                  <h4 className="text-[0.92rem] font-bold mb-2 font-mono text-text-primary group-hover:text-accent transition-colors duration-300">
+                <div className="p-6 lg:p-7 rounded-2xl border border-border-light bg-white hover:border-accent/30 transition-colors duration-500">
+                  <div className="text-[2.5rem] font-extrabold text-accent/15 font-mono leading-none mb-4 group-hover:text-accent/30 transition-colors duration-500">
+                    {step.num}
+                  </div>
+                  <h4 className="text-[1rem] font-bold text-text-primary mb-2 group-hover:text-accent transition-colors duration-300">
                     {step.title}
                   </h4>
-                  <p className="text-[0.74rem] text-text-muted leading-[1.6]">
+                  <p className="text-[0.78rem] text-text-muted leading-[1.7]">
                     {step.desc}
                   </p>
                 </div>
+                {i < 3 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-2 w-4 h-px bg-border-light" />
+                )}
               </motion.div>
-            </motion.div>
+            </ScrollReveal>
           ))}
-        </motion.div>
-
-        <ScrollReveal animation="fadeUp" delay={400}>
-          <div className="text-center mt-12">
-            <motion.button
-              className="px-7 py-3 rounded-lg bg-accent text-dark font-bold text-[0.85rem] border-none cursor-pointer"
-              whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(14,165,233,0.4)" }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Commencer votre projet &#8594;
-            </motion.button>
-          </div>
-        </ScrollReveal>
+        </div>
       </div>
     </div>
   );

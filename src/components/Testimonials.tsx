@@ -1,144 +1,80 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
-
-const StarIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-[15px] h-[15px] fill-[#f5a623]">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-  </svg>
-);
 
 const testimonials = [
   {
-    text: "L'agence a parfaitement compris nos besoins. Le resultat depasse nos attentes.",
-    initials: "LA",
+    text: "L'agence a parfaitement compris nos besoins. Le resultat depasse nos attentes. Un vrai partenaire digital.",
     name: "Laurent A.",
     role: "Directeur, StartupTech",
   },
   {
-    text: "Expertise technique remarquable. Nos conversions ont augmente de 40%.",
-    initials: "MC",
+    text: "Expertise technique remarquable. Nos conversions ont augmente de 40% depuis le lancement du nouveau site.",
     name: "Marie C.",
     role: "Fondatrice, BelleMode",
   },
   {
-    text: "Livraison dans les temps, communication excellente. Recommande !",
-    initials: "PD",
+    text: "Livraison dans les temps, communication excellente et un suivi apres projet impeccable. Je recommande a 100%.",
     name: "Pierre D.",
     role: "CEO, FormaPro",
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, rotateX: -10 },
-  visible: { opacity: 1, y: 0, rotateX: 0 },
-};
-
 export default function Testimonials() {
-  return (
-    <div className="bg-[#111111] text-white relative overflow-hidden">
-      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-accent/4 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute inset-0 grid-bg opacity-15" />
+  const [current, setCurrent] = useState(0);
 
-      <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12 relative z-2">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-9 lg:gap-12 mb-12 items-start">
-          <ScrollReveal>
-            <div className="text-[0.67rem] uppercase tracking-[2.5px] text-accent font-semibold mb-2.5 flex items-center gap-2">
-              <span className="inline-block w-6 h-px bg-accent" />
+  return (
+    <div className="bg-dark text-white relative overflow-hidden">
+      <div className="absolute inset-0 grid-bg" />
+
+      <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12 relative z-2">
+        <ScrollReveal>
+          <div className="max-w-[900px] mx-auto">
+            <div className="text-[0.7rem] uppercase tracking-[3px] text-accent font-semibold mb-8 flex items-center gap-2.5">
+              <span className="w-8 h-px bg-accent" />
               Temoignages
             </div>
-            <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight">
-              Ce Que Disent{" "}
-              <span className="text-gradient-animated font-mono font-normal">Nos Clients</span>
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal animation="fadeRight">
-            <p className="text-[0.82rem] text-white/50 leading-[1.75] max-w-[440px]">
-              Satisfaction client au coeur de chaque projet.
-            </p>
-          </ScrollReveal>
-        </div>
 
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-        >
-          {testimonials.map((t) => (
-            <motion.div
-              key={t.name}
-              variants={cardVariants}
-              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <motion.div
-                className="bg-[#1a1a1a] rounded-[14px] p-[26px] border border-border-dark relative group"
-                whileHover={{
-                  y: -6,
-                  boxShadow: "0 20px 60px rgba(255,255,255,0.04)",
-                  borderColor: "rgba(14, 165, 233, 0.2)",
-                  transition: { duration: 0.3 },
-                }}
-              >
-                <div className="absolute top-4 right-4 text-[2.5rem] font-serif text-accent/10 leading-none select-none">
-                  &ldquo;
-                </div>
-
-                <div className="flex gap-[3px] mb-3">
-                  {Array.from({ length: 5 }).map((_, j) => (
-                    <motion.div
-                      key={j}
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.3 + j * 0.1, type: "spring", stiffness: 500 }}
-                    >
-                      <StarIcon />
-                    </motion.div>
-                  ))}
-                </div>
-                <p className="text-[0.82rem] text-white/60 leading-[1.7] mb-[18px] italic">
-                  &ldquo;{t.text}&rdquo;
-                </p>
-                <div className="flex items-center gap-2.5">
-                  <motion.div
-                    className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-dark to-accent flex items-center justify-center font-bold text-[0.78rem] text-dark"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    {t.initials}
-                  </motion.div>
-                  <div>
-                    <div className="text-[0.85rem] font-semibold text-white group-hover:text-accent transition-colors duration-300">
-                      {t.name}
+            {/* Large quote */}
+            <div className="min-h-[180px] relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={current}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <p className="text-[1.3rem] sm:text-[1.6rem] lg:text-[2rem] font-bold leading-[1.35] tracking-[-0.01em]">
+                    &ldquo;{testimonials[current].text}&rdquo;
+                  </p>
+                  <div className="mt-6 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-dark font-bold text-[0.8rem]">
+                      {testimonials[current].name.charAt(0)}
                     </div>
-                    <div className="text-[0.72rem] text-white/40">
-                      {t.role}
+                    <div>
+                      <div className="text-[0.88rem] font-semibold">{testimonials[current].name}</div>
+                      <div className="text-[0.75rem] text-white/40">{testimonials[current].role}</div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-        <ScrollReveal animation="fadeUp" delay={300}>
-          <div className="text-center mt-10">
-            <motion.button
-              className="px-7 py-3 rounded-lg bg-transparent text-white font-semibold text-[0.85rem] border border-white/20 cursor-pointer hover:border-accent hover:text-accent transition-colors duration-300"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Rejoignez nos clients satisfaits &#8594;
-            </motion.button>
+            {/* Nav dots */}
+            <div className="flex gap-2 mt-10">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 border-none cursor-pointer ${
+                    i === current ? "w-8 bg-accent" : "w-4 bg-white/15 hover:bg-white/30"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </ScrollReveal>
       </div>

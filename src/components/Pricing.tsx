@@ -3,192 +3,106 @@
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
-const CheckIcon = () => (
-  <span className="w-[18px] h-[18px] rounded-full bg-accent-dim flex items-center justify-center shrink-0">
-    <svg
-      viewBox="0 0 24 24"
-      className="w-2.5 h-2.5 stroke-accent fill-none"
-      strokeWidth={3}
-    >
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  </span>
+const Check = () => (
+  <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-accent fill-none stroke-2 shrink-0"><polyline points="20 6 9 17 4 12" /></svg>
 );
 
 const plans = [
   {
     name: "Essentiel",
-    price: "80€",
-    desc: "Ideal pour une presence web professionnelle.",
+    price: "80",
+    desc: "Presence web professionnelle pour demarrer.",
     featured: false,
-    features: [
-      "Site vitrine responsive",
-      "Jusqu'a 5 pages",
-      "Formulaire de contact",
-      "SEO de base",
-      "Hebergement inclus",
-    ],
+    features: ["Site vitrine responsive", "Jusqu'a 5 pages", "Formulaire de contact", "SEO de base", "Hebergement inclus"],
   },
   {
     name: "Avance",
-    price: "299€",
-    desc: "Solution web complete et performante.",
+    price: "299",
+    desc: "Application web complete et performante.",
     featured: true,
-    features: [
-      "Application web sur mesure",
-      "Dashboard admin",
-      "Base de donnees Supabase",
-      "Authentification utilisateurs",
-      "Support 6 mois",
-    ],
+    features: ["Application web sur mesure", "Dashboard admin", "Base de donnees Supabase", "Authentification", "Support 6 mois"],
   },
   {
     name: "Premium",
-    price: "349€",
-    desc: "Projets ambitieux avec fonctionnalites avancees.",
+    price: "349",
+    desc: "Projets ambitieux, fonctionnalites avancees.",
     featured: false,
-    features: [
-      "E-commerce complet",
-      "Paiement en ligne",
-      "Multi-langue",
-      "API personnalisees",
-      "Maintenance 12 mois",
-    ],
+    features: ["E-commerce complet", "Paiement en ligne", "Multi-langue", "API personnalisees", "Maintenance 12 mois"],
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1 },
-};
-
 export default function Pricing() {
   return (
-    <div className="bg-gray-bg relative overflow-hidden" id="pricing">
-      <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[150px] pointer-events-none" />
-
-      <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12 relative z-2">
-        <ScrollReveal className="text-center mb-12" animation="blur">
-          <div className="text-[0.67rem] uppercase tracking-[2.5px] text-accent font-semibold mb-2.5">
-            Nos Tarifs
+    <div className="bg-light relative overflow-hidden" id="pricing">
+      <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
+        <ScrollReveal>
+          <div className="text-center max-w-[600px] mx-auto mb-14">
+            <div className="text-[0.7rem] uppercase tracking-[3px] text-text-muted font-semibold mb-4">
+              Tarifs
+            </div>
+            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[2.8rem] font-extrabold leading-[1.08] tracking-[-0.02em] text-text-primary">
+              Des formules <span className="text-gradient">adaptees.</span>
+            </h2>
+            <p className="text-[0.88rem] text-text-secondary mt-4 leading-[1.7]">
+              Chaque projet est unique. Nos tarifs s&apos;adaptent a vos besoins et a votre budget.
+            </p>
           </div>
-          <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight text-text-primary">
-            Choisissez Votre{" "}
-            <span className="text-gradient-animated font-mono font-normal">Formule</span>
-          </h2>
-          <p className="text-[0.82rem] text-text-secondary leading-[1.75] max-w-[560px] mx-auto mt-3">
-            Formules adaptees a tous les budgets, personnalisables selon vos
-            besoins.
-          </p>
         </ScrollReveal>
 
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-        >
-          {plans.map((plan) => (
-            <motion.div
-              key={plan.name}
-              variants={cardVariants}
-              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+          {plans.map((plan, i) => (
+            <ScrollReveal key={plan.name} delay={i * 100}>
               <motion.div
-                className={`bg-[#1a1a1a] rounded-[18px] p-[26px] pt-[34px] border flex flex-col relative overflow-hidden ${
+                className={`rounded-2xl p-7 lg:p-8 flex flex-col h-full relative overflow-hidden ${
                   plan.featured
-                    ? "border-accent shadow-[0_0_0_1px_var(--color-accent)]"
-                    : "border-border-light"
+                    ? "bg-dark text-white border-2 border-accent"
+                    : "bg-white text-text-primary border border-border-light"
                 }`}
-                whileHover={{
-                  y: -6,
-                  boxShadow: plan.featured
-                    ? "0 20px 60px rgba(14, 165, 233, 0.15), 0 0 0 1px rgba(14, 165, 233, 0.5)"
-                    : "0 20px 60px rgba(255, 255, 255, 0.05)",
-                  transition: { duration: 0.3 },
-                }}
+                whileHover={{ y: -6, transition: { duration: 0.3 } }}
               >
                 {plan.featured && (
-                  <div className="absolute top-0 right-6">
-                    <motion.div
-                      className="bg-accent text-dark text-[0.65rem] font-bold px-3 py-1 rounded-b-md uppercase tracking-wider"
-                      initial={{ y: -30 }}
-                      whileInView={{ y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
-                    >
-                      Populaire
-                    </motion.div>
+                  <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-accent text-dark text-[0.65rem] font-bold uppercase tracking-wider">
+                    Populaire
                   </div>
                 )}
 
-                {plan.featured && (
-                  <div className="absolute -top-[100px] left-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-accent/5 rounded-full blur-[60px] pointer-events-none" />
-                )}
-
-                <div className="text-[0.85rem] font-semibold text-text-secondary mb-3">
+                <div className={`text-[0.85rem] font-semibold mb-4 ${plan.featured ? "text-white/60" : "text-text-muted"}`}>
                   {plan.name}
                 </div>
-                <div className="text-[2.5rem] font-extrabold text-text-primary">
-                  <span className={plan.featured ? "text-gradient-animated" : ""}>
-                    {plan.price}
-                  </span>{" "}
-                  <small className="text-[0.85rem] font-normal text-text-muted">
-                    /mois
-                  </small>
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span className={`text-[2.8rem] font-extrabold leading-none ${plan.featured ? "text-accent" : ""}`}>
+                    {plan.price}&#8364;
+                  </span>
+                  <span className={`text-[0.8rem] ${plan.featured ? "text-white/40" : "text-text-muted"}`}>/mois</span>
                 </div>
-                <p className="text-[0.78rem] text-text-muted leading-[1.6] mt-2.5 mb-[22px]">
+                <p className={`text-[0.8rem] leading-[1.6] mb-6 ${plan.featured ? "text-white/45" : "text-text-muted"}`}>
                   {plan.desc}
                 </p>
-                <ul className="list-none mb-[26px] flex-1">
+
+                <ul className="list-none flex-1 mb-7">
                   {plan.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-center gap-2.5 py-1.5 text-[0.82rem] text-text-primary"
-                    >
-                      <CheckIcon />
+                    <li key={f} className={`flex items-center gap-2.5 py-2 text-[0.82rem] ${plan.featured ? "text-white/70" : "text-text-secondary"}`}>
+                      <Check />
                       {f}
                     </li>
                   ))}
                 </ul>
+
                 <motion.button
-                  className={`w-full py-3 rounded-lg font-semibold text-[0.88rem] cursor-pointer border ${
+                  className={`w-full py-3.5 rounded-full font-semibold text-[0.85rem] cursor-pointer transition-all duration-300 border ${
                     plan.featured
-                      ? "bg-accent border-accent text-white"
-                      : "bg-transparent border-border-light text-text-primary hover:bg-accent hover:border-accent hover:text-white"
-                  } transition-all duration-300`}
+                      ? "bg-accent border-accent text-dark hover:shadow-[0_0_30px_rgba(200,255,0,0.2)]"
+                      : "bg-transparent border-border-light text-text-primary hover:bg-dark hover:text-white hover:border-dark"
+                  }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   Choisir ce plan
                 </motion.button>
               </motion.div>
-            </motion.div>
+            </ScrollReveal>
           ))}
-        </motion.div>
-
-        <ScrollReveal animation="fadeUp" delay={300}>
-          <div className="text-center mt-10">
-            <p className="text-[0.85rem] text-text-secondary">
-              Besoin d&apos;un devis personnalise ?{" "}
-              <motion.a
-                href="#"
-                className="text-accent font-semibold hover:underline"
-                whileHover={{ scale: 1.02 }}
-              >
-                Contactez-nous &#8594;
-              </motion.a>
-            </p>
-          </div>
-        </ScrollReveal>
+        </div>
       </div>
     </div>
   );
