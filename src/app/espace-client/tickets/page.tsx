@@ -9,6 +9,7 @@ import {
   MessageSquare,
   ChevronRight,
 } from "lucide-react";
+import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
 
 type TicketStatus = "all" | "open" | "in_progress" | "resolved";
 type TicketPriority = "low" | "medium" | "high" | "urgent";
@@ -58,7 +59,7 @@ function PriorityBadge({ priority }: { priority: TicketPriority }) {
 
 function TicketRow({ ticket }: { ticket: SupportTicket }) {
   return (
-    <div className="flex items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-xl hover:border-blue-500/20 transition-all group cursor-pointer">
+    <div className="flex items-center gap-4 p-4 bg-dark-2 border border-white/[0.06] rounded-xl hover:border-cyan-500/20 transition-all group cursor-pointer">
       {/* Status indicator */}
       <div className="flex-shrink-0">
         <div
@@ -75,31 +76,31 @@ function TicketRow({ ticket }: { ticket: SupportTicket }) {
       {/* Main content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <h3 className="text-sm font-medium text-white truncate group-hover:text-blue-300 transition-colors">
+          <h3 className="text-sm font-medium text-text-primary truncate group-hover:text-cyan-400 transition-colors">
             {ticket.subject}
           </h3>
           <PriorityBadge priority={ticket.priority} />
         </div>
-        <p className="text-xs text-gray-500 truncate">{ticket.lastMessage}</p>
+        <p className="text-xs text-text-muted truncate">{ticket.lastMessage}</p>
       </div>
 
       {/* Meta */}
       <div className="hidden sm:flex items-center gap-3 flex-shrink-0">
         <StatusBadge status={ticket.status} />
-        <div className="flex items-center gap-1 text-xs text-gray-500">
+        <div className="flex items-center gap-1 text-xs text-text-muted">
           <MessageSquare size={12} />
           <span>{ticket.messagesCount}</span>
         </div>
       </div>
 
       {/* Date */}
-      <div className="hidden md:flex items-center gap-1.5 text-xs text-gray-500 flex-shrink-0">
+      <div className="hidden md:flex items-center gap-1.5 text-xs text-text-muted flex-shrink-0">
         <Clock size={12} />
         <span>{ticket.updatedAt}</span>
       </div>
 
       {/* Arrow */}
-      <ChevronRight size={16} className="text-gray-600 group-hover:text-blue-400 flex-shrink-0 transition-colors" />
+      <ChevronRight size={16} className="text-text-muted group-hover:text-cyan-400 flex-shrink-0 transition-colors" />
     </div>
   );
 }
@@ -125,75 +126,81 @@ export default function ClientTicketsPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <PageTransition className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">Mes Tickets</h1>
-          <p className="text-gray-400 mt-1">Suivez vos demandes de support</p>
+      <AnimatedSection>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="font-serif text-2xl text-text-primary">Mes Tickets</h1>
+            <p className="text-text-secondary mt-1">Suivez vos demandes de support</p>
+          </div>
+          <button className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-cyan-500 text-dark font-semibold text-sm hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/20">
+            <Plus size={16} />
+            <span>Nouveau ticket</span>
+          </button>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-sm font-medium hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg shadow-blue-600/20">
-          <Plus size={16} />
-          <span>Nouveau ticket</span>
-        </button>
-      </div>
+      </AnimatedSection>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        {/* Search */}
-        <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-          <input
-            type="text"
-            placeholder="Rechercher un ticket..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all"
-          />
-        </div>
+      <AnimatedSection>
+        <div className="flex flex-col sm:flex-row gap-4">
+          {/* Search */}
+          <div className="relative flex-1">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+            <input
+              type="text"
+              placeholder="Rechercher un ticket..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all"
+            />
+          </div>
 
-        {/* Filter tabs */}
-        <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-xl p-1 overflow-x-auto">
-          {filterTabs.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveFilter(tab.key)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
-                activeFilter === tab.key
-                  ? "bg-blue-600/20 text-blue-300 border border-blue-500/30"
-                  : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Tickets list */}
-      {filteredTickets.length > 0 ? (
-        <div className="space-y-2">
-          {filteredTickets.map((ticket) => (
-            <TicketRow key={ticket.id} ticket={ticket} />
-          ))}
-        </div>
-      ) : (
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-12">
-          <div className="text-center">
-            <div className="w-16 h-16 rounded-2xl bg-blue-600/10 flex items-center justify-center mx-auto mb-4">
-              <Ticket size={28} className="text-blue-400/60" />
-            </div>
-            <h3 className="text-white font-medium text-lg mb-2">Aucun ticket</h3>
-            <p className="text-gray-500 text-sm max-w-md mx-auto mb-6">
-              Vous n&apos;avez pas encore de tickets de support. Besoin d&apos;aide ? Ouvrez un nouveau ticket.
-            </p>
-            <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-sm font-medium hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg shadow-blue-600/20">
-              <Plus size={16} />
-              <span>Ouvrir un ticket</span>
-            </button>
+          {/* Filter tabs */}
+          <div className="flex items-center gap-1 bg-dark-2 border border-white/[0.06] rounded-full p-1 overflow-x-auto">
+            {filterTabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveFilter(tab.key)}
+                className={`px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-all ${
+                  activeFilter === tab.key
+                    ? "bg-cyan-500/[0.06] text-cyan-400 border border-cyan-500/20 rounded-full"
+                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
         </div>
-      )}
-    </div>
+      </AnimatedSection>
+
+      {/* Tickets list */}
+      <AnimatedSection>
+        {filteredTickets.length > 0 ? (
+          <div className="space-y-2">
+            {filteredTickets.map((ticket) => (
+              <TicketRow key={ticket.id} ticket={ticket} />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-12">
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-2xl bg-cyan-500/[0.06] flex items-center justify-center mx-auto mb-4">
+                <Ticket size={28} className="text-text-muted" />
+              </div>
+              <h3 className="text-text-primary font-medium text-lg mb-2">Aucun ticket</h3>
+              <p className="text-text-muted text-sm max-w-md mx-auto mb-6">
+                Vous n&apos;avez pas encore de tickets de support. Besoin d&apos;aide ? Ouvrez un nouveau ticket.
+              </p>
+              <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-cyan-500/[0.06] text-cyan-400 border border-cyan-500/20 rounded-full hover:bg-cyan-500/10 transition-all text-sm font-medium">
+                <Plus size={16} />
+                <span>Ouvrir un ticket</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </AnimatedSection>
+    </PageTransition>
   );
 }
