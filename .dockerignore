@@ -1,0 +1,42 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Build outputs
+.next
+out
+build
+dist
+
+# Source control
+.git
+.gitignore
+.gitattributes
+
+# IDE & editors
+.vscode
+.idea
+*.swp
+*.swo
+
+# Environment files (use Coolify env vars instead)
+.env
+.env.*
+!.env.example
+
+# Documentation
+*.md
+LICENSE
+
+# Docker (avoid recursive copy)
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+.turbo
+.turbopack
