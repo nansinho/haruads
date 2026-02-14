@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import Chatbot from "@/components/Chatbot";
+import SessionProvider from "@/components/providers/SessionProvider";
 
 const siteUrl = "https://agencehds.fr";
 
@@ -262,7 +263,9 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className="font-sans antialiased bg-[#0a0a0a] text-text-primary">
+        <SessionProvider>
         {children}
+        </SessionProvider>
         <AccessibilityWidget />
         <Chatbot />
         {/* SVG color filters for colorblind modes */}
