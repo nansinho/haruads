@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SessionProvider } from "next-auth/react";
 import { signOut, useSession } from "next-auth/react";
 import {
   LayoutDashboard,
@@ -168,7 +169,7 @@ const navigation: NavGroup[] = [
   },
 ];
 
-export default function AdminLayout({
+function AdminLayoutInner({
   children,
 }: {
   children: React.ReactNode;
@@ -349,5 +350,17 @@ export default function AdminLayout({
         <main className="p-4 lg:p-8">{children}</main>
       </div>
     </div>
+  );
+}
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <SessionProvider>
+      <AdminLayoutInner>{children}</AdminLayoutInner>
+    </SessionProvider>
   );
 }
