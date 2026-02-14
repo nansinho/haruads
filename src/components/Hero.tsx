@@ -5,28 +5,28 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
-    image: "/images/projects/project-dashboard.jpg",
+    image: "/images/hero-team.jpg",
     tag: "Projet",
     title: "Creation d'un site e-commerce pour AIAKO",
     desc: "Migration WooCommerce vers Next.js + Supabase avec paiement Monetico.",
     cta: "Voir le projet",
   },
   {
-    image: "/images/projects/neuralia-project.webp",
+    image: "/images/blog-team-collaboration.jpg",
     tag: "Projet",
     title: "Dashboard de formation C&CO",
     desc: "Plateforme SaaS multi-tenant avec gestion des programmes et des utilisateurs.",
     cta: "Voir le projet",
   },
   {
-    image: "/images/projects/project-landing.jpg",
+    image: "/images/ai-personalization.jpg",
     tag: "Design",
     title: "Refonte UI/UX pour une application fintech",
     desc: "Design system complet et prototypage interactif avec Figma.",
     cta: "Voir le projet",
   },
   {
-    image: "/images/projects/reservation-system.webp",
+    image: "/images/blog-design-trends.jpg",
     tag: "Marketing",
     title: "Landing page haute conversion pour startup",
     desc: "Optimisation SEO et animations pour un taux de conversion record.",
@@ -168,7 +168,7 @@ export default function Hero() {
               <div key={i} className="min-w-full h-full relative overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={slide.image} alt={slide.title} className="w-full h-full object-cover block transition-transform duration-[1.2s]" style={{ transform: i === current ? "scale(1.05)" : "scale(1)" }} />
-                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(1,8,23,0.85)] via-[rgba(1,8,23,0.3)] to-[rgba(1,8,23,0.1)]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,10,10,0.85)] via-[rgba(10,10,10,0.3)] to-[rgba(10,10,10,0.1)]" />
                 <div className="absolute bottom-4 left-4 right-4 lg:bottom-7 lg:left-8 lg:right-8 z-2 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-5">
                   <AnimatePresence mode="wait">
                     {i === current && (
