@@ -16,6 +16,8 @@ import {
   RefreshCw,
   Download,
 } from "lucide-react";
+import PageHeader from "@/components/admin/PageHeader";
+import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
 
 type Severity = "info" | "warning" | "error" | "critical";
 
@@ -195,210 +197,211 @@ export default function LogsPage() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <ScrollText className="text-violet-400" size={28} />
-            Logs de Securite
-          </h1>
-          <p className="text-gray-400 mt-1">
-            Journal d&apos;activite et evenements de securite
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/5 border border-white/10 text-gray-300 rounded-xl text-sm hover:bg-white/10 transition-colors">
-            <Download size={16} />
-            Exporter
-          </button>
-          <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/5 border border-white/10 text-gray-300 rounded-xl text-sm hover:bg-white/10 transition-colors">
-            <RefreshCw size={16} />
-            Actualiser
-          </button>
-        </div>
-      </div>
+    <PageTransition className="space-y-6">
+      <AnimatedSection>
+        <PageHeader
+          title="Logs Sécurité"
+          subtitle="Journal d'activite et evenements de securite"
+          icon={<ScrollText size={24} />}
+          actions={
+            <div className="flex items-center gap-3">
+              <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors">
+                <Download size={16} />
+                Exporter
+              </button>
+              <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors">
+                <RefreshCw size={16} />
+                Actualiser
+              </button>
+            </div>
+          }
+        />
+      </AnimatedSection>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-blue-500/5 border border-blue-500/20 rounded-2xl p-4">
-          <div className="flex items-center gap-2 mb-1">
-            <Info size={16} className="text-blue-400" />
-            <span className="text-xs font-medium text-blue-400 uppercase">Info</span>
+      <AnimatedSection>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="bg-blue-500/5 border border-blue-500/20 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <Info size={16} className="text-blue-400" />
+              <span className="text-xs font-medium text-blue-400 uppercase">Info</span>
+            </div>
+            <p className="text-2xl font-bold text-text-primary">{severityCounts.info}</p>
           </div>
-          <p className="text-2xl font-bold text-white">{severityCounts.info}</p>
-        </div>
-        <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-2xl p-4">
-          <div className="flex items-center gap-2 mb-1">
-            <AlertTriangle size={16} className="text-yellow-400" />
-            <span className="text-xs font-medium text-yellow-400 uppercase">Warning</span>
+          <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <AlertTriangle size={16} className="text-yellow-400" />
+              <span className="text-xs font-medium text-yellow-400 uppercase">Warning</span>
+            </div>
+            <p className="text-2xl font-bold text-text-primary">{severityCounts.warning}</p>
           </div>
-          <p className="text-2xl font-bold text-white">{severityCounts.warning}</p>
-        </div>
-        <div className="bg-orange-500/5 border border-orange-500/20 rounded-2xl p-4">
-          <div className="flex items-center gap-2 mb-1">
-            <AlertOctagon size={16} className="text-orange-400" />
-            <span className="text-xs font-medium text-orange-400 uppercase">Error</span>
+          <div className="bg-orange-500/5 border border-orange-500/20 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <AlertOctagon size={16} className="text-orange-400" />
+              <span className="text-xs font-medium text-orange-400 uppercase">Error</span>
+            </div>
+            <p className="text-2xl font-bold text-text-primary">{severityCounts.error}</p>
           </div>
-          <p className="text-2xl font-bold text-white">{severityCounts.error}</p>
-        </div>
-        <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-4">
-          <div className="flex items-center gap-2 mb-1">
-            <XOctagon size={16} className="text-red-400" />
-            <span className="text-xs font-medium text-red-400 uppercase">Critical</span>
+          <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <XOctagon size={16} className="text-red-400" />
+              <span className="text-xs font-medium text-red-400 uppercase">Critical</span>
+            </div>
+            <p className="text-2xl font-bold text-text-primary">{severityCounts.critical}</p>
           </div>
-          <p className="text-2xl font-bold text-white">{severityCounts.critical}</p>
         </div>
-      </div>
+      </AnimatedSection>
 
       {/* Table */}
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-          <h2 className="text-lg font-semibold text-white">
-            Journal d&apos;activite
-          </h2>
-          <div className="flex items-center gap-3">
-            {/* Search */}
-            <div className="relative">
-              <Search
-                size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
-              />
-              <input
-                type="text"
-                placeholder="Rechercher..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full sm:w-64 pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
-              />
-            </div>
+      <AnimatedSection>
+        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+            <h2 className="font-serif text-lg text-text-primary">
+              Journal d&apos;activite
+            </h2>
+            <div className="flex items-center gap-3">
+              {/* Search */}
+              <div className="relative">
+                <Search
+                  size={15}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
+                />
+                <input
+                  type="text"
+                  placeholder="Rechercher..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full sm:w-64 pl-9 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                />
+              </div>
 
-            {/* Severity Filter */}
-            <div className="relative">
-              <button
-                onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-300 hover:bg-white/10 transition-colors"
-              >
-                <Filter size={14} />
-                {filterSeverity === "all"
-                  ? "Severite"
-                  : severityOptions.find((s) => s.value === filterSeverity)?.label}
-                <ChevronDown size={14} />
-              </button>
-
-              {showFilterDropdown && (
-                <div className="absolute right-0 mt-2 w-52 bg-[#1a1a2e] border border-white/10 rounded-xl shadow-xl z-10 py-1">
-                  {severityOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      onClick={() => {
-                        setFilterSeverity(option.value);
-                        setShowFilterDropdown(false);
-                      }}
-                      className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                        filterSeverity === option.value
-                          ? "bg-violet-600/10 text-violet-400"
-                          : "text-gray-300 hover:bg-white/5"
-                      }`}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-white/10">
-                <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  <span className="flex items-center gap-1.5">
-                    <Clock size={12} />
-                    Date / Heure
-                  </span>
-                </th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  <span className="flex items-center gap-1.5">
-                    <User size={12} />
-                    Utilisateur
-                  </span>
-                </th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Action
-                </th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  <span className="flex items-center gap-1.5">
-                    <Globe size={12} />
-                    IP
-                  </span>
-                </th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Severite
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {filteredLogs.map((log) => (
-                <tr
-                  key={log.id}
-                  className={`hover:bg-white/5 transition-colors ${
-                    log.severity === "critical" ? "bg-red-500/[0.03]" : ""
-                  }`}
+              {/* Severity Filter */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-colors"
                 >
-                  <td className="py-3.5 px-4">
-                    <span className="text-sm text-gray-400 font-mono">
-                      {log.dateTime}
+                  <Filter size={14} />
+                  {filterSeverity === "all"
+                    ? "Severite"
+                    : severityOptions.find((s) => s.value === filterSeverity)?.label}
+                  <ChevronDown size={14} />
+                </button>
+
+                {showFilterDropdown && (
+                  <div className="absolute right-0 mt-2 w-52 bg-dark-2 border border-white/[0.06] rounded-xl shadow-xl z-10 py-1">
+                    {severityOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => {
+                          setFilterSeverity(option.value);
+                          setShowFilterDropdown(false);
+                        }}
+                        className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                          filterSeverity === option.value
+                            ? "bg-accent/10 text-accent"
+                            : "text-text-secondary hover:bg-white/[0.04]"
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-white/[0.06]">
+                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <span className="flex items-center gap-1.5">
+                      <Clock size={12} />
+                      Date / Heure
                     </span>
-                  </td>
-                  <td className="py-3.5 px-4">
-                    <span className="text-sm text-gray-300">{log.user}</span>
-                  </td>
-                  <td className="py-3.5 px-4">
-                    <span className="text-sm text-white">{log.action}</span>
-                  </td>
-                  <td className="py-3.5 px-4">
-                    <span className="text-sm text-gray-400 font-mono">
-                      {log.ip}
+                  </th>
+                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <span className="flex items-center gap-1.5">
+                      <User size={12} />
+                      Utilisateur
                     </span>
-                  </td>
-                  <td className="py-3.5 px-4">
-                    <SeverityBadge severity={log.severity} />
-                  </td>
+                  </th>
+                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    Action
+                  </th>
+                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <span className="flex items-center gap-1.5">
+                      <Globe size={12} />
+                      IP
+                    </span>
+                  </th>
+                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    Severite
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {filteredLogs.length === 0 && (
-          <div className="text-center py-12">
-            <ScrollText size={40} className="mx-auto text-gray-600 mb-3" />
-            <p className="text-gray-500">Aucun log trouve</p>
+              </thead>
+              <tbody className="divide-y divide-white/[0.06]">
+                {filteredLogs.map((log) => (
+                  <tr
+                    key={log.id}
+                    className={`hover:bg-white/[0.04] transition-colors ${
+                      log.severity === "critical" ? "bg-red-500/[0.03]" : ""
+                    }`}
+                  >
+                    <td className="py-3.5 px-4">
+                      <span className="text-sm text-text-muted font-mono">
+                        {log.dateTime}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <span className="text-sm text-text-secondary">{log.user}</span>
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <span className="text-sm text-text-primary">{log.action}</span>
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <span className="text-sm text-text-muted font-mono">
+                        {log.ip}
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <SeverityBadge severity={log.severity} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        )}
 
-        {/* Pagination placeholder */}
-        <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/10">
-          <p className="text-sm text-gray-500">
-            {filteredLogs.length} evenement{filteredLogs.length !== 1 ? "s" : ""}{" "}
-            affiche{filteredLogs.length !== 1 ? "s" : ""}
-          </p>
-          <div className="flex items-center gap-2">
-            <button className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-400 hover:bg-white/10 transition-colors disabled:opacity-50" disabled>
-              Precedent
-            </button>
-            <span className="px-3 py-1.5 bg-violet-600/10 border border-violet-500/20 rounded-lg text-sm text-violet-400">
-              1
-            </span>
-            <button className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-400 hover:bg-white/10 transition-colors disabled:opacity-50" disabled>
-              Suivant
-            </button>
+          {filteredLogs.length === 0 && (
+            <div className="text-center py-12">
+              <ScrollText size={40} className="mx-auto text-text-muted mb-3" />
+              <p className="text-text-muted">Aucun log trouve</p>
+            </div>
+          )}
+
+          {/* Pagination placeholder */}
+          <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/[0.06]">
+            <p className="text-sm text-text-muted">
+              {filteredLogs.length} evenement{filteredLogs.length !== 1 ? "s" : ""}{" "}
+              affiche{filteredLogs.length !== 1 ? "s" : ""}
+            </p>
+            <div className="flex items-center gap-2">
+              <button className="px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50" disabled>
+                Precedent
+              </button>
+              <span className="px-3 py-1.5 bg-accent/10 border border-accent/20 rounded-lg text-sm text-accent">
+                1
+              </span>
+              <button className="px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50" disabled>
+                Suivant
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </AnimatedSection>
+    </PageTransition>
   );
 }
