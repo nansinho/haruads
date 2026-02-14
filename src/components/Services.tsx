@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
+import GlowCard from "./GlowCard";
 
 const services = [
   {
@@ -58,7 +59,7 @@ export default function Services() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((service, i) => (
             <ScrollReveal key={service.num} delay={i * 100} animation="scaleUp">
-              <div className="bg-white rounded-2xl p-7 lg:p-8 border border-gray-100 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300 h-full">
+              <GlowCard variant="light" className="p-7 lg:p-8 h-full">
                 <div className="flex items-start gap-5">
                   <span className="text-[2.8rem] font-serif text-accent leading-none shrink-0">
                     {service.num}
@@ -72,7 +73,7 @@ export default function Services() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </GlowCard>
             </ScrollReveal>
           ))}
         </div>

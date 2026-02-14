@@ -81,6 +81,41 @@ body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #0a0
   animation: text-gradient-shift 5s ease infinite;
 }
 
+/* ===== Accessibility modes ===== */
+
+/* High contrast */
+.a11y-high-contrast body { background: #000 !important; }
+.a11y-high-contrast * { border-color: #fff !important; }
+.a11y-high-contrast p, .a11y-high-contrast span, .a11y-high-contrast a,
+.a11y-high-contrast li, .a11y-high-contrast h1, .a11y-high-contrast h2,
+.a11y-high-contrast h3, .a11y-high-contrast h4, .a11y-high-contrast h5 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+/* Dyslexia-friendly font */
+.a11y-dyslexia * {
+  font-family: "Comic Sans MS", "OpenDyslexic", sans-serif !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+  line-height: 1.8 !important;
+}
+
+/* Reduced motion */
+.a11y-reduced-motion *,
+.a11y-reduced-motion *::before,
+.a11y-reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Color filters for colorblindness */
+html[data-color-filter="grayscale"] { filter: grayscale(100%); }
+html[data-color-filter="protanopia"] { filter: url('#protanopia'); }
+html[data-color-filter="deuteranopia"] { filter: url('#deuteranopia'); }
+html[data-color-filter="tritanopia"] { filter: url('#tritanopia'); }
+
 .noise-overlay::after {
   content: '';
   position: absolute;

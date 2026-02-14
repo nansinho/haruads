@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const ease: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
@@ -16,15 +17,27 @@ const logos = [
 ];
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const dotOpacity = useTransform(scrollYProgress, [0, 0.5], [0.03, 0]);
+
   return (
     <section
+      ref={sectionRef}
       className="bg-dark text-white relative overflow-hidden min-h-screen flex flex-col"
       id="home"
     >
-      {/* Subtle dot grid */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+      {/* Subtle dot grid with parallax fade */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
         style={{
+          opacity: dotOpacity,
           backgroundImage: `radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px)`,
           backgroundSize: "24px 24px",
         }}
@@ -34,8 +47,8 @@ export default function Hero() {
 
       <div className="max-w-[1400px] mx-auto px-5 lg:px-12 w-full pt-44 pb-12 flex-1 flex items-center relative z-2">
         <div className="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 items-center w-full">
-          {/* Left — Text */}
-          <div>
+          {/* Left — Text with parallax */}
+          <motion.div style={{ y: textY }}>
             <motion.div
               className="flex items-center gap-3 mb-10"
               initial={{ opacity: 0, y: 20 }}
@@ -121,14 +134,15 @@ export default function Hero() {
                 Voir nos projets
               </motion.a>
             </motion.div>
-          </div>
+          </motion.div>
 
-          {/* Right — Visual */}
+          {/* Right — Visual with parallax (opposite direction) */}
           <motion.div
             className="relative hidden lg:block"
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.0, delay: 0.6, ease }}
+            style={{ y: imageY }}
           >
             <div className="absolute -top-8 -right-8 w-[80%] h-[80%] bg-accent/10 rounded-3xl" />
             <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/20 rounded-2xl" />
