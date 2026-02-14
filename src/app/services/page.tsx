@@ -10,18 +10,44 @@ const services = [
     slug: "developpement-web",
     num: "01",
     title: "Développement Web",
-    desc: "Sites vitrines, applications web et plateformes SaaS avec les technologies les plus performantes. React, Next.js, Supabase.",
+    desc: "Sites vitrines, applications web et landing pages performantes avec React, Next.js et les technologies modernes.",
     details: [
       "Sites vitrines responsive",
       "Applications web sur mesure",
-      "Plateformes SaaS multi-tenant",
+      "Landing pages optimisées",
       "API REST & GraphQL",
       "Intégration CMS headless",
     ],
   },
   {
-    slug: "design-uiux",
+    slug: "solutions-saas",
     num: "02",
+    title: "Solutions SaaS",
+    desc: "Plateformes SaaS multi-tenant, dashboards admin et outils métier sur mesure. Architecture scalable et sécurisée.",
+    details: [
+      "Architecture multi-tenant",
+      "Dashboards admin sur mesure",
+      "Gestion d\u2019abonnements & facturation",
+      "Base de données Supabase / PostgreSQL",
+      "Authentification & rôles utilisateurs",
+    ],
+  },
+  {
+    slug: "intelligence-artificielle",
+    num: "03",
+    title: "Intelligence Artificielle",
+    desc: "Chatbots IA, automatisation des processus et intégration d\u2019API IA pour booster votre productivité.",
+    details: [
+      "Chatbots IA conversationnels",
+      "Intégration OpenAI, Claude, Mistral",
+      "Automatisation de processus métier",
+      "Analyse de données intelligente",
+      "Génération de contenu IA",
+    ],
+  },
+  {
+    slug: "design-uiux",
+    num: "04",
     title: "Design UI/UX",
     desc: "Interfaces intuitives et expériences utilisateur mémorables. Maquettes Figma, prototypes interactifs, design systems.",
     details: [
@@ -34,7 +60,7 @@ const services = [
   },
   {
     slug: "e-commerce",
-    num: "03",
+    num: "05",
     title: "E-Commerce",
     desc: "Boutiques en ligne sur mesure avec WooCommerce, Stripe et des solutions de paiement sécurisées et performantes.",
     details: [
@@ -47,7 +73,7 @@ const services = [
   },
   {
     slug: "branding-seo",
-    num: "04",
+    num: "06",
     title: "Branding & SEO",
     desc: "Identité visuelle forte et référencement naturel pour une visibilité maximale sur Google et les réseaux sociaux.",
     details: [

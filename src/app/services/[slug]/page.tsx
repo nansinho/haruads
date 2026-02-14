@@ -50,8 +50,72 @@ const servicesData: Record<
       { step: "04", title: "Déploiement", desc: "Mise en production, tests et formation." },
     ],
   },
-  "design-uiux": {
+  "solutions-saas": {
     num: "02",
+    title: "Solutions SaaS",
+    subtitle: "Des plateformes cloud scalables et s\u00e9curis\u00e9es pour votre business.",
+    description:
+      "Nous concevons des plateformes SaaS compl\u00e8tes, de l\u2019architecture multi-tenant \u00e0 la gestion des abonnements. Notre expertise Supabase et Next.js garantit des solutions performantes, s\u00e9curis\u00e9es et \u00e9volutives.",
+    features: [
+      {
+        title: "Architecture multi-tenant",
+        desc: "Isolation des donn\u00e9es par client avec une base de code unique et maintenable.",
+      },
+      {
+        title: "Dashboards admin",
+        desc: "Interfaces d\u2019administration riches pour g\u00e9rer utilisateurs, donn\u00e9es et analytics.",
+      },
+      {
+        title: "Gestion d\u2019abonnements",
+        desc: "Int\u00e9gration Stripe pour facturation r\u00e9currente, essais gratuits et upgrades.",
+      },
+      {
+        title: "Authentification & r\u00f4les",
+        desc: "Syst\u00e8me de permissions granulaire avec SSO, 2FA et gestion des \u00e9quipes.",
+      },
+    ],
+    technologies: ["Next.js", "Supabase", "Stripe", "PostgreSQL", "TypeScript", "Vercel"],
+    process: [
+      { step: "01", title: "Discovery", desc: "Analyse du mod\u00e8le business et des besoins utilisateurs." },
+      { step: "02", title: "Architecture", desc: "Conception technique, mod\u00e8le de donn\u00e9es et s\u00e9curit\u00e9." },
+      { step: "03", title: "D\u00e9veloppement", desc: "Sprints it\u00e9ratifs avec d\u00e9mos et feedback continu." },
+      { step: "04", title: "Lancement", desc: "D\u00e9ploiement, monitoring et onboarding des premiers clients." },
+    ],
+  },
+  "intelligence-artificielle": {
+    num: "03",
+    title: "Intelligence Artificielle",
+    subtitle: "L\u2019IA au service de votre entreprise, concr\u00e8tement.",
+    description:
+      "Nous int\u00e9grons l\u2019intelligence artificielle dans vos processus m\u00e9tier : chatbots, automatisation, analyse de donn\u00e9es et g\u00e9n\u00e9ration de contenu. Pas de buzzwords, des solutions concr\u00e8tes qui cr\u00e9ent de la valeur.",
+    features: [
+      {
+        title: "Chatbots IA",
+        desc: "Assistants conversationnels intelligents pour le support client et la vente.",
+      },
+      {
+        title: "Automatisation",
+        desc: "Automatisation des t\u00e2ches r\u00e9p\u00e9titives avec des workflows IA sur mesure.",
+      },
+      {
+        title: "Int\u00e9gration API IA",
+        desc: "Connexion \u00e0 OpenAI, Claude, Mistral et autres mod\u00e8les pour vos apps.",
+      },
+      {
+        title: "Analyse intelligente",
+        desc: "Extraction d\u2019insights et pr\u00e9dictions \u00e0 partir de vos donn\u00e9es existantes.",
+      },
+    ],
+    technologies: ["OpenAI API", "Claude API", "LangChain", "Python", "Next.js", "Supabase"],
+    process: [
+      { step: "01", title: "Audit", desc: "Identification des cas d\u2019usage IA \u00e0 fort impact dans votre activit\u00e9." },
+      { step: "02", title: "Prototypage", desc: "POC rapide pour valider la faisabilit\u00e9 et la valeur ajout\u00e9e." },
+      { step: "03", title: "D\u00e9veloppement", desc: "Int\u00e9gration production avec monitoring et fine-tuning." },
+      { step: "04", title: "Optimisation", desc: "Am\u00e9lioration continue des performances et des co\u00fbts." },
+    ],
+  },
+  "design-uiux": {
+    num: "04",
     title: "Design UI/UX",
     subtitle: "Des interfaces qui marquent les esprits et convertissent les visiteurs.",
     description:
@@ -83,7 +147,7 @@ const servicesData: Record<
     ],
   },
   "e-commerce": {
-    num: "03",
+    num: "05",
     title: "E-Commerce",
     subtitle: "Des boutiques en ligne qui vendent, pas juste qui existent.",
     description:
@@ -115,7 +179,7 @@ const servicesData: Record<
     ],
   },
   "branding-seo": {
-    num: "04",
+    num: "06",
     title: "Branding & SEO",
     subtitle: "Une identité forte et une visibilité maximale sur le web.",
     description:
