@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
 const faqs = [
@@ -68,21 +68,19 @@ export default function FAQ() {
                   +
                 </motion.span>
               </button>
-              <AnimatePresence initial={false}>
-                {openIndex === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.35 }}
-                    className="overflow-hidden"
-                  >
-                    <p className="text-[0.82rem] text-text-body leading-[1.7] pb-5">
-                      {faq.a}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <motion.div
+                initial={false}
+                animate={{
+                  height: openIndex === i ? "auto" : 0,
+                  opacity: openIndex === i ? 1 : 0,
+                }}
+                transition={{ duration: 0.35 }}
+                className="overflow-hidden"
+              >
+                <p className="text-[0.82rem] text-text-body leading-[1.7] pb-5">
+                  {faq.a}
+                </p>
+              </motion.div>
             </motion.div>
           ))}
         </div>
