@@ -2,174 +2,100 @@
 
 import { motion } from "framer-motion";
 
-const quickLinks = [
-  { label: "Accueil", href: "#" },
-  { label: "Services", href: "#services" },
-  { label: "Projets", href: "#projects" },
-  { label: "Contact", href: "#" },
-];
-
-const company = [
-  { label: "A Propos", href: "#about" },
-  { label: "Blog", href: "#" },
-  { label: "Carrieres", href: "#" },
-  { label: "Mentions Legales", href: "#" },
-];
-
-const office = [
-  { label: "Aix-en-Provence", href: "#" },
-  { label: "contact@agencehds.fr", href: "mailto:contact@agencehds.fr" },
-  { label: "+33 6 XX XX XX XX", href: "tel:+33600000000" },
-];
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08 },
-  },
+const links = {
+  navigation: [
+    { label: "Accueil", href: "#home" },
+    { label: "Services", href: "#services" },
+    { label: "Projets", href: "#projects" },
+    { label: "Tarifs", href: "#pricing" },
+  ],
+  company: [
+    { label: "A Propos", href: "#about" },
+    { label: "Blog", href: "#" },
+    { label: "Carrieres", href: "#" },
+    { label: "Mentions Legales", href: "#" },
+  ],
+  contact: [
+    { label: "contact@agencehds.fr", href: "mailto:contact@agencehds.fr" },
+    { label: "+33 6 XX XX XX XX", href: "tel:+33600000000" },
+    { label: "Aix-en-Provence, France", href: "#" },
+  ],
 };
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 15 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const SocialIcon = ({ children, href }: { children: React.ReactNode; href: string }) => (
-  <motion.a
-    href={href}
-    className="w-[34px] h-[34px] rounded-full border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent transition-all duration-300 group"
-    whileHover={{ scale: 1.15, y: -2 }}
-    whileTap={{ scale: 0.95 }}
-  >
-    {children}
-  </motion.a>
-);
 
 export default function Footer() {
   return (
-    <footer className="bg-dark-2 border-t border-border-dark pt-[52px] px-5 lg:px-12 text-white relative overflow-hidden">
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-accent/3 rounded-full blur-[120px] pointer-events-none" />
-
-      <motion.div
-        className="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.8fr_1fr_1fr_1fr] gap-7 lg:gap-10 relative z-2"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        <motion.div variants={itemVariants} transition={{ duration: 0.5 }}>
-          <a href="#" className="flex items-center gap-2 font-bold text-[1.05rem] text-white group">
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/logos/logo-hds.svg"
-                alt="Agence HDS"
-                className="h-8 w-auto"
-              />
-            </motion.div>
-          </a>
-          <p className="text-[0.78rem] text-white/45 leading-[1.7] max-w-[280px] my-3">
-            Agence web creative, solutions digitales modernes et performantes.
-          </p>
-          <div className="flex gap-2.5">
-            <SocialIcon href="#">
-              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white/50 group-hover:fill-dark transition-colors duration-300">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-              </svg>
-            </SocialIcon>
-            <SocialIcon href="#">
-              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white/50 group-hover:fill-dark transition-colors duration-300">
-                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
-              </svg>
-            </SocialIcon>
-            <SocialIcon href="#">
-              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-white/50 fill-none group-hover:stroke-dark transition-colors duration-300" strokeWidth={2}>
-                <rect x="2" y="2" width="20" height="20" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-              </svg>
-            </SocialIcon>
-            <SocialIcon href="#">
-              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white/50 group-hover:fill-dark transition-colors duration-300">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />
-              </svg>
-            </SocialIcon>
+    <footer className="bg-dark-2 border-t border-border-dark text-white">
+      <div className="max-w-[1400px] mx-auto px-5 pt-14 pb-8 lg:px-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
+          {/* Brand */}
+          <div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/logos/logo-hds.svg" alt="Agence HDS" className="h-8 w-auto mb-4" />
+            <p className="text-[0.8rem] text-white/35 leading-[1.7] max-w-[260px]">
+              Agence web creative specialisee en developpement web et solutions digitales sur mesure.
+            </p>
+            <div className="flex gap-2.5 mt-5">
+              {["facebook", "twitter", "instagram", "linkedin"].map((social) => (
+                <motion.a
+                  key={social}
+                  href="#"
+                  className="w-8 h-8 rounded-full border border-white/8 flex items-center justify-center hover:bg-accent hover:border-accent transition-all duration-300 group"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                >
+                  <span className="text-[0.6rem] uppercase text-white/40 group-hover:text-dark font-bold transition-colors">{social.charAt(0)}</span>
+                </motion.a>
+              ))}
+            </div>
           </div>
-        </motion.div>
 
-        <motion.div variants={itemVariants} transition={{ duration: 0.5 }}>
-          <h5 className="text-[0.88rem] font-bold mb-[18px] text-white">
-            Liens Rapides
-          </h5>
-          <ul className="list-none">
-            {quickLinks.map((link) => (
-              <li key={link.label} className="mb-2.5">
-                <motion.a
-                  href={link.href}
-                  className="text-[0.8rem] text-white/45 hover:text-accent transition-colors duration-300 inline-flex items-center gap-1"
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {link.label}
-                </motion.a>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+          {/* Navigation */}
+          <div>
+            <h5 className="text-[0.8rem] font-bold mb-4 text-white/60 uppercase tracking-wider">Navigation</h5>
+            <ul className="list-none">
+              {links.navigation.map((link) => (
+                <li key={link.label} className="mb-2.5">
+                  <a href={link.href} className="text-[0.8rem] text-white/35 hover:text-accent transition-colors duration-300">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <motion.div variants={itemVariants} transition={{ duration: 0.5 }}>
-          <h5 className="text-[0.88rem] font-bold mb-[18px] text-white">
-            Entreprise
-          </h5>
-          <ul className="list-none">
-            {company.map((link) => (
-              <li key={link.label} className="mb-2.5">
-                <motion.a
-                  href={link.href}
-                  className="text-[0.8rem] text-white/45 hover:text-accent transition-colors duration-300 inline-flex items-center gap-1"
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {link.label}
-                </motion.a>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+          {/* Company */}
+          <div>
+            <h5 className="text-[0.8rem] font-bold mb-4 text-white/60 uppercase tracking-wider">Entreprise</h5>
+            <ul className="list-none">
+              {links.company.map((link) => (
+                <li key={link.label} className="mb-2.5">
+                  <a href={link.href} className="text-[0.8rem] text-white/35 hover:text-accent transition-colors duration-300">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <motion.div variants={itemVariants} transition={{ duration: 0.5 }}>
-          <h5 className="text-[0.88rem] font-bold mb-[18px] text-white">
-            Bureau
-          </h5>
-          <ul className="list-none">
-            {office.map((link) => (
-              <li key={link.label} className="mb-2.5">
-                <motion.a
-                  href={link.href}
-                  className="text-[0.8rem] text-white/45 hover:text-accent transition-colors duration-300 inline-flex items-center gap-1"
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {link.label}
-                </motion.a>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      </motion.div>
+          {/* Contact */}
+          <div>
+            <h5 className="text-[0.8rem] font-bold mb-4 text-white/60 uppercase tracking-wider">Contact</h5>
+            <ul className="list-none">
+              {links.contact.map((link) => (
+                <li key={link.label} className="mb-2.5">
+                  <a href={link.href} className="text-[0.8rem] text-white/35 hover:text-accent transition-colors duration-300">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
-      <motion.div
-        className="max-w-[1280px] mx-auto mt-9 py-5 border-t border-border-dark flex flex-col sm:flex-row items-center justify-between text-[0.72rem] text-white/35 gap-2 relative z-2"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-      >
-        <span>&copy; 2024 Agence HDS. Tous droits reserves.</span>
-        <span>Concu avec passion en Provence</span>
-      </motion.div>
+        <div className="border-t border-border-dark pt-6 flex flex-col sm:flex-row items-center justify-between text-[0.7rem] text-white/25 gap-2">
+          <span>&copy; 2024 Agence HDS. Tous droits reserves.</span>
+          <span>Concu avec passion a Aix-en-Provence</span>
+        </div>
+      </div>
     </footer>
   );
 }
