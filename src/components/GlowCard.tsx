@@ -5,9 +5,11 @@ import { useRef, useState, type ReactNode } from "react";
 export default function GlowCard({
   children,
   className = "",
+  glowColor = "rgba(255,85,0,0.06)",
 }: {
   children: ReactNode;
   className?: string;
+  glowColor?: string;
 }) {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -25,14 +27,13 @@ export default function GlowCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsFocused(true)}
       onMouseLeave={() => setIsFocused(false)}
-      className={`relative rounded-2xl bg-dark-2 border border-white/[0.06] overflow-hidden transition-all duration-500 hover:border-white/[0.12] ${className}`}
+      className={`relative rounded-2xl overflow-hidden card-glass ${className}`}
     >
-      {/* Mouse-following glow */}
       <div
         className="pointer-events-none absolute inset-0 transition-opacity duration-500"
         style={{
           opacity: isFocused ? 1 : 0,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(59,130,246,0.07), transparent 40%)`,
+          background: `radial-gradient(500px circle at ${position.x}px ${position.y}px, ${glowColor}, transparent 40%)`,
         }}
       />
       <div className="relative z-[2]">{children}</div>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ease: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const words = ["digitales.", "memorables.", "uniques.", "performantes."];
 
@@ -28,154 +28,128 @@ export default function Hero() {
   }, []);
 
   return (
-    <div
-      className="bg-dark text-white relative overflow-hidden min-h-screen flex flex-col noise-overlay"
+    <section
+      className="relative min-h-screen flex flex-col overflow-hidden bg-dark"
       id="home"
     >
-      {/* === Background glow orbs === */}
+      {/* Background mesh gradient */}
+      <div className="absolute inset-0 bg-mesh-1" />
+
+      {/* Geometric accent elements */}
       <motion.div
-        className="absolute top-[-20%] left-[20%] w-[800px] h-[800px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(59,130,246,0.08) 0%, rgba(59,130,246,0.02) 40%, transparent 70%)",
-        }}
-        animate={{
-          x: [0, 80, -40, 0],
-          y: [0, 60, -30, 0],
-          scale: [1, 1.1, 0.95, 1],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[15%] right-[8%] w-[300px] h-[300px] rounded-full border border-accent/[0.06] pointer-events-none"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute top-[40%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(34,211,238,0.06) 0%, rgba(34,211,238,0.01) 40%, transparent 70%)",
-        }}
-        animate={{
-          x: [0, -60, 40, 0],
-          y: [0, -40, 30, 0],
-          scale: [1, 0.9, 1.05, 1],
-        }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[18%] right-[10%] w-[200px] h-[200px] rounded-full border border-violet/[0.04] pointer-events-none"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
       />
 
-      {/* Subtle dot grid */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px)`,
-          backgroundSize: "24px 24px",
-        }}
+      {/* Floating accent dot */}
+      <motion.div
+        className="absolute top-[25%] left-[12%] w-2 h-2 rounded-full bg-accent/30 pointer-events-none"
+        animate={{ y: [0, -20, 0], opacity: [0.3, 0.7, 0.3] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-[30%] right-[15%] w-1.5 h-1.5 rounded-full bg-violet/30 pointer-events-none"
+        animate={{ y: [0, 15, 0], opacity: [0.2, 0.5, 0.2] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Top gradient edge */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
-
-      {/* === Main content - CENTERED === */}
-      <section className="flex-1 flex flex-col items-center justify-center px-5 lg:px-12 pt-[120px] relative z-2">
+      {/* Main content */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 lg:px-16 pt-[120px] relative z-10">
         {/* Badge */}
         <motion.div
-          className="flex items-center gap-3 mb-8"
+          className="flex items-center gap-3 mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease }}
+          transition={{ duration: 0.8, delay: 0.2, ease }}
         >
-          <span className="w-2 h-2 rounded-full bg-accent animate-[glow-pulse_4s_ease-in-out_infinite]" />
-          <span className="text-[0.72rem] uppercase tracking-[3px] text-white/40 font-medium">
-            Agence Web Creative &mdash; Aix-en-Provence
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-50" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+          </span>
+          <span className="text-[0.7rem] uppercase tracking-[4px] text-white/30 font-body font-medium">
+            Studio Web Creatif &mdash; Aix-en-Provence
           </span>
         </motion.div>
 
-        {/* CENTERED Headline with typewriter */}
-        <motion.h1
-          className="text-center text-[2.5rem] sm:text-[3.5rem] lg:text-[5rem] xl:text-[6rem] font-extrabold leading-[0.95] tracking-[-0.04em] max-w-[1000px]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <motion.span
-            className="block"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease }}
+        {/* Headline */}
+        <div className="text-center max-w-[1100px]">
+          <motion.h1
+            className="font-display font-extrabold text-[2.8rem] sm:text-[4rem] lg:text-[5.5rem] xl:text-[7rem] leading-[0.92] tracking-[-0.04em]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
           >
-            Nous creons des
-          </motion.span>
-          <motion.span
-            className="block"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.45, ease }}
-          >
-            experiences
-          </motion.span>
-          <motion.span
-            className="block relative"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease }}
-          >
-            <span
-              className="relative inline-block overflow-hidden align-bottom"
-              style={{ height: "1.15em" }}
+            <motion.span
+              className="block text-cream"
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.3, ease }}
             >
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={wordIndex}
-                  className="text-gradient inline-block"
-                  initial={{ y: "100%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
-                  exit={{ y: "-100%", opacity: 0 }}
-                  transition={{ duration: 0.5, ease }}
-                >
-                  {words[wordIndex]}
-                </motion.span>
-              </AnimatePresence>
-            </span>
-          </motion.span>
-        </motion.h1>
+              Nous creons des
+            </motion.span>
+            <motion.span
+              className="block text-cream"
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.45, ease }}
+            >
+              experiences{" "}
+              <span className="relative inline-block overflow-hidden align-bottom" style={{ height: "1.12em" }}>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={wordIndex}
+                    className="text-gradient-warm inline-block"
+                    initial={{ y: "110%", opacity: 0 }}
+                    animate={{ y: "0%", opacity: 1 }}
+                    exit={{ y: "-110%", opacity: 0 }}
+                    transition={{ duration: 0.6, ease }}
+                  >
+                    {words[wordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+            </motion.span>
+          </motion.h1>
+        </div>
 
         {/* Subtitle */}
         <motion.p
-          className="text-center text-[0.9rem] lg:text-[1.05rem] text-white/35 mt-6 max-w-[520px] leading-[1.8]"
+          className="text-center text-[0.95rem] lg:text-[1.1rem] text-white/30 mt-8 max-w-[540px] leading-[1.8] font-light"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8, ease }}
+          transition={{ duration: 0.8, delay: 0.7, ease }}
         >
           Design UI/UX, developpement web et solutions e-commerce sur mesure
-          pour propulser votre business.
+          pour propulser votre business au niveau superieur.
         </motion.p>
 
         {/* CTAs */}
         <motion.div
-          className="flex flex-wrap gap-4 mt-10 justify-center"
+          className="flex flex-wrap gap-4 mt-12 justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.0, ease }}
+          transition={{ duration: 0.8, delay: 0.9, ease }}
         >
           <motion.a
             href="#contact"
-            className="px-8 py-4 rounded-full bg-accent text-dark font-bold text-[0.9rem] cursor-pointer inline-flex items-center gap-2 relative overflow-hidden"
-            whileHover={{
-              scale: 1.04,
-              boxShadow:
-                "0 0 60px rgba(59,130,246,0.35), 0 0 120px rgba(59,130,246,0.1)",
-            }}
+            className="btn-primary px-9 py-4 text-[0.9rem] font-display font-bold cursor-pointer inline-flex items-center gap-2.5"
+            whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
           >
             Demarrer un projet
-            <svg
-              viewBox="0 0 24 24"
-              className="w-4 h-4 stroke-dark fill-none stroke-2"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
+            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current stroke-2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </motion.a>
           <motion.a
             href="#projects"
-            className="px-8 py-4 rounded-full bg-transparent text-white font-semibold text-[0.9rem] border border-white/10 cursor-pointer hover:border-accent/40 hover:text-accent hover:shadow-[0_0_25px_rgba(59,130,246,0.1)] transition-all duration-300"
+            className="btn-outline px-9 py-4 text-[0.9rem] font-display cursor-pointer"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
           >
@@ -183,31 +157,31 @@ export default function Hero() {
           </motion.a>
         </motion.div>
 
-        {/* === Product Preview - Browser Mockup === */}
+        {/* Browser Mockup */}
         <motion.div
-          className="mt-16 lg:mt-20 w-full max-w-[1000px] mx-auto relative"
-          initial={{ opacity: 0, y: 80 }}
+          className="mt-20 lg:mt-24 w-full max-w-[1060px] mx-auto relative"
+          initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 1.2, ease }}
+          transition={{ duration: 1.2, delay: 1.1, ease }}
         >
-          {/* Glow behind the preview */}
-          <div className="absolute -inset-4 bg-accent/5 rounded-3xl blur-3xl pointer-events-none" />
+          {/* Glow */}
+          <div className="absolute -inset-8 bg-accent/[0.03] rounded-3xl blur-3xl pointer-events-none" />
+          <div className="absolute -inset-4 bg-violet/[0.02] rounded-3xl blur-2xl pointer-events-none" />
 
-          <div className="relative rounded-xl border border-white/[0.08] bg-dark-2 overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
-            {/* Browser chrome */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06] bg-dark-3">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-                <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
-                <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+          <div className="relative rounded-2xl border border-white/[0.06] bg-dark-2 overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.7)]">
+            {/* Browser bar */}
+            <div className="flex items-center gap-2.5 px-5 py-3.5 border-b border-white/[0.04] bg-dark-3/80">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-white/[0.06] hover:bg-[#ff5f57] transition-colors" />
+                <div className="w-3 h-3 rounded-full bg-white/[0.06] hover:bg-[#febc2e] transition-colors" />
+                <div className="w-3 h-3 rounded-full bg-white/[0.06] hover:bg-[#28c840] transition-colors" />
               </div>
-              <div className="flex-1 mx-8">
-                <div className="bg-white/[0.04] rounded-lg px-4 py-1.5 text-[0.7rem] text-white/25 text-center font-mono">
+              <div className="flex-1 mx-12">
+                <div className="bg-white/[0.03] rounded-lg px-4 py-1.5 text-[0.7rem] text-white/20 text-center font-mono">
                   agencehds.fr
                 </div>
               </div>
             </div>
-            {/* Screenshot */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/projects/project-dashboard.jpg"
@@ -216,47 +190,45 @@ export default function Hero() {
             />
           </div>
         </motion.div>
-      </section>
+      </div>
 
-      {/* === Partners marquee === */}
+      {/* Partners marquee */}
       <motion.div
-        className="mt-16 lg:mt-20 pb-10 lg:pb-14 relative z-2"
+        className="mt-16 lg:mt-20 pb-12 lg:pb-16 relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.5, ease }}
+        transition={{ duration: 1, delay: 1.5, ease }}
       >
-        <div className="text-[0.65rem] uppercase tracking-[3px] text-white/15 mb-5 text-center">
-          Technologies & Partenaires
+        <div className="text-center mb-6">
+          <span className="text-[0.65rem] uppercase tracking-[4px] text-white/15 font-body">
+            Technologies & Partenaires
+          </span>
         </div>
         <div className="relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-dark to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-dark to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-dark to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-dark to-transparent z-10 pointer-events-none" />
 
           <motion.div
             className="flex w-max"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              x: { duration: 30, repeat: Infinity, ease: "linear" },
-            }}
+            transition={{ x: { duration: 35, repeat: Infinity, ease: "linear" } }}
           >
-            {[...partners, ...partners, ...partners, ...partners].map(
-              (p, i) => (
-                <div
-                  key={`${p.name}-${i}`}
-                  className="flex items-center px-8 lg:px-14 shrink-0 group"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={p.logo}
-                    alt={p.name}
-                    className="h-5 lg:h-6 w-auto opacity-20 group-hover:opacity-40 transition-opacity duration-500 [filter:brightness(0)_invert(1)]"
-                  />
-                </div>
-              )
-            )}
+            {[...partners, ...partners, ...partners, ...partners].map((p, i) => (
+              <div key={`${p.name}-${i}`} className="flex items-center px-10 lg:px-16 shrink-0 group">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={p.logo}
+                  alt={p.name}
+                  className="h-5 lg:h-6 w-auto opacity-15 group-hover:opacity-35 transition-opacity duration-500 [filter:brightness(0)_invert(1)]"
+                />
+              </div>
+            ))}
           </motion.div>
         </div>
       </motion.div>
-    </div>
+
+      {/* Section divider */}
+      <div className="section-line" />
+    </section>
   );
 }

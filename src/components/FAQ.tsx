@@ -27,26 +27,21 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <div className="bg-dark text-white relative overflow-hidden">
-      {/* Glow orb */}
-      <motion.div
-        className="absolute top-[40%] right-[-10%] w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)",
-        }}
-        animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
+    <section className="relative overflow-hidden bg-dark-2">
+      <div className="absolute inset-0 bg-mesh-2" />
 
-      <div className="max-w-[800px] mx-auto px-5 py-[120px] lg:px-12 relative z-2">
+      <div className="max-w-[900px] mx-auto px-6 py-[140px] lg:px-16 relative z-10">
         <ScrollReveal>
-          <div className="text-center mb-14">
-            <div className="text-[0.7rem] uppercase tracking-[3px] text-accent font-semibold mb-4">
-              FAQ
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-[2px] bg-accent rounded-full" />
+              <span className="text-[0.7rem] uppercase tracking-[4px] text-accent font-display font-semibold">
+                FAQ
+              </span>
             </div>
-            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] font-extrabold leading-[1.08] tracking-[-0.02em]">
+            <h2 className="font-display font-extrabold text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] leading-[1.05] tracking-[-0.03em] text-cream">
               Questions{" "}
-              <span className="text-gradient">frequentes.</span>
+              <span className="text-gradient-warm">frequentes.</span>
             </h2>
           </div>
         </ScrollReveal>
@@ -55,28 +50,32 @@ export default function FAQ() {
           {faqs.map((faq, i) => (
             <motion.div
               key={i}
-              className="border-b border-white/[0.06]"
+              className="border-b border-white/[0.06] last:border-b-0"
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
+              transition={{ delay: i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
-                className="w-full py-5 flex items-center justify-between bg-transparent border-none text-white text-[0.95rem] font-semibold text-left font-sans hover:text-accent transition-colors cursor-pointer group"
+                className="w-full py-6 flex items-center justify-between bg-transparent border-none text-cream text-[1rem] font-display font-bold text-left hover:text-accent transition-colors duration-300 cursor-pointer group"
               >
                 {faq.q}
-                <motion.span
-                  className={`w-7 h-7 rounded-full border flex items-center justify-center text-[0.9rem] font-light shrink-0 ml-4 transition-all duration-300 ${
+                <motion.div
+                  className={`w-8 h-8 rounded-full border flex items-center justify-center shrink-0 ml-4 transition-all duration-400 ${
                     openIndex === i
-                      ? "bg-accent border-accent text-dark shadow-[0_0_15px_rgba(59,130,246,0.3)]"
-                      : "border-white/10 text-white/30 group-hover:border-accent/30 group-hover:text-accent"
+                      ? "bg-accent border-accent shadow-[0_0_20px_rgba(255,85,0,0.25)]"
+                      : "border-white/10 group-hover:border-accent/30"
                   }`}
                   animate={{ rotate: openIndex === i ? 45 : 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  +
-                </motion.span>
+                  <span className={`text-[1.1rem] font-light leading-none ${
+                    openIndex === i ? "text-dark" : "text-white/30 group-hover:text-accent"
+                  }`}>
+                    +
+                  </span>
+                </motion.div>
               </button>
               <AnimatePresence initial={false}>
                 {openIndex === i && (
@@ -84,10 +83,10 @@ export default function FAQ() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.35 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                     className="overflow-hidden"
                   >
-                    <p className="text-[0.82rem] text-white/35 leading-[1.7] pb-5">
+                    <p className="text-[0.88rem] text-white/35 leading-[1.8] pb-6 pl-0 lg:pl-0 max-w-[600px]">
                       {faq.a}
                     </p>
                   </motion.div>
@@ -98,16 +97,18 @@ export default function FAQ() {
         </div>
 
         <ScrollReveal delay={300}>
-          <div className="text-center mt-12">
-            <p className="text-[0.85rem] text-white/25">
+          <div className="text-center mt-14">
+            <p className="text-[0.88rem] text-white/25">
               Vous avez d&apos;autres questions ?{" "}
-              <a href="#contact" className="text-accent hover:underline font-semibold">
+              <a href="#contact" className="text-accent hover:underline font-display font-semibold transition-colors">
                 Contactez-nous
               </a>
             </p>
           </div>
         </ScrollReveal>
       </div>
-    </div>
+
+      <div className="section-line" />
+    </section>
   );
 }

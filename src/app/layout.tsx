@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Agence HDS - Agence Web Créative | Aix-en-Provence",
+  title: "Agence HDS - Studio Web Creatif | Aix-en-Provence",
   description:
-    "Agence web créative spécialisée en développement web, design UI/UX et solutions e-commerce sur mesure. Basée à Aix-en-Provence.",
+    "Studio web creatif specialise en developpement web, design UI/UX et solutions e-commerce sur mesure. Base a Aix-en-Provence.",
   openGraph: {
-    title: "Agence HDS - Agence Web Créative",
+    title: "Agence HDS - Studio Web Creatif",
     description:
       "Solutions digitales modernes et performantes pour propulser votre entreprise.",
     type: "website",
@@ -30,11 +30,11 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Space+Mono:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="font-sans antialiased bg-[#0a0a0a] text-text-primary">
+      <body className="font-body antialiased bg-dark text-text-primary grain">
         {children}
       </body>
     </html>
