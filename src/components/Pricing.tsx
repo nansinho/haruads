@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
+import GlowCard from "./GlowCard";
 
 const Check = () => (
   <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-accent fill-none stroke-2 shrink-0">
@@ -53,35 +54,28 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <div className="bg-dark-2 text-white relative overflow-hidden" id="pricing">
-      {/* Glow orbs */}
+    <div className="bg-dark text-white relative overflow-hidden" id="pricing">
+      {/* Glow orb */}
       <motion.div
         className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)",
         }}
         animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div
-        className="absolute bottom-[10%] right-[-5%] w-[300px] h-[300px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(34,211,238,0.05) 0%, transparent 70%)",
-        }}
-        animate={{ y: [0, -20, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
 
-      <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12 relative z-2">
+      <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12 relative z-2">
         <ScrollReveal>
           <div className="text-center max-w-[600px] mx-auto mb-14">
             <div className="text-[0.7rem] uppercase tracking-[3px] text-accent font-semibold mb-4">
               Tarifs
             </div>
-            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[2.8rem] font-extrabold leading-[1.08] tracking-[-0.02em]">
-              Des formules <span className="text-gradient">adaptees.</span>
+            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] font-extrabold leading-[1.08] tracking-[-0.02em]">
+              Des formules{" "}
+              <span className="text-gradient">adaptees.</span>
             </h2>
-            <p className="text-[0.88rem] text-white/35 mt-4 leading-[1.7]">
+            <p className="text-[0.88rem] text-white/30 mt-4 leading-[1.7]">
               Chaque projet est unique. Nos tarifs s&apos;adaptent a vos besoins et a votre budget.
             </p>
           </div>
@@ -90,76 +84,66 @@ export default function Pricing() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
           {plans.map((plan, i) => (
             <ScrollReveal key={plan.name} delay={i * 100}>
-              <motion.div
-                className={`rounded-2xl p-7 lg:p-8 flex flex-col h-full relative overflow-hidden ${
-                  plan.featured
-                    ? "border-2 border-accent/40 shadow-[0_0_40px_rgba(59,130,246,0.1),inset_0_1px_0_rgba(59,130,246,0.1)]"
-                    : "glass-card"
-                }`}
-                style={
-                  plan.featured
-                    ? {
-                        background:
-                          "linear-gradient(135deg, rgba(59,130,246,0.08), rgba(34,211,238,0.03), rgba(59,130,246,0.05))",
-                      }
-                    : undefined
-                }
-                whileHover={{ y: -6, transition: { duration: 0.3 } }}
-              >
-                {/* Featured glow */}
-                {plan.featured && (
-                  <>
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-20 bg-accent/15 rounded-full blur-3xl pointer-events-none" />
-                    <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-accent/20 border border-accent/30 text-accent text-[0.65rem] font-bold uppercase tracking-wider">
-                      Populaire
-                    </div>
-                  </>
-                )}
+              <GlowCard className={`h-full ${plan.featured ? "ring-1 ring-accent/40" : ""}`}>
+                <div className="p-7 lg:p-8 flex flex-col h-full relative">
+                  {plan.featured && (
+                    <>
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-20 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+                      <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-accent/20 border border-accent/30 text-accent text-[0.65rem] font-bold uppercase tracking-wider">
+                        Populaire
+                      </div>
+                    </>
+                  )}
 
-                <div className="text-[0.85rem] font-semibold mb-4 text-white/50">
-                  {plan.name}
-                </div>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span
-                    className={`text-[2.8rem] font-extrabold leading-none ${
-                      plan.featured ? "text-gradient" : "text-white"
+                  <div className="text-[0.85rem] font-semibold mb-4 text-white/50">
+                    {plan.name}
+                  </div>
+                  <div className="flex items-baseline gap-1 mb-2">
+                    <span className={`text-[2.8rem] font-extrabold leading-none ${plan.featured ? "text-gradient" : "text-white"}`}>
+                      {plan.price}&#8364;
+                    </span>
+                    <span className="text-[0.8rem] text-white/30">/mois</span>
+                  </div>
+                  <p className="text-[0.8rem] leading-[1.6] mb-6 text-white/30">
+                    {plan.desc}
+                  </p>
+
+                  <ul className="list-none flex-1 mb-7">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-center gap-2.5 py-2 text-[0.82rem] text-white/50">
+                        <Check />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <motion.button
+                    className={`w-full py-3.5 rounded-full font-semibold text-[0.85rem] cursor-pointer transition-all duration-300 border ${
+                      plan.featured
+                        ? "bg-accent border-accent text-dark hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+                        : "bg-transparent border-white/10 text-white hover:bg-white/5 hover:border-accent/30 hover:text-accent"
                     }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    {plan.price}&#8364;
-                  </span>
-                  <span className="text-[0.8rem] text-white/30">/mois</span>
+                    Choisir ce plan
+                  </motion.button>
                 </div>
-                <p className="text-[0.8rem] leading-[1.6] mb-6 text-white/35">
-                  {plan.desc}
-                </p>
-
-                <ul className="list-none flex-1 mb-7">
-                  {plan.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-center gap-2.5 py-2 text-[0.82rem] text-white/55"
-                    >
-                      <Check />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                <motion.button
-                  className={`w-full py-3.5 rounded-full font-semibold text-[0.85rem] cursor-pointer transition-all duration-300 border ${
-                    plan.featured
-                      ? "bg-accent border-accent text-dark hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
-                      : "bg-transparent border-white/10 text-white hover:bg-white/5 hover:border-accent/30 hover:text-accent"
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Choisir ce plan
-                </motion.button>
-              </motion.div>
+              </GlowCard>
             </ScrollReveal>
           ))}
         </div>
+
+        <ScrollReveal delay={400}>
+          <div className="text-center mt-12">
+            <p className="text-[0.85rem] text-white/25">
+              Besoin d&apos;un devis personnalise ?{" "}
+              <a href="#contact" className="text-accent hover:underline font-semibold">
+                Contactez-nous
+              </a>
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
     </div>
   );

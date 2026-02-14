@@ -27,25 +27,26 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <div className="bg-dark-2 text-white relative overflow-hidden">
+    <div className="bg-dark text-white relative overflow-hidden">
       {/* Glow orb */}
       <motion.div
         className="absolute top-[40%] right-[-10%] w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)",
         }}
         animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="max-w-[800px] mx-auto px-5 py-[100px] lg:px-12 relative z-2">
+      <div className="max-w-[800px] mx-auto px-5 py-[120px] lg:px-12 relative z-2">
         <ScrollReveal>
-          <div className="text-center mb-12">
+          <div className="text-center mb-14">
             <div className="text-[0.7rem] uppercase tracking-[3px] text-accent font-semibold mb-4">
               FAQ
             </div>
-            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[2.8rem] font-extrabold leading-[1.08] tracking-[-0.02em]">
-              Questions <span className="text-gradient">frequentes.</span>
+            <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] font-extrabold leading-[1.08] tracking-[-0.02em]">
+              Questions{" "}
+              <span className="text-gradient">frequentes.</span>
             </h2>
           </div>
         </ScrollReveal>
@@ -95,6 +96,17 @@ export default function FAQ() {
             </motion.div>
           ))}
         </div>
+
+        <ScrollReveal delay={300}>
+          <div className="text-center mt-12">
+            <p className="text-[0.85rem] text-white/25">
+              Vous avez d&apos;autres questions ?{" "}
+              <a href="#contact" className="text-accent hover:underline font-semibold">
+                Contactez-nous
+              </a>
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
     </div>
   );

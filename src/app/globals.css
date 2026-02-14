@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-dark: #000000;
-  --color-dark-2: #080810;
-  --color-dark-3: #111118;
+  --color-dark: #0a0a0a;
+  --color-dark-2: #111111;
+  --color-dark-3: #1a1a1a;
   --color-accent: #3b82f6;
   --color-accent-hover: #2563eb;
   --color-accent-dim: rgba(59, 130, 246, 0.06);
@@ -17,9 +17,7 @@
   --font-mono: "Space Mono", monospace;
 
   --animate-fade-up: fade-up 0.7s ease forwards;
-  --animate-marquee: marquee 25s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
-  --animate-float-delayed: float 6s ease-in-out 3s infinite;
   --animate-glow-pulse: glow-pulse 4s ease-in-out infinite;
 }
 
@@ -27,11 +25,7 @@
   from { opacity: 0; transform: translateY(28px); }
   to { opacity: 1; transform: translateY(0); }
 }
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-@keyframes text-gradient {
+@keyframes text-gradient-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
@@ -49,40 +43,28 @@
 }
 
 html { scroll-behavior: smooth; }
-body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #000; }
+body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #0a0a0a; }
 
 ::selection { background: rgba(59, 130, 246, 0.3); color: #fff; }
 
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
 ::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.3); border-radius: 2px; }
 
 .text-gradient {
-  background: linear-gradient(135deg, #3b82f6, #22d3ee, #3b82f6);
+  background: linear-gradient(135deg, #3b82f6, #60a5fa, #22d3ee);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: text-gradient 5s ease infinite;
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.glass-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(59, 130, 246, 0.15);
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.08), 0 8px 40px rgba(59, 130, 246, 0.06);
+  animation: text-gradient-shift 5s ease infinite;
 }
 
 .noise-overlay::after {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.015;
+  opacity: 0.012;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1;

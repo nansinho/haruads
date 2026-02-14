@@ -26,40 +26,37 @@ export default function Testimonials() {
   const [current, setCurrent] = useState(0);
 
   return (
-    <div className="bg-dark text-white relative overflow-hidden">
+    <div className="bg-dark-2 text-white relative overflow-hidden">
       {/* Glow orbs */}
       <motion.div
         className="absolute top-[30%] left-[-5%] w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
         }}
         animate={{ scale: [1, 1.1, 1], x: [0, 20, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div
-        className="absolute bottom-[20%] right-[-8%] w-[350px] h-[350px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 70%)",
-        }}
-        animate={{ scale: [1, 0.9, 1], y: [0, -25, 0] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-      />
 
-      {/* Subtle grid */}
+      {/* Dot grid */}
       <div
         className="absolute inset-0 opacity-[0.02] pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(rgba(59,130,246,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.4) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
+          backgroundImage: `radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px)`,
+          backgroundSize: "24px 24px",
         }}
       />
 
-      <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12 relative z-2">
+      <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12 relative z-2">
         <ScrollReveal>
           <div className="max-w-[900px] mx-auto">
-            <div className="text-[0.7rem] uppercase tracking-[3px] text-accent font-semibold mb-8 flex items-center gap-2.5">
-              <span className="w-8 h-px bg-accent" />
-              Temoignages
+            <div className="text-center mb-12">
+              <div className="text-[0.7rem] uppercase tracking-[3px] text-accent font-semibold mb-4">
+                Temoignages
+              </div>
+              <h2 className="text-[1.8rem] sm:text-[2.2rem] lg:text-[3rem] font-extrabold leading-[1.08] tracking-[-0.02em]">
+                Ce que disent{" "}
+                <span className="text-gradient">nos clients.</span>
+              </h2>
             </div>
 
             {/* Large quote icon */}
@@ -69,7 +66,7 @@ export default function Testimonials() {
               </svg>
             </div>
 
-            {/* Large quote carousel */}
+            {/* Quote carousel */}
             <div className="min-h-[200px] relative">
               <AnimatePresence mode="wait">
                 <motion.div
