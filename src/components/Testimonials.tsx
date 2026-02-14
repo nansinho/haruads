@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
 const StarIcon = () => (
@@ -8,69 +11,119 @@ const StarIcon = () => (
 
 const testimonials = [
   {
-    text: "L'agence a parfaitement compris nos besoins. Le résultat dépasse nos attentes.",
+    text: "L'agence a parfaitement compris nos besoins. Le resultat depasse nos attentes.",
     initials: "LA",
     name: "Laurent A.",
     role: "Directeur, StartupTech",
   },
   {
-    text: "Expertise technique remarquable. Nos conversions ont augmenté de 40%.",
+    text: "Expertise technique remarquable. Nos conversions ont augmente de 40%.",
     initials: "MC",
     name: "Marie C.",
     role: "Fondatrice, BelleMode",
   },
   {
-    text: "Livraison dans les temps, communication excellente. Recommandé !",
+    text: "Livraison dans les temps, communication excellente. Recommande !",
     initials: "PD",
     name: "Pierre D.",
     role: "CEO, FormaPro",
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, rotateX: -10 },
+  visible: { opacity: 1, y: 0, rotateX: 0 },
+};
+
 export default function Testimonials() {
   return (
-    <div className="bg-white">
-      <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12">
+    <div className="bg-white relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[150px] pointer-events-none" />
+
+      <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12 relative z-2">
         {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-9 lg:gap-12 mb-12 items-start">
           <ScrollReveal>
-            <div className="text-[0.67rem] uppercase tracking-[2.5px] text-text-muted font-semibold mb-2.5">
-              Témoignages
+            <div className="text-[0.67rem] uppercase tracking-[2.5px] text-accent font-semibold mb-2.5 flex items-center gap-2">
+              <span className="inline-block w-6 h-px bg-accent" />
+              Temoignages
             </div>
             <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight text-text-primary">
               What People{" "}
-              <span className="text-accent font-mono font-normal">Says</span>
+              <span className="text-gradient-animated font-mono font-normal">Says</span>
               <br />
               About us
             </h2>
           </ScrollReveal>
-          <ScrollReveal>
+          <ScrollReveal animation="fadeRight">
             <p className="text-[0.82rem] text-text-secondary leading-[1.75] max-w-[440px]">
-              Satisfaction client au cœur de chaque projet.
+              Satisfaction client au coeur de chaque projet.
             </p>
           </ScrollReveal>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {testimonials.map((t, i) => (
-            <ScrollReveal key={t.name} delay={i * 80}>
-              <div className="bg-white rounded-[14px] p-[26px] border border-border-light">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+        >
+          {testimonials.map((t) => (
+            <motion.div
+              key={t.name}
+              variants={cardVariants}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <motion.div
+                className="bg-white rounded-[14px] p-[26px] border border-border-light relative group"
+                whileHover={{
+                  y: -6,
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.06)",
+                  borderColor: "rgba(14, 165, 233, 0.2)",
+                  transition: { duration: 0.3 },
+                }}
+              >
+                {/* Quote decoration */}
+                <div className="absolute top-4 right-4 text-[2.5rem] font-serif text-accent/10 leading-none select-none">
+                  &ldquo;
+                </div>
+
                 {/* Stars */}
                 <div className="flex gap-[3px] mb-3">
                   {Array.from({ length: 5 }).map((_, j) => (
-                    <StarIcon key={j} />
+                    <motion.div
+                      key={j}
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + j * 0.1, type: "spring", stiffness: 500 }}
+                    >
+                      <StarIcon />
+                    </motion.div>
                   ))}
                 </div>
                 <p className="text-[0.82rem] text-text-secondary leading-[1.7] mb-[18px] italic">
                   &ldquo;{t.text}&rdquo;
                 </p>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-dark to-accent flex items-center justify-center font-bold text-[0.78rem] text-dark">
+                  <motion.div
+                    className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-dark to-accent flex items-center justify-center font-bold text-[0.78rem] text-dark"
+                    whileHover={{ scale: 1.1 }}
+                  >
                     {t.initials}
-                  </div>
+                  </motion.div>
                   <div>
-                    <div className="text-[0.85rem] font-semibold text-text-primary">
+                    <div className="text-[0.85rem] font-semibold text-text-primary group-hover:text-accent transition-colors duration-300">
                       {t.name}
                     </div>
                     <div className="text-[0.72rem] text-text-muted">
@@ -78,10 +131,10 @@ export default function Testimonials() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </ScrollReveal>
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
