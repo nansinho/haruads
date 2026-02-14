@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
+import Chatbot from "@/components/Chatbot";
 
 const siteUrl = "https://agencehds.fr";
 
@@ -263,6 +264,7 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-[#0a0a0a] text-text-primary">
         {children}
         <AccessibilityWidget />
+        <Chatbot />
         {/* SVG color filters for colorblind modes */}
         <svg className="hidden" aria-hidden="true">
           <defs>
