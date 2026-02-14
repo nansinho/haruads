@@ -15,7 +15,7 @@ export default function About() {
       <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12">
         <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-center">
           {/* Left — Image */}
-          <ScrollReveal>
+          <ScrollReveal animation="fadeLeft">
             <div className="rounded-2xl overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -27,7 +27,7 @@ export default function About() {
           </ScrollReveal>
 
           {/* Right — Text + Stats */}
-          <ScrollReveal delay={150}>
+          <ScrollReveal delay={150} animation="fadeRight">
             <div>
               <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
                 &Agrave; Propos
@@ -60,7 +60,7 @@ export default function About() {
         </div>
 
         {/* Founder quote */}
-        <ScrollReveal delay={200}>
+        <ScrollReveal delay={200} animation="scaleUp">
           <div className="mt-20 grid lg:grid-cols-[200px_1fr] gap-0 items-center bg-light rounded-2xl overflow-hidden">
             <div className="h-full min-h-[200px] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}

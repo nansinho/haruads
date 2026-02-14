@@ -59,7 +59,7 @@ export default function Projects() {
         </ScrollReveal>
 
         {/* Featured project */}
-        <ScrollReveal>
+        <ScrollReveal animation="scaleUp">
           <div className="mb-5 relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
             <div className="aspect-[16/7] relative overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}

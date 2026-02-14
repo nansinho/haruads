@@ -7,20 +7,30 @@ const services = [
   {
     num: "01",
     title: "D\u00e9veloppement Web",
-    desc: "Sites vitrines, applications web et plateformes SaaS avec les technologies les plus performantes. React, Next.js, Supabase.",
+    desc: "Sites vitrines, applications web et landing pages performantes avec React, Next.js et les technologies modernes.",
   },
   {
     num: "02",
+    title: "Solutions SaaS",
+    desc: "Plateformes SaaS multi-tenant, dashboards admin et outils m\u00e9tier sur mesure. Architecture scalable et s\u00e9curis\u00e9e.",
+  },
+  {
+    num: "03",
+    title: "Intelligence Artificielle",
+    desc: "Chatbots IA, automatisation des processus et int\u00e9gration d\u2019API IA (OpenAI, Claude) pour booster votre productivit\u00e9.",
+  },
+  {
+    num: "04",
     title: "Design UI/UX",
     desc: "Interfaces intuitives et exp\u00e9riences utilisateur m\u00e9morables. Maquettes Figma, prototypes interactifs, design systems.",
   },
   {
-    num: "03",
+    num: "05",
     title: "E-Commerce",
     desc: "Boutiques en ligne sur mesure avec WooCommerce, Stripe et des solutions de paiement s\u00e9curis\u00e9es et performantes.",
   },
   {
-    num: "04",
+    num: "06",
     title: "Branding & SEO",
     desc: "Identit\u00e9 visuelle forte et r\u00e9f\u00e9rencement naturel pour une visibilit\u00e9 maximale sur Google et les r\u00e9seaux sociaux.",
   },
@@ -45,9 +55,9 @@ export default function Services() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((service, i) => (
-            <ScrollReveal key={service.num} delay={i * 100}>
+            <ScrollReveal key={service.num} delay={i * 100} animation="scaleUp">
               <div className="bg-white rounded-2xl p-7 lg:p-8 border border-gray-100 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300 h-full">
                 <div className="flex items-start gap-5">
                   <span className="text-[2.8rem] font-serif text-accent leading-none shrink-0">

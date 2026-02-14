@@ -72,7 +72,7 @@ export default function Pricing() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {plans.map((plan, i) => (
-            <ScrollReveal key={plan.name} delay={i * 100}>
+            <ScrollReveal key={plan.name} delay={i * 100} animation="slideRotate">
               <div
                 className={`rounded-2xl p-7 lg:p-8 flex flex-col h-full ${
                   plan.featured
