@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: ["/api/", "/_next/", "/admin/", "/espace-client/"],
       },
     ],
     sitemap: "https://agencehds.fr/sitemap.xml",

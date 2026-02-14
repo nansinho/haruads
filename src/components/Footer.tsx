@@ -11,15 +11,15 @@ const links = {
     { label: "Tarifs", href: "/tarifs" },
   ],
   company: [
-    { label: "A Propos", href: "/a-propos" },
+    { label: "À Propos", href: "/a-propos" },
     { label: "Blog", href: "/blog" },
-    { label: "Carrieres", href: "#" },
-    { label: "Mentions Legales", href: "#" },
+    { label: "Carrières", href: "/carrieres" },
+    { label: "Mentions Légales", href: "/mentions-legales" },
   ],
   contact: [
     { label: "contact@agencehds.fr", href: "mailto:contact@agencehds.fr" },
-    { label: "+33 6 XX XX XX XX", href: "tel:+33600000000" },
-    { label: "Aix-en-Provence, France", href: "#" },
+    { label: "06 24 63 30 54", href: "tel:+33624633054" },
+    { label: "Gardanne (13120), Aix-en-Provence", href: "https://maps.google.com/?q=Gardanne+13120+France" },
   ],
 };
 
@@ -32,18 +32,23 @@ export default function Footer() {
           <div>
             <Logo className="h-8 w-auto mb-4" />
             <p className="text-[0.8rem] text-white/25 leading-[1.7] max-w-[260px]">
-              Agence web creative specialisee en developpement web et solutions digitales sur mesure.
+              Agence web créative spécialisée en développement web et solutions digitales sur mesure.
             </p>
             <div className="flex gap-2.5 mt-5">
-              {["facebook", "twitter", "instagram", "linkedin"].map((social) => (
+              {[
+                { name: "facebook", href: "https://www.facebook.com/HaruaDesignSolutions" },
+                { name: "linkedin", href: "https://www.linkedin.com/in/nans-harua/" },
+              ].map((social) => (
                 <motion.a
-                  key={social}
-                  href="#"
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-8 h-8 rounded-full border border-white/[0.06] flex items-center justify-center hover:bg-accent hover:border-accent transition-all duration-300 group"
                   whileHover={{ scale: 1.1, y: -2 }}
                 >
                   <span className="text-[0.6rem] uppercase text-white/30 group-hover:text-dark font-bold transition-colors">
-                    {social.charAt(0)}
+                    {social.name.charAt(0)}
                   </span>
                 </motion.a>
               ))}
@@ -81,8 +86,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-white/[0.04] pt-6 flex flex-col sm:flex-row items-center justify-between text-[0.7rem] text-white/20 gap-2">
-          <span>&copy; 2024 Agence HDS. Tous droits reserves.</span>
-          <span>Concu avec passion a Aix-en-Provence</span>
+          <span>&copy; {new Date().getFullYear()} Agence HDS. Tous droits réservés.</span>
+          <span>Conçu avec passion à Aix-en-Provence</span>
         </div>
       </div>
     </footer>

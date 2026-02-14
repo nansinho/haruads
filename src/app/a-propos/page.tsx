@@ -97,7 +97,8 @@ export default function AProposPage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/images/why-choose.jpg"
-                    alt="Équipe Agence HDS"
+                    alt="Équipe Agence HDS - Agence web Aix-en-Provence"
+                    loading="lazy"
                     className="w-full h-auto object-cover"
                   />
                 </div>

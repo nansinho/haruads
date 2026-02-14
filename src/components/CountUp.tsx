@@ -10,14 +10,14 @@ interface CountUpProps {
 }
 
 export default function CountUp({ value, className = "", duration = 2000 }: CountUpProps) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [display, setDisplay] = useState("0");
-
   // Parse the numeric part and suffix (e.g., "50+" → 50, "+")
   const match = value.match(/^(\d+)(.*)/);
   const target = match ? parseInt(match[1], 10) : 0;
   const suffix = match ? match[2] : value;
+
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [display, setDisplay] = useState(String(target));
 
   useEffect(() => {
     if (!isInView) return;
