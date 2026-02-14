@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
 const CheckIcon = () => (
@@ -16,25 +19,25 @@ const plans = [
   {
     name: "Basic",
     price: "$80",
-    desc: "Idéal pour une présence web professionnelle.",
+    desc: "Ideal pour une presence web professionnelle.",
     featured: false,
     features: [
       "Site vitrine responsive",
-      "Jusqu'à 5 pages",
+      "Jusqu'a 5 pages",
       "Formulaire de contact",
       "SEO de base",
-      "Hébergement inclus",
+      "Hebergement inclus",
     ],
   },
   {
     name: "Advance",
     price: "$299",
-    desc: "Solution web complète et performante.",
+    desc: "Solution web complete et performante.",
     featured: true,
     features: [
       "Application web sur mesure",
       "Dashboard admin",
-      "Base de données Supabase",
+      "Base de donnees Supabase",
       "Authentification users",
       "Support 6 mois",
     ],
@@ -42,53 +45,107 @@ const plans = [
   {
     name: "Premium",
     price: "$349",
-    desc: "Projets ambitieux avec fonctionnalités avancées.",
+    desc: "Projets ambitieux avec fonctionnalites avancees.",
     featured: false,
     features: [
       "E-commerce complet",
       "Paiement en ligne",
       "Multi-langue",
-      "API personnalisées",
+      "API personnalisees",
       "Maintenance 12 mois",
     ],
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: { opacity: 1, y: 0, scale: 1 },
+};
+
 export default function Pricing() {
   return (
-    <div className="bg-gray-bg">
-      <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12">
+    <div className="bg-gray-bg relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[150px] pointer-events-none" />
+
+      <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12 relative z-2">
         {/* Header */}
-        <ScrollReveal className="text-center mb-12">
-          <div className="text-[0.67rem] uppercase tracking-[2.5px] text-text-muted font-semibold mb-2.5">
+        <ScrollReveal className="text-center mb-12" animation="blur">
+          <div className="text-[0.67rem] uppercase tracking-[2.5px] text-accent font-semibold mb-2.5">
             Nos Tarifs
           </div>
           <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight text-text-primary">
             Choose Your{" "}
-            <span className="text-accent font-mono font-normal">Package</span>
+            <span className="text-gradient-animated font-mono font-normal">Package</span>
           </h2>
           <p className="text-[0.82rem] text-text-secondary leading-[1.75] max-w-[560px] mx-auto mt-3">
-            Formules adaptées à tous les budgets, personnalisables selon vos
+            Formules adaptees a tous les budgets, personnalisables selon vos
             besoins.
           </p>
         </ScrollReveal>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {plans.map((plan, i) => (
-            <ScrollReveal key={plan.name} delay={i * 80}>
-              <div
-                className={`bg-white rounded-[18px] p-[26px] pt-[34px] border flex flex-col hover:-translate-y-1 transition-transform duration-300 ${
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+        >
+          {plans.map((plan) => (
+            <motion.div
+              key={plan.name}
+              variants={cardVariants}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <motion.div
+                className={`bg-white rounded-[18px] p-[26px] pt-[34px] border flex flex-col relative overflow-hidden ${
                   plan.featured
                     ? "border-accent shadow-[0_0_0_1px_var(--color-accent)]"
                     : "border-border-light"
                 }`}
+                whileHover={{
+                  y: -6,
+                  boxShadow: plan.featured
+                    ? "0 20px 60px rgba(14, 165, 233, 0.15), 0 0 0 1px rgba(14, 165, 233, 0.5)"
+                    : "0 20px 60px rgba(0, 0, 0, 0.08)",
+                  transition: { duration: 0.3 },
+                }}
               >
+                {/* Featured badge */}
+                {plan.featured && (
+                  <div className="absolute top-0 right-6">
+                    <motion.div
+                      className="bg-accent text-dark text-[0.65rem] font-bold px-3 py-1 rounded-b-md uppercase tracking-wider"
+                      initial={{ y: -30 }}
+                      whileInView={{ y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
+                    >
+                      Populaire
+                    </motion.div>
+                  </div>
+                )}
+
+                {/* Glow effect for featured */}
+                {plan.featured && (
+                  <div className="absolute -top-[100px] left-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-accent/5 rounded-full blur-[60px] pointer-events-none" />
+                )}
+
                 <div className="text-[0.85rem] font-semibold text-text-secondary mb-3">
                   {plan.name}
                 </div>
                 <div className="text-[2.5rem] font-extrabold text-text-primary">
-                  {plan.price}{" "}
+                  <span className={plan.featured ? "text-gradient-animated" : ""}>
+                    {plan.price}
+                  </span>{" "}
                   <small className="text-[0.85rem] font-normal text-text-muted">
                     /mo
                   </small>
@@ -107,19 +164,21 @@ export default function Pricing() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  className={`w-full py-3 rounded-lg font-semibold text-[0.88rem] transition-all cursor-pointer ${
+                <motion.button
+                  className={`w-full py-3 rounded-lg font-semibold text-[0.88rem] cursor-pointer border ${
                     plan.featured
-                      ? "bg-accent border border-accent text-white hover:bg-accent-hover"
-                      : "bg-transparent border border-border-light text-text-primary hover:bg-accent hover:border-accent hover:text-white"
-                  }`}
+                      ? "bg-accent border-accent text-white"
+                      : "bg-transparent border-border-light text-text-primary hover:bg-accent hover:border-accent hover:text-white"
+                  } transition-all duration-300`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   Choisir ce plan
-                </button>
-              </div>
-            </ScrollReveal>
+                </motion.button>
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
