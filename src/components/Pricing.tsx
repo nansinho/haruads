@@ -17,8 +17,8 @@ const CheckIcon = () => (
 
 const plans = [
   {
-    name: "Basic",
-    price: "$80",
+    name: "Essentiel",
+    price: "80€",
     desc: "Ideal pour une presence web professionnelle.",
     featured: false,
     features: [
@@ -30,21 +30,21 @@ const plans = [
     ],
   },
   {
-    name: "Advance",
-    price: "$299",
+    name: "Avance",
+    price: "299€",
     desc: "Solution web complete et performante.",
     featured: true,
     features: [
       "Application web sur mesure",
       "Dashboard admin",
       "Base de donnees Supabase",
-      "Authentification users",
+      "Authentification utilisateurs",
       "Support 6 mois",
     ],
   },
   {
     name: "Premium",
-    price: "$349",
+    price: "349€",
     desc: "Projets ambitieux avec fonctionnalites avancees.",
     featured: false,
     features: [
@@ -71,19 +71,17 @@ const cardVariants = {
 
 export default function Pricing() {
   return (
-    <div className="bg-gray-bg relative overflow-hidden">
-      {/* Background decoration */}
+    <div className="bg-gray-bg relative overflow-hidden" id="pricing">
       <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-[1280px] mx-auto px-5 py-[88px] lg:px-12 relative z-2">
-        {/* Header */}
         <ScrollReveal className="text-center mb-12" animation="blur">
           <div className="text-[0.67rem] uppercase tracking-[2.5px] text-accent font-semibold mb-2.5">
             Nos Tarifs
           </div>
           <h2 className="text-[1.7rem] sm:text-[2rem] lg:text-[2.35rem] font-extrabold leading-[1.12] tracking-tight text-text-primary">
-            Choose Your{" "}
-            <span className="text-gradient-animated font-mono font-normal">Package</span>
+            Choisissez Votre{" "}
+            <span className="text-gradient-animated font-mono font-normal">Formule</span>
           </h2>
           <p className="text-[0.82rem] text-text-secondary leading-[1.75] max-w-[560px] mx-auto mt-3">
             Formules adaptees a tous les budgets, personnalisables selon vos
@@ -91,7 +89,6 @@ export default function Pricing() {
           </p>
         </ScrollReveal>
 
-        {/* Cards */}
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           variants={containerVariants}
@@ -119,7 +116,6 @@ export default function Pricing() {
                   transition: { duration: 0.3 },
                 }}
               >
-                {/* Featured badge */}
                 {plan.featured && (
                   <div className="absolute top-0 right-6">
                     <motion.div
@@ -134,7 +130,6 @@ export default function Pricing() {
                   </div>
                 )}
 
-                {/* Glow effect for featured */}
                 {plan.featured && (
                   <div className="absolute -top-[100px] left-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-accent/5 rounded-full blur-[60px] pointer-events-none" />
                 )}
@@ -147,7 +142,7 @@ export default function Pricing() {
                     {plan.price}
                   </span>{" "}
                   <small className="text-[0.85rem] font-normal text-text-muted">
-                    /mo
+                    /mois
                   </small>
                 </div>
                 <p className="text-[0.78rem] text-text-muted leading-[1.6] mt-2.5 mb-[22px]">
@@ -179,6 +174,21 @@ export default function Pricing() {
             </motion.div>
           ))}
         </motion.div>
+
+        <ScrollReveal animation="fadeUp" delay={300}>
+          <div className="text-center mt-10">
+            <p className="text-[0.85rem] text-text-secondary">
+              Besoin d&apos;un devis personnalise ?{" "}
+              <motion.a
+                href="#"
+                className="text-accent font-semibold hover:underline"
+                whileHover={{ scale: 1.02 }}
+              >
+                Contactez-nous &#8594;
+              </motion.a>
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
     </div>
   );

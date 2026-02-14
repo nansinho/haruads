@@ -6,7 +6,6 @@ import ScrollReveal from "./ScrollReveal";
 export default function CTA() {
   return (
     <div className="bg-dark px-5 py-[88px] lg:px-12 relative overflow-hidden noise-overlay">
-      {/* Animated background elements */}
       <motion.div
         className="absolute -top-[200px] -left-[200px] w-[500px] h-[500px] rounded-full bg-accent/5 blur-[100px] pointer-events-none"
         animate={{
@@ -24,7 +23,6 @@ export default function CTA() {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Grid background */}
       <div className="absolute inset-0 grid-bg opacity-20" />
 
       <ScrollReveal animation="scaleUp">
@@ -40,8 +38,8 @@ export default function CTA() {
               <div className="h-[3px] bg-accent rounded-full w-full" />
             </motion.div>
             <h2 className="text-[2rem] lg:text-[2.6rem] font-extrabold leading-[1.12] font-mono text-white max-w-[480px]">
-              Let&apos;s Make Something{" "}
-              <span className="text-gradient-animated">Together</span>
+              Creons Quelque Chose d&apos;
+              <span className="text-gradient-animated">Exceptionnel</span>
             </h2>
           </div>
           <motion.button
@@ -53,7 +51,7 @@ export default function CTA() {
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.3 }}
           >
-            <span className="relative z-10">Let&apos;s Talk &#8594;</span>
+            <span className="relative z-10">Parlons de votre projet &#8594;</span>
           </motion.button>
         </div>
       </ScrollReveal>

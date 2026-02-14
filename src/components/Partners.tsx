@@ -12,25 +12,32 @@ const partners = [
   { logo: "/images/logos/logo-lovable.svg", name: "Lovable" },
 ];
 
-const doubled = [...partners, ...partners];
-
 export default function Partners() {
   return (
-    <div className="bg-dark border-t border-b border-border-dark overflow-hidden relative">
+    <div className="bg-dark border-t border-b border-border-dark overflow-hidden relative py-6 lg:py-8">
       {/* Gradient fades on edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-dark to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-dark to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-dark to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-dark to-transparent z-10 pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="py-5 lg:py-[26px]"
       >
-        {/* Marquee track */}
-        <div className="flex animate-marquee hover:[animation-play-state:paused] w-max gap-0">
-          {doubled.map((p, i) => (
+        {/* Framer Motion marquee */}
+        <motion.div
+          className="flex w-max"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            x: {
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear",
+            },
+          }}
+        >
+          {[...partners, ...partners, ...partners, ...partners].map((p, i) => (
             <div
               key={`${p.name}-${i}`}
               className="flex items-center gap-3 px-8 lg:px-12 shrink-0 cursor-default group"
@@ -43,7 +50,7 @@ export default function Partners() {
               />
             </div>
           ))}
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );
