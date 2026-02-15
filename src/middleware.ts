@@ -45,6 +45,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/espace-client", request.url));
   }
 
+  // Admins go to /admin, not /espace-client
+  if (pathname.startsWith("/espace-client") && role === "admin") {
+    return NextResponse.redirect(new URL("/admin", request.url));
+  }
+
   // Already authenticated: redirect away from login page based on role
   if (pathname.startsWith("/auth/login") && isAuthenticated) {
     const dest = role === "admin" ? "/admin" : "/espace-client";
