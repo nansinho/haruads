@@ -122,9 +122,9 @@ export default function Projects() {
                       </span>
                     ))}
                   </div>
-                  <h4 className="text-[0.95rem] font-serif text-white">
+                  <h3 className="text-[0.95rem] font-serif text-white">
                     {project.title}
-                  </h4>
+                  </h3>
                   <p className="text-[0.75rem] text-white/35 mt-0.5">
                     {project.desc}
                   </p>
