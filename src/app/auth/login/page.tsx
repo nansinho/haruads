@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Globe, Palette, Zap } from "lucide-react";
+import { ArrowRight, Globe, Palette, Zap, LogIn } from "lucide-react";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -125,7 +125,10 @@ function LoginForm() {
           {/* Form card */}
           <div className="bg-dark-2/80 backdrop-blur-2xl border border-white/[0.06] rounded-2xl p-8">
             <div className="mb-6">
-              <h2 className="font-serif text-xl text-text-primary">Connexion</h2>
+              <h2 className="font-serif text-xl text-text-primary flex items-center gap-2">
+                <LogIn size={20} className="text-accent" />
+                Connexion
+              </h2>
               <p className="text-sm text-text-secondary mt-1">
                 Accédez à votre espace de gestion
               </p>
