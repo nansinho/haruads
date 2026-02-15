@@ -6,17 +6,27 @@ import ScrollReveal from "./ScrollReveal";
 
 const testimonials = [
   {
-    text: "L\u2019agence a parfaitement compris nos besoins. Le r\u00e9sultat d\u00e9passe nos attentes. Un vrai partenaire digital.",
+    text: "L\u2019Agence HDS a parfaitement compris notre besoin de migrer notre boutique WooCommerce vers une solution moderne. Le nouveau site est rapide, fluide et nos ventes en ligne ont augment\u00e9 significativement.",
+    name: "Karim B.",
+    role: "G\u00e9rant, AIAKO",
+  },
+  {
+    text: "Expertise technique remarquable et vraie \u00e9coute. Le dashboard de formation qu\u2019ils ont d\u00e9velopp\u00e9 nous a permis de g\u00e9rer nos sessions et apprenants bien plus efficacement. Un partenaire de confiance.",
+    name: "Caroline M.",
+    role: "Directrice, C&CO Formation",
+  },
+  {
+    text: "Du design \u00e0 la mise en production, tout a \u00e9t\u00e9 livr\u00e9 dans les temps avec une qualit\u00e9 irr\u00e9prochable. La communication est transparente \u00e0 chaque \u00e9tape. Je recommande sans h\u00e9siter.",
     name: "Laurent A.",
-    role: "Directeur, StartupTech",
+    role: "Directeur technique, StartupTech",
   },
   {
-    text: "Expertise technique remarquable. Nos conversions ont augment\u00e9 de 40% depuis le lancement du nouveau site.",
-    name: "Marie C.",
-    role: "Fondatrice, BelleMode",
+    text: "Notre syst\u00e8me de r\u00e9servation en ligne fonctionne parfaitement depuis le lancement. L\u2019int\u00e9gration Stripe est fluide et nos clients adorent la simplicit\u00e9 du parcours de booking.",
+    name: "Sophie R.",
+    role: "Fondatrice, BookEasy",
   },
   {
-    text: "Livraison dans les temps, communication excellente et un suivi apr\u00e8s projet impeccable. Je recommande \u00e0 100%.",
+    text: "L\u2019Agence HDS a su transformer notre vision en un site qui refl\u00e8te vraiment notre identit\u00e9. R\u00e9activit\u00e9, professionnalisme et un suivi apr\u00e8s-projet impeccable.",
     name: "Pierre D.",
     role: "CEO, FormaPro",
   },

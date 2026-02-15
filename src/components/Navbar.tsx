@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import Logo from "./Logo";
 
 const navLinks = [
   { label: "Accueil", href: "/" },
@@ -53,7 +52,7 @@ export default function Navbar() {
         )}
 
         <a href="/" className="flex items-center gap-2.5 group relative">
-          <Logo className="h-8 w-auto" />
+          <img src="/images/logos/logo-hds-2026-blanc.svg" alt="Agence HDS" className="h-8 w-auto" />
         </a>
 
         <ul className="hidden lg:flex gap-8 list-none">

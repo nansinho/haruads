@@ -20,8 +20,8 @@ const contactInfo = [
   },
   {
     label: "Téléphone",
-    value: "+33 6 XX XX XX XX",
-    href: "tel:+33600000000",
+    value: "06 24 63 30 54",
+    href: "tel:+33624633054",
     icon: (
       <svg viewBox="0 0 24 24" className="w-5 h-5 stroke-accent fill-none stroke-2">
         <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
@@ -30,8 +30,8 @@ const contactInfo = [
   },
   {
     label: "Localisation",
-    value: "Aix-en-Provence, France",
-    href: "#",
+    value: "Gardanne (13120), Aix-en-Provence, France",
+    href: "https://maps.google.com/?q=Gardanne+13120+France",
     icon: (
       <svg viewBox="0 0 24 24" className="w-5 h-5 stroke-accent fill-none stroke-2">
         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />

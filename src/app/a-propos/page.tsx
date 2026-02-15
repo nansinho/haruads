@@ -98,6 +98,7 @@ export default function AProposPage() {
                   <img
                     src="/images/nans-profile-2.jpg"
                     alt="Nans Harua - Fondateur Agence HDS"
+                    loading="lazy"
                     className="w-full h-auto object-cover"
                   />
                 </div>

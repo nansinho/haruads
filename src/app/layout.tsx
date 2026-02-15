@@ -77,6 +77,7 @@ function JsonLd() {
         "@type": "ProfessionalService",
         "@id": `${siteUrl}/#organization`,
         name: "Agence HDS",
+        alternateName: "Harua Digital Studio",
         url: siteUrl,
         logo: `${siteUrl}/images/logos/logo-hds.svg`,
         image: `${siteUrl}/og-image.jpg`,
@@ -84,15 +85,18 @@ function JsonLd() {
           "Agence web créative spécialisée en développement web, design UI/UX, solutions SaaS, intelligence artificielle et e-commerce sur mesure.",
         address: {
           "@type": "PostalAddress",
+          streetAddress: "Gardanne",
           addressLocality: "Aix-en-Provence",
+          postalCode: "13120",
           addressRegion: "Provence-Alpes-Côte d'Azur",
           addressCountry: "FR",
         },
         geo: {
           "@type": "GeoCoordinates",
-          latitude: 43.5297,
-          longitude: 5.4474,
+          latitude: 43.4545,
+          longitude: 5.4697,
         },
+        telephone: "+33624633054",
         email: "contact@agencehds.fr",
         priceRange: "€€",
         openingHoursSpecification: {
@@ -101,13 +105,16 @@ function JsonLd() {
           opens: "09:00",
           closes: "18:00",
         },
-        sameAs: [],
+        sameAs: [
+          "https://www.facebook.com/HaruaDesignSolutions",
+          "https://www.linkedin.com/in/nans-harua/",
+        ],
         areaServed: {
           "@type": "GeoCircle",
           geoMidpoint: {
             "@type": "GeoCoordinates",
-            latitude: 43.5297,
-            longitude: 5.4474,
+            latitude: 43.4545,
+            longitude: 5.4697,
           },
           geoRadius: "100000",
         },

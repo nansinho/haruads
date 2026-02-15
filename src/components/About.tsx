@@ -23,6 +23,7 @@ export default function About() {
                 src="/images/nans-profile.jpg"
                 alt="Nans Harua - Fondateur Agence HDS"
                 className="w-full h-auto object-cover"
+                loading="lazy"
               />
             </div>
           </ScrollReveal>
@@ -68,8 +69,9 @@ export default function About() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/founder-with-mother.jpg"
-                alt="Fondateur"
+                alt="Nans, fondateur de l'Agence HDS"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
             <div className="p-6 lg:p-8">
