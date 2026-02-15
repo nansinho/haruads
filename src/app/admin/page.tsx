@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   Users,
   FileText,
@@ -8,30 +8,20 @@ import {
   Ticket,
   Mail,
   Eye,
-  TrendingUp,
   DollarSign,
   AlertCircle,
   FolderKanban,
   MapPin,
   Search,
   Megaphone,
+  Loader2,
+  RefreshCw,
 } from "lucide-react";
 import Link from "next/link";
 import AdminGlowCard from "@/components/admin/AdminGlowCard";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
-
-interface DashboardStats {
-  total_clients: number;
-  new_quotes: number;
-  active_tickets: number;
-  published_articles: number;
-  newsletter_subs: number;
-  unread_messages: number;
-  total_projects: number;
-  total_revenue: number;
-  overdue_invoices: number;
-  views_30d: number;
-}
+import { formatDateTime } from "@/lib/utils";
+import type { DashboardStats } from "@/types/database";
 
 const defaultStats: DashboardStats = {
   total_clients: 0,
@@ -46,6 +36,14 @@ const defaultStats: DashboardStats = {
   views_30d: 0,
 };
 
+interface ActivityItem {
+  id: string;
+  action: string;
+  severity: string;
+  details: Record<string, unknown>;
+  created_at: string;
+}
+
 function QuickAction({ label, href, icon }: { label: string; href: string; icon: React.ReactNode }) {
   return (
     <Link
@@ -58,13 +56,43 @@ function QuickAction({ label, href, icon }: { label: string; href: string; icon:
   );
 }
 
+const severityColors: Record<string, string> = {
+  info: "bg-blue-500/15 text-blue-400",
+  warning: "bg-yellow-500/15 text-yellow-400",
+  error: "bg-red-500/15 text-red-400",
+  critical: "bg-red-500/15 text-red-300",
+};
+
 export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats>(defaultStats);
+  const [activity, setActivity] = useState<ActivityItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [time, setTime] = useState("");
 
-  useEffect(() => {
-    setStats(defaultStats);
+  const fetchDashboard = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/admin/dashboard");
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || `Erreur ${res.status}`);
+      }
+      const json = await res.json();
+      setStats(json.stats || defaultStats);
+      setActivity(json.activity || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur de chargement");
+      setStats(defaultStats);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchDashboard();
+  }, [fetchDashboard]);
 
   useEffect(() => {
     const update = () => {
@@ -99,8 +127,16 @@ export default function AdminDashboard() {
             </h1>
             <p className="text-sm text-text-secondary mt-1 capitalize">{today}</p>
           </div>
-          <div className="font-mono text-2xl text-text-muted tabular-nums">
-            {time}
+          <div className="flex items-center gap-4">
+            {loading && <Loader2 size={16} className="text-accent animate-spin" />}
+            {error && (
+              <span className="text-xs text-yellow-400 bg-yellow-500/10 px-3 py-1 rounded-full border border-yellow-500/20">
+                Mode hors-ligne
+              </span>
+            )}
+            <div className="font-mono text-2xl text-text-muted tabular-nums">
+              {time}
+            </div>
           </div>
         </div>
       </AnimatedSection>
@@ -193,13 +229,41 @@ export default function AdminDashboard() {
 
           {/* Recent Activity */}
           <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
-            <h2 className="font-serif text-lg text-text-primary mb-4">
-              Activité récente
-            </h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-serif text-lg text-text-primary">
+                Activité récente
+              </h2>
+              <button
+                onClick={fetchDashboard}
+                className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all"
+              >
+                <RefreshCw size={14} />
+              </button>
+            </div>
             <div className="space-y-3">
-              <p className="text-text-muted text-sm text-center py-8">
-                Connectez votre base de données Supabase pour voir l&apos;activité récente.
-              </p>
+              {loading && !activity.length ? (
+                <div className="flex justify-center py-8">
+                  <Loader2 size={20} className="text-accent animate-spin" />
+                </div>
+              ) : activity.length > 0 ? (
+                activity.map((item) => (
+                  <div key={item.id} className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-white/[0.02] transition-colors">
+                    <div className={`flex-shrink-0 w-2 h-2 rounded-full mt-1.5 ${severityColors[item.severity] || "bg-gray-500"}`} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-text-secondary truncate">
+                        {item.action.replace(/_/g, " ")}
+                      </p>
+                      <p className="text-xs text-text-muted">{formatDateTime(item.created_at)}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-text-muted text-sm text-center py-8">
+                  {error
+                    ? "Connectez votre base de données Supabase pour voir l'activité récente."
+                    : "Aucune activité récente."}
+                </p>
+              )}
             </div>
           </div>
         </div>

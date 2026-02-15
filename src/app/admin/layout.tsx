@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SessionProvider, useSession } from "next-auth/react";
 import GlassSidebar from "@/components/admin/GlassSidebar";
+import { ToastProvider } from "@/components/admin/Toast";
 import { Menu, Home, ChevronRight, Globe, Loader2 } from "lucide-react";
 
 function AdminLayoutInner({ children }: { children: React.ReactNode }) {
@@ -85,7 +86,9 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <AdminLayoutInner>{children}</AdminLayoutInner>
+      <ToastProvider>
+        <AdminLayoutInner>{children}</AdminLayoutInner>
+      </ToastProvider>
     </SessionProvider>
   );
 }

@@ -1,0 +1,79 @@
+"use client";
+
+interface FormFieldProps {
+  label: string;
+  name: string;
+  type?: "text" | "email" | "url" | "number" | "password" | "textarea" | "select";
+  value: string | number;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  error?: string;
+  required?: boolean;
+  options?: { value: string; label: string }[];
+  rows?: number;
+}
+
+export default function FormField({
+  label,
+  name,
+  type = "text",
+  value,
+  onChange,
+  placeholder,
+  error,
+  required,
+  options,
+  rows = 4,
+}: FormFieldProps) {
+  const baseClasses =
+    "w-full px-4 py-2.5 bg-dark border border-white/[0.08] rounded-xl text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all";
+  const errorClasses = error ? "border-red-500/30 focus:ring-red-500/50" : "";
+
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor={name} className="block text-sm font-medium text-text-secondary">
+        {label}
+        {required && <span className="text-red-400 ml-0.5">*</span>}
+      </label>
+
+      {type === "textarea" ? (
+        <textarea
+          id={name}
+          name={name}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          rows={rows}
+          className={`${baseClasses} ${errorClasses} resize-none`}
+        />
+      ) : type === "select" ? (
+        <select
+          id={name}
+          name={name}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${baseClasses} ${errorClasses}`}
+        >
+          <option value="">Sélectionner...</option>
+          {options?.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          id={name}
+          name={name}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className={`${baseClasses} ${errorClasses}`}
+        />
+      )}
+
+      {error && <p className="text-xs text-red-400">{error}</p>}
+    </div>
+  );
+}
