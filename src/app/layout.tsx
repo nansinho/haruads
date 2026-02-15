@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import AccessibilityWidget from "@/components/AccessibilityWidget";
-import Chatbot from "@/components/Chatbot";
+import ClientWidgets from "@/components/ClientWidgets";
 import ThemeProvider from "@/components/ThemeProvider";
 import SessionProvider from "@/components/providers/SessionProvider";
 
@@ -259,6 +258,9 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
+        {process.env.NEXT_PUBLIC_SUPABASE_URL && (
+          <link rel="preconnect" href={process.env.NEXT_PUBLIC_SUPABASE_URL} />
+        )}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -275,8 +277,7 @@ export default function RootLayout({
         <SessionProvider>
           <ThemeProvider>
             {children}
-            <AccessibilityWidget />
-            <Chatbot />
+            <ClientWidgets />
           </ThemeProvider>
         </SessionProvider>
         {/* SVG color filters for colorblind modes */}

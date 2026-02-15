@@ -57,9 +57,9 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Scroll progress bar */}
+      {/* Scroll progress bar — hidden on mobile to avoid layout recalculations */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent to-cyan origin-left z-[200]"
+        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent to-cyan origin-left z-[200] hidden md:block"
         style={{ scaleX }}
       />
 
