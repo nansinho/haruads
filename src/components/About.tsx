@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import ScrollReveal from "./ScrollReveal";
 import CountUp from "./CountUp";
 
@@ -18,12 +19,14 @@ export default function About() {
           {/* Left — Image */}
           <ScrollReveal animation="fadeLeft">
             <div className="rounded-2xl overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/images/nans-profile.png"
                 alt="Nans Harua - Fondateur Agence HDS"
+                width={536}
+                height={670}
                 className="w-full h-auto object-cover"
                 loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
           </ScrollReveal>
@@ -65,13 +68,15 @@ export default function About() {
         {/* Founder quote */}
         <ScrollReveal delay={200} animation="scaleUp">
           <div className="mt-20 grid lg:grid-cols-[200px_1fr] gap-0 items-center bg-light rounded-2xl overflow-hidden">
-            <div className="h-full min-h-[200px] overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="h-full min-h-[200px] overflow-hidden relative">
+              <Image
                 src="/images/founder-with-mother.jpg"
                 alt="Nans, fondateur de l'Agence HDS"
+                width={200}
+                height={267}
                 className="w-full h-full object-cover"
                 loading="lazy"
+                sizes="200px"
               />
             </div>
             <div className="p-6 lg:p-8">
