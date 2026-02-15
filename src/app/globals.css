@@ -52,7 +52,7 @@
 }
 
 html { scroll-behavior: smooth; }
-body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #0a0a0a; font-size: 16px; }
+body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: var(--color-dark); font-size: 16px; }
 
 /* Fluid typography utilities */
 .text-fluid-hero { font-size: clamp(2.2rem, 5vw + 1rem, 4.8rem); }
@@ -66,14 +66,14 @@ body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #0a0
   nav a { padding-block: 0.5rem; }
 }
 
-::selection { background: rgba(249, 115, 22, 0.3); color: #fff; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); color: #fff; }
 
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: #0a0a0a; }
-::-webkit-scrollbar-thumb { background: rgba(249, 115, 22, 0.3); border-radius: 2px; }
+::-webkit-scrollbar-track { background: var(--color-dark); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-accent) 30%, transparent); border-radius: 2px; }
 
 .text-gradient {
-  background: linear-gradient(135deg, #f97316, #fb923c, #fbbf24);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-cyan), #fbbf24);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -118,13 +118,13 @@ html[data-color-filter="tritanopia"] { filter: url('#tritanopia'); }
 
 /* Admin utilities */
 .glass-panel {
-  background: rgba(10, 10, 10, 0.8);
+  background: color-mix(in srgb, var(--color-dark) 80%, transparent);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   border: 1px solid rgba(255, 255, 255, 0.04);
 }
 .glow-orange {
-  box-shadow: 0 0 30px rgba(249, 115, 22, 0.15), 0 0 60px rgba(249, 115, 22, 0.05);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--color-accent) 15%, transparent), 0 0 60px color-mix(in srgb, var(--color-accent) 5%, transparent);
 }
 @keyframes slide-up-fade {
   from { opacity: 0; transform: translateY(20px); }
