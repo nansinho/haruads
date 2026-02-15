@@ -96,8 +96,10 @@ function LoginForm() {
             <div className="mb-6">
               <h2 className="text-xl text-text-primary flex items-center gap-2">
                 <LogIn size={20} className="text-accent" />
-                <span className="font-light">Espace </span>
-                <span className="font-serif italic text-accent">client.</span>
+                <span>
+                  <span className="font-light">Espace </span>
+                  <span className="font-serif italic text-accent">client.</span>
+                </span>
               </h2>
               <p className="text-sm text-text-secondary mt-1">
                 Accédez à votre espace de gestion
