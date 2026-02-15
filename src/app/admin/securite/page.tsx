@@ -69,22 +69,46 @@ export default function SecuritePage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [changingPassword, setChangingPassword] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
+  const [passwordError2, setPasswordError2] = useState("");
   const [twoFAEnabled, setTwoFAEnabled] = useState(false);
   const [sessions] = useState<Session[]>(mockSessions);
 
   const handlePasswordChange = async () => {
     if (newPassword !== confirmPassword) return;
     if (!oldPassword || !newPassword) return;
+    setPasswordError2("");
+
+    if (newPassword.length < 8) {
+      setPasswordError2("Le mot de passe doit contenir au moins 8 caractères");
+      return;
+    }
 
     setChangingPassword(true);
-    // TODO: API call to change password
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setChangingPassword(false);
-    setPasswordChanged(true);
-    setOldPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setTimeout(() => setPasswordChanged(false), 3000);
+    try {
+      const res = await fetch("/api/auth/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          currentPassword: oldPassword,
+          newPassword,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPasswordError2(data.error || "Erreur lors de la modification");
+        setChangingPassword(false);
+        return;
+      }
+      setChangingPassword(false);
+      setPasswordChanged(true);
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setTimeout(() => setPasswordChanged(false), 3000);
+    } catch {
+      setPasswordError2("Erreur de connexion au serveur");
+      setChangingPassword(false);
+    }
   };
 
   const passwordsMatch = newPassword === confirmPassword && newPassword.length > 0;
@@ -202,6 +226,13 @@ export default function SecuritePage() {
                   </p>
                 )}
               </div>
+
+              {passwordError2 && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
+                  <AlertTriangle size={14} />
+                  {passwordError2}
+                </div>
+              )}
 
               <button
                 onClick={handlePasswordChange}

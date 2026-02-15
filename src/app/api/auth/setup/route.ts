@@ -1,7 +1,21 @@
 import { NextResponse } from "next/server";
 
+// Simple rate limiting: track last setup attempt
+let lastSetupAttempt = 0;
+const COOLDOWN_MS = 60_000; // 60 seconds
+
 export async function POST(request: Request) {
   try {
+    // Rate limit
+    const now = Date.now();
+    if (now - lastSetupAttempt < COOLDOWN_MS) {
+      return NextResponse.json(
+        { error: "Trop de tentatives. Réessayez dans 1 minute." },
+        { status: 429 }
+      );
+    }
+    lastSetupAttempt = now;
+
     const { supabase } = await import("@/lib/supabase");
     const { hash } = await import("bcryptjs");
 
@@ -37,9 +51,9 @@ export async function POST(request: Request) {
       );
     }
 
-    if (password.length < 6) {
+    if (password.length < 8) {
       return NextResponse.json(
-        { error: "Le mot de passe doit contenir au moins 6 caractères" },
+        { error: "Le mot de passe doit contenir au moins 8 caractères" },
         { status: 400 }
       );
     }
@@ -69,6 +83,19 @@ export async function POST(request: Request) {
         { error: "Erreur lors de la création du compte" },
         { status: 500 }
       );
+    }
+
+    // Send welcome email
+    try {
+      const { sendEmail, welcomeEmail } = await import("@/lib/email");
+      const emailContent = welcomeEmail(name || "Admin");
+      await sendEmail({
+        to: email,
+        subject: emailContent.subject,
+        html: emailContent.html,
+      });
+    } catch {
+      // Email failure should not block setup
     }
 
     return NextResponse.json({

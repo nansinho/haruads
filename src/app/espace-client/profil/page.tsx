@@ -32,6 +32,9 @@ export default function ClientProfilPage() {
   const [showCurrentPwd, setShowCurrentPwd] = useState(false);
   const [showNewPwd, setShowNewPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
+  const [changingPwd, setChangingPwd] = useState(false);
+  const [pwdChanged, setPwdChanged] = useState(false);
+  const [pwdError, setPwdError] = useState("");
 
   const inputClass =
     "w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all text-sm";
@@ -258,11 +261,65 @@ export default function ClientProfilPage() {
               </div>
             </div>
 
+            {pwdError && (
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-xl text-sm">
+                {pwdError}
+              </div>
+            )}
+
+            {pwdChanged && (
+              <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-xl text-sm">
+                Mot de passe modifié avec succès
+              </div>
+            )}
+
             {/* Change password button */}
             <div className="pt-2">
-              <button className="flex items-center gap-2 px-6 py-3 bg-dark border border-white/[0.06] text-text-primary rounded-full hover:bg-white/[0.04] transition-all font-medium text-sm">
+              <button
+                onClick={async () => {
+                  setPwdError("");
+                  if (!passwords.current || !passwords.new || !passwords.confirm) {
+                    setPwdError("Tous les champs sont requis");
+                    return;
+                  }
+                  if (passwords.new !== passwords.confirm) {
+                    setPwdError("Les mots de passe ne correspondent pas");
+                    return;
+                  }
+                  if (passwords.new.length < 8) {
+                    setPwdError("Le mot de passe doit contenir au moins 8 caractères");
+                    return;
+                  }
+                  setChangingPwd(true);
+                  try {
+                    const res = await fetch("/api/auth/change-password", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        currentPassword: passwords.current,
+                        newPassword: passwords.new,
+                      }),
+                    });
+                    const data = await res.json();
+                    if (!res.ok) {
+                      setPwdError(data.error || "Erreur lors de la modification");
+                      setChangingPwd(false);
+                      return;
+                    }
+                    setChangingPwd(false);
+                    setPwdChanged(true);
+                    setPasswords({ current: "", new: "", confirm: "" });
+                    setTimeout(() => setPwdChanged(false), 3000);
+                  } catch {
+                    setPwdError("Erreur de connexion au serveur");
+                    setChangingPwd(false);
+                  }
+                }}
+                disabled={changingPwd}
+                className="flex items-center gap-2 px-6 py-3 bg-dark border border-white/[0.06] text-text-primary rounded-full hover:bg-white/[0.04] transition-all font-medium text-sm disabled:opacity-50"
+              >
                 <Lock size={16} />
-                Modifier le mot de passe
+                {changingPwd ? "Modification..." : "Modifier le mot de passe"}
               </button>
             </div>
           </div>
