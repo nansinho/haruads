@@ -49,7 +49,7 @@ const partners = [
     desc: "Un partenaire cl\u00e9 qui a permis \u00e0 HDS de d\u00e9velopper son expertise dans des projets innovants et ambitieux.",
   },
   {
-    name: "Aiako",
+    name: "A\u00efako",
     logo: "/LOGO-AIAKO_COUL_RVB300-NEW.png",
     href: "https://aiako.fr/",
     desc: "Merci \u00e0 Aiako pour leur confiance et leur collaboration, d\u00e9terminantes dans la croissance de notre entreprise.",
