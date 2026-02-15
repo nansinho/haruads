@@ -96,8 +96,8 @@ export default function AProposPage() {
                 <div className="rounded-2xl overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/images/why-choose.jpg"
-                    alt="Équipe Agence HDS"
+                    src="/images/nans-profile-2.jpg"
+                    alt="Nans Harua - Fondateur Agence HDS"
                     className="w-full h-auto object-cover"
                   />
                 </div>
