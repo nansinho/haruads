@@ -20,7 +20,7 @@ export default function About() {
             <div className="rounded-2xl overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/nans-profile.jpg"
+                src="/images/nans-profile.png"
                 alt="Nans Harua - Fondateur Agence HDS"
                 className="w-full h-auto object-cover"
                 loading="lazy"
