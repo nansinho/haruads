@@ -7,7 +7,7 @@ interface LogoProps {
 export default function Logo({
   className = "h-8 w-auto",
   color = "#ffffff",
-  accentColor = "#f97316",
+  accentColor = "var(--color-accent)",
 }: LogoProps) {
   return (
     <svg

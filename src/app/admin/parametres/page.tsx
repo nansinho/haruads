@@ -14,10 +14,15 @@ import {
   Save,
   CheckCircle,
   Loader2,
+  Palette,
+  RotateCcw,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
 import { useToast } from "@/components/admin/Toast";
+import { applyTheme } from "@/components/ThemeProvider";
+import { DEFAULT_THEME } from "@/lib/theme";
+import { deriveDarkPalette, deriveAccentPalette } from "@/lib/colors";
 
 interface SettingsData {
   siteName: string;
@@ -30,6 +35,8 @@ interface SettingsData {
   twitter: string;
   maintenanceMode: boolean;
   googleAnalyticsId: string;
+  themeDark: string;
+  themeAccent: string;
 }
 
 const defaultSettings: SettingsData = {
@@ -43,6 +50,8 @@ const defaultSettings: SettingsData = {
   twitter: "",
   maintenanceMode: false,
   googleAnalyticsId: "",
+  themeDark: DEFAULT_THEME.dark,
+  themeAccent: DEFAULT_THEME.accent,
 };
 
 function Toggle({
@@ -74,6 +83,7 @@ export default function ParametresPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [loadingSettings, setLoadingSettings] = useState(true);
+  const [saveError, setSaveError] = useState("");
   const { toast } = useToast();
 
   // Fetch settings on mount
@@ -102,6 +112,8 @@ export default function ParametresPage() {
           twitter: flat.twitter || "",
           maintenanceMode: flat.maintenanceMode === "true" || flat.maintenance_mode === "true",
           googleAnalyticsId: flat.googleAnalyticsId || flat.google_analytics_id || "",
+          themeDark: flat.themeDark || flat.theme_dark || DEFAULT_THEME.dark,
+          themeAccent: flat.themeAccent || flat.theme_accent || DEFAULT_THEME.accent,
         });
       } catch {
         // If fetch fails, keep defaults
@@ -109,8 +121,30 @@ export default function ParametresPage() {
         setLoadingSettings(false);
       }
     };
+
+    // Also load theme from dedicated endpoint
+    fetch("/api/settings/theme")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.colors) {
+          setSettings((prev) => ({
+            ...prev,
+            themeDark: data.colors.dark,
+            themeAccent: data.colors.accent,
+          }));
+        }
+      })
+      .catch(() => {});
+
     fetchSettings();
   }, []);
+
+  // Live preview: apply theme whenever colors change
+  useEffect(() => {
+    if (!loadingSettings) {
+      applyTheme({ dark: settings.themeDark, accent: settings.themeAccent });
+    }
+  }, [settings.themeDark, settings.themeAccent, loadingSettings]);
 
   const updateSetting = <K extends keyof SettingsData>(
     key: K,
@@ -118,12 +152,14 @@ export default function ParametresPage() {
   ) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
     setSaved(false);
+    setSaveError("");
   };
 
   const handleSave = async () => {
     setSaving(true);
+    setSaveError("");
     try {
-      // Convert flat object back to array of {key, value}
+      // Save general settings to admin API
       const settingsArray = Object.entries(settings).map(([key, value]) => ({
         key,
         value: String(value),
@@ -136,15 +172,46 @@ export default function ParametresPage() {
       });
 
       if (!res.ok) throw new Error("Erreur");
+
+      // Also save theme to dedicated theme endpoint
+      const themeRes = await fetch("/api/settings/theme", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          dark: settings.themeDark,
+          accent: settings.themeAccent,
+        }),
+      });
+
+      if (!themeRes.ok) {
+        const data = await themeRes.json();
+        throw new Error(data.error || "Erreur lors de la sauvegarde du theme");
+      }
+
+      // Update localStorage cache so ThemeProvider picks it up
+      try {
+        localStorage.setItem(
+          "site-theme",
+          JSON.stringify({ dark: settings.themeDark, accent: settings.themeAccent })
+        );
+      } catch {
+        // Ignore
+      }
+
       toast({ type: "success", message: "Parametres enregistres" });
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
-    } catch {
-      toast({ type: "error", message: "Erreur lors de l'enregistrement" });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erreur lors de l'enregistrement";
+      setSaveError(msg);
+      toast({ type: "error", message: msg });
     } finally {
       setSaving(false);
     }
   };
+
+  const darkPalette = deriveDarkPalette(settings.themeDark);
+  const accentPalette = deriveAccentPalette(settings.themeAccent);
 
   if (loadingSettings) {
     return (
@@ -180,6 +247,132 @@ export default function ParametresPage() {
             </button>
           }
         />
+      </AnimatedSection>
+
+      {/* Apparence */}
+      <AnimatedSection>
+        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2.5 bg-accent/10 rounded-xl">
+              <Palette size={20} className="text-accent" />
+            </div>
+            <div>
+              <h2 className="font-serif text-lg text-text-primary">Apparence</h2>
+              <p className="text-sm text-text-muted">Couleurs du site (preview en temps reel)</p>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            {/* Background color */}
+            <div>
+              <label className="block text-sm font-medium text-text-secondary mb-3">
+                Fond (arriere-plan)
+              </label>
+              <div className="flex items-center gap-3 flex-wrap">
+                <input
+                  type="color"
+                  value={settings.themeDark}
+                  onChange={(e) => updateSetting("themeDark", e.target.value)}
+                  className="w-12 h-10 rounded-lg border border-white/[0.06] cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
+                />
+                <input
+                  type="text"
+                  value={settings.themeDark}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    if (/^#[0-9a-fA-F]{0,6}$/.test(v)) updateSetting("themeDark", v);
+                  }}
+                  className="w-28 px-3 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-primary font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  placeholder="#0a0a0a"
+                />
+                <div className="flex items-center gap-1.5 ml-2">
+                  <div
+                    className="w-8 h-8 rounded-lg border border-white/10"
+                    style={{ background: darkPalette.dark }}
+                    title="dark"
+                  />
+                  <div
+                    className="w-8 h-8 rounded-lg border border-white/10"
+                    style={{ background: darkPalette.dark2 }}
+                    title="dark-2"
+                  />
+                  <div
+                    className="w-8 h-8 rounded-lg border border-white/10"
+                    style={{ background: darkPalette.dark3 }}
+                    title="dark-3"
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-text-muted mt-2">
+                Les variantes (dark-2, dark-3) sont calculees automatiquement
+              </p>
+            </div>
+
+            {/* Accent color */}
+            <div>
+              <label className="block text-sm font-medium text-text-secondary mb-3">
+                Accent (couleur principale)
+              </label>
+              <div className="flex items-center gap-3 flex-wrap">
+                <input
+                  type="color"
+                  value={settings.themeAccent}
+                  onChange={(e) => updateSetting("themeAccent", e.target.value)}
+                  className="w-12 h-10 rounded-lg border border-white/[0.06] cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
+                />
+                <input
+                  type="text"
+                  value={settings.themeAccent}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    if (/^#[0-9a-fA-F]{0,6}$/.test(v)) updateSetting("themeAccent", v);
+                  }}
+                  className="w-28 px-3 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-primary font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  placeholder="#f97316"
+                />
+                <div className="flex items-center gap-1.5 ml-2">
+                  <div
+                    className="w-8 h-8 rounded-lg border border-white/10"
+                    style={{ background: accentPalette.accent }}
+                    title="accent"
+                  />
+                  <div
+                    className="w-8 h-8 rounded-lg border border-white/10"
+                    style={{ background: accentPalette.accentHover }}
+                    title="accent-hover"
+                  />
+                  <div
+                    className="w-8 h-8 rounded-lg border border-white/10"
+                    style={{ background: accentPalette.cyan }}
+                    title="cyan"
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-text-muted mt-2">
+                Les variantes (hover, dim, cyan) sont calculees automatiquement
+              </p>
+            </div>
+
+            {/* Reset */}
+            <button
+              type="button"
+              onClick={() => {
+                updateSetting("themeDark", DEFAULT_THEME.dark);
+                updateSetting("themeAccent", DEFAULT_THEME.accent);
+              }}
+              className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text-secondary transition-colors"
+            >
+              <RotateCcw size={14} />
+              Reinitialiser les couleurs par defaut
+            </button>
+          </div>
+
+          {saveError && (
+            <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
+              {saveError}
+            </div>
+          )}
+        </div>
       </AnimatedSection>
 
       {/* General */}

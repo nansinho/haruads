@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
   title: "Carrières",
   description:
     "Informations sur les opportunités de carrière et stages chez Agence HDS, agence web à Aix-en-Provence.",
+  openGraph: {
+    title: "Carrières — Agence HDS",
+    description:
+      "Opportunités de carrière chez Agence HDS, agence web à Aix-en-Provence.",
+    url: "https://agencehds.fr/carrieres",
+  },
+  twitter: {
+    title: "Carrières — Agence HDS",
+    description:
+      "Opportunités de carrière chez Agence HDS, agence web à Aix-en-Provence.",
+  },
   alternates: {
     canonical: "https://agencehds.fr/carrieres",
   },
@@ -26,6 +38,10 @@ export default function CarrieresPage() {
             }}
           />
           <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+            <Breadcrumb items={[
+              { label: "Accueil", href: "/" },
+              { label: "Carrières" },
+            ]} />
             <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
               Carrières
             </span>

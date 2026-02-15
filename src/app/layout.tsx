@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import Chatbot from "@/components/Chatbot";
+import ThemeProvider from "@/components/ThemeProvider";
+import SessionProvider from "@/components/providers/SessionProvider";
 
 const siteUrl = "https://agencehds.fr";
 
@@ -67,6 +69,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  manifest: "/manifest.json",
 };
 
 function JsonLd() {
@@ -268,10 +271,14 @@ export default function RootLayout({
         />
         <JsonLd />
       </head>
-      <body className="font-sans antialiased bg-[#0a0a0a] text-text-primary">
-        {children}
-        <AccessibilityWidget />
-        <Chatbot />
+      <body className="font-sans antialiased bg-dark text-text-primary">
+        <SessionProvider>
+          <ThemeProvider>
+            {children}
+            <AccessibilityWidget />
+            <Chatbot />
+          </ThemeProvider>
+        </SessionProvider>
         {/* SVG color filters for colorblind modes */}
         <svg className="hidden" aria-hidden="true">
           <defs>
