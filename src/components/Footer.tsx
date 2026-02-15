@@ -15,6 +15,7 @@ const links = {
     { label: "Blog", href: "/blog" },
     { label: "Carrières", href: "/carrieres" },
     { label: "Mentions Légales", href: "/mentions-legales" },
+    { label: "Plan du Site", href: "/plan-du-site" },
   ],
   contact: [
     { label: "contact@agencehds.fr", href: "mailto:contact@agencehds.fr" },
