@@ -138,7 +138,7 @@ export default function GlassSidebar({
         {/* Logo */}
         <div className="h-16 flex items-center justify-between px-5 border-b border-white/[0.06]">
           <Link href="/admin" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#f97316] to-[#fb923c] flex items-center justify-center font-bold text-sm text-dark shadow-lg shadow-accent/20">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent to-cyan flex items-center justify-center font-bold text-sm text-dark shadow-lg shadow-accent/20">
               H
             </div>
             <div>
@@ -218,7 +218,7 @@ export default function GlassSidebar({
         <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-white/[0.06] bg-dark/80 backdrop-blur-2xl">
           <div className="flex items-center gap-3 px-2 py-1.5">
             <div className="relative">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#f97316] to-[#fb923c] flex items-center justify-center text-sm font-bold text-dark">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-accent to-cyan flex items-center justify-center text-sm font-bold text-dark">
                 {session?.user?.name?.charAt(0) || "A"}
               </div>
               <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-dark" />

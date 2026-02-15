@@ -60,7 +60,7 @@ function LoginForm() {
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="relative z-10 flex flex-col justify-end p-12 pb-16 w-full"
         >
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#f97316] to-[#fb923c] flex items-center justify-center font-bold text-lg text-dark shadow-xl shadow-accent/30 mb-5">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-cyan flex items-center justify-center font-bold text-lg text-dark shadow-xl shadow-accent/30 mb-5">
             H
           </div>
           <h1 className="text-[2rem] leading-[1.1] tracking-[-0.02em]">
@@ -86,7 +86,7 @@ function LoginForm() {
         >
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-8">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#f97316] to-[#fb923c] flex items-center justify-center font-bold text-lg text-dark shadow-xl shadow-accent/20 mx-auto mb-4">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-cyan flex items-center justify-center font-bold text-lg text-dark shadow-xl shadow-accent/20 mx-auto mb-4">
               H
             </div>
             <h1 className="text-2xl text-text-primary">
