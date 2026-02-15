@@ -122,6 +122,7 @@ export default function HeroCarousel() {
               src={project.image_url}
               alt={project.title}
               className="w-full h-full object-cover"
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent" />
 
