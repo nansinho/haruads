@@ -24,7 +24,7 @@ export async function sendEmail({
 }) {
   if (!transporter) return;
   await transporter.sendMail({
-    from: process.env.EMAIL_FROM || "Agence HDS <contact@harua-ds.com>",
+    from: process.env.EMAIL_FROM || "Agence HDS <noreply@agencehds.fr>",
     to,
     subject,
     html,
