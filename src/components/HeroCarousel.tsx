@@ -137,9 +137,9 @@ export default function HeroCarousel() {
                   </span>
                 ))}
               </div>
-              <h3 className="text-[1.2rem] lg:text-[1.5rem] font-serif text-white">
+              <h2 className="text-[1.2rem] lg:text-[1.5rem] font-serif text-white">
                 {project.title}
-              </h3>
+              </h2>
               <p className="text-[0.8rem] text-white/40 mt-1 max-w-[400px]">
                 {project.description}
               </p>
