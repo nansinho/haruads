@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
   title: "Mentions Légales",
   description:
     "Mentions légales du site agencehds.fr — Agence HDS (Harua Digital Studio), auto-entrepreneur basé à Gardanne, Aix-en-Provence.",
+  openGraph: {
+    title: "Mentions Légales — Agence HDS",
+    description:
+      "Mentions légales du site agencehds.fr — Agence HDS, auto-entrepreneur à Gardanne.",
+    url: "https://agencehds.fr/mentions-legales",
+  },
+  twitter: {
+    title: "Mentions Légales — Agence HDS",
+    description:
+      "Mentions légales du site agencehds.fr — Agence HDS, auto-entrepreneur à Gardanne.",
+  },
   alternates: {
     canonical: "https://agencehds.fr/mentions-legales",
   },
@@ -26,6 +38,10 @@ export default function MentionsLegalesPage() {
             }}
           />
           <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+            <Breadcrumb items={[
+              { label: "Accueil", href: "/" },
+              { label: "Mentions Légales" },
+            ]} />
             <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
               Légal
             </span>

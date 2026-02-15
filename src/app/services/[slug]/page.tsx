@@ -6,6 +6,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
+import Breadcrumb from "@/components/Breadcrumb";
 import {
   CheckCircle,
   ArrowRight,
@@ -751,19 +752,11 @@ export default function ServiceDetail() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <a
-                href="/services"
-                className="inline-flex items-center gap-2 text-[0.78rem] text-white/40 hover:text-accent transition-colors mb-8"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-3.5 h-3.5 stroke-current fill-none stroke-2"
-                >
-                  <line x1="19" y1="12" x2="5" y2="12" />
-                  <polyline points="12 19 5 12 12 5" />
-                </svg>
-                Tous les services
-              </a>
+              <Breadcrumb items={[
+                { label: "Accueil", href: "/" },
+                { label: "Services", href: "/services" },
+                { label: service.title },
+              ]} />
               <div className="flex items-start gap-6 mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent shrink-0 mt-1">
                   {serviceIcons[slug]}

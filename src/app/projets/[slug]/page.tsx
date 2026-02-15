@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const projectsData: Record<
   string,
@@ -151,16 +152,11 @@ export default function ProjectDetail() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <a
-                href="/projets"
-                className="inline-flex items-center gap-2 text-[0.78rem] text-white/40 hover:text-accent transition-colors mb-8"
-              >
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-current fill-none stroke-2">
-                  <line x1="19" y1="12" x2="5" y2="12" />
-                  <polyline points="12 19 5 12 12 5" />
-                </svg>
-                Tous les projets
-              </a>
+              <Breadcrumb items={[
+                { label: "Accueil", href: "/" },
+                { label: "Projets", href: "/projets" },
+                { label: project.title },
+              ]} />
               <div className="flex flex-wrap items-center gap-3 mb-5">
                 <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-[0.72rem] font-medium">
                   {project.category}
