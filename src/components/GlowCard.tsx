@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, useState, useCallback, type ReactNode } from "react";
 
 export default function GlowCard({
   children,
@@ -12,14 +12,17 @@ export default function GlowCard({
   variant?: "dark" | "light";
 }) {
   const divRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!divRef.current) return;
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!divRef.current || !glowRef.current) return;
     const rect = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    glowRef.current.style.setProperty("--glow-x", `${x}px`);
+    glowRef.current.style.setProperty("--glow-y", `${y}px`);
+  }, []);
 
   const glowColor =
     variant === "light"
@@ -40,10 +43,11 @@ export default function GlowCard({
       className={`relative rounded-2xl overflow-hidden transition-all duration-500 ${baseClasses} ${className}`}
     >
       <div
+        ref={glowRef}
         className="pointer-events-none absolute inset-0 transition-opacity duration-500"
         style={{
           opacity: isFocused ? 1 : 0,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, ${glowColor}, transparent 40%)`,
+          background: `radial-gradient(400px circle at var(--glow-x, 0px) var(--glow-y, 0px), ${glowColor}, transparent 40%)`,
         }}
       />
       <div className="relative z-[2]">{children}</div>
