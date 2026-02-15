@@ -166,6 +166,7 @@ export interface Ticket {
   client_id: string | null;
   project_id: string | null;
   subject: string;
+  description: string | null;
   priority: "low" | "medium" | "high" | "urgent";
   status: "open" | "in_progress" | "waiting_client" | "waiting_internal" | "resolved" | "closed";
   category: string;
