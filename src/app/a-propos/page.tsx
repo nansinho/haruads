@@ -271,7 +271,7 @@ export default function AProposPage() {
                   </div>
                   <div className="p-6">
                     <p className="text-[0.9rem] text-white/70 italic font-serif leading-[1.7]">
-                      &ldquo;Le travail, je te souhaite que des bonheur. Bisous
+                      &ldquo;Le travail, je te souhaite que du bonheur. Bisous
                       Maman.&rdquo;
                     </p>
                     <div className="mt-3 text-[0.78rem] text-accent font-semibold">
