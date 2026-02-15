@@ -10,7 +10,7 @@ import { Menu, Home, ChevronRight, Globe, Loader2 } from "lucide-react";
 function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
-  const { status } = useSession({ required: true });
+  const { data: session, status } = useSession({ required: true });
 
   if (status === "loading") {
     return (
@@ -18,6 +18,12 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
         <Loader2 className="w-8 h-8 text-accent animate-spin" />
       </div>
     );
+  }
+
+  // RBAC: only admins can access /admin
+  if (status === "authenticated" && session?.user?.role !== "admin") {
+    window.location.href = "/espace-client";
+    return null;
   }
 
   return (

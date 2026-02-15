@@ -45,6 +45,15 @@ function EspaceClientLayoutInner({ children }: { children: React.ReactNode }) {
     );
   }
 
+  // Only clients and admins can access espace-client
+  if (
+    status === "authenticated" &&
+    !["client", "admin"].includes(session?.user?.role || "")
+  ) {
+    window.location.href = "/auth/login";
+    return null;
+  }
+
   const isActive = (href: string) => {
     if (href === "/espace-client") return pathname === "/espace-client";
     return pathname.startsWith(href);

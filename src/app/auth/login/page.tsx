@@ -30,7 +30,11 @@ function LoginForm() {
       if (result?.error) {
         setError("Email ou mot de passe incorrect");
       } else {
-        window.location.href = callbackUrl;
+        // Redirect based on user role
+        const sessionRes = await fetch("/api/auth/session");
+        const session = await sessionRes.json();
+        const role = session?.user?.role;
+        window.location.href = role === "admin" ? "/admin" : "/espace-client";
       }
     } catch {
       setError("Une erreur est survenue");
