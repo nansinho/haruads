@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { useSession } from "next-auth/react";
 
 const navLinks = [
   { label: "Accueil", href: "/" },
@@ -16,18 +15,32 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { data: session } = useSession();
+  const [userRole, setUserRole] = useState<string | null>(null);
 
-  const roleNav = useMemo(() => {
-    const role = session?.user?.role;
-    if (role === "admin") {
-      return { label: "Administration", href: "/admin" };
-    }
-    if (role === "client" || role === "editor") {
-      return { label: "Espace Client", href: "/espace-client" };
-    }
-    return { label: "Espace Client", href: "/auth/login" };
-  }, [session]);
+  useEffect(() => {
+    fetch("/api/auth/session")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.user?.role) {
+          setUserRole(data.user.role);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const buttonLabel =
+    userRole === "admin"
+      ? "Administration"
+      : userRole
+        ? "Espace Client"
+        : "Connexion";
+
+  const buttonHref =
+    userRole === "admin"
+      ? "/admin"
+      : userRole
+        ? "/espace-client"
+        : "/auth/login";
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -84,12 +97,12 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3">
           <motion.a
-            href={roleNav.href}
+            href={buttonHref}
             className="flex items-center gap-2 border border-white/[0.12] text-white/60 hover:text-white hover:border-white/[0.25] px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer transition-colors duration-300"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
-            {session?.user?.role === "admin" ? (
+            {userRole === "admin" ? (
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-current fill-none stroke-2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
@@ -99,7 +112,7 @@ export default function Navbar() {
                 <circle cx="12" cy="7" r="4" />
               </svg>
             )}
-            <span>{roleNav.label}</span>
+            <span>{buttonLabel}</span>
           </motion.a>
           <motion.a
             href="/contact"
@@ -169,11 +182,11 @@ export default function Navbar() {
               </ul>
               <div className="flex flex-col gap-3 mt-4 relative z-10">
                 <a
-                  href={roleNav.href}
+                  href={buttonHref}
                   className="block border border-white/[0.12] text-white/60 px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center"
                   onClick={() => setMenuOpen(false)}
                 >
-                  {roleNav.label}
+                  {buttonLabel}
                 </a>
                 <a
                   href="/contact"
