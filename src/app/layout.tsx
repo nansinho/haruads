@@ -3,6 +3,7 @@ import "./globals.css";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import Chatbot from "@/components/Chatbot";
 import ThemeProvider from "@/components/ThemeProvider";
+import SessionProvider from "@/components/providers/SessionProvider";
 
 const siteUrl = "https://agencehds.fr";
 
@@ -271,11 +272,13 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className="font-sans antialiased bg-dark text-text-primary">
-        <ThemeProvider>
-          {children}
-          <AccessibilityWidget />
-          <Chatbot />
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider>
+            {children}
+            <AccessibilityWidget />
+            <Chatbot />
+          </ThemeProvider>
+        </SessionProvider>
         {/* SVG color filters for colorblind modes */}
         <svg className="hidden" aria-hidden="true">
           <defs>

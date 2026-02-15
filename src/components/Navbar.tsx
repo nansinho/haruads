@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { useSession } from "next-auth/react";
 
 const navLinks = [
   { label: "Accueil", href: "/" },
@@ -15,6 +16,18 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { data: session } = useSession();
+
+  const roleNav = useMemo(() => {
+    const role = session?.user?.role;
+    if (role === "admin") {
+      return { label: "Administration", href: "/admin" };
+    }
+    if (role === "client" || role === "editor") {
+      return { label: "Espace Client", href: "/espace-client" };
+    }
+    return { label: "Espace Client", href: "/auth/login" };
+  }, [session]);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -71,16 +84,22 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3">
           <motion.a
-            href="/espace-client"
+            href={roleNav.href}
             className="flex items-center gap-2 border border-white/[0.12] text-white/60 hover:text-white hover:border-white/[0.25] px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer transition-colors duration-300"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
-            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-current fill-none stroke-2">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <span>Espace Client</span>
+            {session?.user?.role === "admin" ? (
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-current fill-none stroke-2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-current fill-none stroke-2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            )}
+            <span>{roleNav.label}</span>
           </motion.a>
           <motion.a
             href="/contact"
@@ -150,11 +169,11 @@ export default function Navbar() {
               </ul>
               <div className="flex flex-col gap-3 mt-4 relative z-10">
                 <a
-                  href="/espace-client"
+                  href={roleNav.href}
                   className="block border border-white/[0.12] text-white/60 px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Espace Client
+                  {roleNav.label}
                 </a>
                 <a
                   href="/contact"
