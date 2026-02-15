@@ -44,13 +44,13 @@ const values = [
 const partners = [
   {
     name: "Neuralia",
-    initial: "N",
+    logo: "/Logo_Neuralia_2.png",
     href: "https://neuralia.life/",
     desc: "Un partenaire cl\u00e9 qui a permis \u00e0 HDS de d\u00e9velopper son expertise dans des projets innovants et ambitieux.",
   },
   {
     name: "Aiako",
-    initial: "A",
+    logo: "/LOGO-AIAKO_COUL_RVB300-NEW.png",
     href: "https://aiako.fr/",
     desc: "Merci \u00e0 Aiako pour leur confiance et leur collaboration, d\u00e9terminantes dans la croissance de notre entreprise.",
   },
@@ -315,10 +315,13 @@ export default function AProposPage() {
                     className="group block h-full"
                   >
                     <div className="bg-white rounded-2xl p-8 border border-gray-100 text-center hover:shadow-lg hover:shadow-accent/5 hover:border-accent/20 transition-all duration-300 h-full">
-                      <div className="w-16 h-16 rounded-full bg-accent/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                        <span className="text-[1.5rem] font-serif text-accent">
-                          {partner.initial}
-                        </span>
+                      <div className="w-20 h-20 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={partner.logo}
+                          alt={`Logo ${partner.name}`}
+                          className="max-w-full max-h-full object-contain"
+                        />
                       </div>
                       <h3 className="text-[1.1rem] font-semibold text-text-dark mb-2 group-hover:text-accent transition-colors">
                         {partner.name}
