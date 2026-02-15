@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import HeroCarousel from "./HeroCarousel";
 
@@ -19,6 +19,12 @@ const logos = [
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -38,7 +44,7 @@ export default function Hero() {
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          opacity: dotOpacity,
+          opacity: isMobile ? 0.03 : dotOpacity,
           backgroundImage: `radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px)`,
           backgroundSize: "24px 24px",
         }}
@@ -49,7 +55,7 @@ export default function Hero() {
       <div className="max-w-[1400px] mx-auto px-5 lg:px-12 w-full pt-44 pb-12 flex-1 flex items-center relative z-2">
         <div className="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 items-center w-full">
           {/* Left — Text with parallax */}
-          <motion.div style={{ y: textY }}>
+          <motion.div style={isMobile ? undefined : { y: textY }}>
             <motion.div
               className="flex items-center gap-3 mb-10"
               initial={{ opacity: 0, y: 20 }}
@@ -143,7 +149,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3, ease }}
-            style={{ y: imageY }}
+            style={isMobile ? undefined : { y: imageY }}
           >
             <div className="absolute -top-8 -right-8 w-[80%] h-[80%] bg-accent/10 rounded-3xl" />
             <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/20 rounded-2xl" />
