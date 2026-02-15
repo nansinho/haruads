@@ -95,5 +95,5 @@ CREATE TRIGGER trigger_users_updated_at
 
 -- Insert default admin user (password: admin123 - À CHANGER EN PROD)
 INSERT INTO public.users (name, email, password_hash, role) VALUES
-  ('Admin HDS', 'admin@agencehds.fr', '$2b$10$placeholder_hash_change_in_prod', 'admin')
+  ('Admin HDS', 'admin@agencehds.fr', '$2b$10$1L6YZiKAucVOuOnfTdr6Bei2DM6iM0kEzFp1Xt2RH5DIkKpurv3yy', 'admin')
 ON CONFLICT (email) DO NOTHING;

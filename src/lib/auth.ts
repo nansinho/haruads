@@ -90,7 +90,10 @@ async function getAuth() {
       }),
       ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
         ? [
-            // Google provider loaded dynamically when needed
+            (await import("next-auth/providers/google")).default({
+              clientId: process.env.GOOGLE_CLIENT_ID,
+              clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            }),
           ]
         : []),
     ],
