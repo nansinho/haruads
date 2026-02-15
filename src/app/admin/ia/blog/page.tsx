@@ -3,156 +3,286 @@
 import { useState } from "react";
 import {
   Sparkles,
-  Send,
   FileText,
+  BookOpen,
+  PenTool,
   Copy,
-  RefreshCw,
-  Settings,
-  Wrench,
+  Save,
+  Loader2,
+  Info,
+  CheckCircle,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
+import FormField from "@/components/admin/FormField";
+import { useToast } from "@/components/admin/Toast";
 
-export default function IABlogPage() {
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+}
+
+export default function AIBlogPage() {
   const [topic, setTopic] = useState("");
   const [tone, setTone] = useState("professionnel");
-  const [length, setLength] = useState("moyen");
+  const [length, setLength] = useState("medium");
+  const [keywords, setKeywords] = useState("");
   const [generating, setGenerating] = useState(false);
+  const [generatedTitle, setGeneratedTitle] = useState("");
+  const [generatedContent, setGeneratedContent] = useState("");
+  const [savingDraft, setSavingDraft] = useState(false);
+  const [showApiNotice, setShowApiNotice] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const { toast } = useToast();
+
+  const handleGenerate = () => {
+    if (!topic) {
+      toast({ type: "error", message: "Veuillez saisir un sujet" });
+      return;
+    }
+    setShowApiNotice(true);
+    setGenerating(false);
+  };
+
+  const saveDraft = async () => {
+    if (!generatedContent) {
+      toast({ type: "error", message: "Aucun contenu a sauvegarder" });
+      return;
+    }
+    setSavingDraft(true);
+    try {
+      const res = await fetch("/api/admin/blog", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: generatedTitle || topic,
+          slug: slugify(generatedTitle || topic),
+          content: generatedContent,
+          excerpt: generatedContent.substring(0, 200),
+          status: "draft",
+          is_ai_generated: true,
+        }),
+      });
+      if (!res.ok) throw new Error("Erreur");
+      toast({ type: "success", message: "Brouillon sauvegarde" });
+    } catch {
+      toast({ type: "error", message: "Erreur lors de la sauvegarde" });
+    } finally {
+      setSavingDraft(false);
+    }
+  };
+
+  const copyContent = () => {
+    if (generatedContent) {
+      navigator.clipboard.writeText(generatedContent);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   return (
     <PageTransition className="space-y-6">
       <AnimatedSection>
         <PageHeader
-          title="Blog IA"
-          subtitle="Generez des articles de blog optimises SEO avec l'intelligence artificielle"
+          title="Generateur de Blog IA"
+          subtitle="Creez du contenu optimise SEO avec l'intelligence artificielle"
           icon={<Sparkles size={24} />}
         />
       </AnimatedSection>
 
-      <AnimatedSection>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Config panel */}
-          <div className="space-y-4">
-            <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6 space-y-5">
-              <h2 className="font-serif text-lg text-text-primary flex items-center gap-2">
-                <Settings size={18} className="text-accent" />
-                Configuration
-              </h2>
-
-              <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">
-                  Sujet / Mot-cle
-                </label>
-                <input
-                  type="text"
-                  value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
-                  placeholder="Ex: création de site web e-commerce"
-                  className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
-                />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Configuration Panel */}
+        <AnimatedSection>
+          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6 lg:col-span-1">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2.5 bg-accent/10 rounded-xl">
+                <PenTool size={20} className="text-accent" />
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">
-                  Ton
-                </label>
-                <select
-                  value={tone}
-                  onChange={(e) => setTone(e.target.value)}
-                  className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/50"
-                >
-                  <option value="professionnel">Professionnel</option>
-                  <option value="decontracte">Decontracte</option>
-                  <option value="educatif">Educatif</option>
-                  <option value="commercial">Commercial</option>
-                </select>
+                <h2 className="font-serif text-lg text-text-primary">
+                  Configuration
+                </h2>
+                <p className="text-sm text-text-muted">
+                  Parametres de generation
+                </p>
               </div>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">
-                  Longueur
-                </label>
-                <div className="flex gap-2">
-                  {["court", "moyen", "long"].map((l) => (
-                    <button
-                      key={l}
-                      onClick={() => setLength(l)}
-                      className={`flex-1 py-2 rounded-full text-sm font-medium transition-all ${
-                        length === l
-                          ? "bg-accent-dim text-accent border border-accent/20"
-                          : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary"
-                      }`}
-                    >
-                      {l.charAt(0).toUpperCase() + l.slice(1)}
-                    </button>
-                  ))}
+            <div className="space-y-4">
+              <FormField
+                label="Sujet / Theme"
+                name="topic"
+                value={topic}
+                onChange={(v) => setTopic(v)}
+                required
+                placeholder="Ex: Les avantages du marketing digital pour les PME"
+              />
+
+              <FormField
+                label="Ton"
+                name="tone"
+                type="select"
+                value={tone}
+                onChange={(v) => setTone(v)}
+                options={[
+                  { value: "professionnel", label: "Professionnel" },
+                  { value: "casual", label: "Decontracte" },
+                  { value: "expert", label: "Expert technique" },
+                  { value: "commercial", label: "Commercial / Persuasif" },
+                  { value: "educatif", label: "Educatif" },
+                ]}
+              />
+
+              <FormField
+                label="Longueur"
+                name="length"
+                type="select"
+                value={length}
+                onChange={(v) => setLength(v)}
+                options={[
+                  { value: "short", label: "Court (300-500 mots)" },
+                  { value: "medium", label: "Moyen (800-1200 mots)" },
+                  { value: "long", label: "Long (1500-2000 mots)" },
+                ]}
+              />
+
+              <FormField
+                label="Mots-cles SEO (optionnel)"
+                name="keywords"
+                type="textarea"
+                value={keywords}
+                onChange={(v) => setKeywords(v)}
+                rows={3}
+                placeholder="marketing digital, PME, croissance, strategie..."
+              />
+
+              <button
+                onClick={handleGenerate}
+                disabled={generating || !topic}
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-accent text-dark font-semibold rounded-full hover:bg-accent-hover transition-all shadow-lg shadow-accent/20 disabled:opacity-50"
+              >
+                {generating ? (
+                  <Loader2 size={18} className="animate-spin" />
+                ) : (
+                  <Sparkles size={18} />
+                )}
+                {generating ? "Generation en cours..." : "Generer l'article"}
+              </button>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        {/* Generated Content / Notice */}
+        <AnimatedSection>
+          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6 lg:col-span-2">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 bg-emerald-500/10 rounded-xl">
+                  <FileText size={20} className="text-emerald-400" />
+                </div>
+                <div>
+                  <h2 className="font-serif text-lg text-text-primary">
+                    Contenu genere
+                  </h2>
+                  <p className="text-sm text-text-muted">
+                    Apercu et edition de l&apos;article
+                  </p>
                 </div>
               </div>
 
-              <button
-                onClick={() => setGenerating(true)}
-                disabled={!topic || generating}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-accent text-dark font-semibold rounded-full hover:bg-accent-hover transition-all shadow-lg shadow-accent/20 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {generating ? (
-                  <>
-                    <RefreshCw size={18} className="animate-spin" />
-                    Generation en cours...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles size={18} />
-                    Generer l&apos;article
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* Tips */}
-            <div className="bg-accent/5 border border-accent/10 rounded-2xl p-5">
-              <h3 className="text-sm font-semibold text-accent mb-2">
-                Conseils
-              </h3>
-              <ul className="text-xs text-text-muted space-y-1.5">
-                <li>• Soyez specifique dans le sujet pour un meilleur resultat</li>
-                <li>• L&apos;article sera optimise SEO automatiquement</li>
-                <li>• Vous pourrez editer le contenu avant publication</li>
-                <li>• Les images devront etre ajoutees manuellement</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Preview panel */}
-          <div className="lg:col-span-2">
-            <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6 min-h-[500px]">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-serif text-lg text-text-primary">Apercu</h2>
+              {generatedContent && (
                 <div className="flex items-center gap-2">
-                  <button className="p-2 text-text-muted hover:text-text-primary bg-dark rounded-lg transition-colors">
-                    <Copy size={16} />
+                  <button
+                    onClick={copyContent}
+                    className="inline-flex items-center gap-2 px-3 py-2 bg-dark border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+                  >
+                    {copied ? <CheckCircle size={14} /> : <Copy size={14} />}
+                    {copied ? "Copie !" : "Copier"}
                   </button>
-                  <button className="flex items-center gap-2 px-3 py-2 bg-emerald-600/15 text-emerald-400 border border-emerald-500/20 rounded-full text-sm hover:bg-emerald-600/25 transition-colors">
-                    <FileText size={14} />
+                  <button
+                    onClick={saveDraft}
+                    disabled={savingDraft}
+                    className="inline-flex items-center gap-2 px-3 py-2 bg-accent text-dark font-semibold rounded-full text-sm hover:bg-accent-hover transition-colors disabled:opacity-50"
+                  >
+                    {savingDraft ? (
+                      <Loader2 size={14} className="animate-spin" />
+                    ) : (
+                      <Save size={14} />
+                    )}
                     Sauvegarder comme brouillon
                   </button>
                 </div>
-              </div>
+              )}
+            </div>
 
-              <div className="flex items-center justify-center h-80 border border-dashed border-white/[0.06] rounded-xl">
-                <div className="text-center">
-                  <Sparkles size={40} className="text-text-muted mx-auto mb-3" />
-                  <p className="text-text-muted">
-                    Configurez les parametres et cliquez sur &quot;Generer&quot;
-                  </p>
-                  <p className="text-text-muted text-sm mt-1">
-                    L&apos;article apparaitra ici
+            {/* API Notice */}
+            {showApiNotice && !generatedContent && (
+              <div className="p-6 bg-blue-500/5 border border-blue-500/20 rounded-xl">
+                <div className="flex items-center gap-2 mb-3">
+                  <Info size={18} className="text-blue-400" />
+                  <p className="text-sm font-medium text-blue-400">
+                    Configuration requise
                   </p>
                 </div>
+                <p className="text-sm text-text-secondary mb-4">
+                  Configurez une cle API IA dans les parametres pour activer cette fonctionnalite.
+                </p>
+                <p className="text-xs text-text-muted">
+                  Rendez-vous dans Parametres &gt; Systeme pour ajouter votre cle API
+                  (OpenAI, Anthropic, etc.). Une fois configuree, vous pourrez generer
+                  du contenu de blog optimise SEO directement depuis cette interface.
+                </p>
               </div>
-            </div>
+            )}
+
+            {/* Generated Content */}
+            {generatedContent ? (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-text-secondary mb-2">
+                    Titre
+                  </label>
+                  <input
+                    type="text"
+                    value={generatedTitle}
+                    onChange={(e) => setGeneratedTitle(e.target.value)}
+                    className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary text-lg font-serif focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-text-secondary mb-2">
+                    Contenu
+                  </label>
+                  <textarea
+                    value={generatedContent}
+                    onChange={(e) => setGeneratedContent(e.target.value)}
+                    rows={20}
+                    className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent/50 resize-y"
+                  />
+                </div>
+              </div>
+            ) : !showApiNotice ? (
+              <div className="flex flex-col items-center justify-center h-80 text-center border border-dashed border-white/[0.06] rounded-xl">
+                <div className="w-16 h-16 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center mb-4">
+                  <BookOpen size={28} className="text-text-muted" />
+                </div>
+                <p className="text-text-secondary font-medium mb-2">
+                  Pret a generer
+                </p>
+                <p className="text-text-muted text-sm max-w-sm">
+                  Configurez les parametres a gauche et cliquez sur &quot;Generer
+                  l&apos;article&quot; pour creer votre contenu.
+                </p>
+              </div>
+            ) : null}
           </div>
-        </div>
-      </AnimatedSection>
+        </AnimatedSection>
+      </div>
     </PageTransition>
   );
 }

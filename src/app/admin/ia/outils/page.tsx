@@ -1,134 +1,234 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Wrench,
   Sparkles,
   FileText,
   Search,
-  MessageSquare,
+  Type,
+  RefreshCw,
   PenTool,
-  Globe,
-  Image,
-  Zap,
+  BarChart3,
+  ArrowRight,
+  Loader2,
+  Info,
 } from "lucide-react";
+import Link from "next/link";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
 
-const tools = [
-  {
-    title: "Generateur de contenu SEO",
-    description:
-      "Generez du contenu optimise pour le referencement naturel en quelques clics.",
-    icon: <Search size={24} />,
-    color: "bg-dark-2 border-white/[0.06]",
-    iconColor: "text-accent",
-    status: "available",
-  },
-  {
-    title: "Rewriter d'articles",
-    description:
-      "Reformulez et ameliorez vos textes existants tout en gardant le sens.",
-    icon: <PenTool size={24} />,
-    color: "bg-dark-2 border-white/[0.06]",
-    iconColor: "text-accent",
-    status: "available",
-  },
-  {
-    title: "Generateur de meta descriptions",
-    description:
-      "Creez des meta descriptions accrocheuses et optimisees SEO.",
-    icon: <Globe size={24} />,
-    color: "bg-dark-2 border-white/[0.06]",
-    iconColor: "text-emerald-400",
-    status: "available",
-  },
-  {
-    title: "Assistant chatbot",
-    description:
-      "Configurez et entrainez le chatbot de votre site avec l'IA.",
-    icon: <MessageSquare size={24} />,
-    color: "bg-dark-2 border-white/[0.06]",
-    iconColor: "text-cyan-400",
-    status: "coming_soon",
-  },
-  {
-    title: "Generateur d'images",
-    description: "Creez des visuels uniques pour vos articles et pages.",
-    icon: <Image size={24} />,
-    color: "bg-dark-2 border-white/[0.06]",
-    iconColor: "text-orange-400",
-    status: "coming_soon",
-  },
-  {
-    title: "Analyse de performance",
-    description:
-      "Analysez la performance SEO de vos pages et obtenez des suggestions.",
-    icon: <Zap size={24} />,
-    color: "bg-dark-2 border-white/[0.06]",
-    iconColor: "text-yellow-400",
-    status: "coming_soon",
-  },
-];
+interface ToolCard {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  color: string;
+  link: string;
+  coming_soon: boolean;
+  stat_key?: string;
+}
 
-export default function IAOutilsPage() {
+export default function AIOutilsPage() {
+  const [aiPostsCount, setAiPostsCount] = useState(0);
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch("/api/admin/blog?is_ai_generated=true");
+        if (res.ok) {
+          const json = await res.json();
+          const data = Array.isArray(json) ? json : json.data || [];
+          setAiPostsCount(data.length);
+        }
+      } catch {
+        // Keep 0 on error
+      } finally {
+        setLoadingStats(false);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  const tools: ToolCard[] = [
+    {
+      id: "blog-generator",
+      title: "Generateur d'articles",
+      description:
+        "Creez des articles de blog optimises SEO avec l'IA. Choisissez le sujet, le ton et la longueur souhaitee.",
+      icon: <PenTool size={24} />,
+      color: "accent",
+      link: "/admin/ia/blog",
+      coming_soon: false,
+      stat_key: "blog",
+    },
+    {
+      id: "meta-descriptions",
+      title: "Meta descriptions",
+      description:
+        "Generez des meta descriptions optimisees pour vos pages et articles. Ameliorez votre SEO automatiquement.",
+      icon: <Search size={24} />,
+      color: "blue-400",
+      link: "/admin/ia/blog",
+      coming_soon: true,
+    },
+    {
+      id: "content-rewriter",
+      title: "Rewriting de contenu",
+      description:
+        "Reformulez et ameliorez vos textes existants. L'IA preserve le sens tout en optimisant le style.",
+      icon: <RefreshCw size={24} />,
+      color: "emerald-400",
+      link: "/admin/ia/blog",
+      coming_soon: true,
+    },
+    {
+      id: "title-generator",
+      title: "Generateur de titres",
+      description:
+        "Proposez des titres accrocheurs pour vos articles et pages. Optimises pour le clic et le SEO.",
+      icon: <Type size={24} />,
+      color: "purple-400",
+      link: "/admin/ia/blog",
+      coming_soon: true,
+    },
+    {
+      id: "analytics-insights",
+      title: "Insights analytiques",
+      description:
+        "Analyse IA de vos statistiques. Obtenez des recommandations personnalisees basees sur vos donnees.",
+      icon: <BarChart3 size={24} />,
+      color: "orange-400",
+      link: "/admin/statistiques",
+      coming_soon: true,
+    },
+  ];
+
+  const getStatValue = (tool: ToolCard): string => {
+    if (tool.stat_key === "blog") return String(aiPostsCount);
+    return "0";
+  };
+
+  const getStatLabel = (tool: ToolCard): string => {
+    if (tool.stat_key === "blog") return "articles IA generes";
+    if (tool.id === "meta-descriptions") return "meta descriptions generees";
+    if (tool.id === "content-rewriter") return "contenus reecrits";
+    return "utilisations";
+  };
+
   return (
     <PageTransition className="space-y-6">
       <AnimatedSection>
         <PageHeader
           title="Outils IA"
-          subtitle="Suite d'outils propulses par l'intelligence artificielle"
+          subtitle="Suite d'outils d'intelligence artificielle pour votre contenu"
           icon={<Wrench size={24} />}
         />
       </AnimatedSection>
 
-      {/* Tools Grid */}
+      {/* Stats Overview */}
       <AnimatedSection>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {tools.map((tool) => (
-            <div
-              key={tool.title}
-              className={`relative ${tool.color} border rounded-2xl p-6 hover:scale-[1.02] transition-all duration-300 cursor-pointer group`}
-            >
-              {tool.status === "coming_soon" && (
-                <span className="absolute top-4 right-4 px-2.5 py-1 bg-dark border border-white/[0.06] text-text-muted rounded-full text-xs font-medium">
-                  Bientot
-                </span>
-              )}
-              <div className={`${tool.iconColor} mb-4`}>{tool.icon}</div>
-              <h3 className="text-text-primary font-semibold mb-2">{tool.title}</h3>
-              <p className="text-text-muted text-sm">{tool.description}</p>
-              {tool.status === "available" && (
-                <button className="mt-4 flex items-center gap-2 text-sm text-accent hover:text-accent-hover transition-colors">
-                  Utiliser
-                  <Sparkles size={14} />
-                </button>
-              )}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-accent/10 rounded-xl">
+                <FileText size={20} className="text-accent" />
+              </div>
+              <div>
+                <p className="text-sm text-text-muted">Articles IA generes</p>
+                <p className="text-2xl font-bold text-text-primary">
+                  {loadingStats ? (
+                    <Loader2 size={20} className="animate-spin text-text-muted" />
+                  ) : (
+                    aiPostsCount
+                  )}
+                </p>
+              </div>
             </div>
-          ))}
+          </div>
+          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-blue-500/10 rounded-xl">
+                <Search size={20} className="text-blue-400" />
+              </div>
+              <div>
+                <p className="text-sm text-text-muted">Meta descriptions</p>
+                <p className="text-2xl font-bold text-text-primary">0</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-emerald-500/10 rounded-xl">
+                <RefreshCw size={20} className="text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-sm text-text-muted">Contenus reecrits</p>
+                <p className="text-2xl font-bold text-text-primary">0</p>
+              </div>
+            </div>
+          </div>
         </div>
       </AnimatedSection>
 
-      {/* Usage stats */}
+      {/* Tools Grid */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
-          <h2 className="font-serif text-lg text-text-primary mb-4">
-            Utilisation IA
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="text-center p-4">
-              <p className="text-3xl font-bold text-text-primary">0</p>
-              <p className="text-sm text-text-muted mt-1">Articles generes</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tools.map((tool) => (
+            <div
+              key={tool.id}
+              className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6 flex flex-col justify-between group hover:border-white/[0.12] transition-all"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`p-3 bg-${tool.color}/10 rounded-xl`}>
+                    <span className={`text-${tool.color}`}>{tool.icon}</span>
+                  </div>
+                  {tool.coming_soon && (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-full text-xs font-medium">
+                      <Info size={10} />
+                      Bientot
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="text-lg font-serif text-text-primary mb-2">
+                  {tool.title}
+                </h3>
+                <p className="text-sm text-text-muted mb-4">
+                  {tool.description}
+                </p>
+
+                {/* Stat */}
+                <div className="flex items-center gap-2 text-xs text-text-muted mb-4">
+                  <Sparkles size={12} className="text-accent" />
+                  <span>
+                    {getStatValue(tool)} {getStatLabel(tool)}
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                {tool.coming_soon ? (
+                  <button
+                    disabled
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-dark border border-white/[0.06] text-text-muted rounded-full text-sm opacity-60 cursor-not-allowed"
+                  >
+                    Bientot disponible
+                  </button>
+                ) : (
+                  <Link
+                    href={tool.link}
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-accent text-dark font-semibold rounded-full hover:bg-accent-hover transition-all text-sm shadow-lg shadow-accent/20 group-hover:shadow-accent/30"
+                  >
+                    Utiliser
+                    <ArrowRight size={14} />
+                  </Link>
+                )}
+              </div>
             </div>
-            <div className="text-center p-4">
-              <p className="text-3xl font-bold text-text-primary">0</p>
-              <p className="text-sm text-text-muted mt-1">Meta descriptions</p>
-            </div>
-            <div className="text-center p-4">
-              <p className="text-3xl font-bold text-text-primary">0</p>
-              <p className="text-sm text-text-muted mt-1">Contenus réécrits</p>
-            </div>
-          </div>
+          ))}
         </div>
       </AnimatedSection>
     </PageTransition>

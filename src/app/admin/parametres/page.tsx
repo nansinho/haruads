@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Settings,
   Globe,
@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
+import { useToast } from "@/components/admin/Toast";
 
 interface SettingsData {
   siteName: string;
@@ -32,16 +33,16 @@ interface SettingsData {
 }
 
 const defaultSettings: SettingsData = {
-  siteName: "HaruAds",
-  siteDescription: "Agence de communication digitale specialisee en creation de sites web et marketing digital",
-  contactEmail: "contact@haruads.com",
-  contactPhone: "+33 1 23 45 67 89",
-  contactAddress: "123 Rue de la Paix, 75001 Paris, France",
-  instagram: "https://instagram.com/haruads",
-  linkedin: "https://linkedin.com/company/haruads",
-  twitter: "https://x.com/haruads",
+  siteName: "",
+  siteDescription: "",
+  contactEmail: "",
+  contactPhone: "",
+  contactAddress: "",
+  instagram: "",
+  linkedin: "",
+  twitter: "",
   maintenanceMode: false,
-  googleAnalyticsId: "G-XXXXXXXXXX",
+  googleAnalyticsId: "",
 };
 
 function Toggle({
@@ -72,6 +73,44 @@ export default function ParametresPage() {
   const [settings, setSettings] = useState<SettingsData>(defaultSettings);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [loadingSettings, setLoadingSettings] = useState(true);
+  const { toast } = useToast();
+
+  // Fetch settings on mount
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch("/api/admin/settings");
+        if (!res.ok) throw new Error("Erreur");
+        const json = await res.json();
+
+        // The API returns an array of {key, value} objects. Convert to flat object
+        const data = Array.isArray(json) ? json : json.data || [];
+        const flat: Record<string, string> = {};
+        data.forEach((item: { key: string; value: string | null }) => {
+          flat[item.key] = item.value || "";
+        });
+
+        setSettings({
+          siteName: flat.siteName || flat.site_name || "",
+          siteDescription: flat.siteDescription || flat.site_description || "",
+          contactEmail: flat.contactEmail || flat.contact_email || "",
+          contactPhone: flat.contactPhone || flat.contact_phone || "",
+          contactAddress: flat.contactAddress || flat.contact_address || "",
+          instagram: flat.instagram || "",
+          linkedin: flat.linkedin || "",
+          twitter: flat.twitter || "",
+          maintenanceMode: flat.maintenanceMode === "true" || flat.maintenance_mode === "true",
+          googleAnalyticsId: flat.googleAnalyticsId || flat.google_analytics_id || "",
+        });
+      } catch {
+        // If fetch fails, keep defaults
+      } finally {
+        setLoadingSettings(false);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   const updateSetting = <K extends keyof SettingsData>(
     key: K,
@@ -83,18 +122,45 @@ export default function ParametresPage() {
 
   const handleSave = async () => {
     setSaving(true);
-    // TODO: Save to Supabase
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    try {
+      // Convert flat object back to array of {key, value}
+      const settingsArray = Object.entries(settings).map(([key, value]) => ({
+        key,
+        value: String(value),
+      }));
+
+      const res = await fetch("/api/admin/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(settingsArray),
+      });
+
+      if (!res.ok) throw new Error("Erreur");
+      toast({ type: "success", message: "Parametres enregistres" });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } catch {
+      toast({ type: "error", message: "Erreur lors de l'enregistrement" });
+    } finally {
+      setSaving(false);
+    }
   };
+
+  if (loadingSettings) {
+    return (
+      <PageTransition className="space-y-6">
+        <div className="flex justify-center py-32">
+          <Loader2 size={32} className="text-accent animate-spin" />
+        </div>
+      </PageTransition>
+    );
+  }
 
   return (
     <PageTransition className="space-y-6">
       <AnimatedSection>
         <PageHeader
-          title="Paramètres"
+          title="Parametres"
           subtitle="Configuration generale du site"
           icon={<Settings size={24} />}
           actions={
