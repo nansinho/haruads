@@ -28,6 +28,26 @@ export async function getAdminUser(request: NextRequest): Promise<AdminUser | nu
   }
 }
 
+export async function getAuthenticatedUser(request: NextRequest): Promise<AdminUser | null> {
+  const secret = process.env.AUTH_SECRET;
+  if (!secret) return null;
+
+  const cookieName = request.cookies.has("__Secure-authjs.session-token")
+    ? "__Secure-authjs.session-token"
+    : "authjs.session-token";
+
+  const token = request.cookies.get(cookieName)?.value;
+  if (!token) return null;
+
+  try {
+    const decoded = await decode({ token, secret, salt: cookieName });
+    if (!decoded?.id) return null;
+    return decoded as unknown as AdminUser;
+  } catch {
+    return null;
+  }
+}
+
 export function unauthorizedResponse() {
   return Response.json({ error: "Non autorisé" }, { status: 401 });
 }
