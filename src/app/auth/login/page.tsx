@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Globe, Palette, Zap, LogIn } from "lucide-react";
+import { ArrowRight, LogIn } from "lucide-react";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -41,63 +41,31 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen bg-dark flex">
-      {/* Left side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center">
-        {/* Background effects */}
-        <div className="absolute inset-0 bg-dark" />
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent/[0.06] rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-[100px]" />
-
-        {/* Dot grid */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
+      {/* Left side - Image */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+        <img
+          src="/images/why-choose.jpg"
+          alt="L'équipe Agence HDS en collaboration"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-
-        {/* Noise overlay */}
-        <div className="noise-overlay absolute inset-0" />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/30 to-dark/10" />
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="relative z-10 px-16 max-w-lg"
+          className="relative z-10 flex flex-col justify-end p-12 pb-16 w-full"
         >
-          {/* Logo */}
-          <div className="mb-10">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#f97316] to-[#fb923c] flex items-center justify-center font-bold text-xl text-dark shadow-2xl shadow-accent/30 mb-6">
-              H
-            </div>
-            <h1 className="font-serif text-4xl text-text-primary mb-3">
-              Agence <span className="text-gradient">HDS</span>
-            </h1>
-            <p className="font-serif italic text-accent text-lg">
-              Votre espace de gestion
-            </p>
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#f97316] to-[#fb923c] flex items-center justify-center font-bold text-lg text-dark shadow-xl shadow-accent/30 mb-5">
+            H
           </div>
-
-          {/* Floating badges */}
-          <div className="space-y-4">
-            {[
-              { icon: <Globe size={16} />, text: "Sites web sur mesure" },
-              { icon: <Palette size={16} />, text: "Design premium" },
-              { icon: <Zap size={16} />, text: "Performance optimale" },
-            ].map((badge, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 + i * 0.15, duration: 0.5 }}
-                className="flex items-center gap-3 px-4 py-3 bg-dark-2/80 backdrop-blur-xl border border-white/[0.06] rounded-xl w-fit"
-              >
-                <span className="text-accent">{badge.icon}</span>
-                <span className="text-sm text-text-secondary">{badge.text}</span>
-              </motion.div>
-            ))}
-          </div>
+          <h1 className="text-[2rem] leading-[1.1] tracking-[-0.02em]">
+            <span className="font-light text-white">Votre espace </span>
+            <span className="font-serif italic text-accent">de gestion.</span>
+          </h1>
+          <p className="text-[0.9rem] text-white/50 mt-3 max-w-[360px] leading-[1.7]">
+            Agence HDS — Aix-en-Provence
+          </p>
         </motion.div>
       </div>
 
@@ -117,17 +85,19 @@ function LoginForm() {
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#f97316] to-[#fb923c] flex items-center justify-center font-bold text-lg text-dark shadow-xl shadow-accent/20 mx-auto mb-4">
               H
             </div>
-            <h1 className="font-serif text-2xl text-text-primary">
-              Agence <span className="text-gradient">HDS</span>
+            <h1 className="text-2xl text-text-primary">
+              <span className="font-light">Agence </span>
+              <span className="font-serif italic text-accent">HDS</span>
             </h1>
           </div>
 
           {/* Form card */}
           <div className="bg-dark-2/80 backdrop-blur-2xl border border-white/[0.06] rounded-2xl p-8">
             <div className="mb-6">
-              <h2 className="font-serif text-xl text-text-primary flex items-center gap-2">
+              <h2 className="text-xl text-text-primary flex items-center gap-2">
                 <LogIn size={20} className="text-accent" />
-                Connexion
+                <span className="font-light">Espace </span>
+                <span className="font-serif italic text-accent">client.</span>
               </h2>
               <p className="text-sm text-text-secondary mt-1">
                 Accédez à votre espace de gestion
