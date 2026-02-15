@@ -32,7 +32,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
           <div>
             <Logo className="h-8 w-auto mb-4" />
-            <p className="text-[0.8rem] text-white/25 leading-[1.7] max-w-[260px]">
+            <p className="text-[0.8rem] text-white/60 leading-[1.7] max-w-[260px]">
               Agence web créative spécialisée en développement web et solutions digitales sur mesure.
             </p>
             <div className="flex gap-2.5 mt-5">
@@ -47,6 +47,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="w-8 h-8 rounded-full border border-white/[0.06] flex items-center justify-center hover:bg-accent hover:border-accent transition-all duration-300 group"
                   whileHover={{ scale: 1.1, y: -2 }}
+                  aria-label={social.name.charAt(0).toUpperCase() + social.name.slice(1)}
                 >
                   <span className="text-[0.6rem] uppercase text-white/30 group-hover:text-dark font-bold transition-colors">
                     {social.name.charAt(0)}
@@ -56,37 +57,37 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h5 className="text-[0.8rem] font-medium mb-4 text-white/40 uppercase tracking-wider">Navigation</h5>
+            <h3 className="text-[0.8rem] font-medium mb-4 text-white/60 uppercase tracking-wider">Navigation</h3>
             <ul className="list-none">
               {links.navigation.map((link) => (
                 <li key={link.label} className="mb-2.5">
-                  <a href={link.href} className="text-[0.8rem] text-white/25 hover:text-accent transition-colors duration-300">{link.label}</a>
+                  <a href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</a>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h5 className="text-[0.8rem] font-medium mb-4 text-white/40 uppercase tracking-wider">Entreprise</h5>
+            <h3 className="text-[0.8rem] font-medium mb-4 text-white/60 uppercase tracking-wider">Entreprise</h3>
             <ul className="list-none">
               {links.company.map((link) => (
                 <li key={link.label} className="mb-2.5">
-                  <a href={link.href} className="text-[0.8rem] text-white/25 hover:text-accent transition-colors duration-300">{link.label}</a>
+                  <a href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</a>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h5 className="text-[0.8rem] font-medium mb-4 text-white/40 uppercase tracking-wider">Contact</h5>
+            <h3 className="text-[0.8rem] font-medium mb-4 text-white/60 uppercase tracking-wider">Contact</h3>
             <ul className="list-none">
               {links.contact.map((link) => (
                 <li key={link.label} className="mb-2.5">
-                  <a href={link.href} className="text-[0.8rem] text-white/25 hover:text-accent transition-colors duration-300">{link.label}</a>
+                  <a href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</a>
                 </li>
               ))}
             </ul>
           </div>
         </div>
-        <div className="border-t border-white/[0.04] pt-6 flex flex-col sm:flex-row items-center justify-between text-[0.7rem] text-white/20 gap-2">
+        <div className="border-t border-white/[0.04] pt-6 flex flex-col sm:flex-row items-center justify-between text-[0.7rem] text-white/50 gap-2">
           <span>&copy; {new Date().getFullYear()} Agence HDS. Tous droits réservés.</span>
           <span>Conçu avec passion à Aix-en-Provence</span>
         </div>

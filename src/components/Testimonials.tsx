@@ -99,6 +99,7 @@ export default function Testimonials() {
                       ? "w-8 bg-accent"
                       : "w-4 bg-white/10 hover:bg-white/20"
                   }`}
+                  aria-label={`Témoignage ${i + 1} : ${testimonials[i].name}`}
                 />
               ))}
             </div>

@@ -48,9 +48,9 @@ export default function HowWeWork() {
                 <span className="text-[3.5rem] font-serif text-white/20 leading-none block">
                   {step.num}
                 </span>
-                <h4 className="text-[1rem] font-semibold text-white mt-4">
+                <h3 className="text-[1rem] font-semibold text-white mt-4">
                   {step.title}
-                </h4>
+                </h3>
                 <p className="text-[0.8rem] text-white/60 leading-[1.7] mt-2">
                   {step.desc}
                 </p>
