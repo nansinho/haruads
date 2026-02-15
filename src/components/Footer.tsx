@@ -17,6 +17,16 @@ const links = {
     { label: "Mentions Légales", href: "/mentions-legales" },
     { label: "Plan du Site", href: "/plan-du-site" },
   ],
+  cities: [
+    { label: "Gardanne", href: "/agence-web/gardanne" },
+    { label: "Aix-en-Provence", href: "/agence-web/aix-en-provence" },
+    { label: "Marseille", href: "/agence-web/marseille" },
+    { label: "Toulon", href: "/agence-web/toulon" },
+    { label: "Avignon", href: "/agence-web/avignon" },
+    { label: "Nice", href: "/agence-web/nice" },
+    { label: "Lyon", href: "/agence-web/lyon" },
+    { label: "Toutes les villes →", href: "/agence-web" },
+  ],
   contact: [
     { label: "contact@agencehds.fr", href: "mailto:contact@agencehds.fr" },
     { label: "06 24 63 30 54", href: "tel:+33624633054" },
@@ -29,7 +39,7 @@ export default function Footer() {
     <footer className="bg-dark border-t border-white/[0.04] text-white relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
       <div className="max-w-[1200px] mx-auto px-5 pt-14 pb-8 lg:px-12 relative z-2">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1fr] gap-10 lg:gap-8 mb-12">
           <div>
             <Logo className="h-8 w-auto mb-4" />
             <p className="text-[0.8rem] text-white/25 leading-[1.7] max-w-[260px]">
@@ -69,6 +79,16 @@ export default function Footer() {
             <h5 className="text-[0.8rem] font-medium mb-4 text-white/40 uppercase tracking-wider">Entreprise</h5>
             <ul className="list-none">
               {links.company.map((link) => (
+                <li key={link.label} className="mb-2.5">
+                  <a href={link.href} className="text-[0.8rem] text-white/25 hover:text-accent transition-colors duration-300">{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h5 className="text-[0.8rem] font-medium mb-4 text-white/40 uppercase tracking-wider">Zones d&apos;intervention</h5>
+            <ul className="list-none">
+              {links.cities.map((link) => (
                 <li key={link.label} className="mb-2.5">
                   <a href={link.href} className="text-[0.8rem] text-white/25 hover:text-accent transition-colors duration-300">{link.label}</a>
                 </li>

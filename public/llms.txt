@@ -11,9 +11,30 @@
 - [E-Commerce](https://agencehds.fr/services/e-commerce): Boutiques en ligne sur mesure avec WooCommerce, Stripe et des solutions de paiement sécurisées et performantes.
 - [Branding & SEO](https://agencehds.fr/services/branding-seo): Identité visuelle forte et référencement naturel pour une visibilité maximale.
 
+## Zones d'intervention
+
+Agence HDS intervient dans toute la région PACA et au-delà :
+
+- [Agence Web Gardanne](https://agencehds.fr/agence-web/gardanne): Siège de l'agence, 0 km.
+- [Agence Web Aix-en-Provence](https://agencehds.fr/agence-web/aix-en-provence): À 15 km, capitale provençale.
+- [Agence Web Marseille](https://agencehds.fr/agence-web/marseille): À 25 km, 2e ville de France.
+- [Agence Web Aubagne](https://agencehds.fr/agence-web/aubagne): À 20 km, pays de Pagnol.
+- [Agence Web Toulon](https://agencehds.fr/agence-web/toulon): À 80 km, préfecture du Var.
+- [Agence Web Avignon](https://agencehds.fr/agence-web/avignon): À 80 km, cité des Papes.
+- [Agence Web Salon-de-Provence](https://agencehds.fr/agence-web/salon-de-provence): À 35 km.
+- [Agence Web Martigues](https://agencehds.fr/agence-web/martigues): À 35 km, Venise provençale.
+- [Agence Web Istres](https://agencehds.fr/agence-web/istres): À 45 km, ouest des BDR.
+- [Agence Web Vitrolles](https://agencehds.fr/agence-web/vitrolles): À 20 km, hub économique.
+- [Agence Web Arles](https://agencehds.fr/agence-web/arles): À 70 km, patrimoine UNESCO.
+- [Agence Web Nîmes](https://agencehds.fr/agence-web/nimes): À 110 km, Rome française.
+- [Agence Web Montpellier](https://agencehds.fr/agence-web/montpellier): À 160 km, French Tech.
+- [Agence Web Nice](https://agencehds.fr/agence-web/nice): À 200 km, Côte d'Azur.
+- [Agence Web Lyon](https://agencehds.fr/agence-web/lyon): À 300 km, capitale des Gaules.
+- [Toutes les villes](https://agencehds.fr/agence-web): Page hub de toutes nos zones d'intervention.
+
 ## Informations clés
 
-- Localisation : Aix-en-Provence, France
+- Localisation : Gardanne (13120), près d'Aix-en-Provence, France
 - Contact : contact@agencehds.fr
 - Technologies : Next.js, React, Supabase, WordPress, WooCommerce, Stripe, Figma
 - Expérience : 50+ projets réalisés, 30+ clients actifs, 3+ ans d'expertise
@@ -27,4 +48,5 @@
 - [À Propos](https://agencehds.fr/a-propos)
 - [Blog](https://agencehds.fr/blog)
 - [Contact](https://agencehds.fr/contact)
+- [Zones d'intervention](https://agencehds.fr/agence-web)
 - [llms-full.txt](https://agencehds.fr/llms-full.txt)

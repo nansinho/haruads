@@ -24,7 +24,9 @@ import {
   ShoppingCart,
   Search,
   Brain,
+  MapPin,
 } from "lucide-react";
+import { primaryCitySlugs, citiesData } from "@/data/cities";
 import { useState } from "react";
 
 const serviceIcons: Record<string, React.ReactNode> = {
@@ -1045,6 +1047,39 @@ export default function ServiceDetail() {
                   </Link>
                 </ScrollReveal>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* City Links - Ce service près de chez vous */}
+        <section className="bg-white text-text-dark">
+          <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+            <ScrollReveal>
+              <div className="text-center max-w-[600px] mx-auto mb-10">
+                <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
+                  Proximité
+                </span>
+                <h3 className="text-[1.3rem] lg:text-[1.8rem] leading-[1.1] tracking-[-0.02em] mt-3">
+                  <span className="font-light">Ce service près de </span>
+                  <span className="font-serif italic">chez vous.</span>
+                </h3>
+              </div>
+            </ScrollReveal>
+            <div className="flex flex-wrap justify-center gap-3">
+              {primaryCitySlugs.map((citySlug) => {
+                const city = citiesData[citySlug];
+                if (!city) return null;
+                return (
+                  <Link
+                    key={citySlug}
+                    href={`/agence-web/${citySlug}`}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-light border border-gray-200 text-[0.82rem] font-medium text-text-dark hover:border-accent/30 hover:shadow-md hover:shadow-accent/5 transition-all duration-300"
+                  >
+                    <MapPin size={14} className="text-accent" />
+                    {city.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>

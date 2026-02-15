@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { servicesSlugs } from "@/data/services";
 import { projectsSlugs } from "@/data/projects";
 import { articlesSlugs } from "@/data/articles";
+import { citySlugs } from "@/data/cities";
 
 const siteUrl = "https://agencehds.fr";
 
@@ -90,5 +91,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...servicePages, ...projetPages, ...blogPages];
+  const cityHubPage: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/agence-web`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+  ];
+
+  const cityPages: MetadataRoute.Sitemap = citySlugs.map((slug) => ({
+    url: `${siteUrl}/agence-web/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  return [
+    ...staticPages,
+    ...servicePages,
+    ...projetPages,
+    ...blogPages,
+    ...cityHubPage,
+    ...cityPages,
+  ];
 }
