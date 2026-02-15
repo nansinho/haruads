@@ -1,0 +1,17 @@
+{
+  "name": "Agence HDS — Agence Web Créative",
+  "short_name": "Agence HDS",
+  "description": "Agence web créative spécialisée en développement web, design UI/UX, solutions SaaS, IA et e-commerce. Basée à Aix-en-Provence.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#A6F170",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/images/logos/logo-hds.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

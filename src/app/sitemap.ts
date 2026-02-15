@@ -1,31 +1,11 @@
 import type { MetadataRoute } from "next";
+import { servicesSlugs } from "@/data/services";
+import { projectsSlugs } from "@/data/projects";
+import { articlesSlugs } from "@/data/articles";
 
 const siteUrl = "https://agencehds.fr";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const services = [
-    "developpement-web",
-    "solutions-saas",
-    "intelligence-artificielle",
-    "design-ui-ux",
-    "e-commerce",
-    "branding-seo",
-  ];
-
-  const projets = [
-    "aiako-ecommerce",
-    "dashboard-cco",
-    "landing-fintech",
-    "systeme-reservation",
-  ];
-
-  const blog = [
-    "tendances-web-design-2024",
-    "ecommerce-conversion",
-    "ia-productivite",
-    "collaboration-equipe",
-  ];
-
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
@@ -83,21 +63,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const servicePages: MetadataRoute.Sitemap = services.map((slug) => ({
+  const servicePages: MetadataRoute.Sitemap = servicesSlugs.map((slug) => ({
     url: `${siteUrl}/services/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
-  const projetPages: MetadataRoute.Sitemap = projets.map((slug) => ({
+  const projetPages: MetadataRoute.Sitemap = projectsSlugs.map((slug) => ({
     url: `${siteUrl}/projets/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
-  const blogPages: MetadataRoute.Sitemap = blog.map((slug) => ({
+  const blogPages: MetadataRoute.Sitemap = articlesSlugs.map((slug) => ({
     url: `${siteUrl}/blog/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
