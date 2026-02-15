@@ -54,7 +54,7 @@ export default function Hero() {
               className="flex items-center gap-3 mb-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease }}
+              transition={{ duration: 0.5, delay: 0.1, ease }}
             >
               <span className="w-2 h-2 rounded-full bg-accent" />
               <span className="text-[0.72rem] uppercase tracking-[3px] text-white/40 font-medium">
@@ -66,29 +66,29 @@ export default function Hero() {
               className="text-fluid-hero leading-[1.05] tracking-[-0.03em]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
             >
               <motion.span
                 className="block font-light"
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease }}
+                transition={{ duration: 0.6, delay: 0.1, ease }}
               >
                 Nous cr&eacute;ons
               </motion.span>
               <motion.span
                 className="block font-light"
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.45, ease }}
+                transition={{ duration: 0.6, delay: 0.2, ease }}
               >
                 des exp&eacute;riences
               </motion.span>
               <motion.span
                 className="block font-serif italic text-accent"
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6, ease }}
+                transition={{ duration: 0.6, delay: 0.3, ease }}
               >
                 digitales.
               </motion.span>
@@ -96,9 +96,9 @@ export default function Hero() {
 
             <motion.p
               className="text-[0.95rem] lg:text-[1.05rem] text-white/35 mt-7 max-w-[420px] leading-[1.8] font-light"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8, ease }}
+              transition={{ duration: 0.5, delay: 0.35, ease }}
             >
               Design UI/UX, d&eacute;veloppement web et solutions e-commerce sur mesure
               pour propulser votre business.
@@ -106,9 +106,9 @@ export default function Hero() {
 
             <motion.div
               className="flex flex-wrap gap-4 mt-10"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0, ease }}
+              transition={{ duration: 0.5, delay: 0.45, ease }}
             >
               <motion.a
                 href="/contact"
@@ -140,9 +140,9 @@ export default function Hero() {
           {/* Right — Project Carousel with parallax */}
           <motion.div
             className="relative hidden lg:block"
-            initial={{ opacity: 0, x: 60 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.0, delay: 0.6, ease }}
+            transition={{ duration: 0.7, delay: 0.3, ease }}
             style={{ y: imageY }}
           >
             <div className="absolute -top-8 -right-8 w-[80%] h-[80%] bg-accent/10 rounded-3xl" />
@@ -159,7 +159,7 @@ export default function Hero() {
         className="w-full border-t border-white/[0.06] shrink-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.4 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
       >
         <div className="py-8 overflow-hidden relative">
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-dark to-transparent z-10" />
