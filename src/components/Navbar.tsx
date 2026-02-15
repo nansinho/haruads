@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import Logo from "./Logo";
 
 const navLinks = [
   { label: "Accueil", href: "/" },
@@ -53,7 +52,7 @@ export default function Navbar() {
         )}
 
         <a href="/" className="flex items-center gap-2.5 group relative">
-          <Logo className="h-8 w-auto" />
+          <img src="/images/logos/logo-hds-2026-blanc.svg" alt="Agence HDS" className="h-8 w-auto" />
         </a>
 
         <ul className="hidden lg:flex gap-8 list-none">
@@ -70,18 +69,32 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <motion.a
-          href="/contact"
-          className="hidden lg:flex items-center gap-2 bg-accent text-dark px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer relative overflow-hidden"
-          whileHover={{ scale: 1.03, boxShadow: "0 0 30px rgba(249,115,22,0.4), 0 0 60px rgba(249,115,22,0.1)" }}
-          whileTap={{ scale: 0.97 }}
-        >
-          <span className="relative z-10">Contactez-nous</span>
-          <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-dark fill-none stroke-2 relative z-10">
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <polyline points="12 5 19 12 12 19" />
-          </svg>
-        </motion.a>
+        <div className="hidden lg:flex items-center gap-3">
+          <motion.a
+            href="/espace-client"
+            className="flex items-center gap-2 border border-white/[0.12] text-white/60 hover:text-white hover:border-white/[0.25] px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer transition-colors duration-300"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-current fill-none stroke-2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span>Espace Client</span>
+          </motion.a>
+          <motion.a
+            href="/contact"
+            className="flex items-center gap-2 bg-accent text-dark px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer relative overflow-hidden"
+            whileHover={{ scale: 1.03, boxShadow: "0 0 30px rgba(249,115,22,0.4), 0 0 60px rgba(249,115,22,0.1)" }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <span className="relative z-10">Contactez-nous</span>
+            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-dark fill-none stroke-2 relative z-10">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </motion.a>
+        </div>
 
         {/* Mobile menu button */}
         <button
@@ -135,13 +148,22 @@ export default function Navbar() {
                   </motion.li>
                 ))}
               </ul>
-              <a
-                href="/contact"
-                className="block mt-4 bg-accent text-dark px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center relative z-10"
-                onClick={() => setMenuOpen(false)}
-              >
-                Contactez-nous
-              </a>
+              <div className="flex flex-col gap-3 mt-4 relative z-10">
+                <a
+                  href="/espace-client"
+                  className="block border border-white/[0.12] text-white/60 px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Espace Client
+                </a>
+                <a
+                  href="/contact"
+                  className="block bg-accent text-dark px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Contactez-nous
+                </a>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

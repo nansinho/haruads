@@ -116,6 +116,21 @@ html[data-color-filter="protanopia"] { filter: url('#protanopia'); }
 html[data-color-filter="deuteranopia"] { filter: url('#deuteranopia'); }
 html[data-color-filter="tritanopia"] { filter: url('#tritanopia'); }
 
+/* Admin utilities */
+.glass-panel {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.glow-orange {
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.15), 0 0 60px rgba(249, 115, 22, 0.05);
+}
+@keyframes slide-up-fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .noise-overlay::after {
   content: '';
   position: absolute;
