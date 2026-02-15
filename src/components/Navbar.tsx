@@ -63,11 +63,8 @@ export default function Navbar() {
         style={{ scaleX }}
       />
 
-      <motion.nav
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className={`fixed top-0 left-0 right-0 z-[150] flex items-center justify-between px-5 py-4 lg:px-12 transition-all duration-500 ${
+      <nav
+        className={`fixed top-0 left-0 right-0 z-[150] flex items-center justify-between px-5 py-4 lg:px-12 transition-all duration-500 animate-[fade-down_0.4s_ease_both] ${
           scrolled
             ? "py-3 lg:py-3 bg-dark/80 backdrop-blur-2xl border-b border-white/[0.04] shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
             : "bg-transparent"
@@ -199,7 +196,7 @@ export default function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
+      </nav>
     </>
   );
 }

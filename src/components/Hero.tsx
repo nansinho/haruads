@@ -4,8 +4,6 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import HeroCarousel from "./HeroCarousel";
 
-const ease: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
-
 const logos = [
   { src: "/images/logos/logo-wordpress.svg", alt: "WordPress" },
   { src: "/images/logos/logo-woocommerce.svg", alt: "WooCommerce" },
@@ -54,67 +52,48 @@ export default function Hero() {
 
       <div className="max-w-[1400px] mx-auto px-5 lg:px-12 w-full pt-44 pb-12 flex-1 flex items-center relative z-2">
         <div className="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 items-center w-full">
-          {/* Left — Text with parallax */}
+          {/* Left — Text (CSS animations, no JS dependency) */}
           <motion.div style={isMobile ? undefined : { y: textY }}>
-            <motion.div
+            <div
               className="flex items-center gap-3 mb-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease }}
+              style={{ animation: "fade-up 0.5s ease both", animationDelay: "0.1s" }}
             >
               <span className="w-2 h-2 rounded-full bg-accent" />
               <span className="text-[0.72rem] uppercase tracking-[3px] text-white/40 font-medium">
                 Agence Web Cr&eacute;ative &mdash; Aix-en-Provence
               </span>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              className="text-fluid-hero leading-[1.05] tracking-[-0.03em]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.span
+            <h1 className="text-fluid-hero leading-[1.05] tracking-[-0.03em]">
+              <span
                 className="block font-light"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1, ease }}
+                style={{ animation: "fade-up 0.6s ease both", animationDelay: "0.15s" }}
               >
                 Nous cr&eacute;ons
-              </motion.span>
-              <motion.span
+              </span>
+              <span
                 className="block font-light"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2, ease }}
+                style={{ animation: "fade-up 0.6s ease both", animationDelay: "0.25s" }}
               >
                 des exp&eacute;riences
-              </motion.span>
-              <motion.span
+              </span>
+              <span
                 className="block font-serif italic text-accent"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3, ease }}
+                style={{ animation: "fade-up 0.6s ease both", animationDelay: "0.35s" }}
               >
                 digitales.
-              </motion.span>
-            </motion.h1>
+              </span>
+            </h1>
 
-            <motion.p
-              className="text-[0.95rem] lg:text-[1.05rem] text-white/35 mt-7 max-w-[420px] leading-[1.8] font-light"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.35, ease }}
-            >
+            {/* LCP element — NO animation, visible immediately at FCP */}
+            <p className="text-[0.95rem] lg:text-[1.05rem] text-white/35 mt-7 max-w-[420px] leading-[1.8] font-light">
               Design UI/UX, d&eacute;veloppement web et solutions e-commerce sur mesure
               pour propulser votre business.
-            </motion.p>
+            </p>
 
-            <motion.div
+            <div
               className="flex flex-wrap gap-4 mt-10"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.45, ease }}
+              style={{ animation: "fade-up 0.5s ease both", animationDelay: "0.4s" }}
             >
               <motion.a
                 href="/contact"
@@ -140,7 +119,7 @@ export default function Hero() {
               >
                 Voir nos projets
               </motion.a>
-            </motion.div>
+            </div>
           </motion.div>
 
           {/* Right — Project Carousel with parallax */}
@@ -148,7 +127,7 @@ export default function Hero() {
             className="relative hidden lg:block"
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             style={isMobile ? undefined : { y: imageY }}
           >
             <div className="absolute -top-8 -right-8 w-[80%] h-[80%] bg-accent/10 rounded-3xl" />
@@ -161,12 +140,7 @@ export default function Hero() {
       </div>
 
       {/* Logo marquee */}
-      <motion.div
-        className="w-full border-t border-white/[0.06] shrink-0"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
-      >
+      <div className="w-full border-t border-white/[0.06] shrink-0">
         <div className="py-8 overflow-hidden relative">
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-dark to-transparent z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-dark to-transparent z-10" />
@@ -190,7 +164,7 @@ export default function Hero() {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
