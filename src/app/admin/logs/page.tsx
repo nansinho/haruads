@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   ScrollText,
   Search,
@@ -15,119 +15,17 @@ import {
   ChevronDown,
   RefreshCw,
   Download,
+  Loader2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
+import { useAdminData } from "@/hooks/useAdminData";
+import { formatDateTime } from "@/lib/utils";
+import type { SecurityLog } from "@/types/database";
 
 type Severity = "info" | "warning" | "error" | "critical";
-
-interface LogEntry {
-  id: string;
-  dateTime: string;
-  user: string;
-  action: string;
-  ip: string;
-  severity: Severity;
-}
-
-const mockLogs: LogEntry[] = [
-  {
-    id: "1",
-    dateTime: "2025-02-14 10:32:15",
-    user: "admin@haruads.com",
-    action: "Connexion reussie",
-    ip: "192.168.1.1",
-    severity: "info",
-  },
-  {
-    id: "2",
-    dateTime: "2025-02-14 09:45:02",
-    user: "admin@haruads.com",
-    action: "Modification des parametres du site",
-    ip: "192.168.1.1",
-    severity: "info",
-  },
-  {
-    id: "3",
-    dateTime: "2025-02-14 08:12:33",
-    user: "inconnu",
-    action: "Tentative de connexion echouee (3 essais)",
-    ip: "45.33.12.87",
-    severity: "warning",
-  },
-  {
-    id: "4",
-    dateTime: "2025-02-13 22:15:41",
-    user: "admin@haruads.com",
-    action: "Export de la base de donnees",
-    ip: "192.168.1.1",
-    severity: "info",
-  },
-  {
-    id: "5",
-    dateTime: "2025-02-13 18:30:09",
-    user: "inconnu",
-    action: "Tentative d'injection SQL detectee",
-    ip: "103.45.67.89",
-    severity: "critical",
-  },
-  {
-    id: "6",
-    dateTime: "2025-02-13 15:22:55",
-    user: "admin@haruads.com",
-    action: "Mise a jour du mot de passe",
-    ip: "192.168.1.1",
-    severity: "info",
-  },
-  {
-    id: "7",
-    dateTime: "2025-02-13 12:05:18",
-    user: "systeme",
-    action: "Erreur serveur - API timeout",
-    ip: "127.0.0.1",
-    severity: "error",
-  },
-  {
-    id: "8",
-    dateTime: "2025-02-12 23:45:30",
-    user: "inconnu",
-    action: "Brute force detecte - IP bloquee",
-    ip: "91.234.56.78",
-    severity: "critical",
-  },
-  {
-    id: "9",
-    dateTime: "2025-02-12 20:10:44",
-    user: "admin@haruads.com",
-    action: "Suppression d'un article de blog",
-    ip: "192.168.1.1",
-    severity: "warning",
-  },
-  {
-    id: "10",
-    dateTime: "2025-02-12 16:33:12",
-    user: "systeme",
-    action: "Certificat SSL renouvele",
-    ip: "127.0.0.1",
-    severity: "info",
-  },
-  {
-    id: "11",
-    dateTime: "2025-02-12 14:20:08",
-    user: "systeme",
-    action: "Erreur de connexion a la base de donnees",
-    ip: "127.0.0.1",
-    severity: "error",
-  },
-  {
-    id: "12",
-    dateTime: "2025-02-12 10:05:55",
-    user: "admin@haruads.com",
-    action: "Activation du mode maintenance",
-    ip: "192.168.1.1",
-    severity: "warning",
-  },
-];
 
 function SeverityBadge({ severity }: { severity: Severity }) {
   const config = {
@@ -153,7 +51,7 @@ function SeverityBadge({ severity }: { severity: Severity }) {
     },
   };
 
-  const { label, className, icon } = config[severity];
+  const { label, className, icon } = config[severity] || config.info;
 
   return (
     <span
@@ -166,20 +64,26 @@ function SeverityBadge({ severity }: { severity: Severity }) {
 }
 
 export default function LogsPage() {
-  const [logs] = useState<LogEntry[]>(mockLogs);
-  const [search, setSearch] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [filterSeverity, setFilterSeverity] = useState<Severity | "all">("all");
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
 
-  const filteredLogs = logs.filter((log) => {
-    const matchesSearch =
-      log.action.toLowerCase().includes(search.toLowerCase()) ||
-      log.user.toLowerCase().includes(search.toLowerCase()) ||
-      log.ip.includes(search);
-    const matchesSeverity =
-      filterSeverity === "all" || log.severity === filterSeverity;
-    return matchesSearch && matchesSeverity;
+  const { data: logs, loading, total, refetch } = useAdminData<SecurityLog>("/api/admin/logs", {
+    search: debouncedSearch,
+    status: filterSeverity,
+    page,
+    pageSize,
   });
+
+  const handleSearch = useCallback((value: string) => {
+    setSearchQuery(value);
+    setPage(1);
+    const timeout = setTimeout(() => setDebouncedSearch(value), 300);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const severityOptions: { value: Severity | "all"; label: string }[] = [
     { value: "all", label: "Toutes les severites" },
@@ -189,6 +93,9 @@ export default function LogsPage() {
     { value: "critical", label: "Critical" },
   ];
 
+  const totalPages = Math.ceil(total / pageSize);
+
+  // Severity counts from loaded data (approximate - from current page data)
   const severityCounts = {
     info: logs.filter((l) => l.severity === "info").length,
     warning: logs.filter((l) => l.severity === "warning").length,
@@ -196,20 +103,47 @@ export default function LogsPage() {
     critical: logs.filter((l) => l.severity === "critical").length,
   };
 
+  const exportCSV = () => {
+    const headers = ["Date", "Utilisateur", "Action", "IP", "Severite"];
+    const rows = logs.map((l) => [
+      l.created_at,
+      l.user_email || l.user_name || l.user_id || "systeme",
+      l.action,
+      l.ip_address || "-",
+      l.severity,
+    ]);
+    const csv = [headers, ...rows]
+      .map((r) => r.map((c) => `"${String(c || "").replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `logs-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <PageTransition className="space-y-6">
       <AnimatedSection>
         <PageHeader
-          title="Logs Sécurité"
+          title="Logs Securite"
           subtitle="Journal d'activite et evenements de securite"
           icon={<ScrollText size={24} />}
           actions={
             <div className="flex items-center gap-3">
-              <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors">
+              <button
+                onClick={exportCSV}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+              >
                 <Download size={16} />
                 Exporter
               </button>
-              <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors">
+              <button
+                onClick={refetch}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+              >
                 <RefreshCw size={16} />
                 Actualiser
               </button>
@@ -269,8 +203,8 @@ export default function LogsPage() {
                 <input
                   type="text"
                   placeholder="Rechercher..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  value={searchQuery}
+                  onChange={(e) => handleSearch(e.target.value)}
                   className="w-full sm:w-64 pl-9 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
                 />
               </div>
@@ -296,6 +230,7 @@ export default function LogsPage() {
                         onClick={() => {
                           setFilterSeverity(option.value);
                           setShowFilterDropdown(false);
+                          setPage(1);
                         }}
                         className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
                           filterSeverity === option.value
@@ -312,94 +247,116 @@ export default function LogsPage() {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-white/[0.06]">
-                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    <span className="flex items-center gap-1.5">
-                      <Clock size={12} />
-                      Date / Heure
-                    </span>
-                  </th>
-                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    <span className="flex items-center gap-1.5">
-                      <User size={12} />
-                      Utilisateur
-                    </span>
-                  </th>
-                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Action
-                  </th>
-                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    <span className="flex items-center gap-1.5">
-                      <Globe size={12} />
-                      IP
-                    </span>
-                  </th>
-                  <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Severite
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/[0.06]">
-                {filteredLogs.map((log) => (
-                  <tr
-                    key={log.id}
-                    className={`hover:bg-white/[0.04] transition-colors ${
-                      log.severity === "critical" ? "bg-red-500/[0.03]" : ""
-                    }`}
+          {loading ? (
+            <div className="flex justify-center py-16">
+              <Loader2 size={24} className="text-accent animate-spin" />
+            </div>
+          ) : (
+            <>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-white/[0.06]">
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <span className="flex items-center gap-1.5">
+                          <Clock size={12} />
+                          Date / Heure
+                        </span>
+                      </th>
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <span className="flex items-center gap-1.5">
+                          <User size={12} />
+                          Utilisateur
+                        </span>
+                      </th>
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        Action
+                      </th>
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <span className="flex items-center gap-1.5">
+                          <Globe size={12} />
+                          IP
+                        </span>
+                      </th>
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        Severite
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.06]">
+                    {logs.length > 0 ? (
+                      logs.map((log) => (
+                        <tr
+                          key={log.id}
+                          className={`hover:bg-white/[0.04] transition-colors ${
+                            log.severity === "critical" ? "bg-red-500/[0.03]" : ""
+                          }`}
+                        >
+                          <td className="py-3.5 px-4">
+                            <span className="text-sm text-text-muted font-mono">
+                              {formatDateTime(log.created_at)}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <span className="text-sm text-text-secondary">
+                              {log.user_email || log.user_name || log.user_id || "systeme"}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <span className="text-sm text-text-primary">{log.action}</span>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <span className="text-sm text-text-muted font-mono">
+                              {log.ip_address || "-"}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <SeverityBadge severity={log.severity} />
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={5} className="text-center py-12">
+                          <ScrollText size={40} className="mx-auto text-text-muted mb-3" />
+                          <p className="text-text-muted">Aucun log trouve</p>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Pagination */}
+              <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/[0.06]">
+                <p className="text-sm text-text-muted">
+                  {total} evenement{total !== 1 ? "s" : ""} au total
+                  {totalPages > 1 && ` - Page ${page} / ${totalPages}`}
+                </p>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page <= 1}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50"
                   >
-                    <td className="py-3.5 px-4">
-                      <span className="text-sm text-text-muted font-mono">
-                        {log.dateTime}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4">
-                      <span className="text-sm text-text-secondary">{log.user}</span>
-                    </td>
-                    <td className="py-3.5 px-4">
-                      <span className="text-sm text-text-primary">{log.action}</span>
-                    </td>
-                    <td className="py-3.5 px-4">
-                      <span className="text-sm text-text-muted font-mono">
-                        {log.ip}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4">
-                      <SeverityBadge severity={log.severity} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {filteredLogs.length === 0 && (
-            <div className="text-center py-12">
-              <ScrollText size={40} className="mx-auto text-text-muted mb-3" />
-              <p className="text-text-muted">Aucun log trouve</p>
-            </div>
+                    <ChevronLeft size={14} />
+                    Precedent
+                  </button>
+                  <span className="px-3 py-1.5 bg-accent/10 border border-accent/20 rounded-lg text-sm text-accent">
+                    {page}
+                  </span>
+                  <button
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={page >= totalPages}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50"
+                  >
+                    Suivant
+                    <ChevronRight size={14} />
+                  </button>
+                </div>
+              </div>
+            </>
           )}
-
-          {/* Pagination placeholder */}
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/[0.06]">
-            <p className="text-sm text-text-muted">
-              {filteredLogs.length} evenement{filteredLogs.length !== 1 ? "s" : ""}{" "}
-              affiche{filteredLogs.length !== 1 ? "s" : ""}
-            </p>
-            <div className="flex items-center gap-2">
-              <button className="px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50" disabled>
-                Precedent
-              </button>
-              <span className="px-3 py-1.5 bg-accent/10 border border-accent/20 rounded-lg text-sm text-accent">
-                1
-              </span>
-              <button className="px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50" disabled>
-                Suivant
-              </button>
-            </div>
-          </div>
         </div>
       </AnimatedSection>
     </PageTransition>

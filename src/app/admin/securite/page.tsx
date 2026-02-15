@@ -7,58 +7,16 @@ import {
   Key,
   Smartphone,
   Monitor,
-  Globe,
-  Clock,
   Eye,
   EyeOff,
   CheckCircle,
   AlertTriangle,
   Loader2,
-  LogOut,
   Save,
+  Info,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
-
-interface Session {
-  id: string;
-  device: string;
-  browser: string;
-  ip: string;
-  location: string;
-  lastActive: string;
-  current: boolean;
-}
-
-const mockSessions: Session[] = [
-  {
-    id: "1",
-    device: "MacBook Pro",
-    browser: "Chrome 121",
-    ip: "192.168.1.1",
-    location: "Paris, France",
-    lastActive: "Actif maintenant",
-    current: true,
-  },
-  {
-    id: "2",
-    device: "iPhone 15",
-    browser: "Safari Mobile",
-    ip: "10.0.0.42",
-    location: "Paris, France",
-    lastActive: "Il y a 2 heures",
-    current: false,
-  },
-  {
-    id: "3",
-    device: "Windows PC",
-    browser: "Firefox 122",
-    ip: "172.16.0.5",
-    location: "Lyon, France",
-    lastActive: "Il y a 3 jours",
-    current: false,
-  },
-];
 
 export default function SecuritePage() {
   const [oldPassword, setOldPassword] = useState("");
@@ -70,8 +28,6 @@ export default function SecuritePage() {
   const [changingPassword, setChangingPassword] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
   const [passwordError2, setPasswordError2] = useState("");
-  const [twoFAEnabled, setTwoFAEnabled] = useState(false);
-  const [sessions] = useState<Session[]>(mockSessions);
 
   const handlePasswordChange = async () => {
     if (newPassword !== confirmPassword) return;
@@ -79,7 +35,7 @@ export default function SecuritePage() {
     setPasswordError2("");
 
     if (newPassword.length < 8) {
-      setPasswordError2("Le mot de passe doit contenir au moins 8 caractères");
+      setPasswordError2("Le mot de passe doit contenir au moins 8 caracteres");
       return;
     }
 
@@ -119,7 +75,7 @@ export default function SecuritePage() {
     <PageTransition className="space-y-6">
       <AnimatedSection>
         <PageHeader
-          title="Sécurité"
+          title="Securite"
           subtitle="Parametres de securite et acces"
           icon={<Shield size={24} />}
         />
@@ -274,7 +230,7 @@ export default function SecuritePage() {
             <div className="space-y-6">
               <div className="flex items-center justify-between p-4 bg-dark rounded-xl border border-white/[0.06]">
                 <div className="flex items-center gap-3">
-                  <Key size={20} className={twoFAEnabled ? "text-emerald-400" : "text-text-muted"} />
+                  <Key size={20} className="text-text-muted" />
                   <div>
                     <p className="text-sm font-medium text-text-primary">
                       Application d&apos;authentification
@@ -284,48 +240,27 @@ export default function SecuritePage() {
                     </p>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setTwoFAEnabled(!twoFAEnabled)}
-                  className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/50 ${
-                    twoFAEnabled ? "bg-accent" : "bg-white/10"
-                  }`}
+                <div
+                  className="relative inline-flex h-7 w-12 items-center rounded-full bg-white/10 cursor-not-allowed opacity-60"
                 >
                   <span
-                    className={`inline-block h-5 w-5 transform rounded-full bg-white shadow-md transition-transform duration-200 ${
-                      twoFAEnabled ? "translate-x-6" : "translate-x-1"
-                    }`}
+                    className="inline-block h-5 w-5 transform rounded-full bg-white shadow-md translate-x-1"
                   />
-                </button>
+                </div>
               </div>
 
-              {twoFAEnabled ? (
-                <div className="p-4 bg-emerald-500/5 border border-emerald-500/20 rounded-xl">
-                  <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle size={16} className="text-emerald-400" />
-                    <p className="text-sm font-medium text-emerald-400">
-                      2FA Active
-                    </p>
-                  </div>
-                  <p className="text-xs text-text-muted">
-                    Votre compte est protege par une double authentification. Un code
-                    sera demande a chaque connexion.
+              <div className="p-4 bg-blue-500/5 border border-blue-500/20 rounded-xl">
+                <div className="flex items-center gap-2 mb-2">
+                  <Info size={16} className="text-blue-400" />
+                  <p className="text-sm font-medium text-blue-400">
+                    Bientot disponible
                   </p>
                 </div>
-              ) : (
-                <div className="p-4 bg-yellow-500/5 border border-yellow-500/20 rounded-xl">
-                  <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle size={16} className="text-yellow-400" />
-                    <p className="text-sm font-medium text-yellow-400">
-                      2FA Desactivee
-                    </p>
-                  </div>
-                  <p className="text-xs text-text-muted">
-                    Nous recommandons fortement d&apos;activer la double authentification
-                    pour securiser votre compte.
-                  </p>
-                </div>
-              )}
+                <p className="text-xs text-text-muted">
+                  L&apos;authentification a deux facteurs sera disponible dans une prochaine mise a jour.
+                  Cette fonctionnalite ajoutera une couche de securite supplementaire a votre compte.
+                </p>
+              </div>
 
               <div className="pt-2">
                 <h3 className="text-sm font-medium text-text-secondary mb-3">
@@ -335,7 +270,10 @@ export default function SecuritePage() {
                   Generez des codes de secours pour acceder a votre compte si vous
                   perdez votre appareil.
                 </p>
-                <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors">
+                <button
+                  disabled
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-muted rounded-full text-sm opacity-50 cursor-not-allowed"
+                >
                   <Key size={14} />
                   Generer des codes de secours
                 </button>
@@ -362,80 +300,16 @@ export default function SecuritePage() {
                 </p>
               </div>
             </div>
-            <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-red-500/10 border border-red-500/20 text-red-400 rounded-full text-sm hover:bg-red-500/20 transition-colors">
-              <LogOut size={14} />
-              Deconnecter tout
-            </button>
           </div>
 
-          <div className="space-y-3">
-            {sessions.map((session) => (
-              <div
-                key={session.id}
-                className={`flex items-center justify-between p-4 rounded-xl border transition-colors ${
-                  session.current
-                    ? "bg-accent/5 border-accent/20"
-                    : "bg-dark border-white/[0.06] hover:bg-white/[0.04]"
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  <div
-                    className={`p-2 rounded-lg ${
-                      session.current ? "bg-accent/10" : "bg-white/5"
-                    }`}
-                  >
-                    {session.device.includes("iPhone") ? (
-                      <Smartphone
-                        size={18}
-                        className={
-                          session.current ? "text-accent" : "text-text-muted"
-                        }
-                      />
-                    ) : (
-                      <Monitor
-                        size={18}
-                        className={
-                          session.current ? "text-accent" : "text-text-muted"
-                        }
-                      />
-                    )}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-text-primary">
-                        {session.device}
-                      </p>
-                      {session.current && (
-                        <span className="px-2 py-0.5 bg-accent/10 border border-accent/20 text-accent text-xs rounded-full">
-                          Session actuelle
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-3 mt-1">
-                      <span className="text-xs text-text-muted flex items-center gap-1">
-                        <Globe size={10} />
-                        {session.browser}
-                      </span>
-                      <span className="text-xs text-text-muted">{session.ip}</span>
-                      <span className="text-xs text-text-muted">
-                        {session.location}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-text-muted flex items-center gap-1">
-                    <Clock size={10} />
-                    {session.lastActive}
-                  </span>
-                  {!session.current && (
-                    <button className="p-1.5 rounded-lg hover:bg-red-500/10 text-text-muted hover:text-red-400 transition-colors" title="Deconnecter">
-                      <LogOut size={14} />
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
+          <div className="p-6 bg-dark rounded-xl border border-white/[0.06] text-center">
+            <Info size={32} className="mx-auto text-text-muted mb-3" />
+            <p className="text-sm text-text-secondary font-medium mb-1">
+              Gestion des sessions
+            </p>
+            <p className="text-xs text-text-muted max-w-md mx-auto">
+              La gestion des sessions sera disponible dans une prochaine mise a jour.
+            </p>
           </div>
         </div>
       </AnimatedSection>

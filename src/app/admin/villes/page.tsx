@@ -1,108 +1,401 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, Search, MapPin } from "lucide-react";
+import { useState, useCallback } from "react";
+import {
+  Plus,
+  Search,
+  MapPin,
+  Download,
+  RefreshCw,
+  Pencil,
+  Trash2,
+  Loader2,
+} from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
+import Modal from "@/components/admin/Modal";
+import ConfirmDialog from "@/components/admin/ConfirmDialog";
+import FormField from "@/components/admin/FormField";
+import TagInput from "@/components/admin/TagInput";
+import { useToast } from "@/components/admin/Toast";
+import { useAdminData } from "@/hooks/useAdminData";
+import { slugify, formatDateTime } from "@/lib/utils";
+import type { City } from "@/types/database";
+
+const filterTabs = [
+  { key: "all", label: "Toutes" },
+  { key: "active", label: "Actives" },
+  { key: "inactive", label: "Inactives" },
+];
+
+const emptyForm = {
+  name: "",
+  slug: "",
+  department: "",
+  region: "",
+  population: 0,
+  description: "",
+  seo_title: "",
+  seo_description: "",
+  seo_keywords: [] as string[],
+  is_active: true,
+};
 
 export default function VillesAdminPage() {
-  const [search, setSearch] = useState("");
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [editingCity, setEditingCity] = useState<City | null>(null);
+  const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const [form, setForm] = useState(emptyForm);
+  const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const { toast } = useToast();
+
+  const { data: cities, loading, refetch } = useAdminData<City>("/api/admin/cities", {
+    status: activeFilter,
+    search: debouncedSearch,
+  });
+
+  const handleSearch = useCallback((value: string) => {
+    setSearchQuery(value);
+    const timeout = setTimeout(() => setDebouncedSearch(value), 300);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const openCreate = () => {
+    setEditingCity(null);
+    setForm(emptyForm);
+    setShowModal(true);
+  };
+
+  const openEdit = (city: City) => {
+    setEditingCity(city);
+    setForm({
+      name: city.name,
+      slug: city.slug,
+      department: city.department || "",
+      region: city.region || "",
+      population: city.population || 0,
+      description: city.description || "",
+      seo_title: city.seo_title || "",
+      seo_description: city.seo_description || "",
+      seo_keywords: [],
+      is_active: city.is_active,
+    });
+    setShowModal(true);
+  };
+
+  const handleNameChange = (value: string) => {
+    setForm((prev) => ({
+      ...prev,
+      name: value,
+      ...(!editingCity ? { slug: slugify(value) } : {}),
+    }));
+  };
+
+  const handleSave = async () => {
+    if (!form.name) {
+      toast({ type: "error", message: "Le nom est requis" });
+      return;
+    }
+    setSaving(true);
+    try {
+      const url = editingCity ? `/api/admin/cities/${editingCity.id}` : "/api/admin/cities";
+      const method = editingCity ? "PUT" : "POST";
+      const payload: Record<string, unknown> = { ...form };
+      // Map seo_keywords to seo_content for DB compatibility
+      if (form.seo_keywords.length > 0) {
+        payload.seo_content = form.seo_keywords.join(", ");
+      }
+      delete payload.seo_keywords;
+
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Erreur");
+      }
+      toast({ type: "success", message: editingCity ? "Ville mise à jour" : "Ville créée" });
+      setShowModal(false);
+      setForm(emptyForm);
+      setEditingCity(null);
+      refetch();
+    } catch (err) {
+      toast({ type: "error", message: err instanceof Error ? err.message : "Erreur" });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const toggleActive = async (city: City) => {
+    try {
+      const res = await fetch(`/api/admin/cities/${city.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_active: !city.is_active }),
+      });
+      if (!res.ok) throw new Error("Erreur");
+      toast({ type: "success", message: city.is_active ? "Ville désactivée" : "Ville activée" });
+      refetch();
+    } catch {
+      toast({ type: "error", message: "Erreur lors de la mise à jour" });
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!selectedCity) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/admin/cities/${selectedCity.id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Erreur");
+      toast({ type: "success", message: "Ville supprimée" });
+      setShowDelete(false);
+      setSelectedCity(null);
+      refetch();
+    } catch {
+      toast({ type: "error", message: "Erreur lors de la suppression" });
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const exportCSV = () => {
+    const headers = ["Nom", "Slug", "Département", "Région", "Population", "Actif", "Date création"];
+    const rows = cities.map((c) => [
+      c.name,
+      c.slug,
+      c.department || "",
+      c.region || "",
+      c.population ?? "",
+      c.is_active ? "Oui" : "Non",
+      c.created_at,
+    ]);
+    const csv = [headers, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `villes-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <PageTransition className="space-y-6">
-      <AnimatedSection>
-        <PageHeader
-          title="Villes (SEO Local)"
-          subtitle="Gérez les villes pour le référencement local."
-          icon={<MapPin size={24} />}
-          actions={
-            <button className="flex items-center gap-2 px-5 py-2.5 bg-accent text-dark font-semibold rounded-full hover:bg-accent-hover transition-all text-sm shadow-lg shadow-accent/20">
+      <PageHeader
+        icon={<MapPin size={24} />}
+        title="Villes (SEO Local)"
+        subtitle="Gérez les villes pour le référencement local."
+        actions={
+          <>
+            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+              <Download size={16} />
+              Exporter
+            </button>
+            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+              <RefreshCw size={16} />
+              Actualiser
+            </button>
+            <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2.5 bg-accent text-dark font-semibold rounded-full hover:bg-accent-hover shadow-lg shadow-accent/20 transition-all text-sm">
               <Plus size={16} />
               Ajouter une ville
             </button>
-          }
-        />
-      </AnimatedSection>
+          </>
+        }
+      />
 
-      {/* Filters bar */}
+      {/* Filters & Search */}
       <AnimatedSection>
-        <div className="flex flex-wrap gap-2">
-          <button className="px-4 py-2 rounded-full text-sm font-medium bg-accent-dim text-accent border border-accent/20 transition-all">
-            Toutes
-          </button>
-          <button className="px-4 py-2 rounded-full text-sm font-medium bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary transition-all">
-            Actives
-          </button>
-          <button className="px-4 py-2 rounded-full text-sm font-medium bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary transition-all">
-            Inactives
-          </button>
+        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+          <div className="relative">
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+            <input
+              type="text"
+              placeholder="Rechercher par nom, département, région..."
+              value={searchQuery}
+              onChange={(e) => handleSearch(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+            />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {filterTabs.map((filter) => (
+              <button
+                key={filter.key}
+                onClick={() => setActiveFilter(filter.key)}
+                className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
+                  activeFilter === filter.key
+                    ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
+                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
         </div>
       </AnimatedSection>
 
+      {/* Table */}
       <AnimatedSection>
         <div className="bg-dark-2 border border-white/[0.06] rounded-2xl overflow-hidden">
-          {/* Search */}
-          <div className="p-4 border-b border-white/[0.06]">
-            <div className="relative w-full sm:w-72">
-              <Search
-                size={15}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
-              />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Rechercher une ville..."
-                className="w-full pl-9 pr-4 py-2 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
-              />
+          {loading ? (
+            <div className="flex justify-center py-16">
+              <Loader2 size={24} className="text-accent animate-spin" />
             </div>
-          </div>
-
-          {/* Table */}
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-white/[0.06]">
-                  <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Ville
-                  </th>
-                  <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Département
-                  </th>
-                  <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Région
-                  </th>
-                  <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Slug
-                  </th>
-                  <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Actif
-                  </th>
-                  <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td colSpan={6} className="px-5 py-12 text-center">
-                    <div className="flex flex-col items-center gap-3">
-                      <MapPin size={40} className="text-text-muted" />
-                      <p className="text-text-muted">
-                        Aucune ville trouvée. Connectez Supabase pour charger les données.
-                      </p>
-                      <button className="mt-2 flex items-center gap-2 px-4 py-2 bg-accent-dim text-accent border border-accent/20 rounded-full text-sm font-medium hover:bg-accent/20 transition-all">
-                        <Plus size={16} />
-                        Ajouter votre première ville
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-white/[0.06]">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Ville</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Département</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Région</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Population</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Slug</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Actif</th>
+                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/[0.06]">
+                  {cities.length > 0 ? (
+                    cities.map((city) => (
+                      <tr key={city.id} className="hover:bg-white/[0.02] transition-colors">
+                        <td className="px-6 py-4">
+                          <span className="text-sm font-medium text-text-primary">{city.name}</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-sm text-text-secondary">{city.department || "-"}</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-sm text-text-secondary">{city.region || "-"}</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-sm text-text-secondary">
+                            {city.population ? city.population.toLocaleString("fr-FR") : "-"}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-xs text-text-muted font-mono">/{city.slug}</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <button onClick={() => toggleActive(city)}>
+                            {city.is_active ? (
+                              <span className="inline-flex px-2.5 py-1 bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-medium cursor-pointer hover:bg-emerald-500/25 transition-all">
+                                Actif
+                              </span>
+                            ) : (
+                              <span className="inline-flex px-2.5 py-1 bg-gray-500/15 text-gray-400 border border-gray-500/20 rounded-lg text-xs font-medium cursor-pointer hover:bg-gray-500/25 transition-all">
+                                Inactif
+                              </span>
+                            )}
+                          </button>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <button onClick={() => openEdit(city)} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all">
+                              <Pencil size={16} />
+                            </button>
+                            <button onClick={() => { setSelectedCity(city); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-all">
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={7} className="px-6 py-16 text-center">
+                        <div className="flex flex-col items-center gap-3">
+                          <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center">
+                            <MapPin size={24} className="text-text-muted" />
+                          </div>
+                          <div>
+                            <p className="text-text-muted font-medium">Aucune ville trouvée</p>
+                            <p className="text-text-muted text-sm mt-1">Créez votre première ville pour le SEO local</p>
+                          </div>
+                          <button onClick={openCreate} className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-accent-dim text-accent border border-accent/20 rounded-full hover:bg-accent/20 transition-all text-sm font-medium">
+                            <Plus size={16} />
+                            Ajouter votre première ville
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </AnimatedSection>
+
+      {/* Create / Edit Modal */}
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title={editingCity ? "Modifier la ville" : "Nouvelle ville"}
+        description={editingCity ? undefined : "Ajouter une nouvelle ville pour le SEO local"}
+        size="lg"
+        footer={
+          <>
+            <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all">
+              Annuler
+            </button>
+            <button onClick={handleSave} disabled={saving} className="px-4 py-2 text-sm font-semibold text-dark bg-accent rounded-full hover:bg-accent-hover transition-all disabled:opacity-50">
+              {saving ? "Enregistrement..." : editingCity ? "Mettre à jour" : "Créer la ville"}
+            </button>
+          </>
+        }
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <FormField label="Nom" name="name" value={form.name} onChange={handleNameChange} required placeholder="Nom de la ville" />
+          <div>
+            <FormField label="Slug" name="slug" value={form.slug} onChange={(v) => setForm({ ...form, slug: v })} placeholder="nom-de-la-ville" />
+            <p className="text-xs text-text-muted mt-1">Auto-généré depuis le nom</p>
+          </div>
+          <FormField label="Département" name="department" value={form.department} onChange={(v) => setForm({ ...form, department: v })} placeholder="Ex: Rhône" />
+          <FormField label="Région" name="region" value={form.region} onChange={(v) => setForm({ ...form, region: v })} placeholder="Ex: Auvergne-Rhône-Alpes" />
+          <FormField label="Population" name="population" type="number" value={form.population} onChange={(v) => setForm({ ...form, population: parseInt(v) || 0 })} placeholder="0" />
+          <div />
+          <div className="sm:col-span-2">
+            <FormField label="Description" name="description" type="textarea" value={form.description} onChange={(v) => setForm({ ...form, description: v })} placeholder="Description de la ville..." rows={3} />
+          </div>
+          <FormField label="Titre SEO" name="seo_title" value={form.seo_title} onChange={(v) => setForm({ ...form, seo_title: v })} placeholder="Titre pour les moteurs de recherche" />
+          <FormField label="Description SEO" name="seo_description" value={form.seo_description} onChange={(v) => setForm({ ...form, seo_description: v })} placeholder="Description meta" />
+          <div className="sm:col-span-2">
+            <TagInput label="Mots-clés SEO" tags={form.seo_keywords} onChange={(seo_keywords) => setForm({ ...form, seo_keywords })} placeholder="Ajouter un mot-clé..." />
+          </div>
+
+          {/* Toggle: Actif */}
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium text-text-secondary">Actif</label>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.is_active}
+                onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
+                className="sr-only peer"
+              />
+              <div className="w-11 h-6 bg-dark border border-white/[0.08] rounded-full peer peer-checked:bg-accent/20 peer-checked:border-accent/30 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-gray-400 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:bg-accent" />
+              <span className="ml-3 text-sm text-text-secondary">{form.is_active ? "Oui" : "Non"}</span>
+            </label>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Delete Confirmation */}
+      <ConfirmDialog
+        isOpen={showDelete}
+        onClose={() => setShowDelete(false)}
+        onConfirm={handleDelete}
+        message={`Êtes-vous sûr de vouloir supprimer la ville "${selectedCity?.name}" ? Cette action est irréversible.`}
+        loading={deleting}
+      />
     </PageTransition>
   );
 }

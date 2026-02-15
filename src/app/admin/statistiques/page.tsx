@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BarChart3,
   TrendingUp,
@@ -9,6 +9,8 @@ import {
   FileText,
   ArrowUpRight,
   Calendar,
+  Loader2,
+  RefreshCw,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
@@ -41,26 +43,59 @@ function MetricCard({
   );
 }
 
-function ChartPlaceholder({ title, height = "h-64" }: { title: string; height?: string }) {
-  return (
-    <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
-      <h3 className="font-serif text-lg text-text-primary mb-4">{title}</h3>
-      <div
-        className={`${height} flex items-center justify-center border border-dashed border-white/[0.06] rounded-xl`}
-      >
-        <div className="text-center">
-          <BarChart3 size={40} className="text-text-muted mx-auto mb-2" />
-          <p className="text-text-muted text-sm">
-            Connectez Supabase pour afficher les graphiques
-          </p>
-        </div>
-      </div>
-    </div>
-  );
+interface StatsData {
+  totalViews: number;
+  uniqueVisitors: number;
+  totalPages: number;
+  conversionRate: number;
+  topPages: { path: string; views: number; uniqueVisitors: number; avgTime: string }[];
+  dailyViews: { date: string; views: number }[];
 }
 
+const defaultStats: StatsData = {
+  totalViews: 0,
+  uniqueVisitors: 0,
+  totalPages: 0,
+  conversionRate: 0,
+  topPages: [],
+  dailyViews: [],
+};
+
 export default function StatistiquesPage() {
-  const [period] = useState("30j");
+  const [period, setPeriod] = useState("30");
+  const [stats, setStats] = useState<StatsData>(defaultStats);
+  const [loading, setLoading] = useState(true);
+
+  const fetchStats = async (periodDays: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/admin/stats?period=${periodDays}`);
+      if (!res.ok) throw new Error("Erreur");
+      const json = await res.json();
+      setStats({
+        totalViews: json.totalViews || 0,
+        uniqueVisitors: json.uniqueVisitors || 0,
+        totalPages: json.totalPages || 0,
+        conversionRate: json.conversionRate || 0,
+        topPages: json.topPages || [],
+        dailyViews: json.dailyViews || [],
+      });
+    } catch {
+      // Keep defaults on error
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStats(period);
+  }, [period]);
+
+  const periods = [
+    { value: "7", label: "7j" },
+    { value: "30", label: "30j" },
+    { value: "90", label: "90j" },
+  ];
 
   return (
     <PageTransition className="space-y-6">
@@ -70,97 +105,198 @@ export default function StatistiquesPage() {
           subtitle="Analyses detaillees de votre activite"
           icon={<BarChart3 size={24} />}
           actions={
-            <button className="flex items-center gap-2 px-4 py-2.5 bg-accent-dim text-accent border border-accent/20 rounded-full text-sm font-medium hover:bg-accent/20 transition-all">
-              <Calendar size={16} />
-              30 derniers jours
-            </button>
+            <div className="flex items-center gap-2">
+              {periods.map((p) => (
+                <button
+                  key={p.value}
+                  onClick={() => setPeriod(p.value)}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all ${
+                    period === p.value
+                      ? "bg-accent-dim text-accent border border-accent/20"
+                      : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary"
+                  }`}
+                >
+                  {p.value === period && <Calendar size={16} />}
+                  {p.label}
+                </button>
+              ))}
+              <button
+                onClick={() => fetchStats(period)}
+                className="p-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-colors"
+                title="Actualiser"
+              >
+                <RefreshCw size={16} />
+              </button>
+            </div>
           }
         />
       </AnimatedSection>
 
-      {/* Metrics */}
-      <AnimatedSection>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <MetricCard
-            label="Visites ce mois"
-            value="0"
-            change="+0%"
-            icon={<Eye size={20} />}
-          />
-          <MetricCard
-            label="Visiteurs uniques"
-            value="0"
-            change="+0%"
-            icon={<Users size={20} />}
-          />
-          <MetricCard
-            label="Pages vues"
-            value="0"
-            change="+0%"
-            icon={<FileText size={20} />}
-          />
-          <MetricCard
-            label="Taux de conversion"
-            value="0%"
-            change="+0%"
-            icon={<TrendingUp size={20} />}
-          />
+      {loading ? (
+        <div className="flex justify-center py-32">
+          <Loader2 size={32} className="text-accent animate-spin" />
         </div>
-      </AnimatedSection>
+      ) : (
+        <>
+          {/* Metrics */}
+          <AnimatedSection>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <MetricCard
+                label="Visites totales"
+                value={stats.totalViews.toLocaleString("fr-FR")}
+                icon={<Eye size={20} />}
+              />
+              <MetricCard
+                label="Visiteurs uniques"
+                value={stats.uniqueVisitors.toLocaleString("fr-FR")}
+                icon={<Users size={20} />}
+              />
+              <MetricCard
+                label="Pages indexees"
+                value={stats.totalPages.toLocaleString("fr-FR")}
+                icon={<FileText size={20} />}
+              />
+              <MetricCard
+                label="Taux de conversion"
+                value={`${stats.conversionRate.toFixed(1)}%`}
+                icon={<TrendingUp size={20} />}
+              />
+            </div>
+          </AnimatedSection>
 
-      {/* Charts */}
-      <AnimatedSection>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <ChartPlaceholder title="Visites par jour" />
-          <ChartPlaceholder title="Sources de trafic" />
-        </div>
-      </AnimatedSection>
+          {/* Daily Views Table */}
+          <AnimatedSection>
+            <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+              <h3 className="font-serif text-lg text-text-primary mb-4">Visites par jour</h3>
+              {stats.dailyViews.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-white/[0.06]">
+                        <th className="text-left px-5 py-3 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                          Date
+                        </th>
+                        <th className="text-right px-5 py-3 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                          Vues
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/[0.06]">
+                      {stats.dailyViews.map((day, i) => (
+                        <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                          <td className="px-5 py-3">
+                            <span className="text-sm text-text-secondary">
+                              {new Date(day.date).toLocaleDateString("fr-FR", {
+                                weekday: "short",
+                                day: "2-digit",
+                                month: "short",
+                              })}
+                            </span>
+                          </td>
+                          <td className="px-5 py-3 text-right">
+                            <div className="flex items-center justify-end gap-3">
+                              <div className="w-32 h-2 bg-dark rounded-full overflow-hidden">
+                                <div
+                                  className="h-full bg-accent/60 rounded-full"
+                                  style={{
+                                    width: `${
+                                      stats.dailyViews.length > 0
+                                        ? (day.views / Math.max(...stats.dailyViews.map((d) => d.views), 1)) * 100
+                                        : 0
+                                    }%`,
+                                  }}
+                                />
+                              </div>
+                              <span className="text-sm font-medium text-text-primary min-w-[3rem] text-right">
+                                {day.views.toLocaleString("fr-FR")}
+                              </span>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-48 border border-dashed border-white/[0.06] rounded-xl">
+                  <div className="text-center">
+                    <BarChart3 size={32} className="text-text-muted mx-auto mb-2" />
+                    <p className="text-text-muted text-sm">
+                      Aucune donnee de visite pour cette periode
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </AnimatedSection>
 
-      <AnimatedSection>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <ChartPlaceholder title="Pages les plus visitées" />
-          <ChartPlaceholder title="Parcours chatbot" />
-        </div>
-      </AnimatedSection>
-
-      {/* Top pages */}
-      <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
-          <h3 className="font-serif text-lg text-text-primary mb-4">
-            Pages les plus visitees
-          </h3>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-white/[0.06]">
-                  <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Page
-                  </th>
-                  <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Vues
-                  </th>
-                  <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Visiteurs uniques
-                  </th>
-                  <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
-                    Temps moyen
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td
-                    colSpan={4}
-                    className="px-5 py-12 text-center text-text-muted"
-                  >
-                    Connectez Supabase pour voir les statistiques
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </AnimatedSection>
+          {/* Top Pages Table */}
+          <AnimatedSection>
+            <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+              <h3 className="font-serif text-lg text-text-primary mb-4">
+                Pages les plus visitees
+              </h3>
+              {stats.topPages.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-white/[0.06]">
+                        <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                          Page
+                        </th>
+                        <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                          Vues
+                        </th>
+                        <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                          Visiteurs uniques
+                        </th>
+                        <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                          Temps moyen
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/[0.06]">
+                      {stats.topPages.map((page, i) => (
+                        <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                          <td className="px-5 py-3">
+                            <span className="text-sm text-text-primary font-medium">
+                              {page.path}
+                            </span>
+                          </td>
+                          <td className="px-5 py-3 text-right">
+                            <span className="text-sm text-text-secondary">
+                              {page.views.toLocaleString("fr-FR")}
+                            </span>
+                          </td>
+                          <td className="px-5 py-3 text-right">
+                            <span className="text-sm text-text-secondary">
+                              {page.uniqueVisitors.toLocaleString("fr-FR")}
+                            </span>
+                          </td>
+                          <td className="px-5 py-3 text-right">
+                            <span className="text-sm text-text-muted">
+                              {page.avgTime || "-"}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-48 border border-dashed border-white/[0.06] rounded-xl">
+                  <div className="text-center">
+                    <FileText size={32} className="text-text-muted mx-auto mb-2" />
+                    <p className="text-text-muted text-sm">
+                      Aucune donnee de pages pour cette periode
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </AnimatedSection>
+        </>
+      )}
     </PageTransition>
   );
 }
