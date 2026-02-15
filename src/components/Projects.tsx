@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
@@ -66,12 +67,12 @@ export default function Projects() {
         <ScrollReveal animation="scaleUp">
           <div className="mb-5 relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
             <div className="aspect-[16/7] relative overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={featured.image}
                 alt={featured.alt || featured.title}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                fill
+                sizes="(max-width: 768px) 100vw, 1200px"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent" />
             </div>
@@ -102,12 +103,12 @@ export default function Projects() {
             <ScrollReveal key={project.title} delay={i * 80}>
               <div className="relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
                 <div className="aspect-[4/3] relative overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={project.image}
                     alt={project.alt || project.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent" />
                 </div>

@@ -26,7 +26,7 @@ export default function About() {
                 height={670}
                 className="w-full h-auto object-cover"
                 loading="lazy"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 530px"
               />
             </div>
           </ScrollReveal>
