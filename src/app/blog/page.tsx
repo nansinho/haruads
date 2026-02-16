@@ -76,7 +76,7 @@ export default function BlogPage() {
               </span>
               <h1 className="text-[2rem] sm:text-[2.8rem] lg:text-[4rem] leading-[1.08] tracking-[-0.02em] mt-4">
                 <span className="font-light">Actualités & </span>
-                <span className="font-serif italic text-accent">ressources.</span>
+                <span className="font-serif italic">ressources.</span>
               </h1>
               <p className="text-[0.95rem] text-white/40 mt-5 max-w-[500px] leading-[1.8] font-light">
                 Conseils, tendances et retours d&apos;expérience sur le développement web,
@@ -112,15 +112,15 @@ export default function BlogPage() {
                         {featured.date} &bull; {featured.readTime} de lecture
                       </span>
                     </div>
-                    <h2 className="text-[1.4rem] lg:text-[2rem] font-serif text-text-dark group-hover:text-accent transition-colors leading-[1.2]">
+                    <h2 className="text-[1.4rem] lg:text-[2rem] font-semibold text-text-dark group-hover:text-accent transition-colors leading-[1.2]">
                       {featured.title}
                     </h2>
                     <p className="text-[0.9rem] text-text-body leading-[1.7] mt-4">
                       {featured.excerpt}
                     </p>
-                    <span className="inline-flex items-center gap-2 text-[0.85rem] text-accent font-medium mt-6">
+                    <span className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-full bg-accent text-white text-[0.82rem] font-medium group-hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] transition-all duration-300">
                       Lire l&apos;article
-                      <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-accent fill-none stroke-2">
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-white fill-none stroke-2">
                         <line x1="5" y1="12" x2="19" y2="12" />
                         <polyline points="12 5 19 12 12 19" />
                       </svg>
@@ -166,12 +166,19 @@ export default function BlogPage() {
                       <div className="text-[0.7rem] text-text-body mb-3">
                         {article.date} &bull; {article.readTime} de lecture
                       </div>
-                      <h4 className="text-[1rem] font-serif text-text-dark group-hover:text-accent transition-colors leading-[1.3]">
+                      <h4 className="text-[1rem] font-semibold text-text-dark group-hover:text-accent transition-colors leading-[1.3]">
                         {article.title}
                       </h4>
                       <p className="text-[0.8rem] text-text-body leading-[1.7] mt-2 line-clamp-2">
                         {article.excerpt}
                       </p>
+                      <span className="inline-flex items-center gap-2 text-[0.78rem] text-accent font-medium mt-4 group-hover:gap-3 transition-all duration-300">
+                        Lire la suite
+                        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-accent fill-none stroke-2">
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                          <polyline points="12 5 19 12 12 19" />
+                        </svg>
+                      </span>
                     </div>
                   </a>
                 </ScrollReveal>

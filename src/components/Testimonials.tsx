@@ -54,7 +54,7 @@ export default function Testimonials() {
               </span>
               <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em] mt-4">
                 <span className="font-light">Ce que disent </span>
-                <span className="font-serif italic text-accent">nos clients.</span>
+                <span className="font-serif italic">nos clients.</span>
               </h2>
             </div>
 
