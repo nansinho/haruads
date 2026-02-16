@@ -104,52 +104,43 @@ export default function HeroCarousel() {
   const project = projects[current];
   if (!project) return null;
 
-  const slideVariants = {
+  const imageVariants = {
     enter: (dir: number) => ({
-      x: dir > 0 ? "8%" : "-8%",
+      x: dir > 0 ? "6%" : "-6%",
       opacity: 0,
-      scale: 1.05,
     }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
+    center: { x: 0, opacity: 1 },
     exit: (dir: number) => ({
-      x: dir > 0 ? "-8%" : "8%",
+      x: dir > 0 ? "-6%" : "6%",
       opacity: 0,
-      scale: 0.95,
     }),
   };
 
-  const contentVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: 0.15 + i * 0.08, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
-    }),
+  const textVariants = {
+    enter: { opacity: 0, y: 12 },
+    center: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -8 },
   };
 
   return (
-    <div className="relative w-full">
-      {/* Main carousel area */}
-      <div className="relative overflow-hidden rounded-2xl aspect-[16/10] shadow-[0_30px_100px_rgba(0,0,0,0.6)] border border-white/[0.06]">
+    <div className="relative w-full rounded-2xl overflow-hidden border border-white/[0.06] shadow-[0_30px_100px_rgba(0,0,0,0.5)]">
+      {/* Image area — fully visible */}
+      <div className="relative aspect-[16/9] overflow-hidden bg-dark-2">
         <AnimatePresence custom={direction} mode="wait">
           <motion.div
-            key={project.id}
+            key={`img-${project.id}`}
             custom={direction}
-            variants={slideVariants}
+            variants={imageVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="absolute inset-0"
           >
-            {/* Image with Ken Burns zoom */}
+            {/* Ken Burns zoom */}
             <motion.div
               className="absolute inset-0"
-              animate={{ scale: [1, 1.08] }}
+              animate={{ scale: [1, 1.06] }}
               transition={{ duration: 6, ease: "linear" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -160,90 +151,18 @@ export default function HeroCarousel() {
                 fetchPriority="high"
               />
             </motion.div>
-
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
-
-            {/* Bandeau — solid dark strip behind text */}
-            <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-md border-t border-white/[0.08] p-6 lg:p-8">
-              {/* Slide counter */}
-              <motion.div
-                custom={0}
-                variants={contentVariants}
-                initial="hidden"
-                animate="visible"
-                className="flex items-center gap-3 mb-4"
-              >
-                <span className="text-[0.65rem] font-mono text-white/40 tracking-widest">
-                  {String(current + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
-                </span>
-              </motion.div>
-
-              {/* Tags */}
-              <motion.div
-                custom={1}
-                variants={contentVariants}
-                initial="hidden"
-                animate="visible"
-                className="flex flex-wrap gap-2 mb-3"
-              >
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 rounded-full bg-accent/20 backdrop-blur-md text-[0.68rem] font-medium text-accent border border-accent/20"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </motion.div>
-
-              {/* Title */}
-              <motion.h2
-                custom={2}
-                variants={contentVariants}
-                initial="hidden"
-                animate="visible"
-                className="text-[1.3rem] lg:text-[1.7rem] font-semibold text-white tracking-[-0.01em]"
-              >
-                {project.title}
-              </motion.h2>
-
-              {/* Description */}
-              <motion.p
-                custom={3}
-                variants={contentVariants}
-                initial="hidden"
-                animate="visible"
-                className="text-[0.8rem] text-white/50 mt-2 max-w-[420px] leading-[1.6]"
-              >
-                {project.description}
-              </motion.p>
-
-              {/* CTA Button */}
-              <motion.a
-                custom={4}
-                variants={contentVariants}
-                initial="hidden"
-                animate="visible"
-                href={`/projets/${project.slug}`}
-                className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] transition-shadow duration-300"
-              >
-                En savoir plus
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-dark fill-none stroke-2">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </motion.a>
-            </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Navigation arrows - glassmorphism style */}
+        {/* Light vignette — just enough to see arrows */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(0,0,0,0.2)_100%)] pointer-events-none" />
+
+        {/* Navigation arrows */}
         {projects.length > 1 && (
           <>
             <button
               onClick={prev}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white/50 hover:bg-white/15 hover:text-white hover:border-white/25 transition-all duration-300 cursor-pointer z-10"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/30 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/70 hover:bg-black/50 hover:text-white transition-all duration-300 cursor-pointer z-10"
               aria-label="Projet précédent"
             >
               <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-current fill-none stroke-2">
@@ -252,7 +171,7 @@ export default function HeroCarousel() {
             </button>
             <button
               onClick={next}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white/50 hover:bg-white/15 hover:text-white hover:border-white/25 transition-all duration-300 cursor-pointer z-10"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/30 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/70 hover:bg-black/50 hover:text-white transition-all duration-300 cursor-pointer z-10"
               aria-label="Projet suivant"
             >
               <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-current fill-none stroke-2">
@@ -262,54 +181,86 @@ export default function HeroCarousel() {
           </>
         )}
 
-        {/* Progress bar at bottom */}
+        {/* Slide counter — top right corner */}
+        <div className="absolute top-3 right-3 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-md border border-white/10 z-10">
+          <span className="text-[0.65rem] font-mono text-white/70 tracking-wider">
+            {String(current + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+          </span>
+        </div>
+      </div>
+
+      {/* Bandeau info — separated below the image */}
+      <div className="bg-dark-2 border-t border-white/[0.06] px-5 lg:px-6 py-4 lg:py-5">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`info-${project.id}`}
+            variants={textVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <div className="flex items-center justify-between gap-4">
+              {/* Left: project info */}
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2.5 py-0.5 rounded-full bg-accent/10 text-[0.65rem] font-medium text-accent"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h2 className="text-[1.05rem] lg:text-[1.2rem] font-semibold text-white truncate">
+                  {project.title}
+                </h2>
+                <p className="text-[0.75rem] text-white/40 mt-1 leading-[1.5] line-clamp-1">
+                  {project.description}
+                </p>
+              </div>
+
+              {/* Right: CTA */}
+              <a
+                href={`/projets/${project.slug}`}
+                className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] transition-shadow duration-300"
+              >
+                En savoir plus
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-dark fill-none stroke-2">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </a>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Progress bar */}
         {projects.length > 1 && (
-          <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/5 z-20">
-            <motion.div
-              className="h-full bg-accent"
-              style={{ width: `${progress}%` }}
-              transition={{ duration: 0.03, ease: "linear" }}
-            />
+          <div className="mt-4 flex gap-2">
+            {projects.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setDirection(i > current ? 1 : -1);
+                  setCurrent(i);
+                  setProgress(0);
+                }}
+                className="flex-1 h-[3px] rounded-full bg-white/[0.06] overflow-hidden cursor-pointer border-none"
+                aria-label={`Projet ${i + 1}`}
+              >
+                <div
+                  className="h-full rounded-full bg-accent transition-all duration-100 ease-linear"
+                  style={{
+                    width: i === current ? `${progress}%` : i < current ? "100%" : "0%",
+                  }}
+                />
+              </button>
+            ))}
           </div>
         )}
       </div>
-
-      {/* Thumbnail navigation */}
-      {projects.length > 1 && (
-        <div className="flex gap-3 mt-5">
-          {projects.map((p, i) => (
-            <button
-              key={p.id}
-              onClick={() => {
-                setDirection(i > current ? 1 : -1);
-                setCurrent(i);
-                setProgress(0);
-              }}
-              className={`group flex-1 rounded-xl overflow-hidden transition-all duration-400 border cursor-pointer ${
-                i === current
-                  ? "border-accent/50 shadow-[0_0_20px_rgba(249,115,22,0.15)]"
-                  : "border-white/[0.06] opacity-40 hover:opacity-70"
-              }`}
-              aria-label={`Projet ${i + 1}: ${p.title}`}
-            >
-              <div className="aspect-[16/9] relative overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={p.image_url}
-                  alt={p.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40" />
-                <div className="absolute bottom-0 left-0 right-0 p-2">
-                  <span className="text-[0.6rem] text-white/70 font-medium truncate block">
-                    {p.title}
-                  </span>
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
