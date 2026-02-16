@@ -151,8 +151,6 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.3, ease }}
             style={isMobile ? undefined : { y: imageY }}
           >
-            <div className="absolute -top-8 -right-8 w-[80%] h-[80%] bg-accent/10 rounded-3xl" />
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/20 rounded-2xl" />
             <div className="relative">
               <HeroCarousel />
             </div>

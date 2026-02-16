@@ -161,12 +161,11 @@ export default function HeroCarousel() {
               />
             </motion.div>
 
-            {/* Gradient bandeau overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
 
-            {/* Project info overlay — bandeau style */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+            {/* Bandeau — solid dark strip behind text */}
+            <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-md border-t border-white/[0.08] p-6 lg:p-8">
               {/* Slide counter */}
               <motion.div
                 custom={0}
