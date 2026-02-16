@@ -58,7 +58,7 @@ export default function Projects() {
             </span>
             <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em] mt-4">
               <span className="font-light">Nos derni&egrave;res </span>
-              <span className="font-serif italic text-accent">r&eacute;alisations.</span>
+              <span className="font-serif italic">r&eacute;alisations.</span>
             </h2>
           </div>
         </ScrollReveal>
@@ -81,18 +81,28 @@ export default function Projects() {
                 {featured.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 rounded-full bg-white/[0.08] backdrop-blur-sm text-[0.7rem] font-medium text-white/70"
+                    className="px-3 py-1 rounded-full bg-accent/20 backdrop-blur-md text-[0.7rem] font-medium text-accent border border-accent/20"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-              <h3 className="text-[1.3rem] lg:text-[1.8rem] font-serif text-white">
+              <h3 className="text-[1.3rem] lg:text-[1.8rem] font-semibold text-white">
                 {featured.title}
               </h3>
               <p className="text-[0.85rem] text-white/40 mt-1.5 max-w-[500px]">
                 {featured.desc}
               </p>
+              <motion.span
+                className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium"
+                whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(249,115,22,0.3)" }}
+              >
+                En savoir plus
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-dark fill-none stroke-2">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </motion.span>
             </div>
           </div>
         </ScrollReveal>

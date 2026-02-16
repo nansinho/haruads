@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 import CountUp from "./CountUp";
 
 const stats = [
   { num: "50+", label: "Projets r\u00e9alis\u00e9s" },
   { num: "30+", label: "Clients actifs" },
-  { num: "3+", label: "Ans d\u2019expertise" },
+  { num: "12+", label: "Ans d\u2019expertise" },
   { num: "100%", label: "Satisfaction" },
 ];
 
@@ -39,12 +40,13 @@ export default function About() {
               </span>
               <h2 className="text-fluid-h2 leading-[1.1] tracking-[-0.02em] mt-4">
                 <span className="font-light">Une agence </span>
-                <span className="font-serif italic text-accent">&agrave; taille humaine.</span>
+                <span className="font-serif italic">&agrave; taille humaine.</span>
               </h2>
               <p className="text-[0.9rem] text-text-body mt-5 leading-[1.8] max-w-[480px]">
                 Bas&eacute;e &agrave; Aix-en-Provence, l&apos;Agence HDS accompagne les entreprises
-                dans leur transformation digitale depuis plus de 3 ans. Nous combinons
-                cr&eacute;ativit&eacute; et expertise technique pour des r&eacute;sultats concrets.
+                dans leur transformation digitale depuis plus de 12 ans. Nous combinons
+                cr&eacute;ativit&eacute;, expertise technique et une approche centr&eacute;e sur les r&eacute;sultats
+                pour propulser votre business.
               </p>
 
               {/* Stats grid with CountUp */}
@@ -61,6 +63,23 @@ export default function About() {
                   </div>
                 ))}
               </div>
+
+              {/* CTA */}
+              <motion.a
+                href="/a-propos"
+                className="inline-flex items-center gap-2 mt-10 px-7 py-3.5 rounded-full bg-accent text-white font-medium text-[0.85rem] cursor-pointer"
+                whileHover={{
+                  scale: 1.04,
+                  boxShadow: "0 0 40px rgba(249,115,22,0.25)",
+                }}
+                whileTap={{ scale: 0.97 }}
+              >
+                En savoir plus
+                <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-white fill-none stroke-2">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </motion.a>
             </div>
           </ScrollReveal>
         </div>
