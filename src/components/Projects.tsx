@@ -58,7 +58,7 @@ export default function Projects() {
             </span>
             <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em] mt-4">
               <span className="font-light">Nos derni&egrave;res </span>
-              <span className="font-serif italic">r&eacute;alisations.</span>
+              <span className="font-serif italic text-accent">r&eacute;alisations.</span>
             </h2>
           </div>
         </ScrollReveal>

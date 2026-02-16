@@ -40,7 +40,7 @@ export default function About() {
               </span>
               <h2 className="text-fluid-h2 leading-[1.1] tracking-[-0.02em] mt-4">
                 <span className="font-light">Une agence </span>
-                <span className="font-serif italic">&agrave; taille humaine.</span>
+                <span className="font-serif italic text-accent">&agrave; taille humaine.</span>
               </h2>
               <p className="text-[0.9rem] text-text-body mt-5 leading-[1.8] max-w-[480px]">
                 Bas&eacute;e &agrave; Aix-en-Provence, l&apos;Agence HDS accompagne les entreprises

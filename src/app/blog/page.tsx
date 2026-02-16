@@ -76,7 +76,7 @@ export default function BlogPage() {
               </span>
               <h1 className="text-[2rem] sm:text-[2.8rem] lg:text-[4rem] leading-[1.08] tracking-[-0.02em] mt-4">
                 <span className="font-light">Actualités & </span>
-                <span className="font-serif italic">ressources.</span>
+                <span className="font-serif italic text-accent">ressources.</span>
               </h1>
               <p className="text-[0.95rem] text-white/40 mt-5 max-w-[500px] leading-[1.8] font-light">
                 Conseils, tendances et retours d&apos;expérience sur le développement web,
