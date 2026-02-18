@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import ScrollReveal from "./ScrollReveal";
 
 const faqs = [
@@ -89,9 +90,9 @@ export default function FAQ() {
           <div className="text-center mt-12">
             <p className="text-[0.85rem] text-text-body">
               Vous avez d&apos;autres questions ?{" "}
-              <a href="/contact" className="text-accent hover:underline font-semibold">
+              <Link href="/contact" className="text-accent hover:underline font-semibold" title="Contactez l'Agence HDS">
                 Contactez-nous
-              </a>
+              </Link>
             </p>
           </div>
         </ScrollReveal>
