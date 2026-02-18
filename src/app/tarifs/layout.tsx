@@ -1,63 +1,59 @@
 import type { Metadata } from "next";
 import { plans } from "@/data/pricing";
+import JsonLd from "@/components/seo/JsonLd";
+import { seoConfig, pageSeo } from "@/lib/seo-config";
 
-const siteUrl = "https://agencehds.fr";
+const page = pageSeo["/tarifs"];
 
 export const metadata: Metadata = {
-  title: "Tarifs — Nos Offres & Prix",
-  description:
-    "Consultez nos tarifs pour la création de sites web, applications, e-commerce et solutions digitales. Devis gratuit. Agence HDS à Aix-en-Provence.",
+  title: page.title,
+  description: page.description,
+  keywords: page.keywords,
   openGraph: {
-    title: "Tarifs — Agence HDS",
-    description:
-      "Nos offres et tarifs pour sites web, applications et solutions digitales sur mesure.",
-    url: `${siteUrl}/tarifs`,
+    title: page.title,
+    description: page.description,
+    url: `${seoConfig.siteUrl}/tarifs`,
+    siteName: seoConfig.siteName,
+    locale: seoConfig.locale,
+    type: "website",
+    images: [{ url: `${seoConfig.siteUrl}${seoConfig.defaultImage}`, width: 1200, height: 630 }],
   },
   twitter: {
-    title: "Tarifs — Agence HDS",
-    description:
-      "Nos offres et tarifs pour sites web, applications et solutions digitales sur mesure.",
+    card: "summary_large_image",
+    title: page.title,
+    description: page.description,
   },
   alternates: {
-    canonical: `${siteUrl}/tarifs`,
+    canonical: `${seoConfig.siteUrl}/tarifs`,
   },
 };
 
-function JsonLd() {
-  const breadcrumb = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Accueil", item: siteUrl },
-      { "@type": "ListItem", position: 2, name: "Tarifs", item: `${siteUrl}/tarifs` },
-    ],
-  };
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: seoConfig.siteUrl },
+    { "@type": "ListItem", position: 2, name: "Tarifs", item: `${seoConfig.siteUrl}/tarifs` },
+  ],
+};
 
-  const offers = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Tarifs Agence HDS",
-    itemListElement: plans.map((plan, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": "Offer",
-        name: plan.name,
-        description: plan.desc,
-        price: plan.price,
-        priceCurrency: "EUR",
-        url: `${siteUrl}/tarifs`,
-      },
-    })),
-  };
-
-  return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offers) }} />
-    </>
-  );
-}
+const offersSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Tarifs Agence HDS",
+  itemListElement: plans.map((plan, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Offer",
+      name: plan.name,
+      description: plan.desc,
+      price: plan.price,
+      priceCurrency: "EUR",
+      url: `${seoConfig.siteUrl}/tarifs`,
+    },
+  })),
+};
 
 export default function TarifsLayout({
   children,
@@ -66,7 +62,8 @@ export default function TarifsLayout({
 }) {
   return (
     <>
-      <JsonLd />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={offersSchema} />
       {children}
     </>
   );

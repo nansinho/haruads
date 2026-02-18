@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
@@ -10,7 +11,8 @@ const projects = [
     desc: "Migration WooCommerce vers Next.js + Supabase avec paiement Monetico.",
     tags: ["Next.js", "Supabase", "E-Commerce"],
     image: "/images/projects/project-dashboard.jpg",
-    alt: "Dashboard e-commerce AIAKO - Migration WooCommerce vers Next.js",
+    alt: "Dashboard e-commerce AIAKO - Migration WooCommerce vers Next.js par Agence HDS",
+    slug: "aiako-ecommerce",
     featured: true,
   },
   {
@@ -19,6 +21,7 @@ const projects = [
     tags: ["React", "Node.js"],
     image: "/images/projects/neuralia-project.webp",
     alt: "Dashboard SaaS C&CO Formation - Plateforme multi-tenant",
+    slug: "dashboard-cco",
   },
   {
     title: "Landing Fintech",
@@ -26,6 +29,7 @@ const projects = [
     tags: ["Figma", "GSAP"],
     image: "/images/projects/project-landing.jpg",
     alt: "Landing page Fintech - Refonte UI/UX par Agence HDS",
+    slug: "landing-fintech",
   },
   {
     title: "Système de Réservation",
@@ -33,6 +37,7 @@ const projects = [
     tags: ["Next.js", "Stripe"],
     image: "/images/projects/reservation-system.webp",
     alt: "Système de réservation en ligne avec calendrier et paiement Stripe",
+    slug: "systeme-reservation",
   },
 ];
 
@@ -65,7 +70,7 @@ export default function Projects() {
 
         {/* Featured project */}
         <ScrollReveal animation="scaleUp">
-          <div className="mb-5 relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
+          <Link href={`/projets/${featured.slug}`} title={`Voir notre réalisation ${featured.title}`} className="block mb-5 relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
             <div className="aspect-[16/7] relative overflow-hidden">
               <Image
                 src={featured.image}
@@ -104,14 +109,14 @@ export default function Projects() {
                 </svg>
               </motion.span>
             </div>
-          </div>
+          </Link>
         </ScrollReveal>
 
         {/* Other projects */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {others.map((project, i) => (
             <ScrollReveal key={project.title} delay={i * 80}>
-              <div className="relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
+              <Link href={`/projets/${project.slug}`} title={`Voir le projet ${project.title}`} className="block relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
                 <div className="aspect-[4/3] relative overflow-hidden">
                   <Image
                     src={project.image}
@@ -140,7 +145,7 @@ export default function Projects() {
                     {project.desc}
                   </p>
                 </div>
-              </div>
+              </Link>
             </ScrollReveal>
           ))}
         </div>
@@ -149,6 +154,7 @@ export default function Projects() {
           <div className="text-center mt-14">
             <motion.a
               href="/projets"
+              title="Découvrez tous nos projets et réalisations web"
               className="inline-flex items-center gap-2 text-[0.85rem] text-accent font-medium hover:gap-3 transition-all duration-300"
               whileHover={{ x: 4 }}
             >

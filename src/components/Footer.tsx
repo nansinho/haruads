@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import Logo from "./Logo";
 
 const links = {
@@ -61,7 +62,7 @@ export default function Footer() {
             <ul className="list-none">
               {links.navigation.map((link) => (
                 <li key={link.label} className="mb-2.5">
-                  <a href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</a>
+                  <Link href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</Link>
                 </li>
               ))}
             </ul>
@@ -71,7 +72,7 @@ export default function Footer() {
             <ul className="list-none">
               {links.company.map((link) => (
                 <li key={link.label} className="mb-2.5">
-                  <a href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</a>
+                  <Link href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</Link>
                 </li>
               ))}
             </ul>

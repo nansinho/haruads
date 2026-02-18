@@ -3,7 +3,9 @@ import { servicesSlugs } from "@/data/services";
 import { projectsSlugs } from "@/data/projects";
 import { articlesSlugs } from "@/data/articles";
 
-const siteUrl = "https://agencehds.fr";
+import { seoConfig } from "@/lib/seo-config";
+
+const siteUrl = seoConfig.siteUrl;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
@@ -23,25 +25,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteUrl}/projets`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 0.8,
     },
     {
       url: `${siteUrl}/tarifs`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: `${siteUrl}/a-propos`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.7,
+      priority: 0.6,
     },
     {
       url: `${siteUrl}/contact`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
+      changeFrequency: "yearly",
+      priority: 0.7,
     },
     {
       url: `${siteUrl}/blog`,
@@ -53,7 +55,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteUrl}/mentions-legales`,
       lastModified: new Date(),
       changeFrequency: "yearly",
-      priority: 0.3,
+      priority: 0.2,
     },
     {
       url: `${siteUrl}/carrieres`,
@@ -64,7 +66,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${siteUrl}/plan-du-site`,
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: "monthly",
       priority: 0.3,
     },
   ];

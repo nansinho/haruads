@@ -1,36 +1,40 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { seoConfig, pageSeo } from "@/lib/seo-config";
+
+const page = pageSeo["/contact"];
 
 export const metadata: Metadata = {
-  title: "Contact — Parlons de Votre Projet",
-  description:
-    "Contactez l'Agence HDS pour discuter de votre projet web. Premier rendez-vous gratuit, réponse sous 24h. Agence web à Aix-en-Provence.",
+  title: page.title,
+  description: page.description,
+  keywords: page.keywords,
   openGraph: {
-    title: "Contact — Agence HDS",
-    description:
-      "Contactez-nous pour votre projet web. Premier rendez-vous gratuit, réponse sous 24h.",
-    url: "https://agencehds.fr/contact",
+    title: page.title,
+    description: page.description,
+    url: `${seoConfig.siteUrl}/contact`,
+    siteName: seoConfig.siteName,
+    locale: seoConfig.locale,
+    type: "website",
+    images: [{ url: `${seoConfig.siteUrl}${seoConfig.defaultImage}`, width: 1200, height: 630 }],
   },
   twitter: {
-    title: "Contact — Agence HDS",
-    description:
-      "Contactez-nous pour votre projet web. Premier rendez-vous gratuit, réponse sous 24h.",
+    card: "summary_large_image",
+    title: page.title,
+    description: page.description,
   },
   alternates: {
-    canonical: "https://agencehds.fr/contact",
+    canonical: `${seoConfig.siteUrl}/contact`,
   },
 };
 
-function BreadcrumbJsonLd() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://agencehds.fr" },
-      { "@type": "ListItem", position: 2, name: "Contact", item: "https://agencehds.fr/contact" },
-    ],
-  };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
-}
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: seoConfig.siteUrl },
+    { "@type": "ListItem", position: 2, name: "Contact", item: `${seoConfig.siteUrl}/contact` },
+  ],
+};
 
 export default function ContactLayout({
   children,
@@ -39,7 +43,7 @@ export default function ContactLayout({
 }) {
   return (
     <>
-      <BreadcrumbJsonLd />
+      <JsonLd data={breadcrumbSchema} />
       {children}
     </>
   );
