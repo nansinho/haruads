@@ -146,7 +146,7 @@ export default function HeroCarousel() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={project.image_url}
-                alt={project.title}
+                alt={`${project.title} - Projet réalisé par Agence HDS`}
                 className="w-full h-full object-cover"
                 fetchPriority="high"
               />
@@ -224,6 +224,7 @@ export default function HeroCarousel() {
               {/* Right: CTA */}
               <a
                 href={`/projets/${project.slug}`}
+                title={`Voir le projet ${project.title}`}
                 className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] transition-shadow duration-300"
               >
                 En savoir plus

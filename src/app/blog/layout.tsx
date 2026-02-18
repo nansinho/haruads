@@ -1,36 +1,40 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { seoConfig, pageSeo } from "@/lib/seo-config";
+
+const page = pageSeo["/blog"];
 
 export const metadata: Metadata = {
-  title: "Blog — Actualités Web & Digital",
-  description:
-    "Articles et conseils sur le développement web, le design, l'e-commerce et les tendances digitales. Blog de l'Agence HDS.",
+  title: page.title,
+  description: page.description,
+  keywords: page.keywords,
   openGraph: {
-    title: "Blog — Agence HDS",
-    description:
-      "Articles et conseils sur le développement web, le design et les tendances digitales.",
-    url: "https://agencehds.fr/blog",
+    title: page.title,
+    description: page.description,
+    url: `${seoConfig.siteUrl}/blog`,
+    siteName: seoConfig.siteName,
+    locale: seoConfig.locale,
+    type: "website",
+    images: [{ url: `${seoConfig.siteUrl}${seoConfig.defaultImage}`, width: 1200, height: 630 }],
   },
   twitter: {
-    title: "Blog — Agence HDS",
-    description:
-      "Articles et conseils sur le développement web, le design et les tendances digitales.",
+    card: "summary_large_image",
+    title: page.title,
+    description: page.description,
   },
   alternates: {
-    canonical: "https://agencehds.fr/blog",
+    canonical: `${seoConfig.siteUrl}/blog`,
   },
 };
 
-function BreadcrumbJsonLd() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://agencehds.fr" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://agencehds.fr/blog" },
-    ],
-  };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
-}
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: seoConfig.siteUrl },
+    { "@type": "ListItem", position: 2, name: "Blog", item: `${seoConfig.siteUrl}/blog` },
+  ],
+};
 
 export default function BlogLayout({
   children,
@@ -39,7 +43,7 @@ export default function BlogLayout({
 }) {
   return (
     <>
-      <BreadcrumbJsonLd />
+      <JsonLd data={breadcrumbSchema} />
       {children}
     </>
   );

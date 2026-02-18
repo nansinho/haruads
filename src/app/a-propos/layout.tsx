@@ -1,36 +1,40 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { seoConfig, pageSeo } from "@/lib/seo-config";
+
+const page = pageSeo["/a-propos"];
 
 export const metadata: Metadata = {
-  title: "À Propos — Notre Histoire & Passion depuis 2015",
-  description:
-    "Découvrez l'histoire de l'Agence HDS : d'une passion de Geek à l'entrepreneuriat digital. Nos origines, nos valeurs et notre mission depuis 2015.",
+  title: page.title,
+  description: page.description,
+  keywords: page.keywords,
   openGraph: {
-    title: "À Propos — Agence HDS | Notre Histoire",
-    description:
-      "Du Geek passionné à l'entrepreneur digital. Découvrez l'histoire, les valeurs et la mission de l'Agence HDS depuis 2015.",
-    url: "https://agencehds.fr/a-propos",
+    title: page.title,
+    description: page.description,
+    url: `${seoConfig.siteUrl}/a-propos`,
+    siteName: seoConfig.siteName,
+    locale: seoConfig.locale,
+    type: "website",
+    images: [{ url: `${seoConfig.siteUrl}${seoConfig.defaultImage}`, width: 1200, height: 630 }],
   },
   twitter: {
-    title: "À Propos — Agence HDS",
-    description:
-      "Notre histoire, nos origines, nos valeurs. Une passion devenue entreprise depuis 2015.",
+    card: "summary_large_image",
+    title: page.title,
+    description: page.description,
   },
   alternates: {
-    canonical: "https://agencehds.fr/a-propos",
+    canonical: `${seoConfig.siteUrl}/a-propos`,
   },
 };
 
-function BreadcrumbJsonLd() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://agencehds.fr" },
-      { "@type": "ListItem", position: 2, name: "\u00c0 Propos", item: "https://agencehds.fr/a-propos" },
-    ],
-  };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
-}
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: seoConfig.siteUrl },
+    { "@type": "ListItem", position: 2, name: "À Propos", item: `${seoConfig.siteUrl}/a-propos` },
+  ],
+};
 
 export default function AProposLayout({
   children,
@@ -39,7 +43,7 @@ export default function AProposLayout({
 }) {
   return (
     <>
-      <BreadcrumbJsonLd />
+      <JsonLd data={breadcrumbSchema} />
       {children}
     </>
   );

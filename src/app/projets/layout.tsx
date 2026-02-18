@@ -1,36 +1,40 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { seoConfig, pageSeo } from "@/lib/seo-config";
+
+const page = pageSeo["/projets"];
 
 export const metadata: Metadata = {
-  title: "Projets — Nos Réalisations Web",
-  description:
-    "Découvrez nos projets : sites e-commerce, dashboards, landing pages et applications web. Portfolio de l'Agence HDS à Aix-en-Provence.",
+  title: page.title,
+  description: page.description,
+  keywords: page.keywords,
   openGraph: {
-    title: "Projets — Agence HDS",
-    description:
-      "Portfolio de nos réalisations web : e-commerce, dashboards, landing pages et applications.",
-    url: "https://agencehds.fr/projets",
+    title: page.title,
+    description: page.description,
+    url: `${seoConfig.siteUrl}/projets`,
+    siteName: seoConfig.siteName,
+    locale: seoConfig.locale,
+    type: "website",
+    images: [{ url: `${seoConfig.siteUrl}${seoConfig.defaultImage}`, width: 1200, height: 630 }],
   },
   twitter: {
-    title: "Projets — Agence HDS",
-    description:
-      "Portfolio de nos réalisations web : e-commerce, dashboards, landing pages et applications.",
+    card: "summary_large_image",
+    title: page.title,
+    description: page.description,
   },
   alternates: {
-    canonical: "https://agencehds.fr/projets",
+    canonical: `${seoConfig.siteUrl}/projets`,
   },
 };
 
-function BreadcrumbJsonLd() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://agencehds.fr" },
-      { "@type": "ListItem", position: 2, name: "Projets", item: "https://agencehds.fr/projets" },
-    ],
-  };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
-}
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Accueil", item: seoConfig.siteUrl },
+    { "@type": "ListItem", position: 2, name: "Projets", item: `${seoConfig.siteUrl}/projets` },
+  ],
+};
 
 export default function ProjetsLayout({
   children,
@@ -39,7 +43,7 @@ export default function ProjetsLayout({
 }) {
   return (
     <>
-      <BreadcrumbJsonLd />
+      <JsonLd data={breadcrumbSchema} />
       {children}
     </>
   );

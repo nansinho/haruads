@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 
 const navLinks = [
@@ -77,20 +78,20 @@ export default function Navbar() {
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
         )}
 
-        <a href="/" className="flex items-center gap-2.5 group relative">
-          <img src="/images/logos/logo-hds-2026-blanc.svg" alt="Agence HDS" className="h-8 w-auto" />
-        </a>
+        <Link href="/" className="flex items-center gap-2.5 group relative" title="Agence HDS - Accueil">
+          <img src="/images/logos/logo-hds-2026-blanc.svg" alt="Agence HDS - Agence web créative à Aix-en-Provence" className="h-8 w-auto" />
+        </Link>
 
         <ul className="hidden lg:flex gap-8 list-none">
           {navLinks.map((link) => (
             <li key={link.label}>
-              <a
+              <Link
                 href={link.href}
                 className="text-[0.82rem] font-medium text-white/40 hover:text-white transition-colors duration-300 relative group"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -170,31 +171,31 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.06, duration: 0.3 }}
                   >
-                    <a
+                    <Link
                       href={link.href}
                       className="block py-3 text-[0.95rem] font-medium text-white/60 hover:text-accent transition-colors"
                       onClick={() => setMenuOpen(false)}
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </motion.li>
                 ))}
               </ul>
               <div className="flex flex-col gap-3 mt-4 relative z-10">
-                <a
+                <Link
                   href={buttonHref}
                   className="block border border-white/[0.12] text-white/60 px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center"
                   onClick={() => setMenuOpen(false)}
                 >
                   {buttonLabel}
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/contact"
                   className="block bg-accent text-dark px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center"
                   onClick={() => setMenuOpen(false)}
                 >
                   Contactez-nous
-                </a>
+                </Link>
               </div>
             </motion.div>
           )}

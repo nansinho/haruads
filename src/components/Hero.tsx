@@ -118,6 +118,7 @@ export default function Hero() {
             >
               <motion.a
                 href="/contact"
+                title="Contactez-nous pour démarrer votre projet web"
                 className="px-8 py-4 rounded-full bg-accent text-dark font-medium text-[0.9rem] cursor-pointer inline-flex items-center gap-2"
                 whileHover={{
                   scale: 1.04,
@@ -134,6 +135,7 @@ export default function Hero() {
               </motion.a>
               <motion.a
                 href="/projets"
+                title="Découvrez nos réalisations web"
                 className="px-8 py-4 rounded-full bg-transparent text-white font-medium text-[0.9rem] border border-white/15 cursor-pointer hover:border-white/30 transition-all duration-300"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
