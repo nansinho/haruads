@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import ScrollReveal from "./ScrollReveal";
 
 const plans = [
@@ -122,9 +123,9 @@ export default function Pricing() {
           <div className="text-center mt-12">
             <p className="text-[0.85rem] text-text-body">
               Besoin d&apos;un devis personnalis&eacute; ?{" "}
-              <a href="/contact" className="text-accent hover:underline font-semibold">
+              <Link href="/contact" className="text-accent hover:underline font-semibold" title="Demandez un devis personnalisé">
                 Contactez-nous
-              </a>
+              </Link>
             </p>
           </div>
         </ScrollReveal>

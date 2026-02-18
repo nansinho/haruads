@@ -150,7 +150,7 @@ export default function AProposPage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/images/founder-with-mother.jpg"
-                    alt="Fondateur avec sa m&egrave;re"
+                    alt="Nans Harua, fondateur de l'Agence HDS, avec sa mère"
                     className="w-full h-auto object-cover"
                     loading="lazy"
                   />
@@ -240,7 +240,7 @@ export default function AProposPage() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/mother-note-1.jpg"
-                      alt="Message de maman"
+                      alt="Message d'encouragement de la mère du fondateur de l'Agence HDS"
                       className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                       loading="lazy"
                     />
@@ -264,7 +264,7 @@ export default function AProposPage() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/mother-note-2.jpg"
-                      alt="Message de maman"
+                      alt="Mot de soutien de la mère du fondateur de l'Agence HDS"
                       className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                       loading="lazy"
                     />
@@ -454,6 +454,7 @@ export default function AProposPage() {
                 <div className="flex flex-wrap gap-4 justify-center mt-10">
                   <motion.a
                     href="/contact"
+                    title="Contactez l'Agence HDS pour discuter de votre projet"
                     className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-accent font-medium text-[0.9rem] cursor-pointer"
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}
