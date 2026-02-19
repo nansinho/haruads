@@ -1,10 +1,34 @@
 import type { Metadata } from "next";
+import { Plus_Jakarta_Sans, DM_Serif_Display, Space_Mono } from "next/font/google";
 import "./globals.css";
 import ClientWidgets from "@/components/ClientWidgets";
 import ThemeProvider from "@/components/ThemeProvider";
 import SessionProvider from "@/components/providers/SessionProvider";
 import JsonLd from "@/components/seo/JsonLd";
 import { seoConfig, pageSeo } from "@/lib/seo-config";
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-plus-jakarta",
+});
+
+const dmSerif = DM_Serif_Display({
+  subsets: ["latin", "latin-ext"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-dm-serif",
+});
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-space-mono",
+});
 
 const siteUrl = seoConfig.siteUrl;
 
@@ -56,6 +80,9 @@ export const metadata: Metadata = {
     canonical: siteUrl,
   },
   manifest: "/manifest.json",
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+  },
 };
 
 const organizationSchema = {
@@ -203,8 +230,17 @@ const organizationSchema = {
       "@id": `${siteUrl}/#website`,
       url: siteUrl,
       name: "Agence HDS",
+      alternateName: "Harua Digital Studio",
       publisher: { "@id": `${siteUrl}/#organization` },
       inLanguage: "fr-FR",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${siteUrl}/blog?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
     },
     {
       "@type": "FAQPage",
@@ -253,21 +289,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" className={`${plusJakarta.variable} ${dmSerif.variable} ${spaceMono.variable}`} suppressHydrationWarning>
       <head>
         {process.env.NEXT_PUBLIC_SUPABASE_URL && (
           <link rel="preconnect" href={process.env.NEXT_PUBLIC_SUPABASE_URL} />
         )}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Space+Mono:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
         <JsonLd data={organizationSchema} />
       </head>
       <body className="font-sans antialiased bg-dark text-text-primary">
