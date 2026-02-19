@@ -16,9 +16,9 @@
   --color-text-body: #6b7280;
   --color-border-dark: rgba(255, 255, 255, 0.06);
 
-  --font-sans: "Plus Jakarta Sans", sans-serif;
-  --font-serif: "DM Serif Display", serif;
-  --font-mono: "Space Mono", monospace;
+  --font-sans: var(--font-plus-jakarta, "Plus Jakarta Sans"), sans-serif;
+  --font-serif: var(--font-dm-serif, "DM Serif Display"), serif;
+  --font-mono: var(--font-space-mono, "Space Mono"), monospace;
 
   --animate-fade-up: fade-up 0.7s ease forwards;
   --animate-float: float 6s ease-in-out infinite;
