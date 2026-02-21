@@ -10,7 +10,7 @@ import { articlesData } from "@/data/articles";
 export const metadata: Metadata = {
   title: "Plan du Site",
   description:
-    "Plan du site agencehds.fr — Retrouvez toutes les pages de l'Agence HDS, agence web créative à Aix-en-Provence.",
+    "Plan du site agencehds.fr — Retrouvez toutes les pages, services, projets et articles de l'Agence HDS, agence web créative à Aix-en-Provence.",
   openGraph: {
     title: "Plan du Site — Agence HDS",
     description:
@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://agencehds.fr/plan-du-site",
   },
+  keywords: [
+    "plan du site",
+    "sitemap agence hds",
+    "pages agence web",
+  ],
 };
 
 const staticPages = [

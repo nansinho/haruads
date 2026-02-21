@@ -6,7 +6,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 export const metadata: Metadata = {
   title: "Mentions Légales",
   description:
-    "Mentions légales du site agencehds.fr — Agence HDS (Harua Digital Studio), auto-entrepreneur basé à Gardanne, Aix-en-Provence.",
+    "Mentions légales du site agencehds.fr — Agence HDS (Harua Digital Studio), auto-entrepreneur basé à Gardanne, Aix-en-Provence. Informations légales et conditions.",
   openGraph: {
     title: "Mentions Légales — Agence HDS",
     description:
@@ -21,6 +21,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://agencehds.fr/mentions-legales",
   },
+  keywords: [
+    "mentions légales",
+    "agence hds",
+    "conditions générales",
+    "agence web gardanne",
+  ],
 };
 
 export default function MentionsLegalesPage() {

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -180,10 +181,11 @@ export default function ProjectDetail() {
           <div className="max-w-[1200px] mx-auto px-5 lg:px-12">
             <ScrollReveal>
               <div className="rounded-2xl overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={project.image}
                   alt={project.title}
+                  width={1200}
+                  height={675}
                   className="w-full h-auto object-cover"
                 />
               </div>

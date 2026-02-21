@@ -40,7 +40,7 @@ export const pageSeo: Record<
   "/projets": {
     title: "Nos Projets & Réalisations Web | Agence HDS Aix-en-Provence",
     description:
-      "Portfolio de nos réalisations : sites e-commerce, applications web, dashboards SaaS et landing pages. Découvrez nos projets clients.",
+      "Portfolio de nos réalisations : sites e-commerce, applications web, dashboards SaaS et landing pages. Découvrez nos projets clients à Aix-en-Provence.",
     keywords: [
       "portfolio agence web",
       "réalisations web",
@@ -62,7 +62,7 @@ export const pageSeo: Record<
   "/a-propos": {
     title: "À Propos — Agence Web Créative depuis 2014 | Agence HDS",
     description:
-      "Découvrez l'Agence HDS, agence web à taille humaine basée à Gardanne près d'Aix-en-Provence. Plus de 12 ans d'expertise en développement web.",
+      "Découvrez l'Agence HDS, agence web à taille humaine basée à Gardanne près d'Aix-en-Provence. Plus de 12 ans d'expertise en développement web et solutions digitales.",
     keywords: [
       "agence web gardanne",
       "développeur web aix-en-provence",

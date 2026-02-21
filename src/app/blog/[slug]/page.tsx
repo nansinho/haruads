@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -291,10 +292,11 @@ export default function BlogArticle() {
         <section className="bg-dark text-white pb-16">
           <div className="max-w-[800px] mx-auto px-5 lg:px-12">
             <div className="rounded-2xl overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={article.image}
                 alt={article.title}
+                width={800}
+                height={450}
                 className="w-full h-auto object-cover"
               />
             </div>

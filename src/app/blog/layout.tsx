@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/seo/JsonLd";
 import { seoConfig, pageSeo } from "@/lib/seo-config";
+import { articlesData } from "@/data/articles";
 
 const page = pageSeo["/blog"];
 
@@ -36,6 +37,18 @@ const breadcrumbSchema = {
   ],
 };
 
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Blog — Agence HDS",
+  itemListElement: Object.entries(articlesData).map(([slug, article], i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: article.title,
+    url: `${seoConfig.siteUrl}/blog/${slug}`,
+  })),
+};
+
 export default function BlogLayout({
   children,
 }: {
@@ -44,6 +57,7 @@ export default function BlogLayout({
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={itemListSchema} />
       {children}
     </>
   );

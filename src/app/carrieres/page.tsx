@@ -21,6 +21,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://agencehds.fr/carrieres",
   },
+  keywords: [
+    "emploi agence web",
+    "stage développement web",
+    "carrière agence digitale",
+    "recrutement aix-en-provence",
+  ],
 };
 
 export default function CarrieresPage() {
