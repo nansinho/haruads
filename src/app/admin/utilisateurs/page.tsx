@@ -194,11 +194,11 @@ export default function UtilisateursPage() {
         subtitle="Gérez les utilisateurs et leurs rôles"
         actions={
           <>
-            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-border-dark rounded-full text-text-secondary hover:bg-dark-3 hover:text-text-primary transition-all text-sm">
               <Download size={16} />
               Exporter
             </button>
-            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-border-dark rounded-full text-text-secondary hover:bg-dark-3 hover:text-text-primary transition-all text-sm">
               <RefreshCw size={16} />
               Actualiser
             </button>
@@ -212,7 +212,7 @@ export default function UtilisateursPage() {
 
       {/* Filters & Search */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-4 space-y-4">
           <div className="relative">
             <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
             <input
@@ -220,7 +220,7 @@ export default function UtilisateursPage() {
               placeholder="Rechercher par nom, email, entreprise..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-border-dark rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -231,7 +231,7 @@ export default function UtilisateursPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-dark-2 text-text-secondary border border-border-dark hover:bg-dark-3 hover:text-text-primary rounded-full"
                 }`}
               >
                 {filter.label}
@@ -243,7 +243,7 @@ export default function UtilisateursPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-16">
               <Loader2 size={24} className="text-accent animate-spin" />
@@ -252,7 +252,7 @@ export default function UtilisateursPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-border-dark">
                     <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Nom</th>
                     <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Email</th>
                     <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Rôle</th>
@@ -265,7 +265,7 @@ export default function UtilisateursPage() {
                 <tbody className="divide-y divide-white/[0.06]">
                   {users.length > 0 ? (
                     users.map((user) => (
-                      <tr key={user.id} className="hover:bg-white/[0.02] transition-colors">
+                      <tr key={user.id} className="hover:bg-dark-3 transition-colors">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-xs font-bold text-accent">
@@ -285,13 +285,13 @@ export default function UtilisateursPage() {
                         </td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => { setSelectedUser(user); setShowDetail(true); }} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all">
+                            <button onClick={() => { setSelectedUser(user); setShowDetail(true); }} className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-text-primary transition-all">
                               <Eye size={16} />
                             </button>
-                            <button onClick={() => openEdit(user)} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all">
+                            <button onClick={() => openEdit(user)} className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-text-primary transition-all">
                               <Pencil size={16} />
                             </button>
-                            <button onClick={() => { setSelectedUser(user); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-all">
+                            <button onClick={() => { setSelectedUser(user); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-red-400 transition-all">
                               <Trash2 size={16} />
                             </button>
                           </div>
@@ -302,7 +302,7 @@ export default function UtilisateursPage() {
                     <tr>
                       <td colSpan={7} className="px-6 py-16 text-center">
                         <div className="flex flex-col items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-2xl bg-dark border border-border-dark flex items-center justify-center">
                             <Users size={24} className="text-text-muted" />
                           </div>
                           <div>
@@ -332,7 +332,7 @@ export default function UtilisateursPage() {
         size="md"
         footer={
           <>
-            <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all">
+            <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-border-dark rounded-full hover:bg-dark-3 transition-all">
               Annuler
             </button>
             <button onClick={handleSave} disabled={saving} className="px-4 py-2 text-sm font-semibold text-dark bg-accent rounded-full hover:bg-accent-hover transition-all disabled:opacity-50">
@@ -358,19 +358,19 @@ export default function UtilisateursPage() {
         title="Détails de l'utilisateur"
         size="md"
         footer={
-          <button onClick={() => setShowDetail(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all">
+          <button onClick={() => setShowDetail(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-border-dark rounded-full hover:bg-dark-3 transition-all">
             Fermer
           </button>
         }
       >
         {selectedUser && (
           <div className="space-y-4">
-            <div className="flex items-center gap-4 pb-4 border-b border-white/[0.06]">
+            <div className="flex items-center gap-4 pb-4 border-b border-border-dark">
               <div className="w-14 h-14 rounded-2xl bg-accent/20 flex items-center justify-center text-xl font-bold text-accent">
                 {(selectedUser.name || selectedUser.email).charAt(0).toUpperCase()}
               </div>
               <div>
-                <h3 className="text-lg font-serif text-text-primary">{selectedUser.name || "-"}</h3>
+                <h3 className="text-base font-semibold text-text-primary">{selectedUser.name || "-"}</h3>
                 <p className="text-sm text-text-muted">{selectedUser.email}</p>
               </div>
             </div>

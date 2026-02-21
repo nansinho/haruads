@@ -29,15 +29,15 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-dark text-text-primary">
-      {/* Ambient glow */}
-      <div className="fixed top-0 right-0 w-[600px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
+      {/* Subtle ambient warmth */}
+      <div className="fixed top-0 right-0 w-[500px] h-[300px] bg-accent/[0.02] rounded-full blur-[150px] pointer-events-none" />
 
       <GlassSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Main content */}
       <div className="lg:pl-[270px]">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 h-14 bg-dark/80 backdrop-blur-2xl border-b border-white/[0.04] flex items-center px-4 lg:px-8">
+        <header className="sticky top-0 z-30 h-14 bg-dark/90 backdrop-blur-md border-b border-border-dark flex items-center px-5 lg:px-10">
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden text-text-secondary hover:text-text-primary mr-4 transition-colors"
@@ -56,7 +56,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
             {pathname !== "/admin" && (
               <>
                 <ChevronRight size={13} className="text-text-muted" />
-                <span className="text-text-secondary capitalize text-[0.82rem]">
+                <span className="text-text-secondary capitalize text-sm">
                   {pathname.split("/").pop()?.replace(/-/g, " ")}
                 </span>
               </>
@@ -68,7 +68,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
             <Link
               href="/"
               target="_blank"
-              className="text-xs text-text-muted hover:text-text-primary transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.06] hover:border-white/[0.12]"
+              className="text-xs text-text-muted hover:text-text-primary transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border-dark hover:border-white/15"
             >
               <Globe size={13} />
               Voir le site
@@ -77,7 +77,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* Page content */}
-        <main className="p-4 lg:p-8">{children}</main>
+        <main className="p-5 lg:p-10">{children}</main>
       </div>
     </div>
   );

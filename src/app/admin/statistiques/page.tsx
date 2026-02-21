@@ -27,7 +27,7 @@ function MetricCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+    <div className="bg-dark-2 border border-border-dark rounded-2xl p-5">
       <div className="flex items-center justify-between mb-3">
         <span className="text-text-muted">{icon}</span>
         {change && (
@@ -113,7 +113,7 @@ export default function StatistiquesPage() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all ${
                     period === p.value
                       ? "bg-accent-dim text-accent border border-accent/20"
-                      : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary"
+                      : "bg-dark-2 text-text-secondary border border-border-dark hover:bg-dark-3 hover:text-text-primary"
                   }`}
                 >
                   {p.value === period && <Calendar size={16} />}
@@ -122,7 +122,7 @@ export default function StatistiquesPage() {
               ))}
               <button
                 onClick={() => fetchStats(period)}
-                className="p-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-colors"
+                className="p-2.5 bg-dark-2 border border-border-dark rounded-full text-text-muted hover:text-text-primary hover:bg-dark-3 transition-colors"
                 title="Actualiser"
               >
                 <RefreshCw size={16} />
@@ -166,13 +166,13 @@ export default function StatistiquesPage() {
 
           {/* Daily Views Table */}
           <AnimatedSection>
-            <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
-              <h3 className="font-serif text-lg text-text-primary mb-4">Visites par jour</h3>
+            <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
+              <h3 className="text-base font-semibold text-text-primary mb-4">Visites par jour</h3>
               {stats.dailyViews.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-border-dark">
                         <th className="text-left px-5 py-3 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
                           Date
                         </th>
@@ -183,7 +183,7 @@ export default function StatistiquesPage() {
                     </thead>
                     <tbody className="divide-y divide-white/[0.06]">
                       {stats.dailyViews.map((day, i) => (
-                        <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                        <tr key={i} className="hover:bg-dark-3 transition-colors">
                           <td className="px-5 py-3">
                             <span className="text-sm text-text-secondary">
                               {new Date(day.date).toLocaleDateString("fr-FR", {
@@ -218,7 +218,7 @@ export default function StatistiquesPage() {
                   </table>
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-48 border border-dashed border-white/[0.06] rounded-xl">
+                <div className="flex items-center justify-center h-48 border border-dashed border-border-dark rounded-xl">
                   <div className="text-center">
                     <BarChart3 size={32} className="text-text-muted mx-auto mb-2" />
                     <p className="text-text-muted text-sm">
@@ -232,15 +232,15 @@ export default function StatistiquesPage() {
 
           {/* Top Pages Table */}
           <AnimatedSection>
-            <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
-              <h3 className="font-serif text-lg text-text-primary mb-4">
+            <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
+              <h3 className="text-base font-semibold text-text-primary mb-4">
                 Pages les plus visitees
               </h3>
               {stats.topPages.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-border-dark">
                         <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
                           Page
                         </th>
@@ -257,7 +257,7 @@ export default function StatistiquesPage() {
                     </thead>
                     <tbody className="divide-y divide-white/[0.06]">
                       {stats.topPages.map((page, i) => (
-                        <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                        <tr key={i} className="hover:bg-dark-3 transition-colors">
                           <td className="px-5 py-3">
                             <span className="text-sm text-text-primary font-medium">
                               {page.path}
@@ -284,7 +284,7 @@ export default function StatistiquesPage() {
                   </table>
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-48 border border-dashed border-white/[0.06] rounded-xl">
+                <div className="flex items-center justify-center h-48 border border-dashed border-border-dark rounded-xl">
                   <div className="text-center">
                     <FileText size={32} className="text-text-muted mx-auto mb-2" />
                     <p className="text-text-muted text-sm">

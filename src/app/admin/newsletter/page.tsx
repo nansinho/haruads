@@ -301,7 +301,7 @@ export default function NewsletterPage() {
       {/* Stats */}
       <AnimatedSection>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <Users size={20} className="text-accent" />
@@ -312,7 +312,7 @@ export default function NewsletterPage() {
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-emerald-500/10 rounded-xl">
                 <CheckCircle size={20} className="text-emerald-400" />
@@ -323,7 +323,7 @@ export default function NewsletterPage() {
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-blue-500/10 rounded-xl">
                 <Send size={20} className="text-blue-400" />
@@ -334,7 +334,7 @@ export default function NewsletterPage() {
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-orange-500/10 rounded-xl">
                 <Eye size={20} className="text-orange-400" />
@@ -350,7 +350,7 @@ export default function NewsletterPage() {
 
       {/* Tabs */}
       <AnimatedSection>
-        <div className="flex gap-2 border-b border-white/[0.06] pb-0">
+        <div className="flex gap-2 border-b border-border-dark pb-0">
           <button
             onClick={() => setActiveTab("abonnes")}
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
@@ -383,7 +383,7 @@ export default function NewsletterPage() {
       {/* Abonnes Section */}
       {activeTab === "abonnes" && (
         <AnimatedSection>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
               <h2 className="text-lg font-semibold text-text-primary">Liste des abonnes</h2>
               <div className="flex items-center gap-3">
@@ -397,12 +397,12 @@ export default function NewsletterPage() {
                     placeholder="Rechercher un abonne..."
                     value={searchQuery}
                     onChange={(e) => handleSearch(e.target.value)}
-                    className="w-full sm:w-72 pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                    className="w-full sm:w-72 pl-10 pr-4 py-2.5 bg-dark border border-border-dark rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
                   />
                 </div>
                 <button
                   onClick={refetchSubs}
-                  className="p-2.5 bg-dark border border-white/[0.06] rounded-full text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-colors"
+                  className="p-2.5 bg-dark border border-border-dark rounded-full text-text-muted hover:text-text-primary hover:bg-dark-3 transition-colors"
                   title="Actualiser"
                 >
                   <RefreshCw size={16} />
@@ -419,7 +419,7 @@ export default function NewsletterPage() {
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-border-dark">
                         <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
                           Email
                         </th>
@@ -445,7 +445,7 @@ export default function NewsletterPage() {
                         subscribers.map((sub) => (
                           <tr
                             key={sub.id}
-                            className="hover:bg-white/[0.02] transition-colors"
+                            className="hover:bg-dark-3 transition-colors"
                           >
                             <td className="py-3.5 px-4">
                               <span className="text-sm text-text-primary">{sub.email}</span>
@@ -468,7 +468,7 @@ export default function NewsletterPage() {
                               <div className="flex items-center justify-end gap-1">
                                 <button
                                   onClick={() => openEditSub(sub)}
-                                  className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-accent transition-colors"
+                                  className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-accent transition-colors"
                                   title="Modifier"
                                 >
                                   <Pencil size={14} />
@@ -478,7 +478,7 @@ export default function NewsletterPage() {
                                     setSelectedSub(sub);
                                     setShowSubDelete(true);
                                   }}
-                                  className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-colors"
+                                  className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-red-400 transition-colors"
                                   title="Supprimer"
                                 >
                                   <Trash2 size={14} />
@@ -507,13 +507,13 @@ export default function NewsletterPage() {
       {/* Campagnes Section */}
       {activeTab === "campagnes" && (
         <AnimatedSection>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-text-primary">Campagnes</h2>
               <div className="flex items-center gap-3">
                 <button
                   onClick={refetchCamps}
-                  className="p-2.5 bg-dark border border-white/[0.06] rounded-full text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-colors"
+                  className="p-2.5 bg-dark border border-border-dark rounded-full text-text-muted hover:text-text-primary hover:bg-dark-3 transition-colors"
                   title="Actualiser"
                 >
                   <RefreshCw size={16} />
@@ -537,7 +537,7 @@ export default function NewsletterPage() {
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-border-dark">
                         <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
                           Sujet
                         </th>
@@ -575,7 +575,7 @@ export default function NewsletterPage() {
                         campaigns.map((campaign) => (
                           <tr
                             key={campaign.id}
-                            className="hover:bg-white/[0.02] transition-colors"
+                            className="hover:bg-dark-3 transition-colors"
                           >
                             <td className="py-3.5 px-4">
                               <span className="text-sm text-text-primary font-medium">
@@ -614,7 +614,7 @@ export default function NewsletterPage() {
                               <div className="flex items-center justify-end gap-1">
                                 <button
                                   onClick={() => openEditCamp(campaign)}
-                                  className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-accent transition-colors"
+                                  className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-accent transition-colors"
                                   title="Modifier"
                                 >
                                   <Pencil size={14} />
@@ -624,7 +624,7 @@ export default function NewsletterPage() {
                                     setSelectedCamp(campaign);
                                     setShowCampDelete(true);
                                   }}
-                                  className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-colors"
+                                  className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-red-400 transition-colors"
                                   title="Supprimer"
                                 >
                                   <Trash2 size={14} />
@@ -660,7 +660,7 @@ export default function NewsletterPage() {
           <>
             <button
               onClick={() => setShowSubModal(false)}
-              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-border-dark rounded-full hover:bg-dark-3 transition-all"
             >
               Annuler
             </button>
@@ -732,7 +732,7 @@ export default function NewsletterPage() {
           <>
             <button
               onClick={() => setShowCampModal(false)}
-              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-border-dark rounded-full hover:bg-dark-3 transition-all"
             >
               Annuler
             </button>

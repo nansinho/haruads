@@ -188,7 +188,7 @@ export default function PrixPage() {
           <>
             <button
               onClick={refetch}
-              className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm"
+              className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-border-dark rounded-full text-text-secondary hover:bg-dark-3 hover:text-text-primary transition-all text-sm"
             >
               <RefreshCw size={16} />
               Actualiser
@@ -207,7 +207,7 @@ export default function PrixPage() {
       {/* Stats */}
       <AnimatedSection>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <Tag size={20} className="text-accent" />
@@ -218,7 +218,7 @@ export default function PrixPage() {
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-emerald-500/10 rounded-xl">
                 <CheckCircle size={20} className="text-emerald-400" />
@@ -229,7 +229,7 @@ export default function PrixPage() {
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-orange-500/10 rounded-xl">
                 <Percent size={20} className="text-orange-400" />
@@ -245,7 +245,7 @@ export default function PrixPage() {
 
       {/* Filters */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-4 space-y-4">
           <div className="relative">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
             <input
@@ -253,7 +253,7 @@ export default function PrixPage() {
               placeholder="Rechercher un prix..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-border-dark rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -264,7 +264,7 @@ export default function PrixPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-dark-2 text-text-secondary border border-border-dark hover:bg-dark-3 hover:text-text-primary rounded-full"
                 }`}
               >
                 {filter.label}
@@ -276,7 +276,7 @@ export default function PrixPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
           <h2 className="text-lg font-semibold text-text-primary mb-6">Liste des prix</h2>
 
           {loading ? (
@@ -287,7 +287,7 @@ export default function PrixPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-border-dark">
                     <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
                       Nom
                     </th>
@@ -322,7 +322,7 @@ export default function PrixPage() {
                     prices.map((price) => (
                       <tr
                         key={price.id}
-                        className="hover:bg-white/[0.02] transition-colors"
+                        className="hover:bg-dark-3 transition-colors"
                       >
                         <td className="py-3.5 px-4">
                           <span className="text-sm text-text-primary font-medium">
@@ -383,7 +383,7 @@ export default function PrixPage() {
                           <div className="flex items-center justify-end gap-1">
                             <button
                               onClick={() => openEdit(price)}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-accent transition-colors"
+                              className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-accent transition-colors"
                               title="Modifier"
                             >
                               <Pencil size={14} />
@@ -393,7 +393,7 @@ export default function PrixPage() {
                                 setSelectedItem(price);
                                 setShowDelete(true);
                               }}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-colors"
+                              className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-red-400 transition-colors"
                               title="Supprimer"
                             >
                               <Trash2 size={14} />
@@ -427,7 +427,7 @@ export default function PrixPage() {
           <>
             <button
               onClick={() => setShowModal(false)}
-              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-border-dark rounded-full hover:bg-dark-3 transition-all"
             >
               Annuler
             </button>
@@ -519,7 +519,7 @@ export default function PrixPage() {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between p-4 bg-dark rounded-xl border border-white/[0.06]">
+          <div className="flex items-center justify-between p-4 bg-dark rounded-xl border border-border-dark">
             <div>
               <p className="text-sm font-medium text-text-primary">Actif</p>
               <p className="text-xs text-text-muted">Activer ou desactiver ce prix</p>

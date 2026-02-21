@@ -94,13 +94,13 @@ export default function DataTable<T extends Record<string, unknown>>({
   );
 
   return (
-    <div className="bg-dark-2 border border-white/[0.06] rounded-2xl overflow-hidden">
+    <div className="bg-dark-2 border border-border-dark rounded-2xl overflow-hidden">
       {/* Header */}
       {(title || headerActions || onSearch) && (
-        <div className="p-5 border-b border-white/[0.06] flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <div className="p-5 border-b border-border-dark flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <div className="flex items-center gap-4">
             {title && (
-              <h2 className="text-base font-serif text-text-primary">{title}</h2>
+              <h2 className="text-base font-semibold text-text-primary">{title}</h2>
             )}
             <span className="text-xs font-mono text-text-muted">
               {filteredData.length} résultat{filteredData.length !== 1 ? "s" : ""}
@@ -121,7 +121,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                   onSearch?.(e.target.value);
                 }}
                 placeholder={searchPlaceholder}
-                className="w-full pl-9 pr-4 py-2 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all"
+                className="w-full pl-9 pr-4 py-2 bg-dark border border-border-dark rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all"
               />
             </div>
             {headerActions}
@@ -133,7 +133,7 @@ export default function DataTable<T extends Record<string, unknown>>({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-white/[0.06]">
+            <tr className="border-b border-border-dark">
               {columns.map((col) => (
                 <th
                   key={col.key}
@@ -184,7 +184,7 @@ export default function DataTable<T extends Record<string, unknown>>({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="p-4 border-t border-white/[0.06] flex items-center justify-between">
+        <div className="p-4 border-t border-border-dark flex items-center justify-between">
           <p className="text-xs font-mono text-text-muted">
             Page {currentPage} sur {totalPages}
           </p>
@@ -192,7 +192,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="p-2 rounded-full bg-dark border border-white/[0.06] text-text-muted hover:text-text-primary hover:border-white/[0.12] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="p-2 rounded-full bg-dark border border-border-dark text-text-muted hover:text-text-primary hover:border-white/[0.12] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronLeft size={14} />
             </button>
@@ -214,7 +214,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                   className={`w-8 h-8 rounded-full text-xs font-mono transition-all ${
                     currentPage === page
                       ? "bg-accent text-dark font-bold"
-                      : "text-text-muted hover:text-text-primary hover:bg-white/[0.04]"
+                      : "text-text-muted hover:text-text-primary hover:bg-dark-3"
                   }`}
                 >
                   {page}
@@ -224,7 +224,7 @@ export default function DataTable<T extends Record<string, unknown>>({
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="p-2 rounded-full bg-dark border border-white/[0.06] text-text-muted hover:text-text-primary hover:border-white/[0.12] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="p-2 rounded-full bg-dark border border-border-dark text-text-muted hover:text-text-primary hover:border-white/[0.12] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
             >
               <ChevronRight size={14} />
             </button>

@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-dark: #0a0a0a;
-  --color-dark-2: #111111;
-  --color-dark-3: #1a1a1a;
+  --color-dark: #141416;
+  --color-dark-2: #1c1c1f;
+  --color-dark-3: #242427;
   --color-accent: #f97316;
   --color-accent-hover: #ea580c;
-  --color-accent-dim: rgba(249, 115, 22, 0.06);
+  --color-accent-dim: rgba(249, 115, 22, 0.08);
   --color-cyan: #fb923c;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted: #52525b;
+  --color-text-primary: #f0f0f3;
+  --color-text-secondary: #a8a8b3;
+  --color-text-muted: #6b6b76;
   --color-light: #f8f8f8;
   --color-text-dark: #1a1a1a;
   --color-text-body: #6b7280;
-  --color-border-dark: rgba(255, 255, 255, 0.06);
+  --color-border-dark: rgba(255, 255, 255, 0.10);
 
   --font-sans: var(--font-plus-jakarta, "Plus Jakarta Sans"), sans-serif;
   --font-serif: var(--font-dm-serif, "DM Serif Display"), serif;
@@ -22,20 +22,16 @@
 
   --animate-fade-up: fade-up 0.7s ease forwards;
   --animate-float: float 6s ease-in-out infinite;
-  --animate-glow-pulse: glow-pulse 4s ease-in-out infinite;
+  /* glow-pulse removed – unused after card simplification */
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(28px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes text-gradient-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
-}
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.08); }
 }
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
@@ -118,25 +114,14 @@ html[data-color-filter="tritanopia"] { filter: url('#tritanopia'); }
 
 /* Admin utilities */
 .glass-panel {
-  background: color-mix(in srgb, var(--color-dark) 80%, transparent);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: var(--color-dark-2);
+  border: 1px solid var(--color-border-dark);
 }
 .glow-orange {
-  box-shadow: 0 0 30px color-mix(in srgb, var(--color-accent) 15%, transparent), 0 0 60px color-mix(in srgb, var(--color-accent) 5%, transparent);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.06);
 }
 @keyframes slide-up-fade {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.noise-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.012;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1;
-}

@@ -236,14 +236,14 @@ export default function TicketsPage() {
           <>
             <button
               onClick={exportCSV}
-              className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm"
+              className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-border-dark rounded-full text-text-secondary hover:bg-dark-3 hover:text-text-primary transition-all text-sm"
             >
               <Download size={16} />
               Exporter
             </button>
             <button
               onClick={refetch}
-              className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm"
+              className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-border-dark rounded-full text-text-secondary hover:bg-dark-3 hover:text-text-primary transition-all text-sm"
             >
               <RefreshCw size={16} />
               Actualiser
@@ -261,7 +261,7 @@ export default function TicketsPage() {
 
       {/* Filters & Search */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-4 space-y-4">
           {/* Search */}
           <div className="relative">
             <Search
@@ -273,7 +273,7 @@ export default function TicketsPage() {
               placeholder="Rechercher par reference, sujet..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-border-dark rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
             />
           </div>
 
@@ -286,7 +286,7 @@ export default function TicketsPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-dark-2 text-text-secondary border border-border-dark hover:bg-dark-3 hover:text-text-primary rounded-full"
                 }`}
               >
                 {filter.label}
@@ -298,7 +298,7 @@ export default function TicketsPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-16">
               <Loader2 size={24} className="text-accent animate-spin" />
@@ -307,7 +307,7 @@ export default function TicketsPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-border-dark">
                     <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
                       Reference
                     </th>
@@ -336,7 +336,7 @@ export default function TicketsPage() {
                     tickets.map((ticket) => (
                       <tr
                         key={ticket.id}
-                        className="hover:bg-white/[0.02] transition-colors"
+                        className="hover:bg-dark-3 transition-colors"
                       >
                         <td className="px-6 py-4">
                           <span className="text-sm font-medium text-accent">
@@ -368,14 +368,14 @@ export default function TicketsPage() {
                           <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => openDetail(ticket)}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all"
+                              className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-text-primary transition-all"
                               title="Voir"
                             >
                               <Eye size={16} />
                             </button>
                             <button
                               onClick={() => openEdit(ticket)}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-accent transition-all"
+                              className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-accent transition-all"
                               title="Modifier"
                             >
                               <Pencil size={16} />
@@ -385,7 +385,7 @@ export default function TicketsPage() {
                                 setSelectedTicket(ticket);
                                 setShowDelete(true);
                               }}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-all"
+                              className="p-1.5 rounded-lg hover:bg-dark-3 text-text-muted hover:text-red-400 transition-all"
                               title="Supprimer"
                             >
                               <Trash2 size={16} />
@@ -398,7 +398,7 @@ export default function TicketsPage() {
                     <tr>
                       <td colSpan={7} className="px-6 py-16 text-center">
                         <div className="flex flex-col items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-2xl bg-dark border border-border-dark flex items-center justify-center">
                             <Ticket size={24} className="text-text-muted" />
                           </div>
                           <div>
@@ -437,7 +437,7 @@ export default function TicketsPage() {
           <>
             <button
               onClick={() => setShowModal(false)}
-              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-border-dark rounded-full hover:bg-dark-3 transition-all"
             >
               Annuler
             </button>
@@ -527,7 +527,7 @@ export default function TicketsPage() {
         footer={
           <button
             onClick={() => setShowDetail(false)}
-            className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+            className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-border-dark rounded-full hover:bg-dark-3 transition-all"
           >
             Fermer
           </button>
@@ -535,9 +535,9 @@ export default function TicketsPage() {
       >
         {selectedTicket && (
           <div className="space-y-5">
-            <div className="flex items-start justify-between pb-4 border-b border-white/[0.06]">
+            <div className="flex items-start justify-between pb-4 border-b border-border-dark">
               <div>
-                <h3 className="text-lg font-serif text-text-primary">{selectedTicket.subject}</h3>
+                <h3 className="text-base font-semibold text-text-primary">{selectedTicket.subject}</h3>
                 <p className="text-sm text-text-muted mt-1">
                   Categorie: {selectedTicket.category}
                 </p>
@@ -559,7 +559,7 @@ export default function TicketsPage() {
                     className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all ${
                       selectedTicket.status === s
                         ? "bg-accent/10 text-accent border-accent/20"
-                        : "text-text-secondary border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary"
+                        : "text-text-secondary border-border-dark hover:bg-dark-3 hover:text-text-primary"
                     }`}
                   >
                     {s.replace(/_/g, " ")}

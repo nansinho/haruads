@@ -137,13 +137,13 @@ export default function AIBlogPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Configuration Panel */}
         <AnimatedSection>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6 lg:col-span-1">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-6 lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <PenTool size={20} className="text-accent" />
               </div>
               <div>
-                <h2 className="font-serif text-lg text-text-primary">
+                <h2 className="text-base font-semibold text-text-primary">
                   Configuration
                 </h2>
                 <p className="text-sm text-text-muted">
@@ -218,14 +218,14 @@ export default function AIBlogPage() {
 
         {/* Generated Content / Notice */}
         <AnimatedSection>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6 lg:col-span-2">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-6 lg:col-span-2">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <div className="p-2.5 bg-emerald-500/10 rounded-xl">
                   <FileText size={20} className="text-emerald-400" />
                 </div>
                 <div>
-                  <h2 className="font-serif text-lg text-text-primary">
+                  <h2 className="text-base font-semibold text-text-primary">
                     Contenu genere
                   </h2>
                   <p className="text-sm text-text-muted">
@@ -238,7 +238,7 @@ export default function AIBlogPage() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={copyContent}
-                    className="inline-flex items-center gap-2 px-3 py-2 bg-dark border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+                    className="inline-flex items-center gap-2 px-3 py-2 bg-dark border border-border-dark text-text-secondary rounded-full text-sm hover:bg-dark-3 hover:text-text-primary transition-colors"
                   >
                     {copied ? <CheckCircle size={14} /> : <Copy size={14} />}
                     {copied ? "Copie !" : "Copier"}
@@ -290,7 +290,7 @@ export default function AIBlogPage() {
                     type="text"
                     value={generatedTitle}
                     onChange={(e) => setGeneratedTitle(e.target.value)}
-                    className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary text-lg font-serif focus:outline-none focus:ring-2 focus:ring-accent/50"
+                    className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary text-base font-semibold focus:outline-none focus:ring-2 focus:ring-accent/50"
                   />
                 </div>
                 <div>
@@ -301,13 +301,13 @@ export default function AIBlogPage() {
                     value={generatedContent}
                     onChange={(e) => setGeneratedContent(e.target.value)}
                     rows={20}
-                    className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent/50 resize-y"
+                    className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent/50 resize-y"
                   />
                 </div>
               </div>
             ) : !showApiNotice ? (
-              <div className="flex flex-col items-center justify-center h-80 text-center border border-dashed border-white/[0.06] rounded-xl">
-                <div className="w-16 h-16 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center mb-4">
+              <div className="flex flex-col items-center justify-center h-80 text-center border border-dashed border-border-dark rounded-xl">
+                <div className="w-16 h-16 rounded-2xl bg-dark border border-border-dark flex items-center justify-center mb-4">
                   <BookOpen size={28} className="text-text-muted" />
                 </div>
                 <p className="text-text-secondary font-medium mb-2">

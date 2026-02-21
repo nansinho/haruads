@@ -84,13 +84,13 @@ export default function SecuritePage() {
       <AnimatedSection>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Change Password */}
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <Lock size={20} className="text-accent" />
               </div>
               <div>
-                <h2 className="font-serif text-lg text-text-primary">
+                <h2 className="text-base font-semibold text-text-primary">
                   Changer le mot de passe
                 </h2>
                 <p className="text-sm text-text-muted">
@@ -111,7 +111,7 @@ export default function SecuritePage() {
                     value={oldPassword}
                     onChange={(e) => setOldPassword(e.target.value)}
                     placeholder="Votre mot de passe actuel"
-                    className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 pr-12"
+                    className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 pr-12"
                   />
                   <button
                     type="button"
@@ -134,7 +134,7 @@ export default function SecuritePage() {
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="Votre nouveau mot de passe"
-                    className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 pr-12"
+                    className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 pr-12"
                   />
                   <button
                     type="button"
@@ -160,7 +160,7 @@ export default function SecuritePage() {
                     className={`w-full px-4 py-3 bg-dark border rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 pr-12 ${
                       passwordError
                         ? "border-red-500/50 focus:ring-red-500/50"
-                        : "border-white/[0.06] focus:ring-accent/50"
+                        : "border-border-dark focus:ring-accent/50"
                     }`}
                   />
                   <button
@@ -212,13 +212,13 @@ export default function SecuritePage() {
           </div>
 
           {/* 2FA */}
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2.5 bg-emerald-500/10 rounded-xl">
                 <Smartphone size={20} className="text-emerald-400" />
               </div>
               <div>
-                <h2 className="font-serif text-lg text-text-primary">
+                <h2 className="text-base font-semibold text-text-primary">
                   Authentification 2FA
                 </h2>
                 <p className="text-sm text-text-muted">
@@ -228,7 +228,7 @@ export default function SecuritePage() {
             </div>
 
             <div className="space-y-6">
-              <div className="flex items-center justify-between p-4 bg-dark rounded-xl border border-white/[0.06]">
+              <div className="flex items-center justify-between p-4 bg-dark rounded-xl border border-border-dark">
                 <div className="flex items-center gap-3">
                   <Key size={20} className="text-text-muted" />
                   <div>
@@ -272,7 +272,7 @@ export default function SecuritePage() {
                 </p>
                 <button
                   disabled
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-muted rounded-full text-sm opacity-50 cursor-not-allowed"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-border-dark text-text-muted rounded-full text-sm opacity-50 cursor-not-allowed"
                 >
                   <Key size={14} />
                   Generer des codes de secours
@@ -285,14 +285,14 @@ export default function SecuritePage() {
 
       {/* Active Sessions */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <Monitor size={20} className="text-accent" />
               </div>
               <div>
-                <h2 className="font-serif text-lg text-text-primary">
+                <h2 className="text-base font-semibold text-text-primary">
                   Sessions actives
                 </h2>
                 <p className="text-sm text-text-muted">
@@ -302,7 +302,7 @@ export default function SecuritePage() {
             </div>
           </div>
 
-          <div className="p-6 bg-dark rounded-xl border border-white/[0.06] text-center">
+          <div className="p-6 bg-dark rounded-xl border border-border-dark text-center">
             <Info size={32} className="mx-auto text-text-muted mb-3" />
             <p className="text-sm text-text-secondary font-medium mb-1">
               Gestion des sessions

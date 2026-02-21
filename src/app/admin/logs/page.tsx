@@ -135,14 +135,14 @@ export default function LogsPage() {
             <div className="flex items-center gap-3">
               <button
                 onClick={exportCSV}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-border-dark text-text-secondary rounded-full text-sm hover:bg-dark-3 hover:text-text-primary transition-colors"
               >
                 <Download size={16} />
                 Exporter
               </button>
               <button
                 onClick={refetch}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-border-dark text-text-secondary rounded-full text-sm hover:bg-dark-3 hover:text-text-primary transition-colors"
               >
                 <RefreshCw size={16} />
                 Actualiser
@@ -188,9 +188,9 @@ export default function LogsPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <h2 className="font-serif text-lg text-text-primary">
+            <h2 className="text-base font-semibold text-text-primary">
               Journal d&apos;activite
             </h2>
             <div className="flex items-center gap-3">
@@ -205,7 +205,7 @@ export default function LogsPage() {
                   placeholder="Rechercher..."
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
-                  className="w-full sm:w-64 pl-9 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="w-full sm:w-64 pl-9 pr-4 py-2.5 bg-dark border border-border-dark rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
                 />
               </div>
 
@@ -213,7 +213,7 @@ export default function LogsPage() {
               <div className="relative">
                 <button
                   onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark border border-border-dark rounded-full text-sm text-text-secondary hover:bg-dark-3 hover:text-text-primary transition-colors"
                 >
                   <Filter size={14} />
                   {filterSeverity === "all"
@@ -223,7 +223,7 @@ export default function LogsPage() {
                 </button>
 
                 {showFilterDropdown && (
-                  <div className="absolute right-0 mt-2 w-52 bg-dark-2 border border-white/[0.06] rounded-xl shadow-xl z-10 py-1">
+                  <div className="absolute right-0 mt-2 w-52 bg-dark-2 border border-border-dark rounded-xl shadow-xl z-10 py-1">
                     {severityOptions.map((option) => (
                       <button
                         key={option.value}
@@ -235,7 +235,7 @@ export default function LogsPage() {
                         className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
                           filterSeverity === option.value
                             ? "bg-accent/10 text-accent"
-                            : "text-text-secondary hover:bg-white/[0.04]"
+                            : "text-text-secondary hover:bg-dark-3"
                         }`}
                       >
                         {option.label}
@@ -256,7 +256,7 @@ export default function LogsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-white/[0.06]">
+                    <tr className="border-b border-border-dark">
                       <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
                         <span className="flex items-center gap-1.5">
                           <Clock size={12} />
@@ -288,7 +288,7 @@ export default function LogsPage() {
                       logs.map((log) => (
                         <tr
                           key={log.id}
-                          className={`hover:bg-white/[0.04] transition-colors ${
+                          className={`hover:bg-dark-3 transition-colors ${
                             log.severity === "critical" ? "bg-red-500/[0.03]" : ""
                           }`}
                         >
@@ -328,7 +328,7 @@ export default function LogsPage() {
               </div>
 
               {/* Pagination */}
-              <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/[0.06]">
+              <div className="flex items-center justify-between mt-6 pt-4 border-t border-border-dark">
                 <p className="text-sm text-text-muted">
                   {total} evenement{total !== 1 ? "s" : ""} au total
                   {totalPages > 1 && ` - Page ${page} / ${totalPages}`}
@@ -337,7 +337,7 @@ export default function LogsPage() {
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page <= 1}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-dark border border-border-dark rounded-lg text-sm text-text-muted hover:bg-dark-3 transition-colors disabled:opacity-50"
                   >
                     <ChevronLeft size={14} />
                     Precedent
@@ -348,7 +348,7 @@ export default function LogsPage() {
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page >= totalPages}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-dark border border-border-dark rounded-lg text-sm text-text-muted hover:bg-dark-3 transition-colors disabled:opacity-50"
                   >
                     Suivant
                     <ChevronRight size={14} />

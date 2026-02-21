@@ -389,13 +389,13 @@ export default function ParametresPage() {
 
       {/* Apparence */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Palette size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Apparence</h2>
+              <h2 className="text-base font-semibold text-text-primary">Apparence</h2>
               <p className="text-sm text-text-muted">Couleurs du site (preview en temps reel)</p>
             </div>
           </div>
@@ -411,7 +411,7 @@ export default function ParametresPage() {
                   type="color"
                   value={settings.themeDark}
                   onChange={(e) => updateSetting("themeDark", e.target.value)}
-                  className="w-12 h-10 rounded-lg border border-white/[0.06] cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
+                  className="w-12 h-10 rounded-lg border border-border-dark cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
                 />
                 <input
                   type="text"
@@ -420,7 +420,7 @@ export default function ParametresPage() {
                     const v = e.target.value;
                     if (/^#[0-9a-fA-F]{0,6}$/.test(v)) updateSetting("themeDark", v);
                   }}
-                  className="w-28 px-3 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-primary font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="w-28 px-3 py-2.5 bg-dark border border-border-dark rounded-xl text-text-primary font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
                   placeholder="#0a0a0a"
                 />
                 <div className="flex items-center gap-1.5 ml-2">
@@ -456,7 +456,7 @@ export default function ParametresPage() {
                   type="color"
                   value={settings.themeAccent}
                   onChange={(e) => updateSetting("themeAccent", e.target.value)}
-                  className="w-12 h-10 rounded-lg border border-white/[0.06] cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
+                  className="w-12 h-10 rounded-lg border border-border-dark cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
                 />
                 <input
                   type="text"
@@ -465,7 +465,7 @@ export default function ParametresPage() {
                     const v = e.target.value;
                     if (/^#[0-9a-fA-F]{0,6}$/.test(v)) updateSetting("themeAccent", v);
                   }}
-                  className="w-28 px-3 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-primary font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="w-28 px-3 py-2.5 bg-dark border border-border-dark rounded-xl text-text-primary font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
                   placeholder="#f97316"
                 />
                 <div className="flex items-center gap-1.5 ml-2">
@@ -515,13 +515,13 @@ export default function ParametresPage() {
 
       {/* General */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Globe size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">General</h2>
+              <h2 className="text-base font-semibold text-text-primary">General</h2>
               <p className="text-sm text-text-muted">Informations generales du site</p>
             </div>
           </div>
@@ -535,7 +535,7 @@ export default function ParametresPage() {
                 type="text"
                 value={settings.siteName}
                 onChange={(e) => updateSetting("siteName", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
@@ -546,7 +546,7 @@ export default function ParametresPage() {
                 type="text"
                 value={settings.siteDescription}
                 onChange={(e) => updateSetting("siteDescription", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
           </div>
@@ -555,13 +555,13 @@ export default function ParametresPage() {
 
       {/* Contact */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Phone size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Contact</h2>
+              <h2 className="text-base font-semibold text-text-primary">Contact</h2>
               <p className="text-sm text-text-muted">Coordonnees de contact</p>
             </div>
           </div>
@@ -578,7 +578,7 @@ export default function ParametresPage() {
                 type="email"
                 value={settings.contactEmail}
                 onChange={(e) => updateSetting("contactEmail", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
@@ -592,7 +592,7 @@ export default function ParametresPage() {
                 type="tel"
                 value={settings.contactPhone}
                 onChange={(e) => updateSetting("contactPhone", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
@@ -606,7 +606,7 @@ export default function ParametresPage() {
                 type="text"
                 value={settings.contactAddress}
                 onChange={(e) => updateSetting("contactAddress", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
           </div>
@@ -615,13 +615,13 @@ export default function ParametresPage() {
 
       {/* Social Media */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Instagram size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Reseaux Sociaux</h2>
+              <h2 className="text-base font-semibold text-text-primary">Reseaux Sociaux</h2>
               <p className="text-sm text-text-muted">Liens vers vos reseaux sociaux</p>
             </div>
           </div>
@@ -639,7 +639,7 @@ export default function ParametresPage() {
                 value={settings.instagram}
                 onChange={(e) => updateSetting("instagram", e.target.value)}
                 placeholder="https://instagram.com/..."
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
@@ -654,7 +654,7 @@ export default function ParametresPage() {
                 value={settings.linkedin}
                 onChange={(e) => updateSetting("linkedin", e.target.value)}
                 placeholder="https://linkedin.com/company/..."
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
@@ -669,7 +669,7 @@ export default function ParametresPage() {
                 value={settings.twitter}
                 onChange={(e) => updateSetting("twitter", e.target.value)}
                 placeholder="https://x.com/..."
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
           </div>
@@ -678,13 +678,13 @@ export default function ParametresPage() {
 
       {/* API Keys */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2.5 bg-emerald-500/10 rounded-xl">
               <Key size={20} className="text-emerald-400" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Cles API</h2>
+              <h2 className="text-base font-semibold text-text-primary">Cles API</h2>
               <p className="text-sm text-text-muted">Connexions aux services externes</p>
             </div>
           </div>
@@ -701,7 +701,7 @@ export default function ParametresPage() {
               if (!state) return null;
 
               return (
-                <div key={cfg.key} className="border-b border-white/[0.04] pb-5 last:border-0 last:pb-0">
+                <div key={cfg.key} className="border-b border-border-dark pb-5 last:border-0 last:pb-0">
                   <div className="flex items-center justify-between mb-2">
                     <label className="block text-sm font-medium text-text-secondary">
                       {cfg.label}
@@ -717,7 +717,7 @@ export default function ParametresPage() {
 
                   {state.configured && !state.inputValue && (
                     <div className="flex items-center gap-3 mb-3">
-                      <code className="flex-1 px-4 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-muted font-mono text-sm">
+                      <code className="flex-1 px-4 py-2.5 bg-dark border border-border-dark rounded-xl text-text-muted font-mono text-sm">
                         {state.masked}
                       </code>
                       <button
@@ -727,7 +727,7 @@ export default function ParametresPage() {
                             [cfg.key]: { ...prev[cfg.key], inputValue: " " },
                           }))
                         }
-                        className="px-3 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-secondary hover:text-accent hover:border-accent/30 transition-colors text-sm"
+                        className="px-3 py-2.5 bg-dark border border-border-dark rounded-xl text-text-secondary hover:text-accent hover:border-accent/30 transition-colors text-sm"
                         title="Modifier"
                       >
                         Modifier
@@ -735,7 +735,7 @@ export default function ParametresPage() {
                       <button
                         onClick={() => deleteApiKey(cfg.key)}
                         disabled={state.saving}
-                        className="p-2.5 bg-dark border border-white/[0.06] rounded-xl text-red-400 hover:bg-red-500/10 hover:border-red-500/30 transition-colors"
+                        className="p-2.5 bg-dark border border-border-dark rounded-xl text-red-400 hover:bg-red-500/10 hover:border-red-500/30 transition-colors"
                         title="Supprimer"
                       >
                         {state.saving ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
@@ -756,7 +756,7 @@ export default function ParametresPage() {
                             }))
                           }
                           placeholder={cfg.placeholder}
-                          className="w-full px-4 py-3 pr-12 bg-dark border border-white/[0.06] rounded-xl text-text-primary font-mono text-sm placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                          className="w-full px-4 py-3 pr-12 bg-dark border border-border-dark rounded-xl text-text-primary font-mono text-sm placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
                           autoComplete="off"
                         />
                         <button
@@ -787,7 +787,7 @@ export default function ParametresPage() {
                               [cfg.key]: { ...prev[cfg.key], inputValue: "", visible: false },
                             }))
                           }
-                          className="px-3 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-muted hover:text-text-secondary transition-colors text-sm"
+                          className="px-3 py-3 bg-dark border border-border-dark rounded-xl text-text-muted hover:text-text-secondary transition-colors text-sm"
                         >
                           Annuler
                         </button>
@@ -803,13 +803,13 @@ export default function ParametresPage() {
 
       {/* System */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-dark-2 border border-border-dark rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Monitor size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Systeme</h2>
+              <h2 className="text-base font-semibold text-text-primary">Systeme</h2>
               <p className="text-sm text-text-muted">Configuration technique</p>
             </div>
           </div>
@@ -838,7 +838,7 @@ export default function ParametresPage() {
                 value={settings.googleAnalyticsId}
                 onChange={(e) => updateSetting("googleAnalyticsId", e.target.value)}
                 placeholder="G-XXXXXXXXXX"
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-dark border border-border-dark rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
           </div>
