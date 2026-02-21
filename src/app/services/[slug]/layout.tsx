@@ -18,7 +18,9 @@ export async function generateMetadata({
 
   return {
     title: `${service.title} — Agence Web Aix-en-Provence`,
-    description: service.subtitle,
+    description: service.description.length > 160
+      ? service.description.substring(0, 157) + "..."
+      : service.description,
     openGraph: {
       title: `${service.title} — Agence HDS`,
       description: service.description,

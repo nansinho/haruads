@@ -34,19 +34,56 @@ export default function AIBlogPage() {
   const [generating, setGenerating] = useState(false);
   const [generatedTitle, setGeneratedTitle] = useState("");
   const [generatedContent, setGeneratedContent] = useState("");
+  const [generatedExcerpt, setGeneratedExcerpt] = useState("");
+  const [generatedKeywords, setGeneratedKeywords] = useState("");
   const [savingDraft, setSavingDraft] = useState(false);
   const [showApiNotice, setShowApiNotice] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const { toast } = useToast();
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if (!topic) {
       toast({ type: "error", message: "Veuillez saisir un sujet" });
       return;
     }
-    setShowApiNotice(true);
-    setGenerating(false);
+    setGenerating(true);
+    setShowApiNotice(false);
+    setGeneratedContent("");
+    setGeneratedTitle("");
+    setGeneratedExcerpt("");
+    setGeneratedKeywords("");
+
+    try {
+      const res = await fetch("/api/admin/ia/generate-article", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic, tone, length, keywords }),
+      });
+
+      if (res.status === 503) {
+        setShowApiNotice(true);
+        setGenerating(false);
+        return;
+      }
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Erreur de generation");
+      }
+
+      const data = await res.json();
+      setGeneratedTitle(data.title || topic);
+      setGeneratedContent(data.content || "");
+      setGeneratedExcerpt(data.excerpt || "");
+      setGeneratedKeywords(data.seo_keywords || "");
+      toast({ type: "success", message: "Article genere avec succes !" });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Erreur de generation";
+      toast({ type: "error", message: msg });
+    } finally {
+      setGenerating(false);
+    }
   };
 
   const saveDraft = async () => {
@@ -63,7 +100,9 @@ export default function AIBlogPage() {
           title: generatedTitle || topic,
           slug: slugify(generatedTitle || topic),
           content: generatedContent,
-          excerpt: generatedContent.substring(0, 200),
+          excerpt: generatedExcerpt || generatedContent.substring(0, 200),
+          seo_description: generatedExcerpt || "",
+          seo_keywords: generatedKeywords || "",
           status: "draft",
           is_ai_generated: true,
         }),

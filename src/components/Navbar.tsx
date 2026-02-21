@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 
@@ -79,7 +80,7 @@ export default function Navbar() {
         )}
 
         <Link href="/" className="flex items-center gap-2.5 group relative" title="Agence HDS - Accueil">
-          <img src="/images/logos/logo-hds-2026-blanc.svg" alt="Agence HDS - Agence web créative à Aix-en-Provence" className="h-8 w-auto" />
+          <Image src="/images/logos/logo-hds-2026-blanc.svg" alt="Agence HDS - Agence web créative à Aix-en-Provence" width={120} height={32} className="h-8 w-auto" priority />
         </Link>
 
         <ul className="hidden lg:flex gap-8 list-none">

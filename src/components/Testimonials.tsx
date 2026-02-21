@@ -4,6 +4,50 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
+const reviewSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://agencehds.fr/#organization",
+  name: "Agence HDS",
+  review: [
+    {
+      "@type": "Review",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      author: { "@type": "Person", name: "Karim B." },
+      reviewBody:
+        "L'Agence HDS a parfaitement compris notre besoin de migrer notre boutique WooCommerce vers une solution moderne. Le nouveau site est rapide, fluide et nos ventes en ligne ont augmenté significativement.",
+    },
+    {
+      "@type": "Review",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      author: { "@type": "Person", name: "Caroline M." },
+      reviewBody:
+        "Expertise technique remarquable et vraie écoute. Le dashboard de formation qu'ils ont développé nous a permis de gérer nos sessions et apprenants bien plus efficacement.",
+    },
+    {
+      "@type": "Review",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      author: { "@type": "Person", name: "Laurent A." },
+      reviewBody:
+        "Du design à la mise en production, tout a été livré dans les temps avec une qualité irréprochable. La communication est transparente à chaque étape.",
+    },
+    {
+      "@type": "Review",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      author: { "@type": "Person", name: "Sophie R." },
+      reviewBody:
+        "Notre système de réservation en ligne fonctionne parfaitement depuis le lancement. L'intégration Stripe est fluide et nos clients adorent la simplicité du parcours de booking.",
+    },
+    {
+      "@type": "Review",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      author: { "@type": "Person", name: "Pierre D." },
+      reviewBody:
+        "L'Agence HDS a su transformer notre vision en un site qui reflète vraiment notre identité. Réactivité, professionnalisme et un suivi après-projet impeccable.",
+    },
+  ],
+};
+
 const testimonials = [
   {
     text: "L\u2019Agence HDS a parfaitement compris notre besoin de migrer notre boutique WooCommerce vers une solution moderne. Le nouveau site est rapide, fluide et nos ventes en ligne ont augment\u00e9 significativement.",
@@ -36,6 +80,11 @@ export default function Testimonials() {
   const [current, setCurrent] = useState(0);
 
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
+      />
     <section className="bg-dark text-white relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-[0.02] pointer-events-none"
@@ -107,5 +156,6 @@ export default function Testimonials() {
         </ScrollReveal>
       </div>
     </section>
+    </>
   );
 }
