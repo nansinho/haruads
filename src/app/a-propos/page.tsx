@@ -176,7 +176,7 @@ export default function AProposPage() {
 
                   {/* Citation hommage */}
                   <div className="bg-accent/5 p-6 rounded-xl border border-accent/10 mt-6">
-                    <p className="text-[0.88rem] text-text-body leading-[1.8] italic font-serif">
+                    <p className="text-[0.88rem] text-text-body leading-[1.8] italic">
                       &ldquo;Ma m&egrave;re m&apos;a soutenu comme une folle pour
                       cr&eacute;er ma petite entreprise. Son d&eacute;part en
                       ao&ucirc;t 2024 a marqu&eacute; &agrave; jamais mon

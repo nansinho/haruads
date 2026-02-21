@@ -99,7 +99,7 @@ export default function About() {
               />
             </div>
             <div className="p-6 lg:p-8">
-              <p className="text-[0.9rem] text-text-body leading-[1.8] italic font-serif">
+              <p className="text-[0.9rem] text-text-body leading-[1.8] italic">
                 &ldquo;Notre mission est de rendre le digital accessible &agrave;
                 toutes les entreprises, avec des solutions qui font vraiment
                 la diff&eacute;rence.&rdquo;

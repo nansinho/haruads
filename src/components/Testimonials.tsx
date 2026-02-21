@@ -117,7 +117,7 @@ export default function Testimonials() {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <p className="text-fluid-h3 font-serif italic leading-[1.4] text-white/80">
+                  <p className="text-fluid-h3 italic leading-[1.4] text-white/80">
                     &ldquo;{testimonials[current].text}&rdquo;
                   </p>
                   <div className="mt-8 flex items-center gap-4">
