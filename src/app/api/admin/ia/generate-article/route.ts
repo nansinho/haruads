@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { getAdminUser, unauthorizedResponse, errorResponse } from "@/lib/api-auth";
+import { getApiKey } from "@/lib/encryption";
 
 const TONE_PROMPTS: Record<string, string> = {
   professionnel: "Ton professionnel et crédible, adapté à une audience B2B.",
@@ -19,10 +20,11 @@ export async function POST(request: NextRequest) {
   const admin = await getAdminUser(request);
   if (!admin) return unauthorizedResponse();
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  // Read API key from database first, fallback to env var
+  const apiKey = await getApiKey("anthropic_api_key", "ANTHROPIC_API_KEY");
   if (!apiKey) {
     return errorResponse(
-      "Clé API Anthropic non configurée. Ajoutez ANTHROPIC_API_KEY dans vos variables d'environnement.",
+      "Clé API Anthropic non configurée. Ajoutez-la dans Paramètres > Clés API.",
       503,
     );
   }
