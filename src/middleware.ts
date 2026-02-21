@@ -21,12 +21,36 @@ async function getRole(request: NextRequest): Promise<string | null> {
   }
 }
 
+// Dead WordPress URL patterns that must return a hard 404
+const DEAD_WORDPRESS_PATTERNS = [
+  /^\/feed(\/|$)/,
+  /^\/comments\/feed(\/|$)/,
+  /^\/author(\/|$)/,
+  /^\/category(\/|$)/,
+  /^\/search$/,
+  /^\/recherche$/,
+  /^\/wp-/,
+  /^\/ville(\/|$)/,
+  /\/feed\/?$/,
+  /^\/investissement-dans-des-technologies-de-pointe/,
+  /^\/nouvelle-certification-en-securite-electrique/,
+  /^\/nouveau-projet-de-fibre-optique/,
+];
+
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Dead WordPress URLs — add noindex header and let Next.js return a native 404
+  // (these URLs have no matching route, so Next.js automatically serves not-found.tsx with HTTP 404)
+  if (DEAD_WORDPRESS_PATTERNS.some((pattern) => pattern.test(pathname))) {
+    const response = NextResponse.next();
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return response;
+  }
+
   if (!process.env.AUTH_SECRET) {
     return NextResponse.next();
   }
-
-  const { pathname } = request.nextUrl;
   const role = await getRole(request);
   const isAuthenticated = role !== null;
 
@@ -60,5 +84,21 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/espace-client/:path*", "/auth/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/espace-client/:path*",
+    "/auth/:path*",
+    // Dead WordPress patterns
+    "/feed/:path*",
+    "/comments/:path*",
+    "/author/:path*",
+    "/category/:path*",
+    "/search",
+    "/recherche",
+    "/wp-:path*",
+    "/ville/:path*",
+    "/investissement-dans-des-technologies-de-pointe-pour-nos-chantiers/:path*",
+    "/nouvelle-certification-en-securite-electrique-pour-innovtec/:path*",
+    "/nouveau-projet-de-fibre-optique-acheve-avec-succes/:path*",
+  ],
 };

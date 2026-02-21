@@ -7,6 +7,18 @@ export default function robots(): MetadataRoute.Robots {
     "/admin/",
     "/espace-client/",
     "/auth/",
+    // Block dead WordPress URL patterns
+    "/feed/",
+    "/comments/",
+    "/author/",
+    "/category/",
+    "/search",
+    "/recherche",
+    "/wp-admin/",
+    "/wp-content/",
+    "/wp-includes/",
+    "/wp-json/",
+    "/ville/",
   ];
 
   return {

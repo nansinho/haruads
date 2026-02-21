@@ -9,6 +9,25 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["framer-motion", "lucide-react"],
   },
+  async redirects() {
+    return [
+      // Old WordPress URLs → proper Next.js routes (301 permanent)
+      { source: "/about", destination: "/a-propos", permanent: true },
+      { source: "/notre-societe", destination: "/a-propos", permanent: true },
+      { source: "/notre-societe/", destination: "/a-propos", permanent: true },
+      { source: "/nos-activites", destination: "/services", permanent: true },
+      { source: "/nos-activites/", destination: "/services", permanent: true },
+      { source: "/nos-certifications", destination: "/services", permanent: true },
+      { source: "/nos-certifications/", destination: "/services", permanent: true },
+      { source: "/agences", destination: "/a-propos", permanent: true },
+      { source: "/agences/", destination: "/a-propos", permanent: true },
+      { source: "/partenaires", destination: "/a-propos", permanent: true },
+      { source: "/partenaires/", destination: "/a-propos", permanent: true },
+      // Trailing slash normalization for existing pages
+      { source: "/contact/", destination: "/contact", permanent: true },
+      { source: "/carrieres/", destination: "/carrieres", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
