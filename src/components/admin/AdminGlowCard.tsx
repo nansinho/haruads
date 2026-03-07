@@ -105,7 +105,7 @@ export default function AdminGlowCard({
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsFocused(true)}
         onMouseLeave={() => setIsFocused(false)}
-        className="relative rounded-2xl overflow-hidden bg-dark-2 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500"
+        className="relative rounded-2xl overflow-hidden bg-dark-2 border border-white/[0.10] hover:border-white/[0.16] transition-all duration-500"
       >
         {/* Glow effect */}
         <div
@@ -137,7 +137,7 @@ export default function AdminGlowCard({
           <div className="mt-1.5 flex items-center justify-between">
             <span className="text-sm text-text-secondary">{label}</span>
             {trend && (
-              <span className="text-[0.65rem] text-text-muted">{trend.label}</span>
+              <span className="text-xs text-text-muted">{trend.label}</span>
             )}
           </div>
         </div>
