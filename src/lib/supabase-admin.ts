@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase, supabaseAdmin } from "./supabase";
 import type {
   QueryFilters,
   DashboardStats,
@@ -21,8 +21,10 @@ import type {
 } from "@/types/database";
 
 function getClient() {
-  if (!supabase) throw new Error("Supabase non configuré");
-  return supabase;
+  // Prefer service_role client for admin operations (bypasses RLS)
+  if (supabaseAdmin) return supabaseAdmin;
+  if (supabase) return supabase;
+  throw new Error("Supabase non configuré");
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
