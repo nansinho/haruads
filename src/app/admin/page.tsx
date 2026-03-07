@@ -48,7 +48,7 @@ function QuickAction({ label, href, icon }: { label: string; href: string; icon:
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 p-3 rounded-xl bg-dark border border-white/[0.06] hover:border-accent/20 hover:bg-accent-dim transition-all duration-200 group"
+      className="flex items-center gap-3 p-3 rounded-xl bg-dark border border-white/[0.10] hover:border-accent/20 hover:bg-accent-dim transition-all duration-200 group"
     >
       <span className="text-text-muted group-hover:text-accent transition-colors">{icon}</span>
       <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">{label}</span>
@@ -213,7 +213,7 @@ export default function AdminDashboard() {
       <AnimatedSection>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Quick Actions */}
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-dark-2 border border-white/[0.10] rounded-2xl p-6">
             <h2 className="font-serif text-lg text-text-primary mb-4">
               Actions rapides
             </h2>
@@ -228,7 +228,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Recent Activity */}
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-dark-2 border border-white/[0.10] rounded-2xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-serif text-lg text-text-primary">
                 Activité récente

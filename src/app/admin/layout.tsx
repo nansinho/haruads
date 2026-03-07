@@ -37,7 +37,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
       {/* Main content */}
       <div className="lg:pl-[270px]">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 h-14 bg-dark/80 backdrop-blur-2xl border-b border-white/[0.04] flex items-center px-4 lg:px-8">
+        <header className="sticky top-0 z-30 h-14 bg-dark/80 backdrop-blur-2xl border-b border-white/[0.08] flex items-center px-4 lg:px-8">
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden text-text-secondary hover:text-text-primary mr-4 transition-colors"

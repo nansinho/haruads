@@ -26,7 +26,7 @@ export default function FormField({
   rows = 4,
 }: FormFieldProps) {
   const baseClasses =
-    "w-full px-4 py-2.5 bg-dark border border-white/[0.08] rounded-xl text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all";
+    "w-full px-4 py-2.5 bg-dark border border-white/[0.12] rounded-xl text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all";
   const errorClasses = error ? "border-red-500/30 focus:ring-red-500/50" : "";
 
   return (

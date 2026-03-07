@@ -131,12 +131,12 @@ export default function GlassSidebar({
       )}
 
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-[270px] bg-dark/80 backdrop-blur-2xl border-r border-white/[0.04] transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 z-50 h-full w-[270px] bg-dark/80 backdrop-blur-2xl border-r border-white/[0.08] transform transition-transform duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0`}
       >
         {/* Logo */}
-        <div className="h-16 flex items-center justify-between px-5 border-b border-white/[0.06]">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-white/[0.10]">
           <Link href="/admin" className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent to-cyan flex items-center justify-center font-bold text-sm text-dark shadow-lg shadow-accent/20">
               H
@@ -164,7 +164,7 @@ export default function GlassSidebar({
             <div key={group.title} className="mb-1">
               <button
                 onClick={() => toggleGroup(group.title)}
-                className="w-full flex items-center justify-between px-3 py-2.5 text-[0.65rem] font-serif text-text-muted tracking-wide hover:text-text-secondary transition-colors"
+                className="w-full flex items-center justify-between px-3 py-2.5 text-xs font-serif text-text-muted tracking-wide hover:text-text-secondary transition-colors"
               >
                 {group.title}
                 <ChevronDown
@@ -215,7 +215,7 @@ export default function GlassSidebar({
         </nav>
 
         {/* User section */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-white/[0.06] bg-dark/80 backdrop-blur-2xl">
+        <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-white/[0.10] bg-dark/80 backdrop-blur-2xl">
           <div className="flex items-center gap-3 px-2 py-1.5">
             <div className="relative">
               <div className="w-9 h-9 rounded-full bg-gradient-to-br from-accent to-cyan flex items-center justify-center text-sm font-bold text-dark">

@@ -48,7 +48,7 @@ export default function Modal({ isOpen, onClose, title, description, children, f
     >
       <div className={`w-full ${sizeClasses[size]} bg-dark-2 border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/40 animate-in fade-in zoom-in-95 duration-200`}>
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.10]">
           <div>
             <h2 className="font-serif text-lg text-text-primary">{title}</h2>
             {description && <p className="text-sm text-text-muted mt-0.5">{description}</p>}
@@ -66,7 +66,7 @@ export default function Modal({ isOpen, onClose, title, description, children, f
 
         {/* Footer */}
         {footer && (
-          <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-white/[0.06]">
+          <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-white/[0.10]">
             {footer}
           </div>
         )}
