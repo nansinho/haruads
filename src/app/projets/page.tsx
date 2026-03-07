@@ -1,46 +1,34 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
-
-const projects = [
-  {
-    slug: "aiako-ecommerce",
-    title: "AIAKO E-Commerce",
-    desc: "Migration WooCommerce vers Next.js + Supabase avec paiement Monetico. Refonte complète de l\u2019expérience d\u2019achat.",
-    tags: ["Next.js", "Supabase", "E-Commerce"],
-    image: "/images/projects/project-dashboard.jpg",
-    category: "E-Commerce",
-  },
-  {
-    slug: "dashboard-cco",
-    title: "Dashboard C&CO",
-    desc: "Plateforme SaaS de formation multi-tenant avec gestion des utilisateurs et suivi de progression.",
-    tags: ["React", "Node.js", "SaaS"],
-    image: "/images/projects/neuralia-project.webp",
-    category: "Application Web",
-  },
-  {
-    slug: "landing-fintech",
-    title: "Landing Fintech",
-    desc: "Refonte UI/UX et design system complet pour une startup fintech en pleine croissance.",
-    tags: ["Figma", "GSAP", "Design"],
-    image: "/images/projects/project-landing.jpg",
-    category: "Design UI/UX",
-  },
-  {
-    slug: "systeme-reservation",
-    title: "Système de Réservation",
-    desc: "Calendrier de booking avec paiement intégré et notifications en temps réel.",
-    tags: ["Next.js", "Stripe", "API"],
-    image: "/images/projects/reservation-system.webp",
-    category: "Application Web",
-  },
-];
+import type { Project } from "@/types/database";
 
 export default function ProjetsPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState("all");
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((r) => r.json())
+      .then((data) => {
+        setProjects(Array.isArray(data) ? data : []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  // Get unique categories
+  const categories = ["all", ...Array.from(new Set(projects.map((p) => p.category).filter(Boolean)))];
+
+  const filtered = activeCategory === "all"
+    ? projects
+    : projects.filter((p) => p.category === activeCategory);
+
   return (
     <>
       <Navbar />
@@ -72,54 +60,112 @@ export default function ProjetsPage() {
                 aidé nos clients à atteindre leurs objectifs.
               </p>
             </motion.div>
+
+            {/* Category filter */}
+            {categories.length > 2 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex flex-wrap gap-2 mt-10"
+              >
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat as string)}
+                    className={`px-4 py-2 rounded-full text-[0.78rem] font-medium transition-all ${
+                      activeCategory === cat
+                        ? "bg-accent text-dark"
+                        : "bg-white/[0.06] text-white/50 hover:bg-white/[0.10] hover:text-white/80 border border-white/[0.06]"
+                    }`}
+                  >
+                    {cat === "all" ? "Tous les projets" : cat}
+                  </button>
+                ))}
+              </motion.div>
+            )}
           </div>
         </section>
 
         {/* Projects grid */}
         <section className="bg-light text-text-dark">
           <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {projects.map((project, i) => (
-                <ScrollReveal key={project.slug} delay={i * 80}>
-                  <a
-                    href={`/projets/${project.slug}`}
-                    className="block group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl hover:shadow-accent/5 transition-all duration-500"
-                  >
-                    <div className="aspect-[16/10] relative overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[0.7rem] font-medium text-text-dark">
-                          {project.category}
-                        </span>
+            {loading ? (
+              <div className="flex justify-center py-20">
+                <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
+              </div>
+            ) : filtered.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-text-body text-lg">Aucun projet pour le moment.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {filtered.map((project, i) => (
+                  <ScrollReveal key={project.id} delay={i * 80}>
+                    <a
+                      href={`/projets/${project.slug}`}
+                      className="block group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl hover:shadow-accent/5 transition-all duration-500"
+                    >
+                      <div className="aspect-[16/10] relative overflow-hidden">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={project.image_url}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        {project.category && (
+                          <div className="absolute top-4 left-4">
+                            <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[0.7rem] font-medium text-text-dark">
+                              {project.category}
+                            </span>
+                          </div>
+                        )}
+                        {project.year && (
+                          <div className="absolute top-4 right-4">
+                            <span className="px-3 py-1 rounded-full bg-dark/70 backdrop-blur-sm text-[0.7rem] font-medium text-white">
+                              {project.year}
+                            </span>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                    <div className="p-6 lg:p-8">
-                      <h3 className="text-[1.2rem] lg:text-[1.4rem] font-serif text-text-dark group-hover:text-accent transition-colors">
-                        {project.title}
-                      </h3>
-                      <p className="text-[0.85rem] text-text-body leading-[1.7] mt-2">
-                        {project.desc}
-                      </p>
-                      <div className="flex flex-wrap gap-2 mt-4">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2.5 py-1 rounded-full bg-light text-[0.7rem] font-medium text-text-body"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                      <div className="p-6 lg:p-8">
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <h3 className="text-[1.2rem] lg:text-[1.4rem] font-serif text-text-dark group-hover:text-accent transition-colors">
+                              {project.title}
+                            </h3>
+                            {project.client && (
+                              <p className="text-[0.75rem] text-text-body/60 mt-1">
+                                Client : {project.client}
+                              </p>
+                            )}
+                          </div>
+                          <div className="shrink-0 w-9 h-9 rounded-full bg-accent/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-accent fill-none stroke-2">
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                              <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                          </div>
+                        </div>
+                        <p className="text-[0.85rem] text-text-body leading-[1.7] mt-2 line-clamp-2">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-4">
+                          {project.tags?.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2.5 py-1 rounded-full bg-light text-[0.7rem] font-medium text-text-body"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </ScrollReveal>
-              ))}
-            </div>
+                    </a>
+                  </ScrollReveal>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
