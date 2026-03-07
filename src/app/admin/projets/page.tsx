@@ -99,7 +99,11 @@ export default function ProjetsAdminPage() {
   };
 
   const handleSave = async () => {
-    if (!form.title || !form.description || !form.image_url) {
+    if (!form.title || !form.description) {
+      toast({ type: "error", message: "Titre et description requis" });
+      return;
+    }
+    if (!editingProject && !form.image_url) {
       toast({ type: "error", message: "Titre, description et image requis" });
       return;
     }
@@ -133,13 +137,16 @@ export default function ProjetsAdminPage() {
     setDeleting(true);
     try {
       const res = await fetch(`/api/admin/projects/${selectedProject.id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Erreur");
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `Erreur ${res.status}`);
+      }
       toast({ type: "success", message: "Projet supprimé" });
       setShowDelete(false);
       setSelectedProject(null);
       refetch();
-    } catch {
-      toast({ type: "error", message: "Erreur lors de la suppression" });
+    } catch (err) {
+      toast({ type: "error", message: err instanceof Error ? err.message : "Erreur lors de la suppression" });
     } finally {
       setDeleting(false);
     }
