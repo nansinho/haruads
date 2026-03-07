@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
@@ -7,113 +8,39 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import Breadcrumb from "@/components/Breadcrumb";
-
-const projectsData: Record<
-  string,
-  {
-    title: string;
-    category: string;
-    year: string;
-    client: string;
-    description: string;
-    challenge: string;
-    solution: string;
-    results: { label: string; value: string }[];
-    tags: string[];
-    image: string;
-    gallery: string[];
-  }
-> = {
-  "aiako-ecommerce": {
-    title: "AIAKO E-Commerce",
-    category: "E-Commerce",
-    year: "2024",
-    client: "AIAKO",
-    description:
-      "Migration complète d\u2019une boutique WooCommerce vers une stack moderne Next.js + Supabase. Refonte de l\u2019expérience d\u2019achat avec intégration du paiement Monetico.",
-    challenge:
-      "Le site existant souffrait de lenteurs importantes, d\u2019une interface datée et d\u2019un taux d\u2019abandon de panier élevé. Le client souhaitait une expérience fluide et moderne sans perdre son catalogue de 500+ produits.",
-    solution:
-      "Nous avons migré l\u2019intégralité du catalogue vers Supabase, reconstruit le front-end en Next.js avec SSG pour des temps de chargement ultra-rapides, et intégré Monetico pour les paiements sécurisés.",
-    results: [
-      { label: "Temps de chargement", value: "-70%" },
-      { label: "Conversions", value: "+45%" },
-      { label: "Panier moyen", value: "+22%" },
-      { label: "Score Lighthouse", value: "98/100" },
-    ],
-    tags: ["Next.js", "Supabase", "Monetico", "Tailwind CSS"],
-    image: "/images/projects/project-dashboard.jpg",
-    gallery: ["/images/projects/project-dashboard.jpg", "/images/projects/project-landing.jpg"],
-  },
-  "dashboard-cco": {
-    title: "Dashboard C&CO",
-    category: "Application Web",
-    year: "2024",
-    client: "C&CO Formation",
-    description:
-      "Plateforme SaaS de formation en ligne multi-tenant avec dashboard admin, suivi de progression des apprenants et gestion des contenus pédagogiques.",
-    challenge:
-      "C&CO avait besoin d\u2019une plateforme centralisant la gestion de plusieurs organismes de formation, avec des espaces cloisonnés par organisme et un suivi détaillé de la progression.",
-    solution:
-      "Architecture multi-tenant avec isolation des données par organisme, dashboard temps réel pour les formateurs, et système de gamification pour motiver les apprenants.",
-    results: [
-      { label: "Utilisateurs actifs", value: "2 500+" },
-      { label: "Organismes", value: "12" },
-      { label: "Satisfaction", value: "96%" },
-      { label: "Temps de dev", value: "10 sem." },
-    ],
-    tags: ["React", "Node.js", "PostgreSQL", "Socket.io"],
-    image: "/images/projects/neuralia-project.webp",
-    gallery: ["/images/projects/neuralia-project.webp"],
-  },
-  "landing-fintech": {
-    title: "Landing Fintech",
-    category: "Design UI/UX",
-    year: "2023",
-    client: "FinPay",
-    description:
-      "Refonte complète de l\u2019identité visuelle et du site vitrine d\u2019une startup fintech. Création d\u2019un design system complet et d\u2019animations immersives.",
-    challenge:
-      "La startup avait une identité visuelle incohérente et un site qui ne convertissait pas. Il fallait crédibiliser la marque et améliorer le taux de conversion des leads.",
-    solution:
-      "Nouvelle identité visuelle épurée, design system Figma de 200+ composants, site vitrine avec animations GSAP et optimisation du tunnel de conversion.",
-    results: [
-      { label: "Taux de conversion", value: "+65%" },
-      { label: "Temps sur site", value: "+40%" },
-      { label: "Leads qualifiés", value: "x3" },
-      { label: "Composants design", value: "200+" },
-    ],
-    tags: ["Figma", "GSAP", "Next.js", "Framer Motion"],
-    image: "/images/projects/project-landing.jpg",
-    gallery: ["/images/projects/project-landing.jpg"],
-  },
-  "systeme-reservation": {
-    title: "Système de Réservation",
-    category: "Application Web",
-    year: "2024",
-    client: "BookEasy",
-    description:
-      "Application de réservation en ligne avec calendrier interactif, paiement intégré via Stripe et notifications en temps réel par email et SMS.",
-    challenge:
-      "Le client gérait ses réservations manuellement par téléphone et email, ce qui entraînait des doubles réservations et une perte de temps considérable.",
-    solution:
-      "Calendrier interactif avec disponibilités en temps réel, intégration Stripe pour le paiement à la réservation, et système de notifications automatiques (confirmation, rappel, annulation).",
-    results: [
-      { label: "Réservations en ligne", value: "85%" },
-      { label: "No-shows", value: "-60%" },
-      { label: "Temps admin", value: "-4h/jour" },
-      { label: "Satisfaction client", value: "98%" },
-    ],
-    tags: ["Next.js", "Stripe", "Supabase", "Twilio"],
-    image: "/images/projects/reservation-system.webp",
-    gallery: ["/images/projects/reservation-system.webp"],
-  },
-};
+import type { Project } from "@/types/database";
 
 export default function ProjectDetail() {
   const params = useParams();
   const slug = params.slug as string;
-  const project = projectsData[slug];
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch(`/api/projects?slug=${slug}`)
+      .then((r) => {
+        if (!r.ok) throw new Error("Not found");
+        return r.json();
+      })
+      .then((data) => {
+        setProject(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <main className="bg-dark text-white min-h-screen flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   if (!project) {
     return (
@@ -123,16 +50,23 @@ export default function ProjectDetail() {
           <div className="text-center">
             <h1 className="text-[2rem] font-serif italic text-accent">Projet introuvable</h1>
             <p className="text-white/40 mt-4">
-              <a href="/projets" className="text-accent hover:underline">
-                Retour aux projets
-              </a>
+              Ce projet n&apos;existe pas ou n&apos;est plus disponible.
             </p>
+            <a href="/projets" className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-full bg-accent text-dark font-medium text-[0.9rem]">
+              Voir tous les projets
+              <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-dark fill-none stroke-2">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
           </div>
         </main>
         <Footer />
       </>
     );
   }
+
+  const allImages = [project.image_url, ...(project.gallery || [])];
 
   return (
     <>
@@ -159,12 +93,20 @@ export default function ProjectDetail() {
                 { label: project.title },
               ]} />
               <div className="flex flex-wrap items-center gap-3 mb-5">
-                <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-[0.72rem] font-medium">
-                  {project.category}
-                </span>
-                <span className="text-[0.72rem] text-white/30">{project.year}</span>
-                <span className="text-[0.72rem] text-white/30">•</span>
-                <span className="text-[0.72rem] text-white/30">{project.client}</span>
+                {project.category && (
+                  <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-[0.72rem] font-medium">
+                    {project.category}
+                  </span>
+                )}
+                {project.year && (
+                  <span className="text-[0.72rem] text-white/30">{project.year}</span>
+                )}
+                {project.client && (
+                  <>
+                    <span className="text-[0.72rem] text-white/30">&bull;</span>
+                    <span className="text-[0.72rem] text-white/30">{project.client}</span>
+                  </>
+                )}
               </div>
               <h1 className="text-[2rem] sm:text-[2.8rem] lg:text-[3.5rem] leading-[1.08] tracking-[-0.02em]">
                 <span className="font-serif italic">{project.title}</span>
@@ -172,6 +114,23 @@ export default function ProjectDetail() {
               <p className="text-[0.95rem] text-white/40 mt-5 max-w-[600px] leading-[1.8] font-light">
                 {project.description}
               </p>
+              {project.external_url && (
+                <motion.a
+                  href={project.external_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-full bg-accent/10 border border-accent/20 text-accent text-[0.85rem] font-medium hover:bg-accent/20 transition-all"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Visiter le site
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-accent fill-none stroke-2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </motion.a>
+              )}
             </motion.div>
           </div>
         </section>
@@ -182,7 +141,7 @@ export default function ProjectDetail() {
             <ScrollReveal>
               <div className="rounded-2xl overflow-hidden">
                 <Image
-                  src={project.image}
+                  src={project.image_url}
                   alt={project.title}
                   width={1200}
                   height={675}
@@ -194,91 +153,200 @@ export default function ProjectDetail() {
         </section>
 
         {/* Challenge & Solution */}
-        <section className="bg-white text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-              <ScrollReveal>
-                <div>
-                  <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
-                    Le Défi
-                  </span>
-                  <h2 className="text-[1.4rem] lg:text-[1.8rem] leading-[1.15] tracking-[-0.02em] mt-4">
-                    <span className="font-light">Comprendre le </span>
-                    <span className="font-serif italic">problème.</span>
-                  </h2>
-                  <p className="text-[0.9rem] text-text-body mt-5 leading-[1.8]">
-                    {project.challenge}
-                  </p>
-                </div>
-              </ScrollReveal>
+        {(project.challenge || project.solution) && (
+          <section className="bg-white text-text-dark">
+            <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+                {project.challenge && (
+                  <ScrollReveal>
+                    <div>
+                      <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
+                        Le Défi
+                      </span>
+                      <h2 className="text-[1.4rem] lg:text-[1.8rem] leading-[1.15] tracking-[-0.02em] mt-4">
+                        <span className="font-light">Comprendre le </span>
+                        <span className="font-serif italic">problème.</span>
+                      </h2>
+                      <p className="text-[0.9rem] text-text-body mt-5 leading-[1.8]">
+                        {project.challenge}
+                      </p>
+                    </div>
+                  </ScrollReveal>
+                )}
 
-              <ScrollReveal delay={150}>
-                <div>
-                  <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
-                    La Solution
-                  </span>
-                  <h2 className="text-[1.4rem] lg:text-[1.8rem] leading-[1.15] tracking-[-0.02em] mt-4">
-                    <span className="font-light">Notre </span>
-                    <span className="font-serif italic">réponse.</span>
+                {project.solution && (
+                  <ScrollReveal delay={150}>
+                    <div>
+                      <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
+                        La Solution
+                      </span>
+                      <h2 className="text-[1.4rem] lg:text-[1.8rem] leading-[1.15] tracking-[-0.02em] mt-4">
+                        <span className="font-light">Notre </span>
+                        <span className="font-serif italic">réponse.</span>
+                      </h2>
+                      <p className="text-[0.9rem] text-text-body mt-5 leading-[1.8]">
+                        {project.solution}
+                      </p>
+                    </div>
+                  </ScrollReveal>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Results */}
+        {project.results && project.results.length > 0 && (
+          <section className="bg-accent text-white">
+            <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+              <ScrollReveal>
+                <div className="text-center mb-12">
+                  <h2 className="text-[1.6rem] lg:text-[2rem] leading-[1.08] tracking-[-0.02em]">
+                    <span className="font-light">Les </span>
+                    <span className="font-serif italic">résultats.</span>
                   </h2>
-                  <p className="text-[0.9rem] text-text-body mt-5 leading-[1.8]">
-                    {project.solution}
-                  </p>
+                </div>
+                <div className={`grid grid-cols-2 gap-8 ${
+                  project.results.length <= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
+                }`}>
+                  {project.results.map((r, i) => (
+                    <motion.div
+                      key={i}
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                    >
+                      <span className="text-[2.5rem] lg:text-[3rem] font-serif text-white leading-none block">
+                        {r.value}
+                      </span>
+                      <span className="text-[0.8rem] text-white/60 mt-2 block">
+                        {r.label}
+                      </span>
+                    </motion.div>
+                  ))}
                 </div>
               </ScrollReveal>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* Results */}
-        <section className="bg-accent text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
-            <ScrollReveal>
-              <div className="text-center mb-12">
-                <h2 className="text-[1.6rem] lg:text-[2rem] leading-[1.08] tracking-[-0.02em]">
-                  <span className="font-light">Les </span>
-                  <span className="font-serif italic">résultats.</span>
-                </h2>
-              </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                {project.results.map((r) => (
-                  <div key={r.label} className="text-center">
-                    <span className="text-[2.5rem] lg:text-[3rem] font-serif text-white leading-none block">
-                      {r.value}
-                    </span>
-                    <span className="text-[0.8rem] text-white/60 mt-2 block">
-                      {r.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
+        {/* Gallery */}
+        {project.gallery && project.gallery.length > 0 && (
+          <section className="bg-white text-text-dark">
+            <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+              <ScrollReveal>
+                <div className="text-center mb-10">
+                  <h3 className="text-[1.3rem] lg:text-[1.6rem] leading-[1.1] tracking-[-0.02em]">
+                    <span className="font-light">Galerie </span>
+                    <span className="font-serif italic">du projet.</span>
+                  </h3>
+                </div>
+                <div className={`grid gap-4 ${
+                  project.gallery.length === 1
+                    ? "grid-cols-1"
+                    : project.gallery.length === 2
+                    ? "grid-cols-1 md:grid-cols-2"
+                    : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                }`}>
+                  {project.gallery.map((img, i) => (
+                    <motion.div
+                      key={i}
+                      className="rounded-xl overflow-hidden cursor-pointer group"
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => setGalleryIndex(i)}
+                    >
+                      <Image
+                        src={img}
+                        alt={`${project.title} - Image ${i + 1}`}
+                        width={600}
+                        height={400}
+                        className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </ScrollReveal>
+            </div>
+          </section>
+        )}
+
+        {/* Lightbox */}
+        {galleryIndex !== null && (
+          <div
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            onClick={() => setGalleryIndex(null)}
+          >
+            <button
+              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
+              onClick={() => setGalleryIndex(null)}
+            >
+              <svg viewBox="0 0 24 24" className="w-8 h-8 stroke-current fill-none stroke-2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            {galleryIndex > 0 && (
+              <button
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+                onClick={(e) => { e.stopPropagation(); setGalleryIndex(galleryIndex - 1); }}
+              >
+                <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-current fill-none stroke-2">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+            )}
+            {galleryIndex < allImages.length - 1 && (
+              <button
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+                onClick={(e) => { e.stopPropagation(); setGalleryIndex(galleryIndex + 1); }}
+              >
+                <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-current fill-none stroke-2">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            )}
+            <Image
+              src={allImages[galleryIndex]}
+              alt={`${project.title} - Image ${galleryIndex + 1}`}
+              width={1200}
+              height={800}
+              className="max-w-full max-h-[85vh] object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-sm">
+              {galleryIndex + 1} / {allImages.length}
+            </div>
           </div>
-        </section>
+        )}
 
         {/* Technologies */}
-        <section className="bg-light text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
-            <ScrollReveal>
-              <div className="text-center mb-10">
-                <h3 className="text-[1.3rem] lg:text-[1.6rem] leading-[1.1] tracking-[-0.02em]">
-                  <span className="font-light">Stack </span>
-                  <span className="font-serif italic">technique.</span>
-                </h3>
-              </div>
-              <div className="flex flex-wrap justify-center gap-3">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[0.82rem] font-medium text-text-dark"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
+        {project.tags && project.tags.length > 0 && (
+          <section className="bg-light text-text-dark">
+            <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+              <ScrollReveal>
+                <div className="text-center mb-10">
+                  <h3 className="text-[1.3rem] lg:text-[1.6rem] leading-[1.1] tracking-[-0.02em]">
+                    <span className="font-light">Stack </span>
+                    <span className="font-serif italic">technique.</span>
+                  </h3>
+                </div>
+                <div className="flex flex-wrap justify-center gap-3">
+                  {project.tags.map((tag) => (
+                    <motion.span
+                      key={tag}
+                      className="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[0.82rem] font-medium text-text-dark"
+                      whileHover={{ scale: 1.05, borderColor: "rgb(var(--accent))" }}
+                    >
+                      {tag}
+                    </motion.span>
+                  ))}
+                </div>
+              </ScrollReveal>
+            </div>
+          </section>
+        )}
 
         {/* CTA */}
         <section className="bg-dark text-white">

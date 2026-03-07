@@ -52,11 +52,31 @@ export interface Project {
   tags: string[];
   client: string | null;
   year: number | null;
+  category: string | null;
+  challenge: string | null;
+  solution: string | null;
+  results: ProjectResult[];
+  gallery: string[];
+  status: "draft" | "published";
   featured: boolean;
   hero_visible: boolean;
   sort_order: number;
+  seo_title: string | null;
+  seo_description: string | null;
+  external_url: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface ProjectResult {
+  label: string;
+  value: string;
+}
+
+export interface Tag {
+  id: string;
+  name: string;
+  created_at: string;
 }
 
 export interface Service {
