@@ -1,12 +1,13 @@
 import { NextRequest } from "next/server";
 import { getAdminUser, unauthorizedResponse, errorResponse } from "@/lib/api-auth";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin, supabase } from "@/lib/supabase";
 
 export async function POST(request: NextRequest) {
   const admin = await getAdminUser(request);
   if (!admin) return unauthorizedResponse();
 
-  if (!supabase) {
+  const db = supabaseAdmin || supabase;
+  if (!db) {
     return errorResponse("Supabase non configuré", 500);
   }
 
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
     const buffer = new Uint8Array(arrayBuffer);
 
     // Upload to Supabase Storage
-    const { error: uploadError } = await supabase.storage
+    const { error: uploadError } = await db.storage
       .from("images")
       .upload(filename, buffer, {
         contentType: file.type,
@@ -53,7 +54,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get public URL
-    const { data: urlData } = supabase.storage.from("images").getPublicUrl(filename);
+    const { data: urlData } = db.storage.from("images").getPublicUrl(filename);
 
     return Response.json({
       url: urlData.publicUrl,
