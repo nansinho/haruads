@@ -16,6 +16,7 @@ const links = {
     { label: "Blog", href: "/blog" },
     { label: "Carrières", href: "/carrieres" },
     { label: "Mentions Légales", href: "/mentions-legales" },
+    { label: "Confidentialité & Cookies", href: "/politique-confidentialite" },
     { label: "Plan du Site", href: "/plan-du-site" },
   ],
   contact: [
@@ -29,12 +30,35 @@ export default function Footer() {
   return (
     <footer className="bg-dark border-t border-white/[0.04] text-white relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
-      <div className="max-w-[1200px] mx-auto px-5 pt-14 pb-8 lg:px-12 relative z-2">
+
+      {/* Pre-footer SEO content */}
+      <div className="max-w-[1200px] mx-auto px-5 pt-14 lg:px-12">
+        <div className="border-b border-white/[0.04] pb-10">
+          <h2 className="text-[1rem] font-semibold text-white/80 mb-4">
+            Agence web &agrave; <span className="font-serif italic text-accent">Aix-en-Provence</span>
+          </h2>
+          <p className="text-[0.78rem] text-white/40 leading-[1.8] max-w-[700px]">
+            L&apos;Agence HDS (Harua Digital Studio) accompagne les entreprises et
+            entrepreneurs dans leur transformation digitale depuis Gardanne, au c&oelig;ur
+            des Bouches-du-Rh&ocirc;ne. Sp&eacute;cialis&eacute;e en{" "}
+            <strong className="text-white/50">cr&eacute;ation de sites internet</strong>,{" "}
+            <strong className="text-white/50">applications web sur mesure</strong>,{" "}
+            <strong className="text-white/50">e-commerce</strong>,{" "}
+            <strong className="text-white/50">design UI/UX</strong> et{" "}
+            <strong className="text-white/50">r&eacute;f&eacute;rencement naturel (SEO)</strong>,
+            nous concevons des solutions digitales performantes pour des clients &agrave;
+            Aix-en-Provence, Marseille, Gardanne et partout en France.
+          </p>
+        </div>
+      </div>
+
+      {/* Main footer */}
+      <div className="max-w-[1200px] mx-auto px-5 pt-10 pb-8 lg:px-12 relative z-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
           <div>
             <Logo className="h-8 w-auto mb-4" />
             <p className="text-[0.8rem] text-white/60 leading-[1.7] max-w-[260px]">
-              Agence web créative spécialisée en développement web et solutions digitales sur mesure.
+              Agence web cr&eacute;ative sp&eacute;cialis&eacute;e en d&eacute;veloppement web et solutions digitales sur mesure.
             </p>
             <div className="flex gap-2.5 mt-5">
               {[
@@ -89,8 +113,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-white/[0.04] pt-6 flex flex-col sm:flex-row items-center justify-between text-[0.7rem] text-white/50 gap-2">
-          <span>&copy; {new Date().getFullYear()} Agence HDS. Tous droits réservés.</span>
-          <span>Conçu avec passion à Aix-en-Provence</span>
+          <span>&copy; {new Date().getFullYear()} Agence HDS. Tous droits r&eacute;serv&eacute;s.</span>
+          <span>Con&ccedil;u avec passion &agrave; Aix-en-Provence</span>
         </div>
       </div>
     </footer>

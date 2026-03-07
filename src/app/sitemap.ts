@@ -64,6 +64,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     {
+      url: `${siteUrl}/politique-confidentialite`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
+    {
       url: `${siteUrl}/plan-du-site`,
       lastModified: new Date(),
       changeFrequency: "monthly",

@@ -42,6 +42,7 @@ const staticPages = [
   { label: "Blog", href: "/blog" },
   { label: "Carrières", href: "/carrieres" },
   { label: "Mentions Légales", href: "/mentions-legales" },
+  { label: "Politique de Confidentialité & Cookies", href: "/politique-confidentialite" },
 ];
 
 export default function PlanDuSitePage() {
