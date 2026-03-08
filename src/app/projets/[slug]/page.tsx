@@ -152,7 +152,7 @@ export default function ProjectDetail() {
           <section className="bg-dark text-white pb-20">
             <div className="max-w-[1200px] mx-auto px-5 lg:px-12">
               <ScrollReveal>
-                <div className="rounded-2xl overflow-hidden aspect-video relative">
+                <div className="rounded-2xl overflow-hidden aspect-[1884/1148] relative">
                   <img
                     src={project.image_url}
                     alt={project.title}
@@ -384,7 +384,7 @@ export default function ProjectDetail() {
                       whileHover={{ y: -4 }}
                     >
                       {p.image_url && (
-                        <div className="aspect-video overflow-hidden">
+                        <div className="aspect-[1884/1148] overflow-hidden">
                           <img
                             src={p.image_url}
                             alt={p.title}
