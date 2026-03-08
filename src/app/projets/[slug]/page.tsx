@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import Breadcrumb from "@/components/Breadcrumb";
+import { formatCompletedAt } from "@/lib/utils";
 import type { Project } from "@/types/database";
 
 export default function ProjectDetail() {
@@ -110,8 +111,8 @@ export default function ProjectDetail() {
                     {project.category}
                   </span>
                 )}
-                {project.year && (
-                  <span className="text-[0.72rem] text-text-muted">{project.year}</span>
+                {project.completed_at && (
+                  <span className="text-[0.72rem] text-text-muted">{formatCompletedAt(project.completed_at)}</span>
                 )}
                 {project.client && (
                   <>
@@ -209,28 +210,31 @@ export default function ProjectDetail() {
 
         {/* Results */}
         {project.results && project.results.length > 0 && (
-          <section className="bg-accent text-white">
+          <section className="bg-white text-text-dark">
             <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
               <ScrollReveal>
                 <div className="text-center mb-12">
-                  <h2 className="text-[1.6rem] lg:text-[2rem] leading-[1.08] tracking-[-0.02em]">
+                  <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
+                    Performances
+                  </span>
+                  <h2 className="text-[1.6rem] lg:text-[2rem] leading-[1.08] tracking-[-0.02em] mt-4">
                     <span className="font-light">Les </span>
                     <span className="font-serif italic">résultats.</span>
                   </h2>
                 </div>
-                <div className={`grid grid-cols-2 gap-8 ${
+                <div className={`grid grid-cols-2 gap-4 lg:gap-6 ${
                   project.results.length <= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
                 }`}>
                   {project.results.map((r, i) => (
                     <motion.div
                       key={i}
-                      className="text-center"
+                      className="text-center p-6 lg:p-8 rounded-2xl bg-light border border-gray-100 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1 }}
                     >
-                      <span className="text-[2.5rem] lg:text-[3rem] font-serif text-white leading-none block">
+                      <span className="text-[2.5rem] lg:text-[3rem] font-serif text-accent leading-none block">
                         {r.value}
                       </span>
                       <span className="text-[0.8rem] text-text-muted mt-2 block">

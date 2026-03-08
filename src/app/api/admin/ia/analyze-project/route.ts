@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 Règles :
 - Écris en français
 - Sois concis et impactant
-- Déduis le titre du projet, le nom du client et l'année à partir du contenu du site
+- Déduis le titre du projet, le nom du client et la date de réalisation à partir du contenu du site
 - Les résultats doivent être réalistes et pertinents pour le type de projet
 - Les tags doivent refléter les technologies détectées ou probables
 - La catégorie doit être parmi : E-Commerce, Application Web, Site Vitrine, Design UI/UX, SaaS, Landing Page, Mobile, Autre
@@ -63,7 +63,7 @@ Tu dois répondre UNIQUEMENT avec un objet JSON valide (sans backticks ni markdo
 {
   "title": "Nom du projet (court et percutant)",
   "client": "Nom du client ou de l'entreprise",
-  "year": 2025,
+  "completed_at": "2025-03",
   "description": "Description courte et accrocheuse du projet (2-3 phrases, max 300 caractères)",
   "challenge": "Le défi / problème client (3-5 phrases détaillées)",
   "solution": "La solution technique apportée (3-5 phrases détaillées)",
@@ -124,7 +124,7 @@ Notes pour les résultats : fournis 3 à 4 KPIs réalistes (ex: "+45% de convers
     return Response.json({
       title: parsed.title || "",
       client: parsed.client || "",
-      year: parsed.year || new Date().getFullYear(),
+      completed_at: parsed.completed_at || `${new Date().getFullYear()}-01`,
       description: parsed.description || "",
       challenge: parsed.challenge || "",
       solution: parsed.solution || "",

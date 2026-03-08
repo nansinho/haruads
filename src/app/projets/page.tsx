@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
+import { formatCompletedAt } from "@/lib/utils";
 import type { Project } from "@/types/database";
 
 export default function ProjetsPage() {
@@ -120,10 +121,10 @@ export default function ProjetsPage() {
                             </span>
                           </div>
                         )}
-                        {project.year && (
+                        {project.completed_at && (
                           <div className="absolute top-4 right-4">
                             <span className="px-3 py-1 rounded-full bg-dark/70 backdrop-blur-sm text-[0.7rem] font-medium text-white">
-                              {project.year}
+                              {formatCompletedAt(project.completed_at)}
                             </span>
                           </div>
                         )}
