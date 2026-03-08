@@ -2,21 +2,12 @@
 
 import Link from "next/link";
 import { formatCompletedAt } from "@/lib/utils";
+import { stripMarkdown } from "@/lib/renderRichText";
 import type { Project } from "@/types/database";
 
 interface ProjectCardProps {
   project: Project;
   className?: string;
-}
-
-/** Strip markdown syntax for plain-text card preview */
-function stripMarkdown(text: string): string {
-  if (!text) return "";
-  return text
-    .replace(/\*\*([^*]+)\*\*/g, "$1")
-    .replace(/\*([^*]+)\*/g, "$1")
-    .replace(/__([^_]+)__/g, "$1")
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
 }
 
 export default function ProjectCard({ project, className = "" }: ProjectCardProps) {

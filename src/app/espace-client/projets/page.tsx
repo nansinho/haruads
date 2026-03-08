@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { stripMarkdown } from "@/lib/renderRichText";
 import {
   FolderKanban,
   Calendar,
@@ -59,7 +60,7 @@ function ProjectCard({ project }: { project: Project }) {
           <h3 className="text-text-primary font-semibold text-lg truncate group-hover:text-cyan-400 transition-colors">
             {project.name}
           </h3>
-          <p className="text-text-muted text-sm mt-1 line-clamp-2">{project.description}</p>
+          <p className="text-text-muted text-sm mt-1 line-clamp-2">{stripMarkdown(project.description)}</p>
         </div>
         <StatusBadge status={project.status} />
       </div>

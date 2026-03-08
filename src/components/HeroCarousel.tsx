@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { stripMarkdown } from "@/lib/renderRichText";
 
 interface Project {
   id: string;
@@ -192,7 +193,7 @@ export default function HeroCarousel() {
                   {project.title}
                 </h2>
                 <p className="text-[0.75rem] text-text-muted mt-1 leading-[1.5] line-clamp-1">
-                  {project.description}
+                  {stripMarkdown(project.description)}
                 </p>
               </div>
 
