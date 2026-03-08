@@ -1,24 +1,8 @@
 @import "tailwindcss";
 
 /* ===== Source color variables (changed by theme switcher) ===== */
+/* Default: Bleu Navy */
 :root {
-  --t-dark: #0a0a0a;
-  --t-dark-2: #111111;
-  --t-dark-3: #1a1a1a;
-  --t-accent: #f97316;
-  --t-accent-hover: #ea580c;
-  --t-accent-dim: rgba(249, 115, 22, 0.06);
-  --t-cyan: #fb923c;
-  --t-text-primary: #ffffff;
-  --t-text-secondary: #c8c8d0;
-  --t-text-muted: #94949e;
-  --t-light: #f8f8f8;
-  --t-text-dark: #1a1a1a;
-  --t-text-body: #94949e;
-  --t-border-dark: rgba(255, 255, 255, 0.06);
-}
-
-html[data-theme="bleu"] {
   --t-dark: #001F4F;
   --t-dark-2: #002a5c;
   --t-dark-3: #003570;
@@ -33,6 +17,24 @@ html[data-theme="bleu"] {
   --t-text-dark: #1a1a1a;
   --t-text-body: #8899b4;
   --t-border-dark: rgba(255, 255, 255, 0.08);
+}
+
+/* Override: Noir & Orange */
+html[data-theme="noir-orange"] {
+  --t-dark: #0a0a0a;
+  --t-dark-2: #111111;
+  --t-dark-3: #1a1a1a;
+  --t-accent: #f97316;
+  --t-accent-hover: #ea580c;
+  --t-accent-dim: rgba(249, 115, 22, 0.06);
+  --t-cyan: #fb923c;
+  --t-text-primary: #ffffff;
+  --t-text-secondary: #c8c8d0;
+  --t-text-muted: #94949e;
+  --t-light: #f8f8f8;
+  --t-text-dark: #1a1a1a;
+  --t-text-body: #94949e;
+  --t-border-dark: rgba(255, 255, 255, 0.06);
 }
 
 /* ===== Tailwind theme: references source vars so utilities use var() ===== */

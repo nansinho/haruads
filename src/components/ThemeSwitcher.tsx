@@ -38,11 +38,12 @@ export default function ThemeSwitcher() {
     }
 
     // 2. Toggle data-theme — CSS rules in globals.css handle the color changes
-    const isBleu = html.getAttribute("data-theme") === "bleu";
-    const newId = isBleu ? "noir-orange" : "bleu";
+    // Default (no attribute) = bleu, data-theme="noir-orange" = noir & orange
+    const isNoirOrange = html.getAttribute("data-theme") === "noir-orange";
+    const newId = isNoirOrange ? "bleu" : "noir-orange";
 
-    if (newId === "bleu") {
-      html.setAttribute("data-theme", "bleu");
+    if (newId === "noir-orange") {
+      html.setAttribute("data-theme", "noir-orange");
     } else {
       html.removeAttribute("data-theme");
     }

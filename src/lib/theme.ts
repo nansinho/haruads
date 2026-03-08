@@ -80,7 +80,7 @@ export const THEME_BLEU: ThemePreset = {
 };
 
 export const THEME_PRESETS: ThemePreset[] = [THEME_NOIR_ORANGE, THEME_BLEU];
-export const DEFAULT_PRESET_ID = "noir-orange";
+export const DEFAULT_PRESET_ID = "bleu";
 
 /* ── Helpers ── */
 

@@ -37,8 +37,9 @@ export default function ThemeProvider({
     }
 
     // Ensure data-theme attribute is set (backup for anti-flash script)
-    if (storedId === "bleu") {
-      document.documentElement.setAttribute("data-theme", "bleu");
+    // Default (no attribute) = bleu, data-theme="noir-orange" = noir & orange
+    if (storedId === "noir-orange") {
+      document.documentElement.setAttribute("data-theme", "noir-orange");
     }
 
     // For noir-orange, fetch admin-level colour customisations
