@@ -295,7 +295,7 @@ export default function RootLayout({
         {/* Anti-flash: apply stored theme preset before React hydrates */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var id=localStorage.getItem("theme-preset-id");if(id&&id!=="noir-orange"){document.documentElement.setAttribute("data-theme",id)}}catch(e){}})()`,
+            __html: `(function(){try{var id=localStorage.getItem("theme-preset-id");if(id==="noir-orange"){document.documentElement.setAttribute("data-theme","noir-orange")}}catch(e){}})()`,
           }}
         />
         {process.env.NEXT_PUBLIC_SUPABASE_URL && (
