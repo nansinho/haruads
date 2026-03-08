@@ -17,6 +17,7 @@ import {
   Settings2,
   FileText,
   Globe,
+  Sparkles,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
@@ -81,6 +82,7 @@ export default function ProjetsAdminPage() {
   const [deleting, setDeleting] = useState(false);
   const [activeFormTab, setActiveFormTab] = useState("general");
   const [savedTags, setSavedTags] = useState<Tag[]>([]);
+  const [analyzing, setAnalyzing] = useState(false);
   const { toast } = useToast();
 
   const { data: projects, loading, refetch } = useAdminData<Project>("/api/admin/projects", {
@@ -272,6 +274,50 @@ export default function ProjetsAdminPage() {
   };
   const removeGalleryImage = (index: number) => {
     setForm((prev) => ({ ...prev, gallery: prev.gallery.filter((_, i) => i !== index) }));
+  };
+
+  // AI auto-fill
+  const handleAIFill = async () => {
+    if (!form.title) {
+      toast({ type: "error", message: "Renseignez au moins le titre du projet" });
+      return;
+    }
+    setAnalyzing(true);
+    try {
+      const res = await fetch("/api/admin/ia/analyze-project", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: form.title, external_url: form.external_url }),
+      });
+
+      if (res.status === 503) {
+        toast({ type: "error", message: "Clé API Anthropic non configurée. Ajoutez-la dans Paramètres > Clés API." });
+        return;
+      }
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Erreur lors de l'analyse");
+      }
+
+      const data = await res.json();
+      setForm((prev) => ({
+        ...prev,
+        description: data.description || prev.description,
+        challenge: data.challenge || prev.challenge,
+        solution: data.solution || prev.solution,
+        results: data.results?.length ? data.results : prev.results,
+        tags: data.tags?.length ? data.tags : prev.tags,
+        category: data.category || prev.category,
+        seo_title: data.seo_title || prev.seo_title,
+        seo_description: data.seo_description || prev.seo_description,
+      }));
+      toast({ type: "success", message: "Fiche projet remplie par l'IA ! Vérifiez et ajustez si besoin." });
+    } catch (err) {
+      toast({ type: "error", message: err instanceof Error ? err.message : "Erreur lors de l'analyse IA" });
+    } finally {
+      setAnalyzing(false);
+    }
   };
 
   return (
@@ -469,6 +515,33 @@ export default function ProjetsAdminPage() {
           </>
         }
       >
+        {/* AI Auto-fill */}
+        <div className="mb-4 p-3 rounded-xl bg-gradient-to-r from-accent/5 to-purple-500/5 border border-accent/10">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <Sparkles size={16} className="text-accent shrink-0" />
+              <p className="text-xs text-text-secondary truncate">
+                Renseignez le titre{" "}
+                <span className="text-text-muted">(+ URL externe pour de meilleurs résultats)</span>{" "}
+                puis laissez l&apos;IA remplir la fiche.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleAIFill}
+              disabled={analyzing || !form.title}
+              className="shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-accent text-dark text-xs font-semibold rounded-full hover:bg-accent-hover transition-all disabled:opacity-50 shadow-lg shadow-accent/20"
+            >
+              {analyzing ? (
+                <Loader2 size={14} className="animate-spin" />
+              ) : (
+                <Sparkles size={14} />
+              )}
+              {analyzing ? "Analyse en cours..." : "Remplir avec l'IA"}
+            </button>
+          </div>
+        </div>
+
         {/* Tabs navigation */}
         <div className="flex gap-1 mb-6 p-1 bg-dark rounded-xl overflow-x-auto">
           {formTabs.map((tab) => {
