@@ -220,23 +220,29 @@ export default function ProjectDetail() {
                 <div className={`grid grid-cols-2 gap-4 lg:gap-6 ${
                   project.results.length <= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
                 }`}>
-                  {project.results.map((r, i) => (
-                    <motion.div
-                      key={i}
-                      className="text-center p-6 lg:p-8 rounded-2xl bg-white/10 border border-white/20 hover:bg-white/15 transition-all duration-300"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.1 }}
-                    >
-                      <span className="text-[2.5rem] lg:text-[3rem] font-serif text-white leading-none block">
-                        {r.value}
-                      </span>
-                      <span className="text-[0.8rem] text-white/70 mt-2 block">
-                        {r.label}
-                      </span>
-                    </motion.div>
-                  ))}
+                  {project.results.map((r, i) => {
+                    // Auto-size: shorter values get bigger font
+                    const isShort = r.value.length <= 5;
+                    return (
+                      <motion.div
+                        key={i}
+                        className="text-center p-6 lg:p-8 rounded-2xl bg-white/10 border border-white/20 hover:bg-white/15 transition-all duration-300 overflow-hidden"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.1 }}
+                      >
+                        <span className={`font-serif text-white leading-none block break-words ${
+                          isShort ? "text-[2.5rem] lg:text-[3rem]" : "text-[1.5rem] lg:text-[1.8rem]"
+                        }`}>
+                          {r.value}
+                        </span>
+                        <span className="text-[0.8rem] text-white/70 mt-2 block">
+                          {r.label}
+                        </span>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </ScrollReveal>
             </div>
