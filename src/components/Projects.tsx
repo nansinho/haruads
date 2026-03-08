@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
+import { formatCompletedAt } from "@/lib/utils";
 
 interface Project {
   id: string;
@@ -14,6 +15,7 @@ interface Project {
   tags: string[];
   client: string;
   category: string;
+  completed_at: string | null;
   featured: boolean;
   sort_order: number;
 }
@@ -77,35 +79,63 @@ export default function Projects() {
           <>
             {/* Featured project */}
             <ScrollReveal animation="scaleUp">
-              <Link href={`/projets/${featured.slug}`} title={`Voir notre réalisation ${featured.title}`} className="block mb-5 relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
+              <Link href={`/projets/${featured.slug}`} title={`Voir notre réalisation ${featured.title}`} className="flex flex-col mb-5 group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl hover:shadow-accent/5 transition-all duration-500">
                 <div className="aspect-[16/7] relative overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={featured.image_url}
                     alt={featured.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent" />
+                  {featured.category && (
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[0.7rem] font-medium text-text-dark">
+                        {featured.category}
+                      </span>
+                    </div>
+                  )}
+                  {featured.completed_at && (
+                    <div className="absolute top-4 right-4">
+                      <span className="px-3 py-1 rounded-full bg-dark/70 backdrop-blur-sm text-[0.7rem] font-medium text-white">
+                        {formatCompletedAt(featured.completed_at)}
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-10">
-                  <div className="flex flex-wrap gap-2 mb-3">
+                <div className="p-6 lg:p-10">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="text-[1.3rem] lg:text-[1.8rem] font-semibold text-text-dark">
+                        {featured.title}
+                      </h3>
+                      {featured.client && (
+                        <p className="text-[0.75rem] text-text-body/60 mt-1">
+                          Client : {featured.client}
+                        </p>
+                      )}
+                    </div>
+                    <div className="shrink-0 w-9 h-9 rounded-full bg-accent/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-accent fill-none stroke-2">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-[0.85rem] text-text-body leading-[1.7] mt-2 max-w-[500px] line-clamp-2">
+                    {featured.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-4">
                     {featured.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 rounded-full bg-accent/20 backdrop-blur-md text-[0.7rem] font-medium text-accent border border-accent/20"
+                        className="px-2.5 py-1 rounded-full bg-accent/10 text-[0.7rem] font-medium text-accent"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <h3 className="text-[1.3rem] lg:text-[1.8rem] font-semibold text-white">
-                    {featured.title}
-                  </h3>
-                  <p className="text-[0.85rem] text-text-muted mt-1.5 max-w-[500px]">
-                    {featured.description}
-                  </p>
                   <motion.span
-                    className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium"
+                    className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium"
                     whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(249,115,22,0.3)" }}
                   >
                     En savoir plus
@@ -123,33 +153,61 @@ export default function Projects() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 {others.map((project, i) => (
                   <ScrollReveal key={project.id} delay={i * 80} className="h-full">
-                    <Link href={`/projets/${project.slug}`} title={`Voir le projet ${project.title}`} className="block h-full relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
-                      <div className="aspect-[4/3] relative overflow-hidden">
+                    <Link href={`/projets/${project.slug}`} title={`Voir le projet ${project.title}`} className="flex flex-col h-full group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl hover:shadow-accent/5 transition-all duration-500">
+                      <div className="aspect-[16/10] relative overflow-hidden">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={project.image_url}
                           alt={project.title}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent" />
+                        {project.category && (
+                          <div className="absolute top-4 left-4">
+                            <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[0.7rem] font-medium text-text-dark">
+                              {project.category}
+                            </span>
+                          </div>
+                        )}
+                        {project.completed_at && (
+                          <div className="absolute top-4 right-4">
+                            <span className="px-3 py-1 rounded-full bg-dark/70 backdrop-blur-sm text-[0.7rem] font-medium text-white">
+                              {formatCompletedAt(project.completed_at)}
+                            </span>
+                          </div>
+                        )}
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-5">
-                        <div className="flex gap-1.5 mb-2">
+                      <div className="p-5 flex-1 flex flex-col">
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <h3 className="text-[0.95rem] font-semibold text-text-dark">
+                              {project.title}
+                            </h3>
+                            {project.client && (
+                              <p className="text-[0.7rem] text-text-body/60 mt-0.5">
+                                Client : {project.client}
+                              </p>
+                            )}
+                          </div>
+                          <div className="shrink-0 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-accent fill-none stroke-2">
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                              <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                          </div>
+                        </div>
+                        <p className="text-[0.8rem] text-text-body leading-[1.7] mt-1.5 line-clamp-2">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-1.5 mt-auto pt-3">
                           {project.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="px-2.5 py-0.5 rounded-full bg-accent/20 backdrop-blur-md text-[0.7rem] font-medium text-accent border border-accent/20"
+                              className="px-2.5 py-0.5 rounded-full bg-accent/10 text-[0.65rem] font-medium text-accent"
                             >
                               {tag}
                             </span>
                           ))}
                         </div>
-                        <h3 className="text-[0.95rem] font-semibold text-white">
-                          {project.title}
-                        </h3>
-                        <p className="text-[0.8rem] text-white/60 mt-1 line-clamp-1">
-                          {project.description}
-                        </p>
                       </div>
                     </Link>
                   </ScrollReveal>
