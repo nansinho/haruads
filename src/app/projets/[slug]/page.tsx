@@ -136,21 +136,24 @@ export default function ProjectDetail() {
         </section>
 
         {/* Featured image */}
-        <section className="bg-dark text-white pb-20">
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-12">
-            <ScrollReveal>
-              <div className="rounded-2xl overflow-hidden">
-                <Image
-                  src={project.image_url}
-                  alt={project.title}
-                  width={1200}
-                  height={675}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
+        {project.image_url && (
+          <section className="bg-dark text-white pb-20">
+            <div className="max-w-[1200px] mx-auto px-5 lg:px-12">
+              <ScrollReveal>
+                <div className="rounded-2xl overflow-hidden aspect-video relative">
+                  <Image
+                    src={project.image_url}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 1200px) 100vw, 1200px"
+                  />
+                </div>
+              </ScrollReveal>
+            </div>
+          </section>
+        )}
 
         {/* Challenge & Solution */}
         {(project.challenge || project.solution) && (
@@ -167,7 +170,7 @@ export default function ProjectDetail() {
                         <span className="font-light">Comprendre le </span>
                         <span className="font-serif italic">problème.</span>
                       </h2>
-                      <p className="text-[0.9rem] text-text-body mt-5 leading-[1.8]">
+                      <p className="text-[0.95rem] text-text-dark/70 mt-5 leading-[1.8]">
                         {project.challenge}
                       </p>
                     </div>
@@ -184,7 +187,7 @@ export default function ProjectDetail() {
                         <span className="font-light">Notre </span>
                         <span className="font-serif italic">réponse.</span>
                       </h2>
-                      <p className="text-[0.9rem] text-text-body mt-5 leading-[1.8]">
+                      <p className="text-[0.95rem] text-text-dark/70 mt-5 leading-[1.8]">
                         {project.solution}
                       </p>
                     </div>
@@ -253,16 +256,16 @@ export default function ProjectDetail() {
                   {project.gallery.map((img, i) => (
                     <motion.div
                       key={i}
-                      className="rounded-xl overflow-hidden cursor-pointer group"
+                      className="rounded-xl overflow-hidden cursor-pointer group aspect-[3/2] relative"
                       whileHover={{ scale: 1.02 }}
                       onClick={() => setGalleryIndex(i)}
                     >
                       <Image
                         src={img}
                         alt={`${project.title} - Image ${i + 1}`}
-                        width={600}
-                        height={400}
-                        className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     </motion.div>
                   ))}
