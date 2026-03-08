@@ -20,7 +20,6 @@ import {
   Sparkles,
   GripVertical,
   Camera,
-  ImagePlus,
   Brain,
   CircleDot,
 } from "lucide-react";
@@ -105,7 +104,7 @@ export default function ProjetsAdminPage() {
   const [activeFormTab, setActiveFormTab] = useState("general");
   const [savedTags, setSavedTags] = useState<Tag[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
-  const [analysisStep, setAnalysisStep] = useState(0); // 0=idle, 1=analyzing, 2=screenshots, 3=featured, 4=done
+  const [analysisStep, setAnalysisStep] = useState(0); // 0=idle, 1=analyzing, 2=screenshots, 3=done
   const [capturingScreenshot, setCapturingScreenshot] = useState(false);
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [dragOverId, setDragOverId] = useState<string | null>(null);
@@ -421,10 +420,9 @@ export default function ProjetsAdminPage() {
 
       const data = await res.json();
 
-      // Step 2: Capture screenshots + featured image
+      // Step 2: Capture screenshots for gallery
       setAnalysisStep(2);
       let galleryUrls: string[] = [];
-      let featuredImageUrl = "";
       try {
         const screenshotRes = await fetch("/api/admin/screenshot", {
           method: "POST",
@@ -436,9 +434,6 @@ export default function ProjetsAdminPage() {
           if (screenshotData.urls?.length) {
             galleryUrls = screenshotData.urls;
           }
-          if (screenshotData.featured) {
-            featuredImageUrl = screenshotData.featured;
-          }
         } else {
           const errData = await screenshotRes.json().catch(() => ({}));
           console.error("[screenshot]", errData);
@@ -448,7 +443,7 @@ export default function ProjetsAdminPage() {
         console.error("[screenshot]", screenshotErr);
       }
 
-      // Step 3: Finalizing
+      // Step 3: Done
       setAnalysisStep(3);
       setForm({
         ...emptyForm,
@@ -466,11 +461,8 @@ export default function ProjetsAdminPage() {
         seo_description: data.seo_description || "",
         external_url: promptUrl,
         gallery: galleryUrls,
-        image_url: featuredImageUrl,
       });
 
-      // Step 4: Done
-      setAnalysisStep(4);
       await new Promise((resolve) => setTimeout(resolve, 800));
 
       setShowUrlPrompt(false);
@@ -1062,7 +1054,7 @@ export default function ProjetsAdminPage() {
                 <div className="h-1 bg-dark rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-accent to-orange-400 rounded-full transition-all duration-700 ease-out"
-                    style={{ width: `${analysisStep === 1 ? 25 : analysisStep === 2 ? 55 : analysisStep === 3 ? 85 : analysisStep === 4 ? 100 : 0}%` }}
+                    style={{ width: `${analysisStep === 1 ? 33 : analysisStep === 2 ? 66 : analysisStep === 3 ? 100 : 0}%` }}
                   />
                 </div>
               </div>
@@ -1072,12 +1064,10 @@ export default function ProjetsAdminPage() {
                 {[
                   { step: 1, icon: Brain, label: "Analyse IA du site", activeLabel: "L'IA analyse le contenu du site..." },
                   { step: 2, icon: Camera, label: "Capture des screenshots", activeLabel: "Capture des pages du site..." },
-                  { step: 3, icon: ImagePlus, label: "Montage image principale", activeLabel: "Composition de l'image mise en avant..." },
-                  { step: 4, icon: CheckCircle, label: "Terminé !", activeLabel: "Fiche projet prête !" },
+                  { step: 3, icon: CheckCircle, label: "Terminé !", activeLabel: "Fiche projet prête !" },
                 ].map(({ step, icon: Icon, label, activeLabel }) => {
                   const isActive = analysisStep === step;
                   const isDone = analysisStep > step;
-                  const isPending = analysisStep < step;
 
                   return (
                     <div
@@ -1112,7 +1102,7 @@ export default function ProjetsAdminPage() {
                           {isDone ? label : isActive ? activeLabel : label}
                         </p>
                       </div>
-                      {isActive && step < 4 && (
+                      {isActive && step < 3 && (
                         <div className="flex gap-1">
                           <span className="w-1 h-1 bg-accent rounded-full animate-bounce [animation-delay:0ms]" />
                           <span className="w-1 h-1 bg-accent rounded-full animate-bounce [animation-delay:150ms]" />
