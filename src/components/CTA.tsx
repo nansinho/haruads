@@ -6,7 +6,7 @@ import ScrollReveal from "./ScrollReveal";
 export default function CTA() {
   return (
     <section className="bg-accent text-white relative overflow-hidden" id="contact">
-      <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12">
+      <div className="max-w-[1400px] mx-auto px-5 py-[120px] lg:px-12">
         <ScrollReveal animation="scaleUp">
           <div className="text-center max-w-[700px] mx-auto">
             <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em]">

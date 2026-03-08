@@ -28,7 +28,7 @@ const steps = [
 export default function HowWeWork() {
   return (
     <section className="bg-accent text-white relative overflow-hidden">
-      <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+      <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
         <ScrollReveal>
           <div className="text-center max-w-[600px] mx-auto mb-16">
             <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em]">

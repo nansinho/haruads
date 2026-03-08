@@ -55,7 +55,7 @@ const Check = ({ className = "" }: { className?: string }) => (
 export default function Pricing() {
   return (
     <section className="bg-white text-text-dark relative overflow-hidden" id="pricing">
-      <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12">
+      <div className="max-w-[1400px] mx-auto px-5 py-[120px] lg:px-12">
         <ScrollReveal>
           <div className="text-center max-w-[600px] mx-auto mb-14">
             <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">

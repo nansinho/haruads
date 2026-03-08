@@ -15,7 +15,7 @@ const stats = [
 export default function About() {
   return (
     <section className="bg-white text-text-dark relative overflow-hidden" id="about">
-      <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12">
+      <div className="max-w-[1400px] mx-auto px-5 py-[120px] lg:px-12">
         <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-center">
           {/* Left — Image */}
           <ScrollReveal animation="fadeLeft">

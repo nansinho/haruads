@@ -29,7 +29,7 @@ export default function FAQ() {
 
   return (
     <section className="bg-white text-text-dark relative overflow-hidden">
-      <div className="max-w-[800px] mx-auto px-5 py-[120px] lg:px-12">
+      <div className="max-w-[1000px] mx-auto px-5 py-[120px] lg:px-12">
         <ScrollReveal>
           <div className="text-center mb-14">
             <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
