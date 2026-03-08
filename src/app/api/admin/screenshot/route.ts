@@ -96,14 +96,16 @@ async function generateFeaturedImage(
     await cleanPage(page);
     await new Promise((resolve) => setTimeout(resolve, 300));
 
-    // Capture hero (viewport) to temp file
-    const heroBuffer = await page.screenshot({ type: "png" });
+    // Capture hero (viewport) to temp file - clip to skip navbar (~80px top)
+    const heroBuffer = await page.screenshot({
+      type: "png",
+      clip: { x: 0, y: 80, width: 1280, height: 640 },
+    });
     fs.writeFileSync(heroPath, heroBuffer);
 
-    // Capture full page to temp file (limited to reasonable height via clip)
-    // First get page height
+    // Capture full page to temp file (up to 5000px for more sections)
     const pageHeight = await page.evaluate(() => {
-      return Math.min(document.body.scrollHeight, 4000);
+      return Math.min(document.body.scrollHeight, 5000);
     });
 
     const fullBuffer = await page.screenshot({
@@ -116,20 +118,26 @@ async function generateFeaturedImage(
     const compositeHtml = `<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"></head>
-<body style="margin:0;padding:0;width:1280px;height:720px;overflow:hidden;background:#0a0a0a;display:flex;font-size:0;">
-  <!-- Left: hero cropped & zoomed -->
-  <div style="width:750px;height:720px;overflow:hidden;position:relative;flex-shrink:0;">
+<body style="margin:0;padding:0;width:1280px;height:720px;overflow:hidden;background:#080808;display:flex;font-size:0;">
+  <!-- Left: hero VERY zoomed, cropped, no navbar -->
+  <div style="width:760px;height:720px;overflow:hidden;position:relative;flex-shrink:0;">
     <img src="file://${heroPath}"
-         style="width:920px;height:auto;position:absolute;top:-10px;left:-30px;display:block;" />
-    <div style="position:absolute;top:0;right:0;width:150px;height:100%;
-                background:linear-gradient(to right,transparent,#0a0a0a);"></div>
+         style="width:1100px;height:auto;position:absolute;top:-20px;left:-60px;display:block;" />
+    <!-- Wide gradient fade (200px) for smooth blend -->
+    <div style="position:absolute;top:0;right:0;width:200px;height:100%;
+                background:linear-gradient(to right,transparent,#080808);"></div>
   </div>
-  <!-- Right: full page screenshot -->
-  <div style="width:530px;height:720px;overflow:hidden;position:relative;
-              display:flex;flex-direction:column;padding:20px 20px 0 0;box-sizing:border-box;">
-    <img src="file://${fullPath}"
-         style="width:510px;height:auto;border-radius:10px;display:block;
-                box-shadow:0 8px 32px rgba(0,0,0,0.6);" />
+  <!-- Right: full page "floating mockup" -->
+  <div style="width:520px;height:720px;overflow:hidden;position:relative;
+              padding:16px 24px 0 0;box-sizing:border-box;">
+    <div style="border-radius:12px;overflow:hidden;height:100%;
+                box-shadow:0 0 0 1px rgba(255,255,255,0.06),0 20px 60px rgba(0,0,0,0.7),0 8px 20px rgba(0,0,0,0.5);">
+      <img src="file://${fullPath}"
+           style="width:100%;height:auto;display:block;" />
+    </div>
+    <!-- Bottom fade for natural "continues below" effect -->
+    <div style="position:absolute;bottom:0;left:0;width:100%;height:120px;
+                background:linear-gradient(to bottom,transparent,#080808);"></div>
   </div>
 </body>
 </html>`;
