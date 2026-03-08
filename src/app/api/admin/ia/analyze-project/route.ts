@@ -58,15 +58,16 @@ Règles :
 - Les résultats doivent être réalistes et pertinents pour le type de projet
 - Les tags doivent refléter les technologies détectées ou probables
 - La catégorie doit être parmi : E-Commerce, Application Web, Site Vitrine, Design UI/UX, SaaS, Landing Page, Mobile, Autre
+- Dans les champs "description", "challenge" et "solution", utilise la syntaxe markdown **gras** (double astérisques) pour mettre en valeur 2 à 4 mots-clés importants par champ (technologies, concepts clés, résultats marquants). Exemple : "Un site **e-commerce** performant avec une **expérience utilisateur** optimisée"
 
 Tu dois répondre UNIQUEMENT avec un objet JSON valide (sans backticks ni markdown autour) :
 {
   "title": "Nom du projet (court et percutant)",
   "client": "Nom du client ou de l'entreprise",
   "completed_at": "2025-03",
-  "description": "Description courte et accrocheuse du projet (2-3 phrases, max 300 caractères)",
-  "challenge": "Le défi / problème client (3-5 phrases détaillées)",
-  "solution": "La solution technique apportée (3-5 phrases détaillées)",
+  "description": "Description courte et accrocheuse (2-3 phrases, max 300 caractères, utilise **gras** pour les mots-clés importants)",
+  "challenge": "Le défi / problème client (3-5 phrases détaillées, utilise **gras** pour les mots-clés)",
+  "solution": "La solution technique apportée (3-5 phrases détaillées, utilise **gras** pour les mots-clés)",
   "results": [
     { "label": "Nom du KPI", "value": "Valeur avec unité" }
   ],

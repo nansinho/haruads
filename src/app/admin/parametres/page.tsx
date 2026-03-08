@@ -120,6 +120,12 @@ const API_KEYS_CONFIG = [
     placeholder: "Code de verification Google",
     description: "Meta tag de verification pour Google Search Console",
   },
+  {
+    key: "screenshot_api_key",
+    label: "ScreenshotOne",
+    placeholder: "votre-cle-api...",
+    description: "Capture automatique des screenshots de projets pour la galerie",
+  },
 ];
 
 export default function ParametresPage() {
