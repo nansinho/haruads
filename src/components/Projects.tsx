@@ -122,7 +122,7 @@ export default function Projects() {
             {others.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 {others.map((project, i) => (
-                  <ScrollReveal key={project.id} delay={i * 80}>
+                  <ScrollReveal key={project.id} delay={i * 80} className="h-full">
                     <Link href={`/projets/${project.slug}`} title={`Voir le projet ${project.title}`} className="block h-full relative overflow-hidden rounded-2xl cursor-pointer group border border-white/[0.06]">
                       <div className="aspect-[4/3] relative overflow-hidden">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -138,16 +138,16 @@ export default function Projects() {
                           {project.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="px-2 py-0.5 rounded-full bg-white/[0.08] backdrop-blur-sm text-[0.65rem] text-text-muted"
+                              className="px-2.5 py-0.5 rounded-full bg-accent/20 backdrop-blur-md text-[0.7rem] font-medium text-accent border border-accent/20"
                             >
                               {tag}
                             </span>
                           ))}
                         </div>
-                        <h3 className="text-[0.95rem] font-serif text-white">
+                        <h3 className="text-[0.95rem] font-semibold text-white">
                           {project.title}
                         </h3>
-                        <p className="text-[0.75rem] text-text-muted mt-0.5">
+                        <p className="text-[0.8rem] text-white/60 mt-1 line-clamp-1">
                           {project.description}
                         </p>
                       </div>

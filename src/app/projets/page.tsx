@@ -105,7 +105,7 @@ export default function ProjetsPage() {
                   <ScrollReveal key={project.id} delay={i * 80}>
                     <a
                       href={`/projets/${project.slug}`}
-                      className="block group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl hover:shadow-accent/5 transition-all duration-500"
+                      className="flex flex-col h-full group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl hover:shadow-accent/5 transition-all duration-500"
                     >
                       <div className="aspect-[16/10] relative overflow-hidden">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -129,10 +129,10 @@ export default function ProjetsPage() {
                           </div>
                         )}
                       </div>
-                      <div className="p-6 lg:p-8">
+                      <div className="p-6 lg:p-8 flex-1 flex flex-col">
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <h3 className="text-[1.2rem] lg:text-[1.4rem] font-serif text-text-dark">
+                            <h3 className="text-[1.2rem] lg:text-[1.4rem] font-semibold text-text-dark">
                               {project.title}
                             </h3>
                             {project.client && (
@@ -151,11 +151,11 @@ export default function ProjetsPage() {
                         <p className="text-[0.85rem] text-text-body leading-[1.7] mt-2 line-clamp-2">
                           {project.description}
                         </p>
-                        <div className="flex flex-wrap gap-2 mt-4">
+                        <div className="flex flex-wrap gap-2 mt-auto pt-4">
                           {project.tags?.map((tag) => (
                             <span
                               key={tag}
-                              className="px-2.5 py-1 rounded-full bg-light text-[0.7rem] font-medium text-text-body"
+                              className="px-2.5 py-1 rounded-full bg-accent/10 text-[0.7rem] font-medium text-accent"
                             >
                               {tag}
                             </span>
