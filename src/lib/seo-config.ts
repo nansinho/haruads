@@ -49,14 +49,14 @@ export const pageSeo: Record<
     ],
   },
   "/tarifs": {
-    title: "Tarifs Création de Site Internet — Devis Gratuit | Agence HDS",
+    title: "Demande de Devis — Projet Web Sur Mesure | Agence HDS",
     description:
-      "Nos formules de création de site web : site vitrine dès 80€/mois, application web 299€/mois, e-commerce 349€/mois. Devis personnalisé gratuit.",
+      "Décrivez votre projet et recevez un devis personnalisé sous 48h. Choisissez vos options, ajoutez vos besoins spécifiques. Agence web à Gardanne.",
     keywords: [
-      "tarif création site internet",
-      "prix site web",
       "devis site internet",
-      "agence web tarif",
+      "devis projet web",
+      "demande devis agence web",
+      "devis personnalisé",
     ],
   },
   "/a-propos": {

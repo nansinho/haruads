@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
-import { plans } from "@/data/pricing";
 import JsonLd from "@/components/seo/JsonLd";
-import { seoConfig, pageSeo } from "@/lib/seo-config";
-
-const page = pageSeo["/tarifs"];
+import { seoConfig } from "@/lib/seo-config";
 
 export const metadata: Metadata = {
-  title: page.title,
-  description: page.description,
-  keywords: page.keywords,
+  title: "Demande de Devis — Projet Web Sur Mesure | Agence HDS",
+  description:
+    "Décrivez votre projet et recevez un devis personnalisé sous 48h. Choisissez vos options, ajoutez vos besoins spécifiques. Agence web à Gardanne, Aix-en-Provence.",
+  keywords: [
+    "devis site internet",
+    "devis projet web",
+    "demande devis agence web",
+    "devis personnalisé",
+  ],
   openGraph: {
-    title: page.title,
-    description: page.description,
+    title: "Demande de Devis — Projet Web Sur Mesure | Agence HDS",
+    description:
+      "Décrivez votre projet et recevez un devis personnalisé sous 48h. Choisissez vos options, ajoutez vos besoins spécifiques.",
     url: `${seoConfig.siteUrl}/tarifs`,
     siteName: seoConfig.siteName,
     locale: seoConfig.locale,
@@ -20,8 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: page.title,
-    description: page.description,
+    title: "Demande de Devis — Projet Web Sur Mesure | Agence HDS",
+    description:
+      "Décrivez votre projet et recevez un devis personnalisé sous 48h.",
   },
   alternates: {
     canonical: `${seoConfig.siteUrl}/tarifs`,
@@ -33,26 +38,8 @@ const breadcrumbSchema = {
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Accueil", item: seoConfig.siteUrl },
-    { "@type": "ListItem", position: 2, name: "Tarifs", item: `${seoConfig.siteUrl}/tarifs` },
+    { "@type": "ListItem", position: 2, name: "Devis", item: `${seoConfig.siteUrl}/tarifs` },
   ],
-};
-
-const offersSchema = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  name: "Tarifs Agence HDS",
-  itemListElement: plans.map((plan, i) => ({
-    "@type": "ListItem",
-    position: i + 1,
-    item: {
-      "@type": "Offer",
-      name: plan.name,
-      description: plan.desc,
-      price: plan.price,
-      priceCurrency: "EUR",
-      url: `${seoConfig.siteUrl}/tarifs`,
-    },
-  })),
 };
 
 export default function TarifsLayout({
@@ -63,7 +50,6 @@ export default function TarifsLayout({
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
-      <JsonLd data={offersSchema} />
       {children}
     </>
   );
