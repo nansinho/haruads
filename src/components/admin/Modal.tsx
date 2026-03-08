@@ -46,16 +46,16 @@ export default function Modal({ isOpen, onClose, title, description, children, f
         if (e.target === overlayRef.current) onClose();
       }}
     >
-      <div className={`w-full ${sizeClasses[size]} bg-dark-2 border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/40 animate-in fade-in zoom-in-95 duration-200`}>
+      <div className={`w-full ${sizeClasses[size]} bg-admin-card border border-admin-card-border rounded-2xl shadow-2xl shadow-black/10 animate-in fade-in zoom-in-95 duration-200`}>
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.10]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-admin-card-border">
           <div>
-            <h2 className="font-serif text-lg text-text-primary">{title}</h2>
-            {description && <p className="text-sm text-text-muted mt-0.5">{description}</p>}
+            <h2 className="font-serif text-lg text-admin-text">{title}</h2>
+            {description && <p className="text-sm text-admin-text-muted mt-0.5">{description}</p>}
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-all"
+            className="p-2 rounded-xl hover:bg-admin-hover text-admin-text-muted hover:text-admin-text transition-all"
           >
             <X size={18} />
           </button>
@@ -66,7 +66,7 @@ export default function Modal({ isOpen, onClose, title, description, children, f
 
         {/* Footer */}
         {footer && (
-          <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-white/[0.10]">
+          <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-admin-card-border">
             {footer}
           </div>
         )}

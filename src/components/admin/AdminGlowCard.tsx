@@ -49,7 +49,7 @@ function AnimatedCounter({
   }, [springValue]);
 
   return (
-    <span className="font-mono text-3xl font-bold text-text-primary tracking-tight">
+    <span className="font-mono text-3xl font-bold text-admin-text tracking-tight">
       {prefix}
       {display}
       {suffix}
@@ -83,7 +83,7 @@ export default function AdminGlowCard({
       ? "text-emerald-400"
       : trend.value < 0
       ? "text-red-400"
-      : "text-text-muted";
+      : "text-admin-text-muted";
 
   const TrendIcon =
     !trend
@@ -105,7 +105,7 @@ export default function AdminGlowCard({
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsFocused(true)}
         onMouseLeave={() => setIsFocused(false)}
-        className="relative rounded-2xl overflow-hidden bg-dark-2 border border-white/[0.10] hover:border-white/[0.16] transition-all duration-500"
+        className="relative rounded-2xl overflow-hidden bg-admin-card border border-admin-card-border hover:border-admin-input-border transition-all duration-500 shadow-sm hover:shadow-md"
       >
         {/* Glow effect */}
         <div
@@ -135,9 +135,9 @@ export default function AdminGlowCard({
           <AnimatedCounter value={value} prefix={prefix} suffix={suffix} />
 
           <div className="mt-1.5 flex items-center justify-between">
-            <span className="text-sm text-text-secondary">{label}</span>
+            <span className="text-sm text-admin-text-secondary">{label}</span>
             {trend && (
-              <span className="text-xs text-text-muted">{trend.label}</span>
+              <span className="text-xs text-admin-text-muted">{trend.label}</span>
             )}
           </div>
         </div>

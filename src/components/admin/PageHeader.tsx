@@ -24,9 +24,9 @@ export default function PageHeader({ title, subtitle, icon, actions }: PageHeade
           </div>
         )}
         <div>
-          <h1 className="font-serif text-2xl text-text-primary">{title}</h1>
+          <h1 className="font-serif text-2xl text-admin-text">{title}</h1>
           {subtitle && (
-            <p className="text-sm text-text-secondary mt-0.5">{subtitle}</p>
+            <p className="text-sm text-admin-text-secondary mt-0.5">{subtitle}</p>
           )}
         </div>
       </div>

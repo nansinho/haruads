@@ -44,12 +44,12 @@ const statusOptions = [
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
     new: "bg-blue-500/15 text-blue-400 border-blue-500/20",
-    read: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    read: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
     in_progress: "bg-violet-500/15 text-violet-400 border-violet-500/20",
     quoted: "bg-orange-500/15 text-orange-400 border-orange-500/20",
     accepted: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
     rejected: "bg-red-500/15 text-red-400 border-red-500/20",
-    expired: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    expired: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     new: "Nouveau",
@@ -60,7 +60,7 @@ function StatusBadge({ status }: { status: string }) {
     rejected: "Rejeté",
     expired: "Expiré",
   };
-  const color = colors[status] || "bg-gray-500/15 text-text-muted border-gray-500/20";
+  const color = colors[status] || "bg-gray-500/15 text-admin-text-muted border-gray-500/20";
   return (
     <span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}>
       {labels[status] || status}
@@ -177,11 +177,11 @@ export default function DevisPage() {
         subtitle="Gérez les demandes de devis clients"
         actions={
           <>
-            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm">
               <Download size={16} />
               Exporter
             </button>
-            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm">
               <RefreshCw size={16} />
               Actualiser
             </button>
@@ -195,15 +195,15 @@ export default function DevisPage() {
 
       {/* Filters & Search */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-4 space-y-4">
           <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-admin-text-muted" />
             <input
               type="text"
               placeholder="Rechercher par référence, client, email..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -214,7 +214,7 @@ export default function DevisPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-admin-card text-admin-text-secondary border border-admin-card-border hover:bg-admin-hover hover:text-admin-text rounded-full"
                 }`}
               >
                 {filter.label}
@@ -226,7 +226,7 @@ export default function DevisPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-16">
               <Loader2 size={24} className="text-accent animate-spin" />
@@ -235,41 +235,41 @@ export default function DevisPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Référence</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Client</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Email</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Budget</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Montant</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Statut</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Date</th>
-                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Actions</th>
+                  <tr className="border-b border-admin-card-border">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Référence</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Client</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Email</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Budget</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Montant</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Statut</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Date</th>
+                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.06]">
+                <tbody className="divide-y divide-admin-card-border">
                   {quotes.length > 0 ? (
                     quotes.map((quote) => (
-                      <tr key={quote.id} className="hover:bg-white/[0.02] transition-colors">
+                      <tr key={quote.id} className="hover:bg-admin-hover transition-colors">
                         <td className="px-6 py-4">
                           <span className="text-sm font-medium text-accent font-mono">{quote.reference}</span>
                         </td>
                         <td className="px-6 py-4">
                           <div>
-                            <span className="text-sm text-text-primary">{quote.name}</span>
-                            {quote.company && <p className="text-xs text-text-muted">{quote.company}</p>}
+                            <span className="text-sm text-admin-text">{quote.name}</span>
+                            {quote.company && <p className="text-xs text-admin-text-muted">{quote.company}</p>}
                           </div>
                         </td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-secondary">{quote.email}</span></td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-secondary">{quote.budget_range || "-"}</span></td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-primary font-medium">{formatPrice(quote.quoted_amount)}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text-secondary">{quote.email}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text-secondary">{quote.budget_range || "-"}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text font-medium">{formatPrice(quote.quoted_amount)}</span></td>
                         <td className="px-6 py-4"><StatusBadge status={quote.status} /></td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-muted">{formatDate(quote.created_at)}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text-muted">{formatDate(quote.created_at)}</span></td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => { setSelectedQuote(quote); setShowDetail(true); }} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all">
+                            <button onClick={() => { setSelectedQuote(quote); setShowDetail(true); }} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-admin-text transition-all">
                               <Eye size={16} />
                             </button>
-                            <button onClick={() => { setSelectedQuote(quote); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-all">
+                            <button onClick={() => { setSelectedQuote(quote); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-red-400 transition-all">
                               <Trash2 size={16} />
                             </button>
                           </div>
@@ -280,12 +280,12 @@ export default function DevisPage() {
                     <tr>
                       <td colSpan={8} className="px-6 py-16 text-center">
                         <div className="flex flex-col items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center">
-                            <FileText size={24} className="text-text-muted" />
+                          <div className="w-12 h-12 rounded-2xl bg-admin-input-bg border border-admin-card-border flex items-center justify-center">
+                            <FileText size={24} className="text-admin-text-muted" />
                           </div>
                           <div>
-                            <p className="text-text-muted font-medium">Aucune demande de devis</p>
-                            <p className="text-text-muted text-sm mt-1">Les nouvelles demandes de devis apparaîtront ici</p>
+                            <p className="text-admin-text-muted font-medium">Aucune demande de devis</p>
+                            <p className="text-admin-text-muted text-sm mt-1">Les nouvelles demandes de devis apparaîtront ici</p>
                           </div>
                           <button onClick={() => { setForm(emptyForm); setShowCreate(true); }} className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-accent-dim text-accent border border-accent/20 rounded-full hover:bg-accent/20 transition-all text-sm font-medium">
                             <Plus size={16} />
@@ -311,7 +311,7 @@ export default function DevisPage() {
         size="lg"
         footer={
           <>
-            <button onClick={() => setShowCreate(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all">
+            <button onClick={() => setShowCreate(false)} className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all">
               Annuler
             </button>
             <button onClick={handleCreate} disabled={saving} className="px-4 py-2 text-sm font-semibold text-dark bg-accent rounded-full hover:bg-accent-hover transition-all disabled:opacity-50">
@@ -340,16 +340,16 @@ export default function DevisPage() {
         title={`Devis ${selectedQuote?.reference || ""}`}
         size="lg"
         footer={
-          <button onClick={() => setShowDetail(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all">
+          <button onClick={() => setShowDetail(false)} className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all">
             Fermer
           </button>
         }
       >
         {selectedQuote && (
           <div className="space-y-5">
-            <div className="flex items-start justify-between pb-4 border-b border-white/[0.06]">
+            <div className="flex items-start justify-between pb-4 border-b border-admin-card-border">
               <div>
-                <p className="text-xs text-text-muted mb-1">Référence</p>
+                <p className="text-xs text-admin-text-muted mb-1">Référence</p>
                 <p className="text-lg font-mono font-bold text-accent">{selectedQuote.reference}</p>
               </div>
               <StatusBadge status={selectedQuote.status} />
@@ -357,49 +357,49 @@ export default function DevisPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-xs text-text-muted mb-1">Client</p>
-                <p className="text-sm text-text-primary font-medium">{selectedQuote.name}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Client</p>
+                <p className="text-sm text-admin-text font-medium">{selectedQuote.name}</p>
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Email</p>
-                <p className="text-sm text-text-primary">{selectedQuote.email}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Email</p>
+                <p className="text-sm text-admin-text">{selectedQuote.email}</p>
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Téléphone</p>
-                <p className="text-sm text-text-primary">{selectedQuote.phone || "-"}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Téléphone</p>
+                <p className="text-sm text-admin-text">{selectedQuote.phone || "-"}</p>
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Entreprise</p>
-                <p className="text-sm text-text-primary">{selectedQuote.company || "-"}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Entreprise</p>
+                <p className="text-sm text-admin-text">{selectedQuote.company || "-"}</p>
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Budget estimé</p>
-                <p className="text-sm text-text-primary">{selectedQuote.budget_range || "-"}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Budget estimé</p>
+                <p className="text-sm text-admin-text">{selectedQuote.budget_range || "-"}</p>
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Montant devisé</p>
-                <p className="text-sm text-text-primary font-medium">{formatPrice(selectedQuote.quoted_amount)}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Montant devisé</p>
+                <p className="text-sm text-admin-text font-medium">{formatPrice(selectedQuote.quoted_amount)}</p>
               </div>
             </div>
 
             <div>
-              <p className="text-xs text-text-muted mb-1">Description</p>
-              <div className="p-4 bg-dark rounded-xl border border-white/[0.04]">
-                <p className="text-sm text-text-secondary whitespace-pre-wrap leading-relaxed">{selectedQuote.description}</p>
+              <p className="text-xs text-admin-text-muted mb-1">Description</p>
+              <div className="p-4 bg-admin-input-bg rounded-xl border border-admin-card-border">
+                <p className="text-sm text-admin-text-secondary whitespace-pre-wrap leading-relaxed">{selectedQuote.description}</p>
               </div>
             </div>
 
             {selectedQuote.notes && (
               <div>
-                <p className="text-xs text-text-muted mb-1">Notes internes</p>
+                <p className="text-xs text-admin-text-muted mb-1">Notes internes</p>
                 <div className="p-3 bg-yellow-500/5 rounded-xl border border-yellow-500/10">
-                  <p className="text-sm text-text-secondary">{selectedQuote.notes}</p>
+                  <p className="text-sm text-admin-text-secondary">{selectedQuote.notes}</p>
                 </div>
               </div>
             )}
 
-            <div className="pt-4 border-t border-white/[0.06]">
-              <p className="text-xs text-text-muted mb-3">Changer le statut</p>
+            <div className="pt-4 border-t border-admin-card-border">
+              <p className="text-xs text-admin-text-muted mb-3">Changer le statut</p>
               <div className="flex flex-wrap gap-2">
                 {statusOptions.map((opt) => (
                   <button
@@ -409,7 +409,7 @@ export default function DevisPage() {
                     className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all ${
                       selectedQuote.status === opt.value
                         ? "bg-accent/10 text-accent border-accent/20 cursor-default"
-                        : "text-text-muted border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary"
+                        : "text-admin-text-muted border-admin-card-border hover:bg-admin-hover hover:text-admin-text"
                     }`}
                   >
                     {opt.label}
@@ -418,7 +418,7 @@ export default function DevisPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 text-xs text-text-muted pt-2">
+            <div className="flex items-center gap-4 text-xs text-admin-text-muted pt-2">
               <span>Créé le {formatDate(selectedQuote.created_at)}</span>
               <span>Mis à jour le {formatDate(selectedQuote.updated_at)}</span>
             </div>

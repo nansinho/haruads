@@ -31,9 +31,9 @@ const filterTabs = [
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
     unread: "bg-orange-500/15 text-orange-400 border-orange-500/20",
-    read: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    read: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
     replied: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-    archived: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    archived: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     unread: "Non lu",
@@ -41,7 +41,7 @@ function StatusBadge({ status }: { status: string }) {
     replied: "Répondu",
     archived: "Archivé",
   };
-  const color = colors[status] || "bg-gray-500/15 text-text-muted border-gray-500/20";
+  const color = colors[status] || "bg-gray-500/15 text-admin-text-muted border-gray-500/20";
   return (
     <span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}>
       {labels[status] || status}
@@ -140,11 +140,11 @@ export default function MessagesPage() {
         subtitle="Messages reçus via le formulaire de contact"
         actions={
           <>
-            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm">
               <Download size={16} />
               Exporter
             </button>
-            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm">
               <RefreshCw size={16} />
               Actualiser
             </button>
@@ -154,15 +154,15 @@ export default function MessagesPage() {
 
       {/* Filters & Search */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-4 space-y-4">
           <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-admin-text-muted" />
             <input
               type="text"
               placeholder="Rechercher par nom, email, sujet, message..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -173,7 +173,7 @@ export default function MessagesPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-admin-card text-admin-text-secondary border border-admin-card-border hover:bg-admin-hover hover:text-admin-text rounded-full"
                 }`}
               >
                 {filter.label}
@@ -185,7 +185,7 @@ export default function MessagesPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-16">
               <Loader2 size={24} className="text-accent animate-spin" />
@@ -194,46 +194,46 @@ export default function MessagesPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Nom</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Email</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Sujet</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Message</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Statut</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Date</th>
-                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Actions</th>
+                  <tr className="border-b border-admin-card-border">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Nom</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Email</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Sujet</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Message</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Statut</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Date</th>
+                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.06]">
+                <tbody className="divide-y divide-admin-card-border">
                   {messages.length > 0 ? (
                     messages.map((msg) => (
                       <tr
                         key={msg.id}
-                        className={`hover:bg-white/[0.02] transition-colors ${msg.status === "unread" ? "bg-accent/[0.02]" : ""}`}
+                        className={`hover:bg-admin-hover transition-colors ${msg.status === "unread" ? "bg-accent/[0.02]" : ""}`}
                       >
                         <td className="px-6 py-4">
-                          <span className={`text-sm ${msg.status === "unread" ? "font-semibold text-text-primary" : "text-text-secondary"}`}>
+                          <span className={`text-sm ${msg.status === "unread" ? "font-semibold text-admin-text" : "text-admin-text-secondary"}`}>
                             {msg.name}
                           </span>
                         </td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-secondary">{msg.email}</span></td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-secondary">{msg.subject || "-"}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text-secondary">{msg.email}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text-secondary">{msg.subject || "-"}</span></td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-text-muted max-w-xs truncate block">
+                          <span className="text-sm text-admin-text-muted max-w-xs truncate block">
                             {msg.message.length > 80 ? `${msg.message.substring(0, 80)}...` : msg.message}
                           </span>
                         </td>
                         <td className="px-6 py-4"><StatusBadge status={msg.status} /></td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-muted">{formatDateTime(msg.created_at)}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text-muted">{formatDateTime(msg.created_at)}</span></td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => openDetail(msg)} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all">
+                            <button onClick={() => openDetail(msg)} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-admin-text transition-all">
                               <Eye size={16} />
                             </button>
-                            <button onClick={() => archiveMessage(msg)} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all" title="Archiver">
+                            <button onClick={() => archiveMessage(msg)} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-admin-text transition-all" title="Archiver">
                               <Archive size={16} />
                             </button>
-                            <button onClick={() => { setSelectedMessage(msg); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-all">
+                            <button onClick={() => { setSelectedMessage(msg); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-red-400 transition-all">
                               <Trash2 size={16} />
                             </button>
                           </div>
@@ -244,12 +244,12 @@ export default function MessagesPage() {
                     <tr>
                       <td colSpan={7} className="px-6 py-16 text-center">
                         <div className="flex flex-col items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center">
-                            <Mail size={24} className="text-text-muted" />
+                          <div className="w-12 h-12 rounded-2xl bg-admin-input-bg border border-admin-card-border flex items-center justify-center">
+                            <Mail size={24} className="text-admin-text-muted" />
                           </div>
                           <div>
-                            <p className="text-text-muted font-medium">Aucun message</p>
-                            <p className="text-text-muted text-sm mt-1">Les messages de contact apparaîtront ici</p>
+                            <p className="text-admin-text-muted font-medium">Aucun message</p>
+                            <p className="text-admin-text-muted text-sm mt-1">Les messages de contact apparaîtront ici</p>
                           </div>
                         </div>
                       </td>
@@ -269,34 +269,34 @@ export default function MessagesPage() {
         title="Détail du message"
         size="lg"
         footer={
-          <button onClick={() => setShowDetail(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all">
+          <button onClick={() => setShowDetail(false)} className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all">
             Fermer
           </button>
         }
       >
         {selectedMessage && (
           <div className="space-y-5">
-            <div className="flex items-start justify-between pb-4 border-b border-white/[0.06]">
+            <div className="flex items-start justify-between pb-4 border-b border-admin-card-border">
               <div>
-                <h3 className="text-lg font-serif text-text-primary">{selectedMessage.name}</h3>
-                <p className="text-sm text-text-muted">{selectedMessage.email}</p>
-                {selectedMessage.phone && <p className="text-sm text-text-muted">{selectedMessage.phone}</p>}
+                <h3 className="text-lg font-serif text-admin-text">{selectedMessage.name}</h3>
+                <p className="text-sm text-admin-text-muted">{selectedMessage.email}</p>
+                {selectedMessage.phone && <p className="text-sm text-admin-text-muted">{selectedMessage.phone}</p>}
               </div>
               <StatusBadge status={selectedMessage.status} />
             </div>
             {selectedMessage.subject && (
               <div>
-                <p className="text-xs text-text-muted mb-1">Sujet</p>
-                <p className="text-sm text-text-primary font-medium">{selectedMessage.subject}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Sujet</p>
+                <p className="text-sm text-admin-text font-medium">{selectedMessage.subject}</p>
               </div>
             )}
             <div>
-              <p className="text-xs text-text-muted mb-1">Message</p>
-              <div className="p-4 bg-dark rounded-xl border border-white/[0.04]">
-                <p className="text-sm text-text-secondary whitespace-pre-wrap leading-relaxed">{selectedMessage.message}</p>
+              <p className="text-xs text-admin-text-muted mb-1">Message</p>
+              <div className="p-4 bg-admin-input-bg rounded-xl border border-admin-card-border">
+                <p className="text-sm text-admin-text-secondary whitespace-pre-wrap leading-relaxed">{selectedMessage.message}</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 text-xs text-text-muted pt-2">
+            <div className="flex items-center gap-4 text-xs text-admin-text-muted pt-2">
               <span>Source : {selectedMessage.source}</span>
               <span>Reçu le {formatDateTime(selectedMessage.created_at)}</span>
               {selectedMessage.replied_at && <span>Répondu le {formatDateTime(selectedMessage.replied_at)}</span>}

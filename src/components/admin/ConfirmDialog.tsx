@@ -33,7 +33,7 @@ export default function ConfirmDialog({
           <button
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+            className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all"
           >
             Annuler
           </button>
@@ -51,7 +51,7 @@ export default function ConfirmDialog({
         <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
           <AlertTriangle size={20} className="text-red-400" />
         </div>
-        <p className="text-sm text-text-secondary leading-relaxed">{message}</p>
+        <p className="text-sm text-admin-text-secondary leading-relaxed">{message}</p>
       </div>
     </Modal>
   );

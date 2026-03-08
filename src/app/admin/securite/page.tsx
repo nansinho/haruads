@@ -84,16 +84,16 @@ export default function SecuritePage() {
       <AnimatedSection>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Change Password */}
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <Lock size={20} className="text-accent" />
               </div>
               <div>
-                <h2 className="font-serif text-lg text-text-primary">
+                <h2 className="font-serif text-lg text-admin-text">
                   Changer le mot de passe
                 </h2>
-                <p className="text-sm text-text-muted">
+                <p className="text-sm text-admin-text-muted">
                   Mettez a jour votre mot de passe
                 </p>
               </div>
@@ -102,7 +102,7 @@ export default function SecuritePage() {
             <div className="space-y-4">
               {/* Old Password */}
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">
+                <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                   Ancien mot de passe
                 </label>
                 <div className="relative">
@@ -111,12 +111,12 @@ export default function SecuritePage() {
                     value={oldPassword}
                     onChange={(e) => setOldPassword(e.target.value)}
                     placeholder="Votre mot de passe actuel"
-                    className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 pr-12"
+                    className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 pr-12"
                   />
                   <button
                     type="button"
                     onClick={() => setShowOldPassword(!showOldPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-admin-text-muted hover:text-admin-text-secondary transition-colors"
                   >
                     {showOldPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -125,7 +125,7 @@ export default function SecuritePage() {
 
               {/* New Password */}
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">
+                <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                   Nouveau mot de passe
                 </label>
                 <div className="relative">
@@ -134,12 +134,12 @@ export default function SecuritePage() {
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="Votre nouveau mot de passe"
-                    className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 pr-12"
+                    className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 pr-12"
                   />
                   <button
                     type="button"
                     onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-admin-text-muted hover:text-admin-text-secondary transition-colors"
                   >
                     {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -148,7 +148,7 @@ export default function SecuritePage() {
 
               {/* Confirm Password */}
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">
+                <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                   Confirmer le mot de passe
                 </label>
                 <div className="relative">
@@ -157,16 +157,16 @@ export default function SecuritePage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirmez votre nouveau mot de passe"
-                    className={`w-full px-4 py-3 bg-dark border rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 pr-12 ${
+                    className={`w-full px-4 py-3 bg-admin-input-bg border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 pr-12 ${
                       passwordError
                         ? "border-red-500/50 focus:ring-red-500/50"
-                        : "border-white/[0.06] focus:ring-accent/50"
+                        : "border-admin-card-border focus:ring-accent/50"
                     }`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-admin-text-muted hover:text-admin-text-secondary transition-colors"
                   >
                     {showConfirmPassword ? (
                       <EyeOff size={18} />
@@ -212,30 +212,30 @@ export default function SecuritePage() {
           </div>
 
           {/* 2FA */}
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2.5 bg-emerald-500/10 rounded-xl">
                 <Smartphone size={20} className="text-emerald-400" />
               </div>
               <div>
-                <h2 className="font-serif text-lg text-text-primary">
+                <h2 className="font-serif text-lg text-admin-text">
                   Authentification 2FA
                 </h2>
-                <p className="text-sm text-text-muted">
+                <p className="text-sm text-admin-text-muted">
                   Double facteur d&apos;authentification
                 </p>
               </div>
             </div>
 
             <div className="space-y-6">
-              <div className="flex items-center justify-between p-4 bg-dark rounded-xl border border-white/[0.06]">
+              <div className="flex items-center justify-between p-4 bg-admin-input-bg rounded-xl border border-admin-card-border">
                 <div className="flex items-center gap-3">
-                  <Key size={20} className="text-text-muted" />
+                  <Key size={20} className="text-admin-text-muted" />
                   <div>
-                    <p className="text-sm font-medium text-text-primary">
+                    <p className="text-sm font-medium text-admin-text">
                       Application d&apos;authentification
                     </p>
-                    <p className="text-xs text-text-muted">
+                    <p className="text-xs text-admin-text-muted">
                       Google Authenticator, Authy, etc.
                     </p>
                   </div>
@@ -256,23 +256,23 @@ export default function SecuritePage() {
                     Bientot disponible
                   </p>
                 </div>
-                <p className="text-xs text-text-muted">
+                <p className="text-xs text-admin-text-muted">
                   L&apos;authentification a deux facteurs sera disponible dans une prochaine mise a jour.
                   Cette fonctionnalite ajoutera une couche de securite supplementaire a votre compte.
                 </p>
               </div>
 
               <div className="pt-2">
-                <h3 className="text-sm font-medium text-text-secondary mb-3">
+                <h3 className="text-sm font-medium text-admin-text-secondary mb-3">
                   Codes de secours
                 </h3>
-                <p className="text-xs text-text-muted mb-3">
+                <p className="text-xs text-admin-text-muted mb-3">
                   Generez des codes de secours pour acceder a votre compte si vous
                   perdez votre appareil.
                 </p>
                 <button
                   disabled
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-muted rounded-full text-sm opacity-50 cursor-not-allowed"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border text-admin-text-muted rounded-full text-sm opacity-50 cursor-not-allowed"
                 >
                   <Key size={14} />
                   Generer des codes de secours
@@ -285,29 +285,29 @@ export default function SecuritePage() {
 
       {/* Active Sessions */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <Monitor size={20} className="text-accent" />
               </div>
               <div>
-                <h2 className="font-serif text-lg text-text-primary">
+                <h2 className="font-serif text-lg text-admin-text">
                   Sessions actives
                 </h2>
-                <p className="text-sm text-text-muted">
+                <p className="text-sm text-admin-text-muted">
                   Appareils connectes a votre compte
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="p-6 bg-dark rounded-xl border border-white/[0.06] text-center">
-            <Info size={32} className="mx-auto text-text-muted mb-3" />
-            <p className="text-sm text-text-secondary font-medium mb-1">
+          <div className="p-6 bg-admin-input-bg rounded-xl border border-admin-card-border text-center">
+            <Info size={32} className="mx-auto text-admin-text-muted mb-3" />
+            <p className="text-sm text-admin-text-secondary font-medium mb-1">
               Gestion des sessions
             </p>
-            <p className="text-xs text-text-muted max-w-md mx-auto">
+            <p className="text-xs text-admin-text-muted max-w-md mx-auto">
               La gestion des sessions sera disponible dans une prochaine mise a jour.
             </p>
           </div>

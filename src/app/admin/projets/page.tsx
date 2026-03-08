@@ -138,13 +138,13 @@ function SortableRow({
   };
 
   return (
-    <tr ref={setNodeRef} style={style} className="hover:bg-white/[0.02] transition-colors">
+    <tr ref={setNodeRef} style={style} className="hover:bg-admin-hover transition-colors">
       <td className="px-3 py-4">
         <div
           ref={setActivatorNodeRef}
           {...attributes}
           {...listeners}
-          className="cursor-grab active:cursor-grabbing text-text-muted hover:text-text-secondary"
+          className="cursor-grab active:cursor-grabbing text-admin-text-muted hover:text-admin-text-secondary"
         >
           <GripVertical size={16} />
         </div>
@@ -152,16 +152,16 @@ function SortableRow({
       <td className="px-6 py-4">
         <div className="flex items-center gap-3">
           {project.image_url && (
-            <img src={project.image_url} alt="" className="w-10 h-10 rounded-lg object-cover border border-white/[0.10]" />
+            <img src={project.image_url} alt="" className="w-10 h-10 rounded-lg object-cover border border-admin-card-border" />
           )}
           <div>
-            <span className="text-sm font-medium text-text-primary">{project.title}</span>
-            <p className="text-xs text-text-muted font-mono mt-0.5">/{project.slug}</p>
+            <span className="text-sm font-medium text-admin-text">{project.title}</span>
+            <p className="text-xs text-admin-text-muted font-mono mt-0.5">/{project.slug}</p>
           </div>
         </div>
       </td>
       <td className="px-6 py-4">
-        <span className="text-sm text-text-secondary">{project.client || "-"}</span>
+        <span className="text-sm text-admin-text-secondary">{project.client || "-"}</span>
       </td>
       <td className="px-6 py-4">
         <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-md border ${
@@ -184,40 +184,40 @@ function SortableRow({
               </span>
             ))
           ) : (
-            <span className="text-sm text-text-muted">-</span>
+            <span className="text-sm text-admin-text-muted">-</span>
           )}
           {project.tags && project.tags.length > 3 && (
-            <span className="text-xs text-text-muted">+{project.tags.length - 3}</span>
+            <span className="text-xs text-admin-text-muted">+{project.tags.length - 3}</span>
           )}
         </div>
       </td>
       <td className="px-6 py-4">
-        <button onClick={() => toggleField(project, "featured")} className="p-1 rounded-lg hover:bg-white/[0.04] transition-all">
+        <button onClick={() => toggleField(project, "featured")} className="p-1 rounded-lg hover:bg-admin-hover transition-all">
           {project.featured ? (
             <CheckCircle size={18} className="text-emerald-400" />
           ) : (
-            <X size={18} className="text-text-muted" />
+            <X size={18} className="text-admin-text-muted" />
           )}
         </button>
       </td>
       <td className="px-6 py-4">
-        <button onClick={() => toggleField(project, "hero_visible")} className="p-1 rounded-lg hover:bg-white/[0.04] transition-all">
+        <button onClick={() => toggleField(project, "hero_visible")} className="p-1 rounded-lg hover:bg-admin-hover transition-all">
           {project.hero_visible ? (
             <CheckCircle size={18} className="text-emerald-400" />
           ) : (
-            <X size={18} className="text-text-muted" />
+            <X size={18} className="text-admin-text-muted" />
           )}
         </button>
       </td>
       <td className="px-6 py-4 text-right">
         <div className="flex items-center justify-end gap-1">
-          <a href={`/projets/${project.slug}`} target="_blank" className="p-2 rounded-lg hover:bg-white/[0.06] text-text-secondary hover:text-accent transition-all" title="Voir">
+          <a href={`/projets/${project.slug}`} target="_blank" className="p-2 rounded-lg hover:bg-admin-hover text-admin-text-secondary hover:text-accent transition-all" title="Voir">
             <Globe size={16} />
           </a>
-          <button onClick={() => openEdit(project)} className="p-2 rounded-lg hover:bg-white/[0.06] text-text-secondary hover:text-accent transition-all" title="Modifier">
+          <button onClick={() => openEdit(project)} className="p-2 rounded-lg hover:bg-admin-hover text-admin-text-secondary hover:text-accent transition-all" title="Modifier">
             <Pencil size={16} />
           </button>
-          <button onClick={() => { setSelectedProject(project); setShowDelete(true); }} className="p-2 rounded-lg hover:bg-red-500/10 text-text-secondary hover:text-red-400 transition-all" title="Supprimer">
+          <button onClick={() => { setSelectedProject(project); setShowDelete(true); }} className="p-2 rounded-lg hover:bg-red-500/10 text-admin-text-secondary hover:text-red-400 transition-all" title="Supprimer">
             <Trash2 size={16} />
           </button>
         </div>
@@ -228,7 +228,7 @@ function SortableRow({
 
 function DragOverlayRow({ project }: { project: Project }) {
   return (
-    <table className="w-full bg-dark-2 shadow-2xl shadow-black/50 rounded-lg border border-accent/30">
+    <table className="w-full bg-admin-card shadow-2xl shadow-black/50 rounded-lg border border-accent/30">
       <tbody>
         <tr>
           <td className="px-3 py-4 w-10">
@@ -239,16 +239,16 @@ function DragOverlayRow({ project }: { project: Project }) {
           <td className="px-6 py-4">
             <div className="flex items-center gap-3">
               {project.image_url && (
-                <img src={project.image_url} alt="" className="w-10 h-10 rounded-lg object-cover border border-white/[0.10]" />
+                <img src={project.image_url} alt="" className="w-10 h-10 rounded-lg object-cover border border-admin-card-border" />
               )}
               <div>
-                <span className="text-sm font-medium text-text-primary">{project.title}</span>
-                <p className="text-xs text-text-muted font-mono mt-0.5">/{project.slug}</p>
+                <span className="text-sm font-medium text-admin-text">{project.title}</span>
+                <p className="text-xs text-admin-text-muted font-mono mt-0.5">/{project.slug}</p>
               </div>
             </div>
           </td>
           <td className="px-6 py-4">
-            <span className="text-sm text-text-secondary">{project.client || "-"}</span>
+            <span className="text-sm text-admin-text-secondary">{project.client || "-"}</span>
           </td>
           <td className="px-6 py-4" colSpan={5}></td>
         </tr>
@@ -642,7 +642,7 @@ export default function ProjetsAdminPage() {
         subtitle="Gérez votre portfolio de projets et réalisations clients."
         actions={
           <>
-            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.10] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm">
               <RefreshCw size={16} />
               Actualiser
             </button>
@@ -656,15 +656,15 @@ export default function ProjetsAdminPage() {
 
       {/* Filters & Search */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.10] rounded-2xl p-4 space-y-4">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-4 space-y-4">
           <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-admin-text-muted" />
             <input
               type="text"
               placeholder="Rechercher un projet..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.10] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -675,7 +675,7 @@ export default function ProjetsAdminPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.10] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-admin-card text-admin-text-secondary border border-admin-card-border hover:bg-admin-hover hover:text-admin-text rounded-full"
                 }`}
               >
                 {filter.label}
@@ -687,7 +687,7 @@ export default function ProjetsAdminPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.10] rounded-2xl overflow-hidden">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-16">
               <Loader2 size={24} className="text-accent animate-spin" />
@@ -704,19 +704,19 @@ export default function ProjetsAdminPage() {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-white/[0.10]">
+                    <tr className="border-b border-admin-card-border">
                       <th className="w-10 px-3 py-4"></th>
-                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Titre {reordering && <Loader2 size={14} className="text-accent animate-spin inline ml-1" />}</th>
-                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Client</th>
-                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Statut</th>
-                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Tags</th>
-                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Featured</th>
-                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Hero</th>
-                      <th className="text-right px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Actions</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Titre {reordering && <Loader2 size={14} className="text-accent animate-spin inline ml-1" />}</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Client</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Statut</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Tags</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Featured</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Hero</th>
+                      <th className="text-right px-6 py-4 text-xs font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
                   <SortableContext items={projects.map((p) => p.id)} strategy={verticalListSortingStrategy}>
-                    <tbody className="divide-y divide-white/[0.06]">
+                    <tbody className="divide-y divide-admin-card-border">
                       {projects.length > 0 ? (
                         projects.map((project) => (
                           <SortableRow
@@ -732,12 +732,12 @@ export default function ProjetsAdminPage() {
                         <tr>
                           <td colSpan={8} className="px-6 py-16 text-center">
                             <div className="flex flex-col items-center gap-3">
-                              <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.10] flex items-center justify-center">
-                                <FolderKanban size={24} className="text-text-muted" />
+                              <div className="w-12 h-12 rounded-2xl bg-admin-input-bg border border-admin-card-border flex items-center justify-center">
+                                <FolderKanban size={24} className="text-admin-text-muted" />
                               </div>
                               <div>
-                                <p className="text-text-muted font-medium">Aucun projet trouvé</p>
-                                <p className="text-text-muted text-sm mt-1">Ajoutez votre premier projet au portfolio</p>
+                                <p className="text-admin-text-muted font-medium">Aucun projet trouvé</p>
+                                <p className="text-admin-text-muted text-sm mt-1">Ajoutez votre premier projet au portfolio</p>
                               </div>
                               <button onClick={openCreate} className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-accent-dim text-accent border border-accent/20 rounded-full hover:bg-accent/20 transition-all text-sm font-medium">
                                 <Plus size={16} />
@@ -768,7 +768,7 @@ export default function ProjetsAdminPage() {
         size="xl"
         footer={
           <>
-            <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.10] rounded-full hover:bg-white/[0.04] transition-all">
+            <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all">
               Annuler
             </button>
             <button onClick={handleSave} disabled={saving} className="px-4 py-2 text-sm font-semibold text-dark bg-accent rounded-full hover:bg-accent-hover transition-all disabled:opacity-50">
@@ -778,7 +778,7 @@ export default function ProjetsAdminPage() {
         }
       >
         {/* Tabs navigation */}
-        <div className="flex gap-1 mb-6 p-1 bg-dark rounded-xl overflow-x-auto">
+        <div className="flex gap-1 mb-6 p-1 bg-admin-input-bg rounded-xl overflow-x-auto">
           {formTabs.map((tab) => {
             const Icon = tab.icon;
             return (
@@ -788,7 +788,7 @@ export default function ProjetsAdminPage() {
                 className={`flex items-center gap-2 px-3 py-2 text-xs font-medium rounded-lg whitespace-nowrap transition-all ${
                   activeFormTab === tab.key
                     ? "bg-accent/15 text-accent border border-accent/20"
-                    : "text-text-muted hover:text-text-secondary hover:bg-white/[0.04]"
+                    : "text-admin-text-muted hover:text-admin-text-secondary hover:bg-admin-hover"
                 }`}
               >
                 <Icon size={14} />
@@ -804,7 +804,7 @@ export default function ProjetsAdminPage() {
             <FormField label="Titre" name="title" value={form.title} onChange={handleTitleChange} required placeholder="Nom du projet" />
             <div>
               <FormField label="Slug" name="slug" value={form.slug} onChange={(v) => setForm({ ...form, slug: v })} placeholder="nom-du-projet" />
-              <p className="text-xs text-text-muted mt-1">Auto-généré depuis le titre</p>
+              <p className="text-xs text-admin-text-muted mt-1">Auto-généré depuis le titre</p>
             </div>
             <div className="sm:col-span-2">
               <FormField label="Description" name="description" type="richtext" value={form.description} onChange={(v) => setForm({ ...form, description: v })} required placeholder="Description courte du projet (visible dans les listings)..." rows={3} />
@@ -845,12 +845,12 @@ export default function ProjetsAdminPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="block text-sm font-medium text-text-secondary">Date de réalisation</label>
+              <label className="block text-sm font-medium text-admin-text-secondary">Date de réalisation</label>
               <div className="flex gap-2">
                 <select
                   value={form.completed_at.split("-")[1] || "01"}
                   onChange={(e) => setForm({ ...form, completed_at: `${form.completed_at.split("-")[0]}-${e.target.value}` })}
-                  className="flex-1 px-3 py-2.5 bg-dark border border-white/[0.10] rounded-xl text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="flex-1 px-3 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-xl text-sm text-admin-text focus:outline-none focus:ring-2 focus:ring-accent/50"
                 >
                   {FRENCH_MONTHS.map((m) => (
                     <option key={m.value} value={m.value}>{m.label}</option>
@@ -859,7 +859,7 @@ export default function ProjetsAdminPage() {
                 <select
                   value={form.completed_at.split("-")[0] || String(new Date().getFullYear())}
                   onChange={(e) => setForm({ ...form, completed_at: `${e.target.value}-${form.completed_at.split("-")[1]}` })}
-                  className="w-24 px-3 py-2.5 bg-dark border border-white/[0.10] rounded-xl text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="w-24 px-3 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-xl text-sm text-admin-text focus:outline-none focus:ring-2 focus:ring-accent/50"
                 >
                   {Array.from({ length: 11 }, (_, i) => 2020 + i).map((y) => (
                     <option key={y} value={String(y)}>{y}</option>
@@ -871,7 +871,7 @@ export default function ProjetsAdminPage() {
 
             {/* Status */}
             <div className="space-y-1.5">
-              <label className="block text-sm font-medium text-text-secondary">Statut</label>
+              <label className="block text-sm font-medium text-admin-text-secondary">Statut</label>
               <div className="flex gap-2">
                 <button
                   type="button"
@@ -879,7 +879,7 @@ export default function ProjetsAdminPage() {
                   className={`px-3 py-2 text-xs font-medium rounded-lg border transition-all ${
                     form.status === "published"
                       ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                      : "bg-dark text-text-muted border-white/[0.08] hover:bg-white/[0.04]"
+                      : "bg-admin-input-bg text-admin-text-muted border-admin-card-border hover:bg-admin-hover"
                   }`}
                 >
                   Publié
@@ -890,7 +890,7 @@ export default function ProjetsAdminPage() {
                   className={`px-3 py-2 text-xs font-medium rounded-lg border transition-all ${
                     form.status === "draft"
                       ? "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
-                      : "bg-dark text-text-muted border-white/[0.08] hover:bg-white/[0.04]"
+                      : "bg-admin-input-bg text-admin-text-muted border-admin-card-border hover:bg-admin-hover"
                   }`}
                 >
                   Brouillon
@@ -902,7 +902,7 @@ export default function ProjetsAdminPage() {
 
             {/* Toggle: Featured */}
             <div className="space-y-1.5">
-              <label className="block text-sm font-medium text-text-secondary">Featured</label>
+              <label className="block text-sm font-medium text-admin-text-secondary">Featured</label>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input
                   type="checkbox"
@@ -910,14 +910,14 @@ export default function ProjetsAdminPage() {
                   onChange={(e) => setForm({ ...form, featured: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-dark border border-white/[0.08] rounded-full peer peer-checked:bg-accent/20 peer-checked:border-accent/30 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-gray-400 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:bg-accent" />
-                <span className="ml-3 text-sm text-text-secondary">{form.featured ? "Oui" : "Non"}</span>
+                <div className="w-11 h-6 bg-admin-input-bg border border-admin-card-border rounded-full peer peer-checked:bg-accent/20 peer-checked:border-accent/30 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-gray-400 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:bg-accent" />
+                <span className="ml-3 text-sm text-admin-text-secondary">{form.featured ? "Oui" : "Non"}</span>
               </label>
             </div>
 
             {/* Toggle: Hero visible */}
             <div className="space-y-1.5">
-              <label className="block text-sm font-medium text-text-secondary">Hero visible</label>
+              <label className="block text-sm font-medium text-admin-text-secondary">Hero visible</label>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input
                   type="checkbox"
@@ -925,8 +925,8 @@ export default function ProjetsAdminPage() {
                   onChange={(e) => setForm({ ...form, hero_visible: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-dark border border-white/[0.08] rounded-full peer peer-checked:bg-accent/20 peer-checked:border-accent/30 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-gray-400 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:bg-accent" />
-                <span className="ml-3 text-sm text-text-secondary">{form.hero_visible ? "Oui" : "Non"}</span>
+                <div className="w-11 h-6 bg-admin-input-bg border border-admin-card-border rounded-full peer peer-checked:bg-accent/20 peer-checked:border-accent/30 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-gray-400 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:bg-accent" />
+                <span className="ml-3 text-sm text-admin-text-secondary">{form.hero_visible ? "Oui" : "Non"}</span>
               </label>
             </div>
           </div>
@@ -935,7 +935,7 @@ export default function ProjetsAdminPage() {
         {/* Tab: Défi & Solution */}
         {activeFormTab === "detail" && (
           <div className="space-y-5">
-            <div className="p-4 rounded-xl bg-dark border border-white/[0.06]">
+            <div className="p-4 rounded-xl bg-admin-input-bg border border-admin-card-border">
               <h4 className="text-sm font-medium text-accent mb-3 flex items-center gap-2">
                 <span className="w-6 h-6 rounded-lg bg-accent/10 flex items-center justify-center text-xs">1</span>
                 Le Défi
@@ -950,7 +950,7 @@ export default function ProjetsAdminPage() {
                 rows={5}
               />
             </div>
-            <div className="p-4 rounded-xl bg-dark border border-white/[0.06]">
+            <div className="p-4 rounded-xl bg-admin-input-bg border border-admin-card-border">
               <h4 className="text-sm font-medium text-accent mb-3 flex items-center gap-2">
                 <span className="w-6 h-6 rounded-lg bg-accent/10 flex items-center justify-center text-xs">2</span>
                 La Solution
@@ -971,9 +971,9 @@ export default function ProjetsAdminPage() {
         {/* Tab: Results */}
         {activeFormTab === "results" && (
           <div className="space-y-4">
-            <p className="text-xs text-text-muted">Ajoutez les KPIs / résultats clés du projet (max 4 recommandé).</p>
+            <p className="text-xs text-admin-text-muted">Ajoutez les KPIs / résultats clés du projet (max 4 recommandé).</p>
             {form.results.map((result, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 rounded-xl bg-dark border border-white/[0.06]">
+              <div key={index} className="flex items-start gap-3 p-3 rounded-xl bg-admin-input-bg border border-admin-card-border">
                 <span className="w-6 h-6 rounded-lg bg-accent/10 flex items-center justify-center text-xs text-accent mt-6 shrink-0">
                   {index + 1}
                 </span>
@@ -997,7 +997,7 @@ export default function ProjetsAdminPage() {
                   <button
                     type="button"
                     onClick={() => removeResult(index)}
-                    className="mt-6 p-1.5 rounded-lg hover:bg-red-500/10 text-text-muted hover:text-red-400 transition-all"
+                    className="mt-6 p-1.5 rounded-lg hover:bg-red-500/10 text-admin-text-muted hover:text-red-400 transition-all"
                   >
                     <X size={16} />
                   </button>
@@ -1008,7 +1008,7 @@ export default function ProjetsAdminPage() {
               <button
                 type="button"
                 onClick={addResult}
-                className="w-full py-2.5 border border-dashed border-white/[0.12] rounded-xl text-sm text-text-muted hover:text-accent hover:border-accent/30 transition-all"
+                className="w-full py-2.5 border border-dashed border-admin-input-border rounded-xl text-sm text-admin-text-muted hover:text-accent hover:border-accent/30 transition-all"
               >
                 + Ajouter un résultat
               </button>
@@ -1019,13 +1019,13 @@ export default function ProjetsAdminPage() {
         {/* Tab: Gallery */}
         {activeFormTab === "gallery" && (
           <div className="space-y-4">
-            <p className="text-xs text-text-muted">Ajoutez des images supplémentaires pour la galerie du projet.</p>
+            <p className="text-xs text-admin-text-muted">Ajoutez des images supplémentaires pour la galerie du projet.</p>
 
             {/* Gallery grid */}
             {form.gallery.length > 0 && (
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {form.gallery.map((url, index) => (
-                  <div key={index} className="relative group rounded-xl overflow-hidden border border-white/[0.10] bg-dark">
+                  <div key={index} className="relative group rounded-xl overflow-hidden border border-admin-card-border bg-admin-input-bg">
                     <img src={url} alt={`Galerie ${index + 1}`} className="w-full h-28 object-cover" />
                     <button
                       type="button"
@@ -1034,7 +1034,7 @@ export default function ProjetsAdminPage() {
                     >
                       <X size={14} />
                     </button>
-                    <div className="px-2 py-1 bg-dark-2 text-[10px] text-text-muted truncate">
+                    <div className="px-2 py-1 bg-admin-card text-[10px] text-admin-text-muted truncate">
                       {url.split("/").pop()}
                     </div>
                   </div>
@@ -1076,8 +1076,8 @@ export default function ProjetsAdminPage() {
         {/* Tab: SEO & Options */}
         {activeFormTab === "seo" && (
           <div className="space-y-4">
-            <div className="p-4 rounded-xl bg-dark border border-white/[0.06]">
-              <h4 className="text-sm font-medium text-text-secondary mb-3">Référencement (SEO)</h4>
+            <div className="p-4 rounded-xl bg-admin-input-bg border border-admin-card-border">
+              <h4 className="text-sm font-medium text-admin-text-secondary mb-3">Référencement (SEO)</h4>
               <div className="space-y-4">
                 <FormField
                   label="Meta Title"
@@ -1099,8 +1099,8 @@ export default function ProjetsAdminPage() {
             </div>
 
             {/* Preview */}
-            <div className="p-4 rounded-xl bg-dark border border-white/[0.06]">
-              <h4 className="text-sm font-medium text-text-secondary mb-3">Aperçu Google</h4>
+            <div className="p-4 rounded-xl bg-admin-input-bg border border-admin-card-border">
+              <h4 className="text-sm font-medium text-admin-text-secondary mb-3">Aperçu Google</h4>
               <div className="p-3 rounded-lg bg-white text-black">
                 <p className="text-[#1a0dab] text-sm font-medium truncate">
                   {form.seo_title || form.title || "Titre du projet"} — HDS Agence Web
@@ -1134,14 +1134,14 @@ export default function ProjetsAdminPage() {
                   <Sparkles size={20} className="text-accent animate-pulse" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-text-primary">Import en cours</h3>
-                  <p className="text-xs text-text-muted truncate max-w-[300px]">{promptUrl}</p>
+                  <h3 className="text-sm font-semibold text-admin-text">Import en cours</h3>
+                  <p className="text-xs text-admin-text-muted truncate max-w-[300px]">{promptUrl}</p>
                 </div>
               </div>
 
               {/* Progress bar */}
               <div className="mb-6 mx-1">
-                <div className="h-1 bg-dark rounded-full overflow-hidden">
+                <div className="h-1 bg-admin-input-bg rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-accent to-orange-400 rounded-full transition-all duration-700 ease-out"
                     style={{ width: `${analysisStep === 1 ? 33 : analysisStep === 2 ? 66 : analysisStep === 3 ? 100 : 0}%` }}
@@ -1182,12 +1182,12 @@ export default function ProjetsAdminPage() {
                         ) : isActive ? (
                           <Loader2 size={16} className="text-accent animate-spin" />
                         ) : (
-                          <CircleDot size={16} className="text-text-muted" />
+                          <CircleDot size={16} className="text-admin-text-muted" />
                         )}
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className={`text-sm font-medium transition-colors duration-300 ${
-                          isActive ? "text-accent" : isDone ? "text-emerald-400" : "text-text-muted"
+                          isActive ? "text-accent" : isDone ? "text-emerald-400" : "text-admin-text-muted"
                         }`}>
                           {isDone ? label : isActive ? activeLabel : label}
                         </p>
@@ -1214,8 +1214,8 @@ export default function ProjetsAdminPage() {
                     <Sparkles size={20} className="text-accent" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-text-primary">Analyse IA</h3>
-                    <p className="text-xs text-text-muted">L&apos;IA analyse le site et remplit tous les champs</p>
+                    <h3 className="text-sm font-semibold text-admin-text">Analyse IA</h3>
+                    <p className="text-xs text-admin-text-muted">L&apos;IA analyse le site et remplit tous les champs</p>
                   </div>
                 </div>
                 <div className="space-y-3">
@@ -1224,7 +1224,7 @@ export default function ProjetsAdminPage() {
                     value={promptUrl}
                     onChange={(e) => setPromptUrl(e.target.value)}
                     placeholder="https://mon-site-client.com"
-                    className="w-full px-4 py-3 bg-dark border border-white/[0.10] rounded-xl text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+                    className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
                     onKeyDown={(e) => { if (e.key === "Enter" && promptUrl) handleAIAnalyze(); }}
                     autoFocus
                   />
@@ -1242,14 +1242,14 @@ export default function ProjetsAdminPage() {
               {/* Divider */}
               <div className="flex items-center gap-4">
                 <div className="flex-1 h-px bg-white/[0.08]" />
-                <span className="text-xs text-text-muted">ou</span>
+                <span className="text-xs text-admin-text-muted">ou</span>
                 <div className="flex-1 h-px bg-white/[0.08]" />
               </div>
 
               {/* Manual mode */}
               <button
                 onClick={openCreateManual}
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-dark border border-white/[0.10] text-text-secondary rounded-xl hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm"
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-admin-input-bg border border-admin-card-border text-admin-text-secondary rounded-xl hover:bg-admin-hover hover:text-admin-text transition-all text-sm"
               >
                 <FileText size={16} />
                 Créer manuellement

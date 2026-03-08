@@ -39,7 +39,7 @@ function StatusBadge({ status }: { status: string }) {
     waiting_client: "bg-orange-500/15 text-orange-400 border-orange-500/20",
     waiting_internal: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
     resolved: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-    closed: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    closed: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     open: "Ouvert",
@@ -50,7 +50,7 @@ function StatusBadge({ status }: { status: string }) {
     closed: "Ferme",
   };
   const color =
-    colors[status] || "bg-gray-500/15 text-text-muted border-gray-500/20";
+    colors[status] || "bg-gray-500/15 text-admin-text-muted border-gray-500/20";
   return (
     <span
       className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}
@@ -65,7 +65,7 @@ function PriorityBadge({ priority }: { priority: string }) {
     urgent: "bg-red-500/15 text-red-400 border-red-500/20",
     high: "bg-orange-500/15 text-orange-400 border-orange-500/20",
     medium: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
-    low: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    low: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     urgent: "Urgent",
@@ -74,7 +74,7 @@ function PriorityBadge({ priority }: { priority: string }) {
     low: "Basse",
   };
   const color =
-    colors[priority] || "bg-gray-500/15 text-text-muted border-gray-500/20";
+    colors[priority] || "bg-gray-500/15 text-admin-text-muted border-gray-500/20";
   return (
     <span
       className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}
@@ -236,14 +236,14 @@ export default function TicketsPage() {
           <>
             <button
               onClick={exportCSV}
-              className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm"
+              className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm"
             >
               <Download size={16} />
               Exporter
             </button>
             <button
               onClick={refetch}
-              className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm"
+              className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm"
             >
               <RefreshCw size={16} />
               Actualiser
@@ -261,19 +261,19 @@ export default function TicketsPage() {
 
       {/* Filters & Search */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-4 space-y-4">
           {/* Search */}
           <div className="relative">
             <Search
               size={18}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-admin-text-muted"
             />
             <input
               type="text"
               placeholder="Rechercher par reference, sujet..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
             />
           </div>
 
@@ -286,7 +286,7 @@ export default function TicketsPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-admin-card text-admin-text-secondary border border-admin-card-border hover:bg-admin-hover hover:text-admin-text rounded-full"
                 }`}
               >
                 {filter.label}
@@ -298,7 +298,7 @@ export default function TicketsPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-16">
               <Loader2 size={24} className="text-accent animate-spin" />
@@ -307,36 +307,36 @@ export default function TicketsPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                  <tr className="border-b border-admin-card-border">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Reference
                     </th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Sujet
                     </th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Categorie
                     </th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Priorite
                     </th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Statut
                     </th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Date
                     </th>
-                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.06]">
+                <tbody className="divide-y divide-admin-card-border">
                   {tickets.length > 0 ? (
                     tickets.map((ticket) => (
                       <tr
                         key={ticket.id}
-                        className="hover:bg-white/[0.02] transition-colors"
+                        className="hover:bg-admin-hover transition-colors"
                       >
                         <td className="px-6 py-4">
                           <span className="text-sm font-medium text-accent">
@@ -344,12 +344,12 @@ export default function TicketsPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-text-primary">
+                          <span className="text-sm text-admin-text">
                             {ticket.subject}
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-text-muted">
+                          <span className="text-sm text-admin-text-muted">
                             {ticket.category}
                           </span>
                         </td>
@@ -360,7 +360,7 @@ export default function TicketsPage() {
                           <StatusBadge status={ticket.status} />
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-text-muted">
+                          <span className="text-sm text-admin-text-muted">
                             {formatDateTime(ticket.created_at)}
                           </span>
                         </td>
@@ -368,14 +368,14 @@ export default function TicketsPage() {
                           <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => openDetail(ticket)}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all"
+                              className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-admin-text transition-all"
                               title="Voir"
                             >
                               <Eye size={16} />
                             </button>
                             <button
                               onClick={() => openEdit(ticket)}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-accent transition-all"
+                              className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-accent transition-all"
                               title="Modifier"
                             >
                               <Pencil size={16} />
@@ -385,7 +385,7 @@ export default function TicketsPage() {
                                 setSelectedTicket(ticket);
                                 setShowDelete(true);
                               }}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-all"
+                              className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-red-400 transition-all"
                               title="Supprimer"
                             >
                               <Trash2 size={16} />
@@ -398,14 +398,14 @@ export default function TicketsPage() {
                     <tr>
                       <td colSpan={7} className="px-6 py-16 text-center">
                         <div className="flex flex-col items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center">
-                            <Ticket size={24} className="text-text-muted" />
+                          <div className="w-12 h-12 rounded-2xl bg-admin-input-bg border border-admin-card-border flex items-center justify-center">
+                            <Ticket size={24} className="text-admin-text-muted" />
                           </div>
                           <div>
-                            <p className="text-text-muted font-medium">
+                            <p className="text-admin-text-muted font-medium">
                               Aucun ticket
                             </p>
-                            <p className="text-text-muted text-sm mt-1">
+                            <p className="text-admin-text-muted text-sm mt-1">
                               Les tickets de support apparaitront ici
                             </p>
                           </div>
@@ -437,7 +437,7 @@ export default function TicketsPage() {
           <>
             <button
               onClick={() => setShowModal(false)}
-              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+              className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all"
             >
               Annuler
             </button>
@@ -527,7 +527,7 @@ export default function TicketsPage() {
         footer={
           <button
             onClick={() => setShowDetail(false)}
-            className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+            className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all"
           >
             Fermer
           </button>
@@ -535,10 +535,10 @@ export default function TicketsPage() {
       >
         {selectedTicket && (
           <div className="space-y-5">
-            <div className="flex items-start justify-between pb-4 border-b border-white/[0.06]">
+            <div className="flex items-start justify-between pb-4 border-b border-admin-card-border">
               <div>
-                <h3 className="text-lg font-serif text-text-primary">{selectedTicket.subject}</h3>
-                <p className="text-sm text-text-muted mt-1">
+                <h3 className="text-lg font-serif text-admin-text">{selectedTicket.subject}</h3>
+                <p className="text-sm text-admin-text-muted mt-1">
                   Categorie: {selectedTicket.category}
                 </p>
               </div>
@@ -549,7 +549,7 @@ export default function TicketsPage() {
             </div>
 
             <div>
-              <p className="text-xs text-text-muted mb-2">Changer le statut</p>
+              <p className="text-xs text-admin-text-muted mb-2">Changer le statut</p>
               <div className="flex flex-wrap gap-2">
                 {["open", "in_progress", "waiting_client", "waiting_internal", "resolved", "closed"].map((s) => (
                   <button
@@ -559,7 +559,7 @@ export default function TicketsPage() {
                     className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all ${
                       selectedTicket.status === s
                         ? "bg-accent/10 text-accent border-accent/20"
-                        : "text-text-secondary border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary"
+                        : "text-admin-text-secondary border-admin-card-border hover:bg-admin-hover hover:text-admin-text"
                     }`}
                   >
                     {s.replace(/_/g, " ")}
@@ -568,7 +568,7 @@ export default function TicketsPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 text-xs text-text-muted pt-2">
+            <div className="flex items-center gap-4 text-xs text-admin-text-muted pt-2">
               <span>Cree le {formatDateTime(selectedTicket.created_at)}</span>
               {selectedTicket.updated_at && (
                 <span>Mis a jour le {formatDateTime(selectedTicket.updated_at)}</span>

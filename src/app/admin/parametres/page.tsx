@@ -403,21 +403,21 @@ export default function ParametresPage() {
 
       {/* Apparence */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Palette size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Apparence</h2>
-              <p className="text-sm text-text-muted">Couleurs du site (preview en temps reel)</p>
+              <h2 className="font-serif text-lg text-admin-text">Apparence</h2>
+              <p className="text-sm text-admin-text-muted">Couleurs du site (preview en temps reel)</p>
             </div>
           </div>
 
           <div className="space-y-6">
             {/* Background color */}
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-3">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-3">
                 Fond (arriere-plan)
               </label>
               <div className="flex items-center gap-3 flex-wrap">
@@ -425,7 +425,7 @@ export default function ParametresPage() {
                   type="color"
                   value={settings.themeDark}
                   onChange={(e) => updateSetting("themeDark", e.target.value)}
-                  className="w-12 h-10 rounded-lg border border-white/[0.06] cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
+                  className="w-12 h-10 rounded-lg border border-admin-card-border cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
                 />
                 <input
                   type="text"
@@ -434,7 +434,7 @@ export default function ParametresPage() {
                     const v = e.target.value;
                     if (/^#[0-9a-fA-F]{0,6}$/.test(v)) updateSetting("themeDark", v);
                   }}
-                  className="w-28 px-3 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-primary font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="w-28 px-3 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
                   placeholder="#0a0a0a"
                 />
                 <div className="flex items-center gap-1.5 ml-2">
@@ -455,14 +455,14 @@ export default function ParametresPage() {
                   />
                 </div>
               </div>
-              <p className="text-xs text-text-muted mt-2">
+              <p className="text-xs text-admin-text-muted mt-2">
                 Les variantes (dark-2, dark-3) sont calculees automatiquement
               </p>
             </div>
 
             {/* Accent color */}
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-3">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-3">
                 Accent (couleur principale)
               </label>
               <div className="flex items-center gap-3 flex-wrap">
@@ -470,7 +470,7 @@ export default function ParametresPage() {
                   type="color"
                   value={settings.themeAccent}
                   onChange={(e) => updateSetting("themeAccent", e.target.value)}
-                  className="w-12 h-10 rounded-lg border border-white/[0.06] cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
+                  className="w-12 h-10 rounded-lg border border-admin-card-border cursor-pointer bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
                 />
                 <input
                   type="text"
@@ -479,7 +479,7 @@ export default function ParametresPage() {
                     const v = e.target.value;
                     if (/^#[0-9a-fA-F]{0,6}$/.test(v)) updateSetting("themeAccent", v);
                   }}
-                  className="w-28 px-3 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-primary font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="w-28 px-3 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
                   placeholder="#f97316"
                 />
                 <div className="flex items-center gap-1.5 ml-2">
@@ -500,7 +500,7 @@ export default function ParametresPage() {
                   />
                 </div>
               </div>
-              <p className="text-xs text-text-muted mt-2">
+              <p className="text-xs text-admin-text-muted mt-2">
                 Les variantes (hover, dim, cyan) sont calculees automatiquement
               </p>
             </div>
@@ -512,7 +512,7 @@ export default function ParametresPage() {
                 updateSetting("themeDark", DEFAULT_THEME.dark);
                 updateSetting("themeAccent", DEFAULT_THEME.accent);
               }}
-              className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-text-secondary transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-admin-text-muted hover:text-admin-text-secondary transition-colors"
             >
               <RotateCcw size={14} />
               Reinitialiser les couleurs par defaut
@@ -529,24 +529,24 @@ export default function ParametresPage() {
 
       {/* Bandeau Promotionnel */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Megaphone size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Bandeau Promotionnel</h2>
-              <p className="text-sm text-text-muted">Bandeau affiche au-dessus du menu sur le site</p>
+              <h2 className="font-serif text-lg text-admin-text">Bandeau Promotionnel</h2>
+              <p className="text-sm text-admin-text-muted">Bandeau affiche au-dessus du menu sur le site</p>
             </div>
           </div>
 
           <div className="space-y-5">
             <div className="flex items-center justify-between">
               <div>
-                <label className="block text-sm font-medium text-text-secondary">
+                <label className="block text-sm font-medium text-admin-text-secondary">
                   Activer le bandeau
                 </label>
-                <p className="text-xs text-text-muted mt-1">
+                <p className="text-xs text-admin-text-muted mt-1">
                   Le bandeau sera visible par tous les visiteurs du site
                 </p>
               </div>
@@ -556,7 +556,7 @@ export default function ParametresPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 Message du bandeau
               </label>
               <input
@@ -564,14 +564,14 @@ export default function ParametresPage() {
                 value={settings.promoBannerText}
                 onChange={(e) => updateSetting("promoBannerText", e.target.value)}
                 placeholder="Ex: -20% sur tous nos services jusqu'au 31 mars !"
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">
+                <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                   <span className="flex items-center gap-2">
-                    <ExternalLink size={14} className="text-text-muted" />
+                    <ExternalLink size={14} className="text-admin-text-muted" />
                     URL du lien (optionnel)
                   </span>
                 </label>
@@ -580,11 +580,11 @@ export default function ParametresPage() {
                   value={settings.promoBannerLink}
                   onChange={(e) => updateSetting("promoBannerLink", e.target.value)}
                   placeholder="https://..."
-                  className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">
+                <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                   Texte du lien (optionnel)
                 </label>
                 <input
@@ -592,14 +592,14 @@ export default function ParametresPage() {
                   value={settings.promoBannerLinkText}
                   onChange={(e) => updateSetting("promoBannerLinkText", e.target.value)}
                   placeholder="En savoir plus"
-                  className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
                 />
               </div>
             </div>
 
             {settings.promoBannerEnabled && settings.promoBannerText && (
               <div className="mt-4 p-3 bg-accent/10 border border-accent/20 rounded-xl">
-                <p className="text-xs text-text-muted mb-2">Apercu du bandeau :</p>
+                <p className="text-xs text-admin-text-muted mb-2">Apercu du bandeau :</p>
                 <div className="bg-accent text-dark px-4 py-2 rounded-lg text-[0.8rem] font-medium text-center">
                   {settings.promoBannerText}
                   {settings.promoBannerLink && settings.promoBannerLinkText && (
@@ -614,38 +614,38 @@ export default function ParametresPage() {
 
       {/* General */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Globe size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">General</h2>
-              <p className="text-sm text-text-muted">Informations generales du site</p>
+              <h2 className="font-serif text-lg text-admin-text">General</h2>
+              <p className="text-sm text-admin-text-muted">Informations generales du site</p>
             </div>
           </div>
 
           <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 Nom du site
               </label>
               <input
                 type="text"
                 value={settings.siteName}
                 onChange={(e) => updateSetting("siteName", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 Description
               </label>
               <input
                 type="text"
                 value={settings.siteDescription}
                 onChange={(e) => updateSetting("siteDescription", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
           </div>
@@ -654,22 +654,22 @@ export default function ParametresPage() {
 
       {/* Contact */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Phone size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Contact</h2>
-              <p className="text-sm text-text-muted">Coordonnees de contact</p>
+              <h2 className="font-serif text-lg text-admin-text">Contact</h2>
+              <p className="text-sm text-admin-text-muted">Coordonnees de contact</p>
             </div>
           </div>
 
           <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 <span className="flex items-center gap-2">
-                  <Mail size={14} className="text-text-muted" />
+                  <Mail size={14} className="text-admin-text-muted" />
                   Email
                 </span>
               </label>
@@ -677,13 +677,13 @@ export default function ParametresPage() {
                 type="email"
                 value={settings.contactEmail}
                 onChange={(e) => updateSetting("contactEmail", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 <span className="flex items-center gap-2">
-                  <Phone size={14} className="text-text-muted" />
+                  <Phone size={14} className="text-admin-text-muted" />
                   Telephone
                 </span>
               </label>
@@ -691,13 +691,13 @@ export default function ParametresPage() {
                 type="tel"
                 value={settings.contactPhone}
                 onChange={(e) => updateSetting("contactPhone", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 <span className="flex items-center gap-2">
-                  <MapPin size={14} className="text-text-muted" />
+                  <MapPin size={14} className="text-admin-text-muted" />
                   Adresse
                 </span>
               </label>
@@ -705,7 +705,7 @@ export default function ParametresPage() {
                 type="text"
                 value={settings.contactAddress}
                 onChange={(e) => updateSetting("contactAddress", e.target.value)}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
           </div>
@@ -714,20 +714,20 @@ export default function ParametresPage() {
 
       {/* Social Media */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Instagram size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Reseaux Sociaux</h2>
-              <p className="text-sm text-text-muted">Liens vers vos reseaux sociaux</p>
+              <h2 className="font-serif text-lg text-admin-text">Reseaux Sociaux</h2>
+              <p className="text-sm text-admin-text-muted">Liens vers vos reseaux sociaux</p>
             </div>
           </div>
 
           <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 <span className="flex items-center gap-2">
                   <Instagram size={14} className="text-pink-400" />
                   Instagram
@@ -738,11 +738,11 @@ export default function ParametresPage() {
                 value={settings.instagram}
                 onChange={(e) => updateSetting("instagram", e.target.value)}
                 placeholder="https://instagram.com/..."
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 <span className="flex items-center gap-2">
                   <Linkedin size={14} className="text-blue-400" />
                   LinkedIn
@@ -753,13 +753,13 @@ export default function ParametresPage() {
                 value={settings.linkedin}
                 onChange={(e) => updateSetting("linkedin", e.target.value)}
                 placeholder="https://linkedin.com/company/..."
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 <span className="flex items-center gap-2">
-                  <Twitter size={14} className="text-text-secondary" />
+                  <Twitter size={14} className="text-admin-text-secondary" />
                   Twitter / X
                 </span>
               </label>
@@ -768,7 +768,7 @@ export default function ParametresPage() {
                 value={settings.twitter}
                 onChange={(e) => updateSetting("twitter", e.target.value)}
                 placeholder="https://x.com/..."
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
           </div>
@@ -777,14 +777,14 @@ export default function ParametresPage() {
 
       {/* API Keys */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2.5 bg-emerald-500/10 rounded-xl">
               <Key size={20} className="text-emerald-400" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Cles API</h2>
-              <p className="text-sm text-text-muted">Connexions aux services externes</p>
+              <h2 className="font-serif text-lg text-admin-text">Cles API</h2>
+              <p className="text-sm text-admin-text-muted">Connexions aux services externes</p>
             </div>
           </div>
           <div className="flex items-center gap-2 mb-6 ml-[52px]">
@@ -800,9 +800,9 @@ export default function ParametresPage() {
               if (!state) return null;
 
               return (
-                <div key={cfg.key} className="border-b border-white/[0.04] pb-5 last:border-0 last:pb-0">
+                <div key={cfg.key} className="border-b border-admin-card-border pb-5 last:border-0 last:pb-0">
                   <div className="flex items-center justify-between mb-2">
-                    <label className="block text-sm font-medium text-text-secondary">
+                    <label className="block text-sm font-medium text-admin-text-secondary">
                       {cfg.label}
                     </label>
                     {state.configured && (
@@ -812,11 +812,11 @@ export default function ParametresPage() {
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-text-muted mb-3">{cfg.description}</p>
+                  <p className="text-xs text-admin-text-muted mb-3">{cfg.description}</p>
 
                   {state.configured && !state.inputValue && (
                     <div className="flex items-center gap-3 mb-3">
-                      <code className="flex-1 px-4 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-muted font-mono text-sm">
+                      <code className="flex-1 px-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text-muted font-mono text-sm">
                         {state.masked}
                       </code>
                       <button
@@ -826,7 +826,7 @@ export default function ParametresPage() {
                             [cfg.key]: { ...prev[cfg.key], inputValue: " " },
                           }))
                         }
-                        className="px-3 py-2.5 bg-dark border border-white/[0.06] rounded-xl text-text-secondary hover:text-accent hover:border-accent/30 transition-colors text-sm"
+                        className="px-3 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text-secondary hover:text-accent hover:border-accent/30 transition-colors text-sm"
                         title="Modifier"
                       >
                         Modifier
@@ -834,7 +834,7 @@ export default function ParametresPage() {
                       <button
                         onClick={() => deleteApiKey(cfg.key)}
                         disabled={state.saving}
-                        className="p-2.5 bg-dark border border-white/[0.06] rounded-xl text-red-400 hover:bg-red-500/10 hover:border-red-500/30 transition-colors"
+                        className="p-2.5 bg-admin-input-bg border border-admin-card-border rounded-xl text-red-400 hover:bg-red-500/10 hover:border-red-500/30 transition-colors"
                         title="Supprimer"
                       >
                         {state.saving ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
@@ -855,7 +855,7 @@ export default function ParametresPage() {
                             }))
                           }
                           placeholder={cfg.placeholder}
-                          className="w-full px-4 py-3 pr-12 bg-dark border border-white/[0.06] rounded-xl text-text-primary font-mono text-sm placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                          className="w-full px-4 py-3 pr-12 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text font-mono text-sm placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
                           autoComplete="off"
                         />
                         <button
@@ -866,7 +866,7 @@ export default function ParametresPage() {
                               [cfg.key]: { ...prev[cfg.key], visible: !prev[cfg.key].visible },
                             }))
                           }
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary transition-colors"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-admin-text-muted hover:text-admin-text-secondary transition-colors"
                         >
                           {state.visible ? <EyeOff size={16} /> : <Eye size={16} />}
                         </button>
@@ -886,7 +886,7 @@ export default function ParametresPage() {
                               [cfg.key]: { ...prev[cfg.key], inputValue: "", visible: false },
                             }))
                           }
-                          className="px-3 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-muted hover:text-text-secondary transition-colors text-sm"
+                          className="px-3 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text-muted hover:text-admin-text-secondary transition-colors text-sm"
                         >
                           Annuler
                         </button>
@@ -902,24 +902,24 @@ export default function ParametresPage() {
 
       {/* System */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 bg-accent/10 rounded-xl">
               <Monitor size={20} className="text-accent" />
             </div>
             <div>
-              <h2 className="font-serif text-lg text-text-primary">Systeme</h2>
-              <p className="text-sm text-text-muted">Configuration technique</p>
+              <h2 className="font-serif text-lg text-admin-text">Systeme</h2>
+              <p className="text-sm text-admin-text-muted">Configuration technique</p>
             </div>
           </div>
 
           <div className="space-y-5">
             <div className="flex items-center justify-between">
               <div>
-                <label className="block text-sm font-medium text-text-secondary">
+                <label className="block text-sm font-medium text-admin-text-secondary">
                   Mode maintenance
                 </label>
-                <p className="text-xs text-text-muted mt-1">
+                <p className="text-xs text-admin-text-muted mt-1">
                   Activer le mode maintenance rend le site inaccessible aux visiteurs
                 </p>
               </div>
@@ -929,7 +929,7 @@ export default function ParametresPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-2">
+              <label className="block text-sm font-medium text-admin-text-secondary mb-2">
                 Google Analytics ID
               </label>
               <input
@@ -937,7 +937,7 @@ export default function ParametresPage() {
                 value={settings.googleAnalyticsId}
                 onChange={(e) => updateSetting("googleAnalyticsId", e.target.value)}
                 placeholder="G-XXXXXXXXXX"
-                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-3 bg-admin-input-bg border border-admin-card-border rounded-xl text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
               />
             </div>
           </div>

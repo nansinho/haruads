@@ -17,6 +17,17 @@
   --t-text-dark: #1a1a1a;
   --t-text-body: #8899b4;
   --t-border-dark: rgba(255, 255, 255, 0.08);
+
+  /* Admin content area - light theme */
+  --t-admin-bg: #f0f4f8;
+  --t-admin-card: #ffffff;
+  --t-admin-card-border: rgba(0, 31, 79, 0.08);
+  --t-admin-text: #1a2b4a;
+  --t-admin-text-secondary: #64748b;
+  --t-admin-text-muted: #94a3b8;
+  --t-admin-input-bg: #f8fafc;
+  --t-admin-input-border: #e2e8f0;
+  --t-admin-hover: #f1f5f9;
 }
 
 /* Override: Noir & Orange */
@@ -35,6 +46,17 @@ html[data-theme="noir-orange"] {
   --t-text-dark: #1a1a1a;
   --t-text-body: #94949e;
   --t-border-dark: rgba(255, 255, 255, 0.06);
+
+  /* Admin content area - light theme (noir-orange) */
+  --t-admin-bg: #f5f5f5;
+  --t-admin-card: #ffffff;
+  --t-admin-card-border: rgba(0, 0, 0, 0.06);
+  --t-admin-text: #1a1a2e;
+  --t-admin-text-secondary: #6b7280;
+  --t-admin-text-muted: #9ca3af;
+  --t-admin-input-bg: #fafafa;
+  --t-admin-input-border: #e5e5e5;
+  --t-admin-hover: #f3f3f3;
 }
 
 /* ===== Tailwind theme: references source vars so utilities use var() ===== */
@@ -53,6 +75,16 @@ html[data-theme="noir-orange"] {
   --color-text-dark: var(--t-text-dark);
   --color-text-body: var(--t-text-body);
   --color-border-dark: var(--t-border-dark);
+
+  --color-admin-bg: var(--t-admin-bg);
+  --color-admin-card: var(--t-admin-card);
+  --color-admin-card-border: var(--t-admin-card-border);
+  --color-admin-text: var(--t-admin-text);
+  --color-admin-text-secondary: var(--t-admin-text-secondary);
+  --color-admin-text-muted: var(--t-admin-text-muted);
+  --color-admin-input-bg: var(--t-admin-input-bg);
+  --color-admin-input-border: var(--t-admin-input-border);
+  --color-admin-hover: var(--t-admin-hover);
 
   --font-sans: var(--font-plus-jakarta, "Plus Jakarta Sans"), sans-serif;
   --font-serif: var(--font-dm-serif, "DM Serif Display"), serif;
