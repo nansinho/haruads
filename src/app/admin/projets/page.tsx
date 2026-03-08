@@ -18,6 +18,7 @@ import {
   FileText,
   Globe,
   Sparkles,
+  GripVertical,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
@@ -45,6 +46,21 @@ const formTabs = [
   { key: "seo", label: "SEO & Options", icon: Settings2 },
 ];
 
+const FRENCH_MONTHS = [
+  { value: "01", label: "Janvier" },
+  { value: "02", label: "Février" },
+  { value: "03", label: "Mars" },
+  { value: "04", label: "Avril" },
+  { value: "05", label: "Mai" },
+  { value: "06", label: "Juin" },
+  { value: "07", label: "Juillet" },
+  { value: "08", label: "Août" },
+  { value: "09", label: "Septembre" },
+  { value: "10", label: "Octobre" },
+  { value: "11", label: "Novembre" },
+  { value: "12", label: "Décembre" },
+];
+
 const emptyResult = { label: "", value: "" };
 
 const emptyForm = {
@@ -54,7 +70,7 @@ const emptyForm = {
   image_url: "",
   tags: [] as string[],
   client: "",
-  year: new Date().getFullYear(),
+  completed_at: `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}`,
   category: "",
   challenge: "",
   solution: "",
@@ -85,6 +101,9 @@ export default function ProjetsAdminPage() {
   const [activeFormTab, setActiveFormTab] = useState("general");
   const [savedTags, setSavedTags] = useState<Tag[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
+  const [reordering, setReordering] = useState(false);
   const { toast } = useToast();
 
   const { data: projects, loading, refetch } = useAdminData<Project>("/api/admin/projects", {
@@ -128,7 +147,7 @@ export default function ProjetsAdminPage() {
       image_url: project.image_url,
       tags: project.tags || [],
       client: project.client || "",
-      year: project.year || new Date().getFullYear(),
+      completed_at: project.completed_at || `${new Date().getFullYear()}-01`,
       category: project.category || "",
       challenge: project.challenge || "",
       solution: project.solution || "",
@@ -284,6 +303,65 @@ export default function ProjetsAdminPage() {
     setForm((prev) => ({ ...prev, gallery: prev.gallery.filter((_, i) => i !== index) }));
   };
 
+  // Drag-and-drop reordering
+  const handleDragStart = (e: React.DragEvent, projectId: string) => {
+    setDraggedId(projectId);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e: React.DragEvent, projectId: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (projectId !== draggedId) {
+      setDragOverId(projectId);
+    }
+  };
+
+  const handleDragEnd = () => {
+    setDraggedId(null);
+    setDragOverId(null);
+  };
+
+  const handleDrop = async (e: React.DragEvent, targetId: string) => {
+    e.preventDefault();
+    if (!draggedId || draggedId === targetId) {
+      handleDragEnd();
+      return;
+    }
+
+    const oldIndex = projects.findIndex((p) => p.id === draggedId);
+    const newIndex = projects.findIndex((p) => p.id === targetId);
+    if (oldIndex === -1 || newIndex === -1) {
+      handleDragEnd();
+      return;
+    }
+
+    const reordered = [...projects];
+    const [moved] = reordered.splice(oldIndex, 1);
+    reordered.splice(newIndex, 0, moved);
+
+    const items = reordered.map((p, i) => ({ id: p.id, sort_order: i }));
+
+    handleDragEnd();
+    setReordering(true);
+
+    try {
+      const res = await fetch("/api/admin/projects/reorder", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+      if (!res.ok) throw new Error("Erreur");
+      toast({ type: "success", message: "Ordre mis à jour" });
+      refetch();
+    } catch {
+      toast({ type: "error", message: "Erreur lors du réordonnancement" });
+      refetch();
+    } finally {
+      setReordering(false);
+    }
+  };
+
   // AI auto-fill from URL
   const handleAIAnalyze = async () => {
     if (!promptUrl) {
@@ -320,7 +398,7 @@ export default function ProjetsAdminPage() {
         tags: data.tags || [],
         category: data.category || "",
         client: data.client || "",
-        year: data.year || new Date().getFullYear(),
+        completed_at: data.completed_at || `${new Date().getFullYear()}-01`,
         seo_title: data.seo_title || "",
         seo_description: data.seo_description || "",
         external_url: promptUrl,
@@ -398,7 +476,8 @@ export default function ProjetsAdminPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Titre</th>
+                    <th className="w-10 px-3 py-4"></th>
+                    <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Titre {reordering && <Loader2 size={14} className="text-accent animate-spin inline ml-1" />}</th>
                     <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Client</th>
                     <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Statut</th>
                     <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Tags</th>
@@ -410,7 +489,22 @@ export default function ProjetsAdminPage() {
                 <tbody className="divide-y divide-white/[0.06]">
                   {projects.length > 0 ? (
                     projects.map((project) => (
-                      <tr key={project.id} className="hover:bg-white/[0.02] transition-colors">
+                      <tr
+                        key={project.id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, project.id)}
+                        onDragOver={(e) => handleDragOver(e, project.id)}
+                        onDragEnd={handleDragEnd}
+                        onDrop={(e) => handleDrop(e, project.id)}
+                        className={`hover:bg-white/[0.02] transition-colors ${
+                          draggedId === project.id ? "opacity-40" : ""
+                        } ${dragOverId === project.id ? "border-t-2 border-accent" : ""}`}
+                      >
+                        <td className="px-3 py-4">
+                          <div className="cursor-grab active:cursor-grabbing text-text-muted hover:text-text-secondary">
+                            <GripVertical size={16} />
+                          </div>
+                        </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             {project.image_url && (
@@ -488,7 +582,7 @@ export default function ProjetsAdminPage() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={7} className="px-6 py-16 text-center">
+                      <td colSpan={8} className="px-6 py-16 text-center">
                         <div className="flex flex-col items-center gap-3">
                           <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.10] flex items-center justify-center">
                             <FolderKanban size={24} className="text-text-muted" />
@@ -597,7 +691,29 @@ export default function ProjetsAdminPage() {
                 suggestions={savedTags.map((t) => t.name)}
               />
             </div>
-            <FormField label="Année" name="year" type="number" value={form.year} onChange={(v) => setForm({ ...form, year: parseInt(v) || 0 })} placeholder="2025" />
+            <div className="space-y-1.5">
+              <label className="block text-sm font-medium text-text-secondary">Date de réalisation</label>
+              <div className="flex gap-2">
+                <select
+                  value={form.completed_at.split("-")[1] || "01"}
+                  onChange={(e) => setForm({ ...form, completed_at: `${form.completed_at.split("-")[0]}-${e.target.value}` })}
+                  className="flex-1 px-3 py-2.5 bg-dark border border-white/[0.10] rounded-xl text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/50"
+                >
+                  {FRENCH_MONTHS.map((m) => (
+                    <option key={m.value} value={m.value}>{m.label}</option>
+                  ))}
+                </select>
+                <select
+                  value={form.completed_at.split("-")[0] || String(new Date().getFullYear())}
+                  onChange={(e) => setForm({ ...form, completed_at: `${e.target.value}-${form.completed_at.split("-")[1]}` })}
+                  className="w-24 px-3 py-2.5 bg-dark border border-white/[0.10] rounded-xl text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/50"
+                >
+                  {Array.from({ length: 11 }, (_, i) => 2020 + i).map((y) => (
+                    <option key={y} value={String(y)}>{y}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
             <FormField label="URL externe" name="external_url" type="url" value={form.external_url} onChange={(v) => setForm({ ...form, external_url: v })} placeholder="https://..." />
 
             {/* Status */}
@@ -629,7 +745,7 @@ export default function ProjetsAdminPage() {
               </div>
             </div>
 
-            <FormField label="Ordre de tri" name="sort_order" type="number" value={form.sort_order} onChange={(v) => setForm({ ...form, sort_order: parseInt(v) || 0 })} placeholder="0" />
+
 
             {/* Toggle: Featured */}
             <div className="space-y-1.5">

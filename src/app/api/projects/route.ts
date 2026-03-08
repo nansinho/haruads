@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     // List all published projects
     const { data, error } = await db
       .from("projects")
-      .select("id, title, slug, description, image_url, tags, client, year, category, results, featured, sort_order")
+      .select("id, title, slug, description, image_url, tags, client, completed_at, category, results, featured, sort_order")
       .eq("status", "published")
       .order("sort_order", { ascending: true });
 
