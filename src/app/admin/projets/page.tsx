@@ -23,6 +23,24 @@ import {
   Brain,
   CircleDot,
 } from "lucide-react";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  KeyboardSensor,
+  useSensor,
+  useSensors,
+  DragStartEvent,
+  DragEndEvent,
+  DragOverlay,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
 import Modal from "@/components/admin/Modal";
@@ -88,6 +106,157 @@ const emptyForm = {
   external_url: "",
 };
 
+function SortableRow({
+  project,
+  openEdit,
+  toggleField,
+  setSelectedProject,
+  setShowDelete,
+}: {
+  project: Project;
+  openEdit: (p: Project) => void;
+  toggleField: (p: Project, field: "featured" | "hero_visible") => void;
+  setSelectedProject: (p: Project) => void;
+  setShowDelete: (v: boolean) => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: project.id });
+
+  const style: React.CSSProperties = {
+    transform: transform ? `translate3d(0, ${Math.round(transform.y)}px, 0)` : undefined,
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+    position: "relative" as const,
+    zIndex: isDragging ? 1 : 0,
+  };
+
+  return (
+    <tr ref={setNodeRef} style={style} className="hover:bg-white/[0.02] transition-colors">
+      <td className="px-3 py-4">
+        <div
+          ref={setActivatorNodeRef}
+          {...attributes}
+          {...listeners}
+          className="cursor-grab active:cursor-grabbing text-text-muted hover:text-text-secondary"
+        >
+          <GripVertical size={16} />
+        </div>
+      </td>
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-3">
+          {project.image_url && (
+            <img src={project.image_url} alt="" className="w-10 h-10 rounded-lg object-cover border border-white/[0.10]" />
+          )}
+          <div>
+            <span className="text-sm font-medium text-text-primary">{project.title}</span>
+            <p className="text-xs text-text-muted font-mono mt-0.5">/{project.slug}</p>
+          </div>
+        </div>
+      </td>
+      <td className="px-6 py-4">
+        <span className="text-sm text-text-secondary">{project.client || "-"}</span>
+      </td>
+      <td className="px-6 py-4">
+        <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-md border ${
+          project.status === "published"
+            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+            : "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
+        }`}>
+          {project.status === "published" ? "Publié" : "Brouillon"}
+        </span>
+      </td>
+      <td className="px-6 py-4">
+        <div className="flex flex-wrap gap-1">
+          {project.tags && project.tags.length > 0 ? (
+            project.tags.slice(0, 3).map((tag, i) => (
+              <span
+                key={i}
+                className="inline-flex px-2 py-0.5 bg-accent/10 text-accent text-xs font-medium rounded-md border border-accent/20"
+              >
+                {tag}
+              </span>
+            ))
+          ) : (
+            <span className="text-sm text-text-muted">-</span>
+          )}
+          {project.tags && project.tags.length > 3 && (
+            <span className="text-xs text-text-muted">+{project.tags.length - 3}</span>
+          )}
+        </div>
+      </td>
+      <td className="px-6 py-4">
+        <button onClick={() => toggleField(project, "featured")} className="p-1 rounded-lg hover:bg-white/[0.04] transition-all">
+          {project.featured ? (
+            <CheckCircle size={18} className="text-emerald-400" />
+          ) : (
+            <X size={18} className="text-text-muted" />
+          )}
+        </button>
+      </td>
+      <td className="px-6 py-4">
+        <button onClick={() => toggleField(project, "hero_visible")} className="p-1 rounded-lg hover:bg-white/[0.04] transition-all">
+          {project.hero_visible ? (
+            <CheckCircle size={18} className="text-emerald-400" />
+          ) : (
+            <X size={18} className="text-text-muted" />
+          )}
+        </button>
+      </td>
+      <td className="px-6 py-4 text-right">
+        <div className="flex items-center justify-end gap-1">
+          <a href={`/projets/${project.slug}`} target="_blank" className="p-2 rounded-lg hover:bg-white/[0.06] text-text-secondary hover:text-accent transition-all" title="Voir">
+            <Globe size={16} />
+          </a>
+          <button onClick={() => openEdit(project)} className="p-2 rounded-lg hover:bg-white/[0.06] text-text-secondary hover:text-accent transition-all" title="Modifier">
+            <Pencil size={16} />
+          </button>
+          <button onClick={() => { setSelectedProject(project); setShowDelete(true); }} className="p-2 rounded-lg hover:bg-red-500/10 text-text-secondary hover:text-red-400 transition-all" title="Supprimer">
+            <Trash2 size={16} />
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+function DragOverlayRow({ project }: { project: Project }) {
+  return (
+    <table className="w-full bg-dark-2 shadow-2xl shadow-black/50 rounded-lg border border-accent/30">
+      <tbody>
+        <tr>
+          <td className="px-3 py-4 w-10">
+            <div className="cursor-grabbing text-accent">
+              <GripVertical size={16} />
+            </div>
+          </td>
+          <td className="px-6 py-4">
+            <div className="flex items-center gap-3">
+              {project.image_url && (
+                <img src={project.image_url} alt="" className="w-10 h-10 rounded-lg object-cover border border-white/[0.10]" />
+              )}
+              <div>
+                <span className="text-sm font-medium text-text-primary">{project.title}</span>
+                <p className="text-xs text-text-muted font-mono mt-0.5">/{project.slug}</p>
+              </div>
+            </div>
+          </td>
+          <td className="px-6 py-4">
+            <span className="text-sm text-text-secondary">{project.client || "-"}</span>
+          </td>
+          <td className="px-6 py-4" colSpan={5}></td>
+        </tr>
+      </tbody>
+    </table>
+  );
+}
+
 export default function ProjetsAdminPage() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -106,8 +275,7 @@ export default function ProjetsAdminPage() {
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0); // 0=idle, 1=analyzing, 2=screenshots, 3=done
   const [capturingScreenshot, setCapturingScreenshot] = useState(false);
-  const [draggedId, setDraggedId] = useState<string | null>(null);
-  const [dragOverId, setDragOverId] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const [reordering, setReordering] = useState(false);
   const { toast } = useToast();
 
@@ -333,48 +501,32 @@ export default function ProjetsAdminPage() {
     }
   };
 
-  // Drag-and-drop reordering
-  const handleDragStart = (e: React.DragEvent, projectId: string) => {
-    setDraggedId(projectId);
-    e.dataTransfer.effectAllowed = "move";
+  // Drag-and-drop reordering with @dnd-kit
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 5 },
+    }),
+    useSensor(KeyboardSensor)
+  );
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id as string);
   };
 
-  const handleDragOver = (e: React.DragEvent, projectId: string) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-    if (projectId !== draggedId) {
-      setDragOverId(projectId);
-    }
-  };
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    setActiveId(null);
 
-  const handleDragEnd = () => {
-    setDraggedId(null);
-    setDragOverId(null);
-  };
+    if (!over || active.id === over.id) return;
 
-  const handleDrop = async (e: React.DragEvent, targetId: string) => {
-    e.preventDefault();
-    if (!draggedId || draggedId === targetId) {
-      handleDragEnd();
-      return;
-    }
+    const oldIndex = projects.findIndex((p) => p.id === active.id);
+    const newIndex = projects.findIndex((p) => p.id === over.id);
+    if (oldIndex === -1 || newIndex === -1) return;
 
-    const oldIndex = projects.findIndex((p) => p.id === draggedId);
-    const newIndex = projects.findIndex((p) => p.id === targetId);
-    if (oldIndex === -1 || newIndex === -1) {
-      handleDragEnd();
-      return;
-    }
-
-    const reordered = [...projects];
-    const [moved] = reordered.splice(oldIndex, 1);
-    reordered.splice(newIndex, 0, moved);
-
+    const reordered = arrayMove(projects, oldIndex, newIndex);
     const items = reordered.map((p, i) => ({ id: p.id, sort_order: i }));
 
-    handleDragEnd();
     setReordering(true);
-
     try {
       const res = await fetch("/api/admin/projects/reorder", {
         method: "PUT",
@@ -390,6 +542,10 @@ export default function ProjetsAdminPage() {
     } finally {
       setReordering(false);
     }
+  };
+
+  const handleDragCancel = () => {
+    setActiveId(null);
   };
 
   // AI auto-fill from URL
@@ -535,136 +691,68 @@ export default function ProjetsAdminPage() {
               <Loader2 size={24} className="text-accent animate-spin" />
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-white/[0.10]">
-                    <th className="w-10 px-3 py-4"></th>
-                    <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Titre {reordering && <Loader2 size={14} className="text-accent animate-spin inline ml-1" />}</th>
-                    <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Client</th>
-                    <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Statut</th>
-                    <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Tags</th>
-                    <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Featured</th>
-                    <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Hero</th>
-                    <th className="text-right px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/[0.06]">
-                  {projects.length > 0 ? (
-                    projects.map((project) => (
-                      <tr
-                        key={project.id}
-                        draggable
-                        onDragStart={(e) => handleDragStart(e, project.id)}
-                        onDragOver={(e) => handleDragOver(e, project.id)}
-                        onDragEnd={handleDragEnd}
-                        onDrop={(e) => handleDrop(e, project.id)}
-                        className={`hover:bg-white/[0.02] transition-colors ${
-                          draggedId === project.id ? "opacity-40" : ""
-                        } ${dragOverId === project.id ? "border-t-2 border-accent" : ""}`}
-                      >
-                        <td className="px-3 py-4">
-                          <div className="cursor-grab active:cursor-grabbing text-text-muted hover:text-text-secondary">
-                            <GripVertical size={16} />
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="flex items-center gap-3">
-                            {project.image_url && (
-                              <img src={project.image_url} alt="" className="w-10 h-10 rounded-lg object-cover border border-white/[0.10]" />
-                            )}
-                            <div>
-                              <span className="text-sm font-medium text-text-primary">{project.title}</span>
-                              <p className="text-xs text-text-muted font-mono mt-0.5">/{project.slug}</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className="text-sm text-text-secondary">{project.client || "-"}</span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-md border ${
-                            project.status === "published"
-                              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                              : "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
-                          }`}>
-                            {project.status === "published" ? "Publié" : "Brouillon"}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="flex flex-wrap gap-1">
-                            {project.tags && project.tags.length > 0 ? (
-                              project.tags.slice(0, 3).map((tag, i) => (
-                                <span
-                                  key={i}
-                                  className="inline-flex px-2 py-0.5 bg-accent/10 text-accent text-xs font-medium rounded-md border border-accent/20"
-                                >
-                                  {tag}
-                                </span>
-                              ))
-                            ) : (
-                              <span className="text-sm text-text-muted">-</span>
-                            )}
-                            {project.tags && project.tags.length > 3 && (
-                              <span className="text-xs text-text-muted">+{project.tags.length - 3}</span>
-                            )}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <button onClick={() => toggleField(project, "featured")} className="p-1 rounded-lg hover:bg-white/[0.04] transition-all">
-                            {project.featured ? (
-                              <CheckCircle size={18} className="text-emerald-400" />
-                            ) : (
-                              <X size={18} className="text-text-muted" />
-                            )}
-                          </button>
-                        </td>
-                        <td className="px-6 py-4">
-                          <button onClick={() => toggleField(project, "hero_visible")} className="p-1 rounded-lg hover:bg-white/[0.04] transition-all">
-                            {project.hero_visible ? (
-                              <CheckCircle size={18} className="text-emerald-400" />
-                            ) : (
-                              <X size={18} className="text-text-muted" />
-                            )}
-                          </button>
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <div className="flex items-center justify-end gap-1">
-                            <a href={`/projets/${project.slug}`} target="_blank" className="p-2 rounded-lg hover:bg-white/[0.06] text-text-secondary hover:text-accent transition-all" title="Voir">
-                              <Globe size={16} />
-                            </a>
-                            <button onClick={() => openEdit(project)} className="p-2 rounded-lg hover:bg-white/[0.06] text-text-secondary hover:text-accent transition-all" title="Modifier">
-                              <Pencil size={16} />
-                            </button>
-                            <button onClick={() => { setSelectedProject(project); setShowDelete(true); }} className="p-2 rounded-lg hover:bg-red-500/10 text-text-secondary hover:text-red-400 transition-all" title="Supprimer">
-                              <Trash2 size={16} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={8} className="px-6 py-16 text-center">
-                        <div className="flex flex-col items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.10] flex items-center justify-center">
-                            <FolderKanban size={24} className="text-text-muted" />
-                          </div>
-                          <div>
-                            <p className="text-text-muted font-medium">Aucun projet trouvé</p>
-                            <p className="text-text-muted text-sm mt-1">Ajoutez votre premier projet au portfolio</p>
-                          </div>
-                          <button onClick={openCreate} className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-accent-dim text-accent border border-accent/20 rounded-full hover:bg-accent/20 transition-all text-sm font-medium">
-                            <Plus size={16} />
-                            Ajouter votre premier projet
-                          </button>
-                        </div>
-                      </td>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              onDragCancel={handleDragCancel}
+            >
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-white/[0.10]">
+                      <th className="w-10 px-3 py-4"></th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Titre {reordering && <Loader2 size={14} className="text-accent animate-spin inline ml-1" />}</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Client</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Statut</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Tags</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Featured</th>
+                      <th className="text-left px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Hero</th>
+                      <th className="text-right px-6 py-4 text-xs font-mono font-semibold text-text-muted uppercase tracking-wider">Actions</th>
                     </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <SortableContext items={projects.map((p) => p.id)} strategy={verticalListSortingStrategy}>
+                    <tbody className="divide-y divide-white/[0.06]">
+                      {projects.length > 0 ? (
+                        projects.map((project) => (
+                          <SortableRow
+                            key={project.id}
+                            project={project}
+                            openEdit={openEdit}
+                            toggleField={toggleField}
+                            setSelectedProject={setSelectedProject}
+                            setShowDelete={setShowDelete}
+                          />
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={8} className="px-6 py-16 text-center">
+                            <div className="flex flex-col items-center gap-3">
+                              <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.10] flex items-center justify-center">
+                                <FolderKanban size={24} className="text-text-muted" />
+                              </div>
+                              <div>
+                                <p className="text-text-muted font-medium">Aucun projet trouvé</p>
+                                <p className="text-text-muted text-sm mt-1">Ajoutez votre premier projet au portfolio</p>
+                              </div>
+                              <button onClick={openCreate} className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-accent-dim text-accent border border-accent/20 rounded-full hover:bg-accent/20 transition-all text-sm font-medium">
+                                <Plus size={16} />
+                                Ajouter votre premier projet
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </SortableContext>
+                </table>
+              </div>
+              <DragOverlay dropAnimation={{ duration: 200, easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)" }}>
+                {activeId ? <DragOverlayRow project={projects.find((p) => p.id === activeId)!} /> : null}
+              </DragOverlay>
+            </DndContext>
           )}
         </div>
       </AnimatedSection>
