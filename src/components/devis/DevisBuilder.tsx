@@ -166,7 +166,6 @@ export default function DevisBuilder() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          offerId: formData.selectedOfferId,
           selectedOffer: formData.selectedOfferName,
           selectedOptions: formData.selectedOptions,
           customOptions: formData.customOptions,

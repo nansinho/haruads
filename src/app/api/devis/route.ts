@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       email: body.email,
       phone: body.phone || null,
       company: body.company || null,
-      service_id: body.offerId || null,
+      // service_id references services table, not offers — offer info is stored in notes
       description: body.description,
       attachments: body.attachments || [],
       notes,
