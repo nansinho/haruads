@@ -229,7 +229,7 @@ export default function ProjectDetail() {
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.1 }}
                     >
-                      <span className="text-[2.5rem] lg:text-[3rem] font-serif text-white leading-none block">
+                      <span className="text-[2.5rem] lg:text-[3rem] font-bold text-white leading-none block">
                         {r.value}
                       </span>
                       <span className="text-[0.8rem] text-white/70 mt-2 block">
