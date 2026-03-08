@@ -53,6 +53,16 @@ export function renderRichText(text: string): string {
   return result.join("<br>");
 }
 
+/** Strip markdown syntax for plain-text display (cards, previews, etc.) */
+export function stripMarkdown(text: string): string {
+  if (!text) return "";
+  return text
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/__([^_]+)__/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
+}
+
 /** Process inline formatting: bold, italic, underline, links */
 function processInline(text: string): string {
   return text

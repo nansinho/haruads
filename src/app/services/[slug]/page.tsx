@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { renderRichText } from "@/lib/renderRichText";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -812,9 +813,10 @@ export default function ServiceDetail() {
                     <span className="font-light">Ce que nous </span>
                     <span className="font-serif italic">proposons.</span>
                   </h2>
-                  <p className="text-[0.9rem] text-text-body mt-5 leading-[1.8]">
-                    {service.description}
-                  </p>
+                  <p
+                    className="text-[0.9rem] text-text-body mt-5 leading-[1.8]"
+                    dangerouslySetInnerHTML={{ __html: renderRichText(service.description) }}
+                  />
                 </div>
               </ScrollReveal>
 

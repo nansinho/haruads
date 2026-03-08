@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { stripMarkdown } from "@/lib/renderRichText";
 import {
   MessageSquare,
   Send,
@@ -89,7 +90,7 @@ function MessageBubble({ message }: { message: Message }) {
               : "bg-dark-2 border border-white/[0.06] text-text-secondary rounded-bl-md"
           }`}
         >
-          {message.content}
+          {stripMarkdown(message.content)}
         </div>
         <span className={`text-[10px] text-text-muted mt-1 block ${isClient ? "text-right" : "text-left"}`}>
           {message.time}
