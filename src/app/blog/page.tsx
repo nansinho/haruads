@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Tag } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -105,7 +106,8 @@ export default function BlogPage() {
                   </div>
                   <div>
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-[0.72rem] font-medium">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent text-white text-[0.72rem] font-medium">
+                        <Tag className="w-3 h-3" />
                         {featured.category}
                       </span>
                       <span className="text-[0.72rem] text-text-body">
@@ -147,9 +149,9 @@ export default function BlogPage() {
                 <ScrollReveal key={article.slug} delay={i * 80}>
                   <a
                     href={`/blog/${article.slug}`}
-                    className="block group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300"
+                    className="flex flex-col h-full group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300"
                   >
-                    <div className="aspect-[16/10] relative overflow-hidden">
+                    <div className="aspect-[16/10] relative overflow-hidden shrink-0">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={article.image}
@@ -157,12 +159,13 @@ export default function BlogPage() {
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute top-3 left-3">
-                        <span className="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[0.65rem] font-medium text-text-dark">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent text-white text-[0.65rem] font-medium shadow-sm">
+                          <Tag className="w-3 h-3" />
                           {article.category}
                         </span>
                       </div>
                     </div>
-                    <div className="p-5 lg:p-6">
+                    <div className="flex flex-col flex-1 p-5 lg:p-6">
                       <div className="text-[0.7rem] text-text-body mb-3">
                         {article.date} &bull; {article.readTime} de lecture
                       </div>
@@ -172,7 +175,7 @@ export default function BlogPage() {
                       <p className="text-[0.8rem] text-text-body leading-[1.7] mt-2 line-clamp-2">
                         {article.excerpt}
                       </p>
-                      <span className="inline-flex items-center gap-2 text-[0.78rem] text-accent font-medium mt-4 group-hover:gap-3 transition-all duration-300">
+                      <span className="inline-flex items-center gap-2 text-[0.78rem] text-accent font-medium mt-auto pt-4 group-hover:gap-3 transition-all duration-300">
                         Lire la suite
                         <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-accent fill-none stroke-2">
                           <line x1="5" y1="12" x2="19" y2="12" />
