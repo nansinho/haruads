@@ -104,11 +104,14 @@ Notes pour les résultats : fournis 3 à 4 KPIs réalistes (ex: "+45% de convers
     }
 
     const data = await response.json();
-    const text = data.content?.[0]?.text;
+    let text = data.content?.[0]?.text;
 
     if (!text) {
       return errorResponse("Réponse vide de l'API Anthropic.", 502);
     }
+
+    // Strip markdown code blocks if Claude wraps the JSON
+    text = text.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim();
 
     const parsed = JSON.parse(text);
 
