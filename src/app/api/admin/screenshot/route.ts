@@ -1,27 +1,24 @@
 import { NextRequest } from "next/server";
 import { getAdminUser, unauthorizedResponse, errorResponse } from "@/lib/api-auth";
 import { supabaseAdmin, supabase } from "@/lib/supabase";
-import puppeteer, { type Page } from "puppeteer-core";
+import puppeteer, { type Page, type Browser } from "puppeteer-core";
+
+type DB = NonNullable<typeof supabaseAdmin | typeof supabase>;
 
 // Remove cookie banners, popups, overlays, and fix overflow issues
 async function cleanPage(page: Page) {
   await page.evaluate(() => {
-    // Force no horizontal overflow
     document.documentElement.style.overflowX = "hidden";
     document.body.style.overflowX = "hidden";
 
-    // Common cookie banner / popup selectors
     const selectors = [
-      // Cookie banners
       '[class*="cookie"]', '[id*="cookie"]',
       '[class*="consent"]', '[id*="consent"]',
       '[class*="gdpr"]', '[id*="gdpr"]',
       '[class*="rgpd"]', '[id*="rgpd"]',
-      // Generic overlays/modals
       '[class*="overlay"]', '[class*="modal"]',
       '[class*="popup"]', '[id*="popup"]',
       '[class*="banner-bottom"]',
-      // Common third-party cookie tools
       '#onetrust-banner-sdk', '#onetrust-consent-sdk',
       '.cc-banner', '.cc-window',
       '#cookiebanner', '#cookie-bar',
@@ -31,7 +28,6 @@ async function cleanPage(page: Page) {
     for (const sel of selectors) {
       document.querySelectorAll(sel).forEach((el) => {
         const style = window.getComputedStyle(el);
-        // Only remove if it looks like a floating/fixed element (banner, popup)
         if (
           style.position === "fixed" ||
           style.position === "sticky" ||
@@ -42,7 +38,6 @@ async function cleanPage(page: Page) {
       });
     }
 
-    // Also remove any fixed/sticky elements with high z-index (likely banners)
     document.querySelectorAll("*").forEach((el) => {
       const style = window.getComputedStyle(el);
       if (
@@ -55,33 +50,82 @@ async function cleanPage(page: Page) {
   });
 }
 
-async function captureAndUpload(
-  page: Page,
-  db: ReturnType<typeof supabaseAdmin extends null ? typeof supabase : typeof supabaseAdmin>,
-): Promise<string | null> {
-  await cleanPage(page);
-  // Small delay after cleaning for reflow
-  await new Promise((resolve) => setTimeout(resolve, 300));
-
-  // Take a full viewport screenshot (no clip = exact viewport size)
-  const screenshotBuffer = await page.screenshot({ type: "png" });
-
-  const imageBuffer = new Uint8Array(screenshotBuffer);
+async function uploadImage(db: DB, buffer: Uint8Array): Promise<string | null> {
   const timestamp = Date.now();
   const randomId = Math.random().toString(36).substring(2, 8);
   const filename = `projects/${timestamp}-${randomId}.png`;
 
-  const { error: uploadError } = await db!.storage
+  const { error } = await db.storage
     .from("images")
-    .upload(filename, imageBuffer, {
-      contentType: "image/png",
-      upsert: false,
-    });
+    .upload(filename, buffer, { contentType: "image/png", upsert: false });
 
-  if (uploadError) return null;
+  if (error) return null;
 
-  const { data: urlData } = db!.storage.from("images").getPublicUrl(filename);
-  return urlData.publicUrl;
+  const { data } = db.storage.from("images").getPublicUrl(filename);
+  return data.publicUrl;
+}
+
+async function captureAndUpload(page: Page, db: DB): Promise<string | null> {
+  await cleanPage(page);
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  const buffer = await page.screenshot({ type: "png" });
+  return uploadImage(db, new Uint8Array(buffer));
+}
+
+// Generate a composite featured image: hero left + full page right
+async function generateFeaturedImage(
+  page: Page,
+  browser: Browser,
+  db: DB,
+  url: string,
+): Promise<string | null> {
+  // Navigate to homepage and clean
+  await page.goto(url, { waitUntil: "networkidle2", timeout: 20000 });
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await cleanPage(page);
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
+  // Capture hero (viewport) as base64
+  const heroBase64 = await page.screenshot({ type: "png", encoding: "base64" });
+
+  // Capture full page as base64
+  const fullPageBase64 = await page.screenshot({
+    type: "png",
+    fullPage: true,
+    encoding: "base64",
+  });
+
+  // Create composite HTML
+  const compositeHtml = `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;width:1280px;height:720px;overflow:hidden;background:#0a0a0a;display:flex;font-size:0;">
+  <!-- Left: hero cropped & zoomed -->
+  <div style="width:750px;height:720px;overflow:hidden;position:relative;flex-shrink:0;">
+    <img src="data:image/png;base64,${heroBase64}"
+         style="width:920px;height:auto;position:absolute;top:-10px;left:-30px;display:block;" />
+    <div style="position:absolute;top:0;right:0;width:150px;height:100%;
+                background:linear-gradient(to right,transparent,#0a0a0a);"></div>
+  </div>
+  <!-- Right: full page screenshot -->
+  <div style="width:530px;height:720px;overflow:hidden;position:relative;
+              display:flex;flex-direction:column;padding:20px 20px 0 0;box-sizing:border-box;">
+    <img src="data:image/png;base64,${fullPageBase64}"
+         style="width:510px;height:auto;border-radius:10px;display:block;
+                box-shadow:0 8px 32px rgba(0,0,0,0.6);" />
+  </div>
+</body>
+</html>`;
+
+  // Render composite and screenshot
+  const compositePage = await browser.newPage();
+  await compositePage.setViewport({ width: 1280, height: 720, deviceScaleFactor: 1 });
+  await compositePage.setContent(compositeHtml, { waitUntil: "load" });
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  const compositeBuffer = await compositePage.screenshot({ type: "png" });
+  await compositePage.close();
+
+  return uploadImage(db, new Uint8Array(compositeBuffer));
 }
 
 export async function POST(request: NextRequest) {
@@ -123,11 +167,19 @@ export async function POST(request: NextRequest) {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 720, deviceScaleFactor: 1 });
 
-    // 1. Navigate to homepage
-    await page.goto(url, { waitUntil: "networkidle2", timeout: 20000 });
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // 1. Generate featured composite image (hero + full page)
+    let featuredUrl: string | null = null;
+    try {
+      featuredUrl = await generateFeaturedImage(page, browser, db, url);
+    } catch (err) {
+      console.error("[screenshot] Featured image generation failed:", err);
+    }
 
-    // 2. Extract internal links
+    // 2. Go back to homepage for link extraction
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 20000 });
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    // 3. Extract internal links
     const baseUrl = new URL(url);
     const internalLinks: string[] = await page.evaluate((hostname: string) => {
       const anchors = Array.from(document.querySelectorAll("a[href]"));
@@ -158,18 +210,18 @@ export async function POST(request: NextRequest) {
       return links;
     }, baseUrl.hostname);
 
-    // 3. Capture homepage first
+    // 4. Capture homepage
     const uploadedUrls: string[] = [];
+    await cleanPage(page);
     const homepageUrl = await captureAndUpload(page, db);
     if (homepageUrl) uploadedUrls.push(homepageUrl);
 
-    // 4. Capture internal pages
+    // 5. Capture internal pages
     const pagesToVisit = internalLinks.slice(0, count - 1);
     for (const pageUrl of pagesToVisit) {
       try {
         await page.goto(pageUrl, { waitUntil: "networkidle2", timeout: 15000 });
         await new Promise((resolve) => setTimeout(resolve, 1500));
-
         const capturedUrl = await captureAndUpload(page, db);
         if (capturedUrl) uploadedUrls.push(capturedUrl);
       } catch {
@@ -180,7 +232,7 @@ export async function POST(request: NextRequest) {
     await browser.close();
     browser = undefined;
 
-    return Response.json({ urls: uploadedUrls });
+    return Response.json({ urls: uploadedUrls, featured: featuredUrl });
   } catch (error) {
     const msg = error instanceof Error ? error.message : "Erreur lors de la capture";
     console.error("[screenshot]", error);
