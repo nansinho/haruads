@@ -21,6 +21,8 @@ import {
   EyeOff,
   Trash2,
   ShieldCheck,
+  Megaphone,
+  ExternalLink,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
@@ -42,6 +44,10 @@ interface SettingsData {
   googleAnalyticsId: string;
   themeDark: string;
   themeAccent: string;
+  promoBannerEnabled: boolean;
+  promoBannerText: string;
+  promoBannerLink: string;
+  promoBannerLinkText: string;
 }
 
 const defaultSettings: SettingsData = {
@@ -57,6 +63,10 @@ const defaultSettings: SettingsData = {
   googleAnalyticsId: "",
   themeDark: DEFAULT_THEME.dark,
   themeAccent: DEFAULT_THEME.accent,
+  promoBannerEnabled: false,
+  promoBannerText: "",
+  promoBannerLink: "",
+  promoBannerLinkText: "",
 };
 
 function Toggle({
@@ -149,6 +159,10 @@ export default function ParametresPage() {
           googleAnalyticsId: flat.googleAnalyticsId || flat.google_analytics_id || "",
           themeDark: flat.themeDark || flat.theme_dark || DEFAULT_THEME.dark,
           themeAccent: flat.themeAccent || flat.theme_accent || DEFAULT_THEME.accent,
+          promoBannerEnabled: flat.promoBannerEnabled === "true" || flat.promo_banner_enabled === "true",
+          promoBannerText: flat.promoBannerText || flat.promo_banner_text || "",
+          promoBannerLink: flat.promoBannerLink || flat.promo_banner_link || "",
+          promoBannerLinkText: flat.promoBannerLinkText || flat.promo_banner_link_text || "",
         });
       } catch {
         // If fetch fails, keep defaults
@@ -510,6 +524,91 @@ export default function ParametresPage() {
               {saveError}
             </div>
           )}
+        </div>
+      </AnimatedSection>
+
+      {/* Bandeau Promotionnel */}
+      <AnimatedSection>
+        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2.5 bg-accent/10 rounded-xl">
+              <Megaphone size={20} className="text-accent" />
+            </div>
+            <div>
+              <h2 className="font-serif text-lg text-text-primary">Bandeau Promotionnel</h2>
+              <p className="text-sm text-text-muted">Bandeau affiche au-dessus du menu sur le site</p>
+            </div>
+          </div>
+
+          <div className="space-y-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <label className="block text-sm font-medium text-text-secondary">
+                  Activer le bandeau
+                </label>
+                <p className="text-xs text-text-muted mt-1">
+                  Le bandeau sera visible par tous les visiteurs du site
+                </p>
+              </div>
+              <Toggle
+                checked={settings.promoBannerEnabled}
+                onChange={(val) => updateSetting("promoBannerEnabled", val)}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-text-secondary mb-2">
+                Message du bandeau
+              </label>
+              <input
+                type="text"
+                value={settings.promoBannerText}
+                onChange={(e) => updateSetting("promoBannerText", e.target.value)}
+                placeholder="Ex: -20% sur tous nos services jusqu'au 31 mars !"
+                className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-text-secondary mb-2">
+                  <span className="flex items-center gap-2">
+                    <ExternalLink size={14} className="text-text-muted" />
+                    URL du lien (optionnel)
+                  </span>
+                </label>
+                <input
+                  type="url"
+                  value={settings.promoBannerLink}
+                  onChange={(e) => updateSetting("promoBannerLink", e.target.value)}
+                  placeholder="https://..."
+                  className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-text-secondary mb-2">
+                  Texte du lien (optionnel)
+                </label>
+                <input
+                  type="text"
+                  value={settings.promoBannerLinkText}
+                  onChange={(e) => updateSetting("promoBannerLinkText", e.target.value)}
+                  placeholder="En savoir plus"
+                  className="w-full px-4 py-3 bg-dark border border-white/[0.06] rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                />
+              </div>
+            </div>
+
+            {settings.promoBannerEnabled && settings.promoBannerText && (
+              <div className="mt-4 p-3 bg-accent/10 border border-accent/20 rounded-xl">
+                <p className="text-xs text-text-muted mb-2">Apercu du bandeau :</p>
+                <div className="bg-accent text-dark px-4 py-2 rounded-lg text-[0.8rem] font-medium text-center">
+                  {settings.promoBannerText}
+                  {settings.promoBannerLink && settings.promoBannerLinkText && (
+                    <span className="ml-2 underline font-semibold">{settings.promoBannerLinkText}</span>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </AnimatedSection>
 
