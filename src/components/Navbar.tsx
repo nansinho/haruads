@@ -52,8 +52,8 @@ export default function Navbar() {
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 400,
+    damping: 40,
     restDelta: 0.001,
   });
 
@@ -81,13 +81,10 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         className={`fixed ${bannerOffset} left-0 right-0 z-[150] flex items-center justify-between px-5 py-4 lg:px-12 transition-all duration-500 ${
           scrolled
-            ? "py-3 lg:py-3 bg-dark/80 backdrop-blur-2xl border-b border-white/[0.04] shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
-            : "bg-transparent"
+            ? "bg-dark/80 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+            : "bg-transparent shadow-none"
         }`}
       >
-        {scrolled && (
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
-        )}
 
         <Link href="/" className="flex items-center gap-2.5 group relative" title="Agence HDS - Accueil">
           <Image src="/images/logos/logo-hds-2026-blanc.svg" alt="Agence HDS - Agence web créative à Aix-en-Provence" width={120} height={32} className="h-8 w-auto" priority />
