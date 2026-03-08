@@ -75,6 +75,8 @@ export default function ProjetsAdminPage() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showUrlPrompt, setShowUrlPrompt] = useState(false);
+  const [promptUrl, setPromptUrl] = useState("");
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [form, setForm] = useState(emptyForm);
@@ -108,6 +110,12 @@ export default function ProjetsAdminPage() {
     setEditingProject(null);
     setForm(emptyForm);
     setActiveFormTab("general");
+    setPromptUrl("");
+    setShowUrlPrompt(true);
+  };
+
+  const openCreateManual = () => {
+    setShowUrlPrompt(false);
     setShowModal(true);
   };
 
@@ -276,10 +284,10 @@ export default function ProjetsAdminPage() {
     setForm((prev) => ({ ...prev, gallery: prev.gallery.filter((_, i) => i !== index) }));
   };
 
-  // AI auto-fill
-  const handleAIFill = async () => {
-    if (!form.title) {
-      toast({ type: "error", message: "Renseignez au moins le titre du projet" });
+  // AI auto-fill from URL
+  const handleAIAnalyze = async () => {
+    if (!promptUrl) {
+      toast({ type: "error", message: "Collez l'URL du site à analyser" });
       return;
     }
     setAnalyzing(true);
@@ -287,7 +295,7 @@ export default function ProjetsAdminPage() {
       const res = await fetch("/api/admin/ia/analyze-project", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: form.title, external_url: form.external_url }),
+        body: JSON.stringify({ external_url: promptUrl }),
       });
 
       if (res.status === 503) {
@@ -301,18 +309,25 @@ export default function ProjetsAdminPage() {
       }
 
       const data = await res.json();
-      setForm((prev) => ({
-        ...prev,
-        description: data.description || prev.description,
-        challenge: data.challenge || prev.challenge,
-        solution: data.solution || prev.solution,
-        results: data.results?.length ? data.results : prev.results,
-        tags: data.tags?.length ? data.tags : prev.tags,
-        category: data.category || prev.category,
-        seo_title: data.seo_title || prev.seo_title,
-        seo_description: data.seo_description || prev.seo_description,
-      }));
-      toast({ type: "success", message: "Fiche projet remplie par l'IA ! Vérifiez et ajustez si besoin." });
+      setForm({
+        ...emptyForm,
+        title: data.title || "",
+        slug: slugify(data.title || ""),
+        description: data.description || "",
+        challenge: data.challenge || "",
+        solution: data.solution || "",
+        results: data.results?.length ? data.results : [{ ...emptyResult }],
+        tags: data.tags || [],
+        category: data.category || "",
+        client: data.client || "",
+        year: data.year || new Date().getFullYear(),
+        seo_title: data.seo_title || "",
+        seo_description: data.seo_description || "",
+        external_url: promptUrl,
+      });
+      setShowUrlPrompt(false);
+      setShowModal(true);
+      toast({ type: "success", message: "Fiche projet remplie par l'IA ! Ajoutez une image et validez." });
     } catch (err) {
       toast({ type: "error", message: err instanceof Error ? err.message : "Erreur lors de l'analyse IA" });
     } finally {
@@ -515,33 +530,6 @@ export default function ProjetsAdminPage() {
           </>
         }
       >
-        {/* AI Auto-fill */}
-        <div className="mb-4 p-3 rounded-xl bg-gradient-to-r from-accent/5 to-purple-500/5 border border-accent/10">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 min-w-0">
-              <Sparkles size={16} className="text-accent shrink-0" />
-              <p className="text-xs text-text-secondary truncate">
-                Renseignez le titre{" "}
-                <span className="text-text-muted">(+ URL externe pour de meilleurs résultats)</span>{" "}
-                puis laissez l&apos;IA remplir la fiche.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={handleAIFill}
-              disabled={analyzing || !form.title}
-              className="shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-accent text-dark text-xs font-semibold rounded-full hover:bg-accent-hover transition-all disabled:opacity-50 shadow-lg shadow-accent/20"
-            >
-              {analyzing ? (
-                <Loader2 size={14} className="animate-spin" />
-              ) : (
-                <Sparkles size={14} />
-              )}
-              {analyzing ? "Analyse en cours..." : "Remplir avec l'IA"}
-            </button>
-          </div>
-        </div>
-
         {/* Tabs navigation */}
         <div className="flex gap-1 mb-6 p-1 bg-dark rounded-xl overflow-x-auto">
           {formTabs.map((tab) => {
@@ -836,6 +824,76 @@ export default function ProjetsAdminPage() {
             </div>
           </div>
         )}
+      </Modal>
+
+      {/* URL Prompt for AI Analysis */}
+      <Modal
+        isOpen={showUrlPrompt}
+        onClose={() => { if (!analyzing) setShowUrlPrompt(false); }}
+        title="Nouveau projet"
+        description="Collez l'URL du site et l'IA remplit tout automatiquement"
+        size="md"
+      >
+        <div className="space-y-6">
+          {/* AI mode */}
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-accent/5 via-purple-500/5 to-accent/5 border border-accent/15">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2.5 bg-accent/10 rounded-xl">
+                <Sparkles size={20} className="text-accent" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-text-primary">Analyse IA</h3>
+                <p className="text-xs text-text-muted">L&apos;IA analyse le site et remplit tous les champs</p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <input
+                type="url"
+                value={promptUrl}
+                onChange={(e) => setPromptUrl(e.target.value)}
+                placeholder="https://mon-site-client.com"
+                disabled={analyzing}
+                className="w-full px-4 py-3 bg-dark border border-white/[0.10] rounded-xl text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all disabled:opacity-50"
+                onKeyDown={(e) => { if (e.key === "Enter" && promptUrl) handleAIAnalyze(); }}
+                autoFocus
+              />
+              <button
+                onClick={handleAIAnalyze}
+                disabled={analyzing || !promptUrl}
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-accent text-dark font-semibold rounded-xl hover:bg-accent-hover transition-all shadow-lg shadow-accent/20 disabled:opacity-50"
+              >
+                {analyzing ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Analyse en cours...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={18} />
+                    Analyser et remplir
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center gap-4">
+            <div className="flex-1 h-px bg-white/[0.08]" />
+            <span className="text-xs text-text-muted">ou</span>
+            <div className="flex-1 h-px bg-white/[0.08]" />
+          </div>
+
+          {/* Manual mode */}
+          <button
+            onClick={openCreateManual}
+            disabled={analyzing}
+            className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-dark border border-white/[0.10] text-text-secondary rounded-xl hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm disabled:opacity-50"
+          >
+            <FileText size={16} />
+            Créer manuellement
+          </button>
+        </div>
       </Modal>
 
       {/* Delete Confirmation */}
