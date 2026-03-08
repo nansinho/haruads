@@ -314,9 +314,9 @@ export default function ProjetsAdminPage() {
       });
       if (res.ok) {
         const data = await res.json();
-        if (data.url) {
-          addGalleryImage(data.url);
-          toast({ type: "success", message: "Screenshot capturé et ajouté à la galerie !" });
+        if (data.urls?.length) {
+          data.urls.forEach((u: string) => addGalleryImage(u));
+          toast({ type: "success", message: `${data.urls.length} screenshots capturés et ajoutés à la galerie !` });
         }
       } else {
         const err = await res.json().catch(() => ({}));
@@ -424,8 +424,8 @@ export default function ProjetsAdminPage() {
         });
         if (screenshotRes.ok) {
           const screenshotData = await screenshotRes.json();
-          if (screenshotData.url) {
-            galleryUrls = [screenshotData.url];
+          if (screenshotData.urls?.length) {
+            galleryUrls = screenshotData.urls;
           }
         } else {
           const errData = await screenshotRes.json().catch(() => ({}));
@@ -455,7 +455,7 @@ export default function ProjetsAdminPage() {
       });
       setShowUrlPrompt(false);
       setShowModal(true);
-      toast({ type: "success", message: galleryUrls.length > 0 ? "Fiche projet remplie par l'IA avec screenshot !" : "Fiche projet remplie par l'IA ! Ajoutez une image et validez." });
+      toast({ type: "success", message: galleryUrls.length > 0 ? `Fiche projet remplie par l'IA avec ${galleryUrls.length} screenshots !` : "Fiche projet remplie par l'IA ! Ajoutez une image et validez." });
     } catch (err) {
       toast({ type: "error", message: err instanceof Error ? err.message : "Erreur lors de l'analyse IA" });
     } finally {
@@ -955,7 +955,7 @@ export default function ProjetsAdminPage() {
                 ) : (
                   <>
                     <Globe size={16} />
-                    Capturer le screenshot du site (1280×720)
+                    Capturer 6 pages du site (1280×720)
                   </>
                 )}
               </button>
