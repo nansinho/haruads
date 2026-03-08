@@ -414,7 +414,7 @@ export default function ProjetsAdminPage() {
 
       const data = await res.json();
 
-      // Capture screenshot for gallery (non-blocking if it fails)
+      // Capture screenshot for gallery
       let galleryUrls: string[] = [];
       try {
         const screenshotRes = await fetch("/api/admin/screenshot", {
@@ -427,9 +427,13 @@ export default function ProjetsAdminPage() {
           if (screenshotData.url) {
             galleryUrls = [screenshotData.url];
           }
+        } else {
+          const errData = await screenshotRes.json().catch(() => ({}));
+          console.error("[screenshot]", errData);
+          toast({ type: "error", message: `Screenshot échoué: ${errData.error || screenshotRes.statusText}` });
         }
-      } catch {
-        // Screenshot capture failed silently — not critical
+      } catch (screenshotErr) {
+        console.error("[screenshot]", screenshotErr);
       }
 
       setForm({
