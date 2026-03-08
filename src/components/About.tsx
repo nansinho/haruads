@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 import CountUp from "./CountUp";
+import TypingQuote from "./TypingQuote";
 
 const stats = [
   { num: "50+", label: "Projets r\u00e9alis\u00e9s" },
@@ -13,6 +15,8 @@ const stats = [
 ];
 
 export default function About() {
+  const [quoteDone, setQuoteDone] = useState(false);
+
   return (
     <section className="bg-white text-text-dark relative overflow-hidden" id="about">
       <div className="max-w-[1400px] mx-auto px-5 py-[120px] lg:px-12">
@@ -85,36 +89,27 @@ export default function About() {
         </div>
 
         {/* Founder quote */}
-        <ScrollReveal delay={200} animation="scaleUp">
-          <div className="mt-20 grid lg:grid-cols-[200px_1fr] gap-0 items-center bg-light rounded-2xl overflow-hidden">
-            <div className="h-full min-h-[200px] overflow-hidden relative">
-              <Image
-                src="/images/founder-with-mother.jpg"
-                alt="Nans, fondateur de l'Agence HDS"
-                width={200}
-                height={267}
-                className="w-full h-full object-cover"
-                loading="lazy"
-                sizes="200px"
-              />
+        <div className="mt-20 py-16 lg:py-20 text-center max-w-[800px] mx-auto">
+          <TypingQuote
+            text={"\u201CNotre mission est de rendre le digital accessible \u00e0 toutes les entreprises, avec des solutions qui font vraiment la diff\u00e9rence.\u201D"}
+            className="font-serif italic text-fluid-h2 leading-[1.3] tracking-[-0.01em] text-text-dark"
+            charDelay={0.03}
+            onComplete={() => setQuoteDone(true)}
+          />
+          <motion.div
+            className="mt-6"
+            initial={{ opacity: 0, y: 10 }}
+            animate={quoteDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <div className="text-[0.85rem] font-semibold text-text-dark">
+              Fondateur, Agence HDS
             </div>
-            <div className="p-6 lg:p-8">
-              <p className="text-[0.9rem] text-text-body leading-[1.8] italic">
-                &ldquo;Notre mission est de rendre le digital accessible &agrave;
-                toutes les entreprises, avec des solutions qui font vraiment
-                la diff&eacute;rence.&rdquo;
-              </p>
-              <div className="mt-4">
-                <div className="text-[0.85rem] font-semibold text-text-dark">
-                  Fondateur, Agence HDS
-                </div>
-                <div className="text-[0.75rem] text-text-body mt-0.5">
-                  Aix-en-Provence
-                </div>
-              </div>
+            <div className="text-[0.75rem] text-text-body mt-0.5">
+              Aix-en-Provence
             </div>
-          </div>
-        </ScrollReveal>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
