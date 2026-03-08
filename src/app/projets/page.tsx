@@ -89,7 +89,7 @@ export default function ProjetsPage() {
         </section>
 
         {/* Projects grid */}
-        <section className="bg-light text-text-dark">
+        <section className="bg-dark text-white">
           <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
             {loading ? (
               <div className="flex justify-center py-20">
