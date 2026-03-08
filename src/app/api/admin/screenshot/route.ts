@@ -1,25 +1,18 @@
 import { NextRequest } from "next/server";
 import { getAdminUser, unauthorizedResponse, errorResponse } from "@/lib/api-auth";
-import { getApiKey } from "@/lib/encryption";
 import { supabaseAdmin, supabase } from "@/lib/supabase";
+import puppeteer from "puppeteer-core";
 
 export async function POST(request: NextRequest) {
   const admin = await getAdminUser(request);
   if (!admin) return unauthorizedResponse();
-
-  const apiKey = await getApiKey("screenshot_api_key");
-  if (!apiKey) {
-    return errorResponse(
-      "Clé API ScreenshotOne non configurée. Ajoutez-la dans Paramètres > Clés API.",
-      503,
-    );
-  }
 
   const db = supabaseAdmin || supabase;
   if (!db) {
     return errorResponse("Supabase non configuré", 500);
   }
 
+  let browser;
   try {
     const { url } = await request.json();
 
@@ -27,29 +20,43 @@ export async function POST(request: NextRequest) {
       return errorResponse("L'URL est requise.", 400);
     }
 
-    // Call ScreenshotOne API
-    const screenshotUrl = new URL("https://api.screenshotone.com/take");
-    screenshotUrl.searchParams.set("access_key", apiKey);
-    screenshotUrl.searchParams.set("url", url);
-    screenshotUrl.searchParams.set("viewport_width", "1280");
-    screenshotUrl.searchParams.set("viewport_height", "720");
-    screenshotUrl.searchParams.set("format", "png");
-    screenshotUrl.searchParams.set("block_ads", "true");
-    screenshotUrl.searchParams.set("block_cookie_banners", "true");
-    screenshotUrl.searchParams.set("timeout", "15");
+    // Find Chromium executable path
+    const executablePath =
+      process.env.PUPPETEER_EXECUTABLE_PATH ||
+      "/usr/bin/chromium-browser" ||
+      "/usr/bin/chromium";
 
-    const res = await fetch(screenshotUrl.toString(), {
-      signal: AbortSignal.timeout(20000),
+    browser = await puppeteer.launch({
+      executablePath,
+      headless: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--disable-extensions",
+        "--disable-background-networking",
+        "--single-process",
+      ],
     });
 
-    if (!res.ok) {
-      const errText = await res.text();
-      return errorResponse(`Erreur capture screenshot: ${errText}`, 502);
-    }
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1280, height: 720 });
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 20000 });
 
-    const imageBuffer = new Uint8Array(await res.arrayBuffer());
+    // Wait a bit for any late-loading content
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    const screenshotBuffer = await page.screenshot({
+      type: "png",
+      clip: { x: 0, y: 0, width: 1280, height: 720 },
+    });
+
+    await browser.close();
+    browser = undefined;
 
     // Upload to Supabase Storage
+    const imageBuffer = new Uint8Array(screenshotBuffer);
     const timestamp = Date.now();
     const randomId = Math.random().toString(36).substring(2, 8);
     const filename = `projects/${timestamp}-${randomId}.png`;
@@ -72,5 +79,9 @@ export async function POST(request: NextRequest) {
     const msg = error instanceof Error ? error.message : "Erreur lors de la capture";
     console.error("[screenshot]", error);
     return errorResponse(msg);
+  } finally {
+    if (browser) {
+      await browser.close().catch(() => {});
+    }
   }
 }

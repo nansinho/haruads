@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  serverExternalPackages: ["puppeteer-core"],
   experimental: {
     optimizePackageImports: ["framer-motion", "lucide-react"],
   },

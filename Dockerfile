@@ -15,9 +15,13 @@ RUN npm run build
 FROM node:22-alpine AS runner
 WORKDIR /app
 
+# Install Chromium for puppeteer-core (screenshot capture)
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
+
 ENV NODE_ENV=production
 ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
