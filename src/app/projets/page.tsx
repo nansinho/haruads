@@ -107,7 +107,7 @@ export default function ProjetsPage() {
                       href={`/projets/${project.slug}`}
                       className="flex flex-col h-full group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl hover:shadow-accent/5 transition-all duration-500"
                     >
-                      <div className="aspect-[16/10] relative overflow-hidden">
+                      <div className="aspect-[1884/1148] relative overflow-hidden">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={project.image_url}
