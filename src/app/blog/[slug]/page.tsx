@@ -355,7 +355,7 @@ export default function BlogArticle() {
                     <span className="text-[0.7rem] text-accent font-medium uppercase tracking-wider">
                       {rel.category}
                     </span>
-                    <h4 className="text-[0.95rem] font-serif text-text-dark group-hover:text-accent transition-colors mt-2 leading-[1.3]">
+                    <h4 className="text-[0.95rem] font-serif text-text-dark mt-2 leading-[1.3]">
                       {rel.title}
                     </h4>
                   </a>

@@ -654,7 +654,7 @@ export default function ProjetsAdminPage() {
               <p className="text-xs text-text-muted mt-1">Auto-généré depuis le titre</p>
             </div>
             <div className="sm:col-span-2">
-              <FormField label="Description" name="description" type="textarea" value={form.description} onChange={(v) => setForm({ ...form, description: v })} required placeholder="Description courte du projet (visible dans les listings)..." rows={3} />
+              <FormField label="Description" name="description" type="richtext" value={form.description} onChange={(v) => setForm({ ...form, description: v })} required placeholder="Description courte du projet (visible dans les listings)..." rows={3} />
             </div>
             <div className="sm:col-span-2">
               <ImageUpload
@@ -790,7 +790,7 @@ export default function ProjetsAdminPage() {
               <FormField
                 label="Description du défi"
                 name="challenge"
-                type="textarea"
+                type="richtext"
                 value={form.challenge}
                 onChange={(v) => setForm({ ...form, challenge: v })}
                 placeholder="Quel était le problème ou besoin du client ?"
@@ -805,7 +805,7 @@ export default function ProjetsAdminPage() {
               <FormField
                 label="Description de la solution"
                 name="solution"
-                type="textarea"
+                type="richtext"
                 value={form.solution}
                 onChange={(v) => setForm({ ...form, solution: v })}
                 placeholder="Comment avez-vous résolu le problème ?"

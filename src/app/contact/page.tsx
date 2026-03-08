@@ -192,7 +192,7 @@ export default function ContactPage() {
                           <div className="text-[0.78rem] text-text-body uppercase tracking-wider mb-1">
                             {info.label}
                           </div>
-                          <div className="text-[0.9rem] font-medium text-text-dark group-hover:text-accent transition-colors">
+                          <div className="text-[0.9rem] font-medium text-text-dark">
                             {info.value}
                           </div>
                         </div>

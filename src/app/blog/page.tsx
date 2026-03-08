@@ -112,7 +112,7 @@ export default function BlogPage() {
                         {featured.date} &bull; {featured.readTime} de lecture
                       </span>
                     </div>
-                    <h2 className="text-[1.4rem] lg:text-[2rem] font-semibold text-text-dark group-hover:text-accent transition-colors leading-[1.2]">
+                    <h2 className="text-[1.4rem] lg:text-[2rem] font-semibold text-text-dark leading-[1.2]">
                       {featured.title}
                     </h2>
                     <p className="text-[0.9rem] text-text-body leading-[1.7] mt-4">
@@ -166,7 +166,7 @@ export default function BlogPage() {
                       <div className="text-[0.7rem] text-text-body mb-3">
                         {article.date} &bull; {article.readTime} de lecture
                       </div>
-                      <h4 className="text-[1rem] font-semibold text-text-dark group-hover:text-accent transition-colors leading-[1.3]">
+                      <h4 className="text-[1rem] font-semibold text-text-dark leading-[1.3]">
                         {article.title}
                       </h4>
                       <p className="text-[0.8rem] text-text-body leading-[1.7] mt-2 line-clamp-2">

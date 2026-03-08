@@ -37,15 +37,15 @@ export default function Footer() {
           <h2 className="text-[1rem] font-semibold text-white/80 mb-4">
             Agence web &agrave; <span className="font-serif italic text-accent">Aix-en-Provence</span>
           </h2>
-          <p className="text-[0.78rem] text-text-muted leading-[1.8] max-w-[700px]">
+          <p className="text-[0.78rem] text-text-muted leading-[1.8]">
             L&apos;Agence HDS (Harua Digital Studio) accompagne les entreprises et
             entrepreneurs dans leur transformation digitale depuis Gardanne, au c&oelig;ur
             des Bouches-du-Rh&ocirc;ne. Sp&eacute;cialis&eacute;e en{" "}
-            <strong className="text-text-muted">cr&eacute;ation de sites internet</strong>,{" "}
-            <strong className="text-text-muted">applications web sur mesure</strong>,{" "}
-            <strong className="text-text-muted">e-commerce</strong>,{" "}
-            <strong className="text-text-muted">design UI/UX</strong> et{" "}
-            <strong className="text-text-muted">r&eacute;f&eacute;rencement naturel (SEO)</strong>,
+            <Link href="/services/developpement-web" className="text-text-muted font-semibold hover:text-accent transition-colors">cr&eacute;ation de sites internet</Link>,{" "}
+            <Link href="/services/solutions-saas" className="text-text-muted font-semibold hover:text-accent transition-colors">applications web sur mesure</Link>,{" "}
+            <Link href="/services/e-commerce" className="text-text-muted font-semibold hover:text-accent transition-colors">e-commerce</Link>,{" "}
+            <Link href="/services/design-uiux" className="text-text-muted font-semibold hover:text-accent transition-colors">design UI/UX</Link> et{" "}
+            <Link href="/services/branding-seo" className="text-text-muted font-semibold hover:text-accent transition-colors">r&eacute;f&eacute;rencement naturel (SEO)</Link>,
             nous concevons des solutions digitales performantes pour des clients &agrave;
             Aix-en-Provence, Marseille, Gardanne et partout en France.
           </p>

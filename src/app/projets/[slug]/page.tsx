@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import Breadcrumb from "@/components/Breadcrumb";
 import { formatCompletedAt } from "@/lib/utils";
+import { renderRichText } from "@/lib/renderRichText";
 import type { Project } from "@/types/database";
 
 export default function ProjectDetail() {
@@ -124,9 +125,7 @@ export default function ProjectDetail() {
               <h1 className="text-[2rem] sm:text-[2.8rem] lg:text-[3.5rem] leading-[1.08] tracking-[-0.02em]">
                 <span className="font-semibold">{project.title}</span>
               </h1>
-              <p className="text-[0.95rem] text-text-muted mt-5 max-w-[600px] leading-[1.8] font-light">
-                {project.description}
-              </p>
+              <p className="text-[0.95rem] text-text-muted mt-5 max-w-[600px] leading-[1.8] font-light whitespace-pre-line" dangerouslySetInnerHTML={{ __html: renderRichText(project.description) }} />
               {project.external_url && (
                 <motion.a
                   href={project.external_url}
@@ -180,9 +179,7 @@ export default function ProjectDetail() {
                         <span className="font-light">Comprendre le </span>
                         <span className="font-serif italic">problème.</span>
                       </h2>
-                      <p className="text-[0.95rem] text-text-dark/70 mt-5 leading-[1.8]">
-                        {project.challenge}
-                      </p>
+                      <p className="text-[0.95rem] text-text-dark/70 mt-5 leading-[1.8] whitespace-pre-line" dangerouslySetInnerHTML={{ __html: renderRichText(project.challenge || "") }} />
                     </div>
                   </ScrollReveal>
                 )}
@@ -197,9 +194,7 @@ export default function ProjectDetail() {
                         <span className="font-light">Notre </span>
                         <span className="font-serif italic">réponse.</span>
                       </h2>
-                      <p className="text-[0.95rem] text-text-dark/70 mt-5 leading-[1.8]">
-                        {project.solution}
-                      </p>
+                      <p className="text-[0.95rem] text-text-dark/70 mt-5 leading-[1.8] whitespace-pre-line" dangerouslySetInnerHTML={{ __html: renderRichText(project.solution || "") }} />
                     </div>
                   </ScrollReveal>
                 )}
