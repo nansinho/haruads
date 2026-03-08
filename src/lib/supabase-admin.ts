@@ -6,6 +6,7 @@ import type {
   BlogPost,
   Project,
   Offer,
+  Testimonial,
   City,
   LocalizedService,
   SeoPage,
@@ -216,6 +217,46 @@ export const offersService = {
   async delete(id: string) {
     const db = getClient();
     return db.from("offers").delete().eq("id", id);
+  },
+};
+
+// --- Testimonials ---
+export const testimonialsService = {
+  async list(filters: QueryFilters) {
+    const db = getClient();
+    let query = db.from("testimonials").select("*", { count: "exact" });
+
+    if (filters.search) {
+      query = query.or(`author_name.ilike.%${filters.search}%,content.ilike.%${filters.search}%,author_role.ilike.%${filters.search}%`);
+    }
+    if (filters.status === "active") {
+      query = query.eq("is_active", true);
+    } else if (filters.status === "inactive") {
+      query = query.eq("is_active", false);
+    }
+
+    query = query.order("sort_order", { ascending: true });
+    return paginate(query, filters);
+  },
+
+  async getById(id: string) {
+    const db = getClient();
+    return db.from("testimonials").select("*").eq("id", id).single();
+  },
+
+  async create(data: Partial<Testimonial>) {
+    const db = getClient();
+    return db.from("testimonials").insert(data).select().single();
+  },
+
+  async update(id: string, data: Partial<Testimonial>) {
+    const db = getClient();
+    return db.from("testimonials").update(data).eq("id", id).select().single();
+  },
+
+  async delete(id: string) {
+    const db = getClient();
+    return db.from("testimonials").delete().eq("id", id);
   },
 };
 
