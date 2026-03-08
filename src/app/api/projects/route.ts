@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       .from("projects")
       .select("id, title, slug, description, image_url, tags, client, completed_at, category, results, featured, sort_order")
       .eq("status", "published")
-      .order("sort_order", { ascending: true });
+      .order("completed_at", { ascending: false });
 
     if (error) return Response.json({ error: error.message }, { status: 400 });
     return Response.json(data);
