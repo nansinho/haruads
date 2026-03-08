@@ -10,10 +10,10 @@
   --color-cyan: #fb923c;
   --color-text-primary: #ffffff;
   --color-text-secondary: #c8c8d0;
-  --color-text-muted: #8b8b96;
+  --color-text-muted: #94949e;
   --color-light: #f8f8f8;
   --color-text-dark: #1a1a1a;
-  --color-text-body: #6b7280;
+  --color-text-body: #94949e;
   --color-border-dark: rgba(255, 255, 255, 0.06);
 
   --font-sans: var(--font-plus-jakarta, "Plus Jakarta Sans"), sans-serif;

@@ -43,41 +43,41 @@ const sections = [
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">Raison sociale</span>
+            <span className="text-text-muted text-xs uppercase tracking-wider">Raison sociale</span>
             <br />
             <strong className="text-white">Agence HDS</strong> (Harua Digital Studio)
           </p>
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">Statut juridique</span>
+            <span className="text-text-muted text-xs uppercase tracking-wider">Statut juridique</span>
             <br />
             Auto-entrepreneur (Micro-entreprise)
           </p>
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">SIRET</span>
+            <span className="text-text-muted text-xs uppercase tracking-wider">SIRET</span>
             <br />
             <strong className="text-white">810 696 096 00041</strong>
           </p>
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">
+            <span className="text-text-muted text-xs uppercase tracking-wider">
               Responsable de publication
             </span>
             <br />
             <strong className="text-white">Nans</strong>, en qualit&eacute; de g&eacute;rant
           </p>
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">Adresse</span>
+            <span className="text-text-muted text-xs uppercase tracking-wider">Adresse</span>
             <br />
             Gardanne (13120), France
           </p>
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">Email</span>
+            <span className="text-text-muted text-xs uppercase tracking-wider">Email</span>
             <br />
             <a href="mailto:contact@agencehds.fr" className="text-accent hover:underline">
               contact@agencehds.fr
             </a>
           </p>
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">T&eacute;l&eacute;phone</span>
+            <span className="text-text-muted text-xs uppercase tracking-wider">T&eacute;l&eacute;phone</span>
             <br />
             <a href="tel:+33624633054" className="text-accent hover:underline">
               06 24 63 30 54
@@ -95,17 +95,17 @@ const sections = [
         <p>Le site agencehds.fr est h&eacute;berg&eacute; par :</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">H&eacute;bergeur</span>
+            <span className="text-text-muted text-xs uppercase tracking-wider">H&eacute;bergeur</span>
             <br />
             <strong className="text-white">Hostinger International Ltd.</strong>
           </p>
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">Adresse</span>
+            <span className="text-text-muted text-xs uppercase tracking-wider">Adresse</span>
             <br />
             61 Lordou Vironos Street, 6023 Larnaca, Chypre
           </p>
           <p>
-            <span className="text-white/40 text-xs uppercase tracking-wider">Site web</span>
+            <span className="text-text-muted text-xs uppercase tracking-wider">Site web</span>
             <br />
             hostinger.fr
           </p>
@@ -157,7 +157,7 @@ const sections = [
             Les donn&eacute;es personnelles collect&eacute;es sur ce site sont
             limit&eacute;es au strict n&eacute;cessaire et incluent :
           </p>
-          <ul className="list-disc list-inside space-y-1 text-white/60">
+          <ul className="list-disc list-inside space-y-1 text-text-muted">
             <li>
               <strong className="text-white/80">Formulaire de contact :</strong> nom, email,
               t&eacute;l&eacute;phone, message
@@ -177,7 +177,7 @@ const sections = [
         </div>
         <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 space-y-3">
           <h4 className="text-white font-medium text-sm">Finalit&eacute;s du traitement</h4>
-          <ul className="list-disc list-inside space-y-1 text-white/60">
+          <ul className="list-disc list-inside space-y-1 text-text-muted">
             <li>R&eacute;pondre aux demandes de contact et devis</li>
             <li>G&eacute;rer l&apos;acc&egrave;s &agrave; l&apos;espace client</li>
             <li>Envoyer des communications commerciales (avec consentement)</li>
@@ -187,7 +187,7 @@ const sections = [
         <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 space-y-3">
           <h4 className="text-white font-medium text-sm">Vos droits</h4>
           <p>Vous disposez des droits suivants concernant vos donn&eacute;es personnelles :</p>
-          <ul className="list-disc list-inside space-y-1 text-white/60">
+          <ul className="list-disc list-inside space-y-1 text-text-muted">
             <li>
               <strong className="text-white/80">Droit d&apos;acc&egrave;s :</strong> obtenir la
               confirmation que vos donn&eacute;es sont trait&eacute;es et en recevoir une copie
@@ -320,14 +320,14 @@ const sections = [
     content: (
       <div className="space-y-2">
         <p>
-          <span className="text-white/40 text-xs uppercase tracking-wider">
+          <span className="text-text-muted text-xs uppercase tracking-wider">
             Conception &amp; D&eacute;veloppement
           </span>
           <br />
           <strong className="text-white">Agence HDS</strong> — agencehds.fr
         </p>
         <p>
-          <span className="text-white/40 text-xs uppercase tracking-wider">
+          <span className="text-text-muted text-xs uppercase tracking-wider">
             Technologies
           </span>
           <br />
@@ -366,7 +366,7 @@ export default function MentionsLegalesPage() {
               <span className="font-light">Mentions </span>
               <span className="font-serif italic text-accent">l&eacute;gales.</span>
             </h1>
-            <p className="text-white/50 text-[0.88rem] mt-4 max-w-[500px] leading-[1.7]">
+            <p className="text-text-muted text-[0.88rem] mt-4 max-w-[500px] leading-[1.7]">
               Informations l&eacute;gales, protection des donn&eacute;es et conditions
               d&apos;utilisation du site agencehds.fr.
             </p>
@@ -374,7 +374,7 @@ export default function MentionsLegalesPage() {
         </section>
 
         {/* Content */}
-        <section className="bg-dark text-white/70 border-t border-white/[0.04]">
+        <section className="bg-dark text-text-secondary border-t border-white/[0.04]">
           <div className="max-w-[900px] mx-auto px-5 py-[80px] lg:px-12">
             <div className="space-y-0">
               {sections.map((section, index) => (
@@ -401,7 +401,7 @@ export default function MentionsLegalesPage() {
 
             {/* Last update */}
             <div className="mt-12 pt-8 border-t border-white/[0.06] text-center">
-              <p className="text-white/30 text-[0.75rem]">
+              <p className="text-text-muted text-[0.75rem]">
                 Derni&egrave;re mise &agrave; jour : F&eacute;vrier 2026
               </p>
             </div>

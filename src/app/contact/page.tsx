@@ -80,7 +80,7 @@ export default function ContactPage() {
                 <span className="font-light">Parlons de votre </span>
                 <span className="font-serif italic text-accent">projet.</span>
               </h1>
-              <p className="text-[0.95rem] text-white/40 mt-5 max-w-[500px] leading-[1.8] font-light">
+              <p className="text-[0.95rem] text-text-muted mt-5 max-w-[500px] leading-[1.8] font-light">
                 Premier rendez-vous gratuit et sans engagement.
                 Réponse sous 24h garantie.
               </p>

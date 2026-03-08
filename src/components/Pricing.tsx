@@ -81,16 +81,16 @@ export default function Pricing() {
                     : "bg-light border border-gray-200"
                 }`}
               >
-                <div className={`text-[0.85rem] font-medium mb-4 ${plan.featured ? "text-white/70" : "text-text-body"}`}>
+                <div className={`text-[0.85rem] font-medium mb-4 ${plan.featured ? "text-text-secondary" : "text-text-body"}`}>
                   {plan.name}
                 </div>
                 <div className="flex items-baseline gap-1 mb-2">
                   <span className={`text-[2.8rem] font-serif leading-none ${plan.featured ? "text-white" : "text-text-dark"}`}>
                     {plan.price}&euro;
                   </span>
-                  <span className={`text-[0.8rem] ${plan.featured ? "text-white/60" : "text-text-body"}`}>/mois</span>
+                  <span className={`text-[0.8rem] ${plan.featured ? "text-text-muted" : "text-text-body"}`}>/mois</span>
                 </div>
-                <p className={`text-[0.8rem] leading-[1.6] mb-6 ${plan.featured ? "text-white/70" : "text-text-body"}`}>
+                <p className={`text-[0.8rem] leading-[1.6] mb-6 ${plan.featured ? "text-text-secondary" : "text-text-body"}`}>
                   {plan.desc}
                 </p>
 

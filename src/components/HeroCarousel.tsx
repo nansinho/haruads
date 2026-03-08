@@ -216,7 +216,7 @@ export default function HeroCarousel() {
                 <h2 className="text-[1.05rem] lg:text-[1.2rem] font-semibold text-white truncate">
                   {project.title}
                 </h2>
-                <p className="text-[0.75rem] text-white/40 mt-1 leading-[1.5] line-clamp-1">
+                <p className="text-[0.75rem] text-text-muted mt-1 leading-[1.5] line-clamp-1">
                   {project.description}
                 </p>
               </div>

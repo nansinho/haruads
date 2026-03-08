@@ -67,7 +67,7 @@ function LoginForm() {
             <span className="font-light text-white">Votre espace </span>
             <span className="font-serif italic text-accent">de gestion.</span>
           </h1>
-          <p className="text-[0.9rem] text-white/50 mt-3 max-w-[360px] leading-[1.7]">
+          <p className="text-[0.9rem] text-text-muted mt-3 max-w-[360px] leading-[1.7]">
             Agence HDS — Aix-en-Provence
           </p>
         </motion.div>

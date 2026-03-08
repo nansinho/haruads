@@ -44,12 +44,12 @@ const statusOptions = [
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
     new: "bg-blue-500/15 text-blue-400 border-blue-500/20",
-    read: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+    read: "bg-gray-500/15 text-text-muted border-gray-500/20",
     in_progress: "bg-violet-500/15 text-violet-400 border-violet-500/20",
     quoted: "bg-orange-500/15 text-orange-400 border-orange-500/20",
     accepted: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
     rejected: "bg-red-500/15 text-red-400 border-red-500/20",
-    expired: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+    expired: "bg-gray-500/15 text-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     new: "Nouveau",
@@ -60,7 +60,7 @@ function StatusBadge({ status }: { status: string }) {
     rejected: "Rejeté",
     expired: "Expiré",
   };
-  const color = colors[status] || "bg-gray-500/15 text-gray-400 border-gray-500/20";
+  const color = colors[status] || "bg-gray-500/15 text-text-muted border-gray-500/20";
   return (
     <span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}>
       {labels[status] || status}

@@ -95,7 +95,7 @@ export default function Projects() {
               <h3 className="text-[1.3rem] lg:text-[1.8rem] font-semibold text-white">
                 {featured.title}
               </h3>
-              <p className="text-[0.85rem] text-white/40 mt-1.5 max-w-[500px]">
+              <p className="text-[0.85rem] text-text-muted mt-1.5 max-w-[500px]">
                 {featured.desc}
               </p>
               <motion.span
@@ -132,7 +132,7 @@ export default function Projects() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 rounded-full bg-white/[0.08] backdrop-blur-sm text-[0.65rem] text-white/60"
+                        className="px-2 py-0.5 rounded-full bg-white/[0.08] backdrop-blur-sm text-[0.65rem] text-text-muted"
                       >
                         {tag}
                       </span>
@@ -141,7 +141,7 @@ export default function Projects() {
                   <h3 className="text-[0.95rem] font-serif text-white">
                     {project.title}
                   </h3>
-                  <p className="text-[0.75rem] text-white/35 mt-0.5">
+                  <p className="text-[0.75rem] text-text-muted mt-0.5">
                     {project.desc}
                   </p>
                 </div>

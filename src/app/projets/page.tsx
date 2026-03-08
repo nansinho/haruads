@@ -56,7 +56,7 @@ export default function ProjetsPage() {
                 <span className="font-light">Nos </span>
                 <span className="font-serif italic text-accent">réalisations.</span>
               </h1>
-              <p className="text-[0.95rem] text-white/40 mt-5 max-w-[500px] leading-[1.8] font-light">
+              <p className="text-[0.95rem] text-text-muted mt-5 max-w-[500px] leading-[1.8] font-light">
                 Chaque projet est une histoire unique. Découvrez comment nous avons
                 aidé nos clients à atteindre leurs objectifs.
               </p>
@@ -77,7 +77,7 @@ export default function ProjetsPage() {
                     className={`px-4 py-2 rounded-full text-[0.78rem] font-medium transition-all ${
                       activeCategory === cat
                         ? "bg-accent text-dark"
-                        : "bg-white/[0.06] text-white/50 hover:bg-white/[0.10] hover:text-white/80 border border-white/[0.06]"
+                        : "bg-white/[0.06] text-text-muted hover:bg-white/[0.10] hover:text-white/80 border border-white/[0.06]"
                     }`}
                   >
                     {cat === "all" ? "Tous les projets" : cat}
@@ -179,7 +179,7 @@ export default function ProjetsPage() {
                   <span className="font-light">Votre projet </span>
                   <span className="font-serif italic">est le prochain ?</span>
                 </h2>
-                <p className="text-[0.9rem] text-white/70 mt-4 leading-[1.7]">
+                <p className="text-[0.9rem] text-text-secondary mt-4 leading-[1.7]">
                   Rejoignez nos clients satisfaits et donnons vie à votre vision.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center mt-10">

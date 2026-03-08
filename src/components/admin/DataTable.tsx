@@ -36,9 +36,9 @@ export function StatusBadge({
     resolved: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
     completed: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
     in_progress: "bg-accent/10 text-accent border-accent/20",
-    draft: "bg-gray-500/15 text-gray-400 border-gray-500/20",
-    closed: "bg-gray-500/15 text-gray-400 border-gray-500/20",
-    archived: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+    draft: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    closed: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    archived: "bg-gray-500/15 text-text-muted border-gray-500/20",
     unread: "bg-accent/10 text-accent border-accent/20",
     waiting_client: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
     overdue: "bg-red-500/15 text-red-400 border-red-500/20",
@@ -46,11 +46,11 @@ export function StatusBadge({
     urgent: "bg-red-500/15 text-red-400 border-red-500/20",
     high: "bg-accent/10 text-accent border-accent/20",
     medium: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
-    low: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+    low: "bg-gray-500/15 text-text-muted border-gray-500/20",
     admin: "bg-accent/10 text-accent border-accent/20",
     client: "bg-blue-500/15 text-blue-400 border-blue-500/20",
     editor: "bg-cyan-500/15 text-cyan-400 border-cyan-500/20",
-    default: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+    default: "bg-gray-500/15 text-text-muted border-gray-500/20",
   };
 
   const color = colorMap[status] || colorMap.default;

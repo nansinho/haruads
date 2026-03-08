@@ -35,7 +35,7 @@ export default function HowWeWork() {
               <span className="font-light">Notre </span>
               <span className="font-serif italic">processus.</span>
             </h2>
-            <p className="text-[0.88rem] text-white/70 mt-4 leading-[1.7]">
+            <p className="text-[0.88rem] text-text-secondary mt-4 leading-[1.7]">
               Du brief &agrave; la mise en ligne, un processus clair et transparent.
             </p>
           </div>
@@ -51,7 +51,7 @@ export default function HowWeWork() {
                 <h3 className="text-[1rem] font-semibold text-white mt-4">
                   {step.title}
                 </h3>
-                <p className="text-[0.8rem] text-white/60 leading-[1.7] mt-2">
+                <p className="text-[0.8rem] text-text-muted leading-[1.7] mt-2">
                   {step.desc}
                 </p>
               </div>

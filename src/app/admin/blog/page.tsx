@@ -30,16 +30,16 @@ const filterTabs = [
 
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
-    draft: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+    draft: "bg-gray-500/15 text-text-muted border-gray-500/20",
     published: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-    archived: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+    archived: "bg-gray-500/15 text-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     draft: "Brouillon",
     published: "Publié",
     archived: "Archivé",
   };
-  const color = colors[status] || "bg-gray-500/15 text-gray-400 border-gray-500/20";
+  const color = colors[status] || "bg-gray-500/15 text-text-muted border-gray-500/20";
   return (
     <span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}>
       {labels[status] || status}

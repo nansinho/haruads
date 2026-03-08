@@ -40,14 +40,14 @@ export default function CookieBanner() {
             </div>
             <button
               onClick={handleRefuse}
-              className="text-white/30 hover:text-white/60 transition-colors shrink-0"
+              className="text-text-muted hover:text-text-secondary transition-colors shrink-0"
               aria-label="Fermer"
             >
               <X size={16} />
             </button>
           </div>
 
-          <p className="text-white/50 text-[0.78rem] leading-[1.7] mb-4">
+          <p className="text-text-muted text-[0.78rem] leading-[1.7] mb-4">
             Ce site utilise des cookies essentiels pour son fonctionnement et des
             cookies fonctionnels pour am&eacute;liorer votre exp&eacute;rience.{" "}
             <Link
@@ -67,7 +67,7 @@ export default function CookieBanner() {
             </button>
             <button
               onClick={handleRefuse}
-              className="flex-1 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] text-white/70 rounded-full text-[0.78rem] font-medium hover:bg-white/[0.08] transition-colors"
+              className="flex-1 px-4 py-2.5 bg-white/[0.04] border border-white/[0.08] text-text-secondary rounded-full text-[0.78rem] font-medium hover:bg-white/[0.08] transition-colors"
             >
               Refuser
             </button>

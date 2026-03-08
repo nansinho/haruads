@@ -37,15 +37,15 @@ export default function Footer() {
           <h2 className="text-[1rem] font-semibold text-white/80 mb-4">
             Agence web &agrave; <span className="font-serif italic text-accent">Aix-en-Provence</span>
           </h2>
-          <p className="text-[0.78rem] text-white/40 leading-[1.8] max-w-[700px]">
+          <p className="text-[0.78rem] text-text-muted leading-[1.8] max-w-[700px]">
             L&apos;Agence HDS (Harua Digital Studio) accompagne les entreprises et
             entrepreneurs dans leur transformation digitale depuis Gardanne, au c&oelig;ur
             des Bouches-du-Rh&ocirc;ne. Sp&eacute;cialis&eacute;e en{" "}
-            <strong className="text-white/50">cr&eacute;ation de sites internet</strong>,{" "}
-            <strong className="text-white/50">applications web sur mesure</strong>,{" "}
-            <strong className="text-white/50">e-commerce</strong>,{" "}
-            <strong className="text-white/50">design UI/UX</strong> et{" "}
-            <strong className="text-white/50">r&eacute;f&eacute;rencement naturel (SEO)</strong>,
+            <strong className="text-text-muted">cr&eacute;ation de sites internet</strong>,{" "}
+            <strong className="text-text-muted">applications web sur mesure</strong>,{" "}
+            <strong className="text-text-muted">e-commerce</strong>,{" "}
+            <strong className="text-text-muted">design UI/UX</strong> et{" "}
+            <strong className="text-text-muted">r&eacute;f&eacute;rencement naturel (SEO)</strong>,
             nous concevons des solutions digitales performantes pour des clients &agrave;
             Aix-en-Provence, Marseille, Gardanne et partout en France.
           </p>
@@ -57,7 +57,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
           <div>
             <Logo className="h-8 w-auto mb-4" />
-            <p className="text-[0.8rem] text-white/60 leading-[1.7] max-w-[260px]">
+            <p className="text-[0.8rem] text-text-muted leading-[1.7] max-w-[260px]">
               Agence web cr&eacute;ative sp&eacute;cialis&eacute;e en d&eacute;veloppement web et solutions digitales sur mesure.
             </p>
             <div className="flex gap-2.5 mt-5">
@@ -74,7 +74,7 @@ export default function Footer() {
                   whileHover={{ scale: 1.1, y: -2 }}
                   aria-label={social.name.charAt(0).toUpperCase() + social.name.slice(1)}
                 >
-                  <span className="text-[0.6rem] uppercase text-white/30 group-hover:text-dark font-bold transition-colors">
+                  <span className="text-[0.6rem] uppercase text-text-muted group-hover:text-dark font-bold transition-colors">
                     {social.name.charAt(0)}
                   </span>
                 </motion.a>
@@ -82,37 +82,37 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h3 className="text-[0.8rem] font-medium mb-4 text-white/60 uppercase tracking-wider">Navigation</h3>
+            <h3 className="text-[0.8rem] font-medium mb-4 text-text-muted uppercase tracking-wider">Navigation</h3>
             <ul className="list-none">
               {links.navigation.map((link) => (
                 <li key={link.label} className="mb-2.5">
-                  <Link href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</Link>
+                  <Link href={link.href} className="text-[0.8rem] text-text-muted hover:text-accent transition-colors duration-300">{link.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h3 className="text-[0.8rem] font-medium mb-4 text-white/60 uppercase tracking-wider">Entreprise</h3>
+            <h3 className="text-[0.8rem] font-medium mb-4 text-text-muted uppercase tracking-wider">Entreprise</h3>
             <ul className="list-none">
               {links.company.map((link) => (
                 <li key={link.label} className="mb-2.5">
-                  <Link href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</Link>
+                  <Link href={link.href} className="text-[0.8rem] text-text-muted hover:text-accent transition-colors duration-300">{link.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h3 className="text-[0.8rem] font-medium mb-4 text-white/60 uppercase tracking-wider">Contact</h3>
+            <h3 className="text-[0.8rem] font-medium mb-4 text-text-muted uppercase tracking-wider">Contact</h3>
             <ul className="list-none">
               {links.contact.map((link) => (
                 <li key={link.label} className="mb-2.5">
-                  <a href={link.href} className="text-[0.8rem] text-white/60 hover:text-accent transition-colors duration-300">{link.label}</a>
+                  <a href={link.href} className="text-[0.8rem] text-text-muted hover:text-accent transition-colors duration-300">{link.label}</a>
                 </li>
               ))}
             </ul>
           </div>
         </div>
-        <div className="border-t border-white/[0.04] pt-6 flex flex-col sm:flex-row items-center justify-between text-[0.7rem] text-white/50 gap-2">
+        <div className="border-t border-white/[0.04] pt-6 flex flex-col sm:flex-row items-center justify-between text-[0.7rem] text-text-muted gap-2">
           <span>&copy; {new Date().getFullYear()} Agence HDS. Tous droits r&eacute;serv&eacute;s.</span>
           <span>Con&ccedil;u avec passion &agrave; Aix-en-Provence</span>
         </div>
