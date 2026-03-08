@@ -221,8 +221,13 @@ export default function ProjectDetail() {
                   project.results.length <= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
                 }`}>
                   {project.results.map((r, i) => {
-                    // Auto-size: shorter values get bigger font
-                    const isShort = r.value.length <= 5;
+                    // Auto-size font based on value length
+                    const len = r.value.length;
+                    const sizeClass = len <= 3
+                      ? "text-[2.5rem] lg:text-[3rem]"
+                      : len <= 8
+                      ? "text-[1.8rem] lg:text-[2.2rem]"
+                      : "text-[1.3rem] lg:text-[1.6rem]";
                     return (
                       <motion.div
                         key={i}
@@ -232,9 +237,7 @@ export default function ProjectDetail() {
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.1 }}
                       >
-                        <span className={`font-serif text-white leading-none block break-words ${
-                          isShort ? "text-[2.5rem] lg:text-[3rem]" : "text-[1.5rem] lg:text-[1.8rem]"
-                        }`}>
+                        <span className={`font-serif italic text-white leading-tight block break-words ${sizeClass}`}>
                           {r.value}
                         </span>
                         <span className="text-[0.8rem] text-white/70 mt-2 block">
