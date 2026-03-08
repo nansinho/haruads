@@ -323,7 +323,7 @@ export default function AProposPage() {
                           className="h-full w-auto object-contain"
                         />
                       </div>
-                      <h3 className="text-[1.1rem] font-semibold text-text-dark mb-2 group-hover:text-accent transition-colors">
+                      <h3 className="text-[1.1rem] font-semibold text-text-dark mb-2">
                         {partner.name}
                       </h3>
                       <p className="text-[0.82rem] text-text-body leading-[1.7]">

@@ -320,10 +320,10 @@ export default function BlogAdminPage() {
             <p className="text-xs text-text-muted mt-1">Auto-généré depuis le titre</p>
           </div>
           <div className="sm:col-span-2">
-            <FormField label="Extrait" name="excerpt" type="textarea" value={form.excerpt} onChange={(v) => setForm({ ...form, excerpt: v })} placeholder="Résumé de l'article..." rows={3} />
+            <FormField label="Extrait" name="excerpt" type="richtext" value={form.excerpt} onChange={(v) => setForm({ ...form, excerpt: v })} placeholder="Résumé de l'article..." rows={3} />
           </div>
           <div className="sm:col-span-2">
-            <FormField label="Contenu" name="content" type="textarea" value={form.content} onChange={(v) => setForm({ ...form, content: v })} required placeholder="Contenu de l'article..." rows={10} />
+            <FormField label="Contenu" name="content" type="richtext" value={form.content} onChange={(v) => setForm({ ...form, content: v })} required placeholder="Contenu de l'article..." rows={10} />
           </div>
           <FormField label="Image de couverture" name="cover_image" type="url" value={form.cover_image} onChange={(v) => setForm({ ...form, cover_image: v })} placeholder="https://..." />
           <FormField label="Catégorie" name="category" value={form.category} onChange={(v) => setForm({ ...form, category: v })} placeholder="Marketing, SEO, etc." />

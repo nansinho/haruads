@@ -136,7 +136,7 @@ export default function ServicesPage() {
                         {service.num}
                       </span>
                       <div>
-                        <h2 className="text-[1.3rem] lg:text-[1.5rem] font-semibold text-text-dark mb-3 group-hover:text-accent transition-colors">
+                        <h2 className="text-[1.3rem] lg:text-[1.5rem] font-semibold text-text-dark mb-3">
                           {service.title}
                         </h2>
                         <p className="text-[0.88rem] text-text-body leading-[1.7]">

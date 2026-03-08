@@ -1032,7 +1032,7 @@ export default function ServiceDetail() {
                     <span className="text-[0.7rem] font-mono text-accent/60 uppercase tracking-wider">
                       {rs.num}
                     </span>
-                    <h3 className="text-[1.1rem] font-semibold text-text-dark mt-1 mb-2 group-hover:text-accent transition-colors">
+                    <h3 className="text-[1.1rem] font-semibold text-text-dark mt-1 mb-2">
                       {rs.title}
                     </h3>
                     <p className="text-[0.8rem] text-text-body leading-[1.7]">

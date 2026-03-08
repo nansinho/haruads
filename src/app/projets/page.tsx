@@ -132,7 +132,7 @@ export default function ProjetsPage() {
                       <div className="p-6 lg:p-8">
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <h3 className="text-[1.2rem] lg:text-[1.4rem] font-serif text-text-dark group-hover:text-accent transition-colors">
+                            <h3 className="text-[1.2rem] lg:text-[1.4rem] font-serif text-text-dark">
                               {project.title}
                             </h3>
                             {project.client && (

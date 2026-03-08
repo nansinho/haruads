@@ -1,9 +1,11 @@
 "use client";
 
+import RichTextarea from "./RichTextarea";
+
 interface FormFieldProps {
   label: string;
   name: string;
-  type?: "text" | "email" | "url" | "number" | "password" | "textarea" | "select";
+  type?: "text" | "email" | "url" | "number" | "password" | "textarea" | "richtext" | "select";
   value: string | number;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -36,7 +38,17 @@ export default function FormField({
         {required && <span className="text-red-400 ml-0.5">*</span>}
       </label>
 
-      {type === "textarea" ? (
+      {type === "richtext" ? (
+        <RichTextarea
+          id={name}
+          name={name}
+          value={String(value)}
+          onChange={onChange}
+          placeholder={placeholder}
+          rows={rows}
+          className={`${baseClasses} ${errorClasses} resize-none`}
+        />
+      ) : type === "textarea" ? (
         <textarea
           id={name}
           name={name}
