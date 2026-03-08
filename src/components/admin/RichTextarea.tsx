@@ -210,7 +210,7 @@ export default function RichTextarea({
   const btnActive =
     "bg-accent/15 text-accent border-accent/20";
   const btnInactive =
-    "text-text-muted hover:text-text-primary hover:bg-white/[0.06] border-transparent hover:border-white/[0.08]";
+    "text-admin-text-muted hover:text-admin-text hover:bg-admin-hover border-transparent hover:border-admin-input-border";
 
   const minHeight = rows * 24;
 
@@ -232,7 +232,7 @@ export default function RichTextarea({
       <div className="flex items-center gap-0.5 mb-1.5 px-1">
         {toolbarButtons.map((btn, i) => {
           if (btn === "sep") {
-            return <div key={`sep-${i}`} className="w-px h-5 bg-white/[0.08] mx-1" />;
+            return <div key={`sep-${i}`} className="w-px h-5 bg-admin-input-border mx-1" />;
           }
           const Icon = btn.icon;
           const isActive = activeFormats.has(btn.key);
@@ -265,7 +265,7 @@ export default function RichTextarea({
           onBlur={handleInput}
           data-placeholder={placeholder}
           style={{ minHeight: `${minHeight}px` }}
-          className={`${className} [&:empty]:before:content-[attr(data-placeholder)] [&:empty]:before:text-text-muted [&:empty]:before:pointer-events-none [&_a]:underline [&_a]:text-accent [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-1 [&_li]:py-0.5`}
+          className={`${className} [&:empty]:before:content-[attr(data-placeholder)] [&:empty]:before:text-admin-text-muted [&:empty]:before:pointer-events-none [&_a]:underline [&_a]:text-accent [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-1 [&_li]:py-0.5`}
         />
       </div>
     </div>

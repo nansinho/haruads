@@ -30,16 +30,16 @@ const filterTabs = [
 
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
-    draft: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    draft: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
     published: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-    archived: "bg-gray-500/15 text-text-muted border-gray-500/20",
+    archived: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     draft: "Brouillon",
     published: "Publié",
     archived: "Archivé",
   };
-  const color = colors[status] || "bg-gray-500/15 text-text-muted border-gray-500/20";
+  const color = colors[status] || "bg-gray-500/15 text-admin-text-muted border-gray-500/20";
   return (
     <span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}>
       {labels[status] || status}
@@ -172,7 +172,7 @@ export default function BlogAdminPage() {
         subtitle="Gérez vos articles de blog, brouillons et publications."
         actions={
           <>
-            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm">
               <RefreshCw size={16} />
               Actualiser
             </button>
@@ -186,15 +186,15 @@ export default function BlogAdminPage() {
 
       {/* Filters & Search */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-4 space-y-4">
           <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-admin-text-muted" />
             <input
               type="text"
               placeholder="Rechercher un article..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -205,7 +205,7 @@ export default function BlogAdminPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-admin-card text-admin-text-secondary border border-admin-card-border hover:bg-admin-hover hover:text-admin-text rounded-full"
                 }`}
               >
                 {filter.label}
@@ -217,7 +217,7 @@ export default function BlogAdminPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-16">
               <Loader2 size={24} className="text-accent animate-spin" />
@@ -226,43 +226,43 @@ export default function BlogAdminPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Titre</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Catégorie</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Statut</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Date de publication</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Vues</th>
-                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Actions</th>
+                  <tr className="border-b border-admin-card-border">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Titre</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Catégorie</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Statut</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Date de publication</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Vues</th>
+                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.06]">
+                <tbody className="divide-y divide-admin-card-border">
                   {posts.length > 0 ? (
                     posts.map((post) => (
-                      <tr key={post.id} className="hover:bg-white/[0.02] transition-colors">
+                      <tr key={post.id} className="hover:bg-admin-hover transition-colors">
                         <td className="px-6 py-4">
                           <div>
-                            <span className="text-sm font-medium text-text-primary">{post.title}</span>
-                            <p className="text-xs text-text-muted font-mono mt-0.5">/{post.slug}</p>
+                            <span className="text-sm font-medium text-admin-text">{post.title}</span>
+                            <p className="text-xs text-admin-text-muted font-mono mt-0.5">/{post.slug}</p>
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-text-secondary">{post.category || "-"}</span>
+                          <span className="text-sm text-admin-text-secondary">{post.category || "-"}</span>
                         </td>
                         <td className="px-6 py-4">
                           <StatusBadge status={post.status} />
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-text-muted">{formatDate(post.published_at)}</span>
+                          <span className="text-sm text-admin-text-muted">{formatDate(post.published_at)}</span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-text-secondary">{post.views_count}</span>
+                          <span className="text-sm text-admin-text-secondary">{post.views_count}</span>
                         </td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => openEdit(post)} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all">
+                            <button onClick={() => openEdit(post)} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-admin-text transition-all">
                               <Pencil size={16} />
                             </button>
-                            <button onClick={() => { setSelectedPost(post); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-all">
+                            <button onClick={() => { setSelectedPost(post); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-red-400 transition-all">
                               <Trash2 size={16} />
                             </button>
                           </div>
@@ -273,12 +273,12 @@ export default function BlogAdminPage() {
                     <tr>
                       <td colSpan={6} className="px-6 py-16 text-center">
                         <div className="flex flex-col items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center">
-                            <FileText size={24} className="text-text-muted" />
+                          <div className="w-12 h-12 rounded-2xl bg-admin-input-bg border border-admin-card-border flex items-center justify-center">
+                            <FileText size={24} className="text-admin-text-muted" />
                           </div>
                           <div>
-                            <p className="text-text-muted font-medium">Aucun article trouvé</p>
-                            <p className="text-text-muted text-sm mt-1">Créez votre premier article de blog</p>
+                            <p className="text-admin-text-muted font-medium">Aucun article trouvé</p>
+                            <p className="text-admin-text-muted text-sm mt-1">Créez votre premier article de blog</p>
                           </div>
                           <button onClick={openCreate} className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-accent-dim text-accent border border-accent/20 rounded-full hover:bg-accent/20 transition-all text-sm font-medium">
                             <Plus size={16} />
@@ -304,7 +304,7 @@ export default function BlogAdminPage() {
         size="xl"
         footer={
           <>
-            <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all">
+            <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all">
               Annuler
             </button>
             <button onClick={handleSave} disabled={saving} className="px-4 py-2 text-sm font-semibold text-dark bg-accent rounded-full hover:bg-accent-hover transition-all disabled:opacity-50">
@@ -317,7 +317,7 @@ export default function BlogAdminPage() {
           <FormField label="Titre" name="title" value={form.title} onChange={handleTitleChange} required placeholder="Mon article" />
           <div>
             <FormField label="Slug" name="slug" value={form.slug} onChange={(v) => setForm({ ...form, slug: v })} placeholder="mon-article" />
-            <p className="text-xs text-text-muted mt-1">Auto-généré depuis le titre</p>
+            <p className="text-xs text-admin-text-muted mt-1">Auto-généré depuis le titre</p>
           </div>
           <div className="sm:col-span-2">
             <FormField label="Extrait" name="excerpt" type="richtext" value={form.excerpt} onChange={(v) => setForm({ ...form, excerpt: v })} placeholder="Résumé de l'article..." rows={3} />

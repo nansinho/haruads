@@ -188,7 +188,7 @@ export default function PrixPage() {
           <>
             <button
               onClick={refetch}
-              className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm"
+              className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm"
             >
               <RefreshCw size={16} />
               Actualiser
@@ -207,36 +207,36 @@ export default function PrixPage() {
       {/* Stats */}
       <AnimatedSection>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <Tag size={20} className="text-accent" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Total prix configures</p>
-                <p className="text-2xl font-bold text-text-primary">{prices.length}</p>
+                <p className="text-sm text-admin-text-muted">Total prix configures</p>
+                <p className="text-2xl font-bold text-admin-text">{prices.length}</p>
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-emerald-500/10 rounded-xl">
                 <CheckCircle size={20} className="text-emerald-400" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Promotions actives</p>
-                <p className="text-2xl font-bold text-text-primary">{activeCount}</p>
+                <p className="text-sm text-admin-text-muted">Promotions actives</p>
+                <p className="text-2xl font-bold text-admin-text">{activeCount}</p>
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-orange-500/10 rounded-xl">
                 <Percent size={20} className="text-orange-400" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Reduction moyenne</p>
-                <p className="text-2xl font-bold text-text-primary">{avgDiscount.toFixed(0)}%</p>
+                <p className="text-sm text-admin-text-muted">Reduction moyenne</p>
+                <p className="text-2xl font-bold text-admin-text">{avgDiscount.toFixed(0)}%</p>
               </div>
             </div>
           </div>
@@ -245,15 +245,15 @@ export default function PrixPage() {
 
       {/* Filters */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-4 space-y-4">
           <div className="relative">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-admin-text-muted" />
             <input
               type="text"
               placeholder="Rechercher un prix..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+              className="w-full pl-10 pr-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -264,7 +264,7 @@ export default function PrixPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-admin-card text-admin-text-secondary border border-admin-card-border hover:bg-admin-hover hover:text-admin-text rounded-full"
                 }`}
               >
                 {filter.label}
@@ -276,8 +276,8 @@ export default function PrixPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-text-primary mb-6">Liste des prix</h2>
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-admin-text mb-6">Liste des prix</h2>
 
           {loading ? (
             <div className="flex justify-center py-16">
@@ -287,60 +287,60 @@ export default function PrixPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
-                    <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                  <tr className="border-b border-admin-card-border">
+                    <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Nom
                     </th>
-                    <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Offre
                     </th>
-                    <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Prix de base
                     </th>
-                    <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Prix actuel
                     </th>
-                    <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Reduction %
                     </th>
-                    <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Valide du
                     </th>
-                    <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Valide au
                     </th>
-                    <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Actif
                     </th>
-                    <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.06]">
+                <tbody className="divide-y divide-admin-card-border">
                   {prices.length > 0 ? (
                     prices.map((price) => (
                       <tr
                         key={price.id}
-                        className="hover:bg-white/[0.02] transition-colors"
+                        className="hover:bg-admin-hover transition-colors"
                       >
                         <td className="py-3.5 px-4">
-                          <span className="text-sm text-text-primary font-medium">
+                          <span className="text-sm text-admin-text font-medium">
                             {price.name}
                           </span>
                         </td>
                         <td className="py-3.5 px-4">
-                          <span className="text-sm text-text-secondary">
+                          <span className="text-sm text-admin-text-secondary">
                             {price.offer_name || "-"}
                           </span>
                         </td>
                         <td className="py-3.5 px-4 text-right">
-                          <span className="text-sm text-text-muted">
+                          <span className="text-sm text-admin-text-muted">
                             {price.base_price.toLocaleString("fr-FR")} &euro;
                           </span>
                         </td>
                         <td className="py-3.5 px-4 text-right">
-                          <span className="text-sm text-text-primary font-medium">
+                          <span className="text-sm text-admin-text font-medium">
                             {price.current_price.toLocaleString("fr-FR")} &euro;
                           </span>
                         </td>
@@ -351,18 +351,18 @@ export default function PrixPage() {
                               -{price.discount_percent}%
                             </span>
                           ) : (
-                            <span className="text-sm text-text-muted">-</span>
+                            <span className="text-sm text-admin-text-muted">-</span>
                           )}
                         </td>
                         <td className="py-3.5 px-4">
-                          <span className="text-sm text-text-muted flex items-center gap-1.5">
-                            <Calendar size={12} className="text-text-muted" />
+                          <span className="text-sm text-admin-text-muted flex items-center gap-1.5">
+                            <Calendar size={12} className="text-admin-text-muted" />
                             {formatDate(price.valid_from)}
                           </span>
                         </td>
                         <td className="py-3.5 px-4">
-                          <span className="text-sm text-text-muted flex items-center gap-1.5">
-                            <Calendar size={12} className="text-text-muted" />
+                          <span className="text-sm text-admin-text-muted flex items-center gap-1.5">
+                            <Calendar size={12} className="text-admin-text-muted" />
                             {formatDate(price.valid_until)}
                           </span>
                         </td>
@@ -383,7 +383,7 @@ export default function PrixPage() {
                           <div className="flex items-center justify-end gap-1">
                             <button
                               onClick={() => openEdit(price)}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-accent transition-colors"
+                              className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-accent transition-colors"
                               title="Modifier"
                             >
                               <Pencil size={14} />
@@ -393,7 +393,7 @@ export default function PrixPage() {
                                 setSelectedItem(price);
                                 setShowDelete(true);
                               }}
-                              className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-colors"
+                              className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-red-400 transition-colors"
                               title="Supprimer"
                             >
                               <Trash2 size={14} />
@@ -405,8 +405,8 @@ export default function PrixPage() {
                   ) : (
                     <tr>
                       <td colSpan={9} className="text-center py-12">
-                        <DollarSign size={40} className="mx-auto text-text-muted mb-3" />
-                        <p className="text-text-muted">Aucun prix trouve</p>
+                        <DollarSign size={40} className="mx-auto text-admin-text-muted mb-3" />
+                        <p className="text-admin-text-muted">Aucun prix trouve</p>
                       </td>
                     </tr>
                   )}
@@ -427,7 +427,7 @@ export default function PrixPage() {
           <>
             <button
               onClick={() => setShowModal(false)}
-              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+              className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all"
             >
               Annuler
             </button>
@@ -497,32 +497,32 @@ export default function PrixPage() {
           />
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="block text-sm font-medium text-text-secondary">
+              <label className="block text-sm font-medium text-admin-text-secondary">
                 Valide du
               </label>
               <input
                 type="date"
                 value={form.valid_from}
                 onChange={(e) => setForm({ ...form, valid_from: e.target.value })}
-                className="w-full px-4 py-2.5 bg-dark border border-white/[0.08] rounded-xl text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all"
+                className="w-full px-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-xl text-sm text-admin-text focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="block text-sm font-medium text-text-secondary">
+              <label className="block text-sm font-medium text-admin-text-secondary">
                 Valide au
               </label>
               <input
                 type="date"
                 value={form.valid_until}
                 onChange={(e) => setForm({ ...form, valid_until: e.target.value })}
-                className="w-full px-4 py-2.5 bg-dark border border-white/[0.08] rounded-xl text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all"
+                className="w-full px-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-xl text-sm text-admin-text focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent/30 transition-all"
               />
             </div>
           </div>
-          <div className="flex items-center justify-between p-4 bg-dark rounded-xl border border-white/[0.06]">
+          <div className="flex items-center justify-between p-4 bg-admin-input-bg rounded-xl border border-admin-card-border">
             <div>
-              <p className="text-sm font-medium text-text-primary">Actif</p>
-              <p className="text-xs text-text-muted">Activer ou desactiver ce prix</p>
+              <p className="text-sm font-medium text-admin-text">Actif</p>
+              <p className="text-xs text-admin-text-muted">Activer ou desactiver ce prix</p>
             </div>
             <button
               type="button"

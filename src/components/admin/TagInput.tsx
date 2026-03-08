@@ -45,9 +45,9 @@ export default function TagInput({ label, tags, onChange, placeholder = "Ajouter
 
   return (
     <div className="space-y-1.5" ref={wrapperRef}>
-      <label className="block text-sm font-medium text-text-secondary">{label}</label>
+      <label className="block text-sm font-medium text-admin-text-secondary">{label}</label>
       <div className="relative">
-        <div className="flex flex-wrap gap-2 p-3 bg-dark border border-white/[0.08] rounded-xl min-h-[42px]">
+        <div className="flex flex-wrap gap-2 p-3 bg-admin-input-bg border border-admin-input-border rounded-xl min-h-[42px]">
           {tags.map((tag, i) => (
             <span
               key={i}
@@ -75,7 +75,7 @@ export default function TagInput({ label, tags, onChange, placeholder = "Ajouter
                 }
               }}
               placeholder={placeholder}
-              className="flex-1 bg-transparent text-sm text-text-primary placeholder-text-muted outline-none"
+              className="flex-1 bg-transparent text-sm text-admin-text placeholder-admin-text-muted outline-none"
             />
             {input.trim() && (
               <button onClick={() => addTag()} className="text-accent hover:text-accent-hover transition-colors">
@@ -87,13 +87,13 @@ export default function TagInput({ label, tags, onChange, placeholder = "Ajouter
 
         {/* Suggestions dropdown */}
         {showSuggestions && filteredSuggestions.length > 0 && (
-          <div className="absolute z-10 w-full mt-1 bg-dark-2 border border-white/[0.10] rounded-xl shadow-lg max-h-40 overflow-y-auto">
+          <div className="absolute z-10 w-full mt-1 bg-admin-card border border-admin-card-border rounded-xl shadow-lg max-h-40 overflow-y-auto">
             {filteredSuggestions.slice(0, 10).map((suggestion) => (
               <button
                 key={suggestion}
                 type="button"
                 onClick={() => addTag(suggestion)}
-                className="w-full text-left px-3 py-2 text-sm text-text-secondary hover:text-accent hover:bg-white/[0.04] transition-colors first:rounded-t-xl last:rounded-b-xl"
+                className="w-full text-left px-3 py-2 text-sm text-admin-text-secondary hover:text-accent hover:bg-admin-hover transition-colors first:rounded-t-xl last:rounded-b-xl"
               >
                 {suggestion}
               </button>

@@ -88,13 +88,13 @@ export default function ImageUpload({ value, onChange, label = "Image", required
 
   return (
     <div className="space-y-1.5">
-      <label className="block text-sm font-medium text-text-secondary">
+      <label className="block text-sm font-medium text-admin-text-secondary">
         {label}
         {required && <span className="text-red-400 ml-0.5">*</span>}
       </label>
 
       {value ? (
-        <div className="relative group rounded-xl overflow-hidden border border-white/[0.10] bg-dark">
+        <div className="relative group rounded-xl overflow-hidden border border-admin-card-border bg-admin-input-bg">
           <img
             src={value}
             alt="Aperçu"
@@ -116,7 +116,7 @@ export default function ImageUpload({ value, onChange, label = "Image", required
               <X size={16} />
             </button>
           </div>
-          <div className="px-3 py-2 bg-dark-2 text-xs text-text-muted truncate">
+          <div className="px-3 py-2 bg-admin-input-bg text-xs text-admin-text-muted truncate">
             {value}
           </div>
         </div>
@@ -129,13 +129,13 @@ export default function ImageUpload({ value, onChange, label = "Image", required
           className={`relative flex flex-col items-center justify-center gap-3 p-8 rounded-xl border-2 border-dashed cursor-pointer transition-all ${
             dragging
               ? "border-accent bg-accent/10"
-              : "border-white/[0.12] hover:border-accent/40 hover:bg-white/[0.02]"
+              : "border-admin-input-border hover:border-accent/40 hover:bg-admin-hover"
           } ${uploading ? "pointer-events-none opacity-60" : ""}`}
         >
           {uploading ? (
             <>
               <Loader2 size={28} className="text-accent animate-spin" />
-              <p className="text-sm text-text-secondary">Upload en cours...</p>
+              <p className="text-sm text-admin-text-secondary">Upload en cours...</p>
             </>
           ) : (
             <>
@@ -147,10 +147,10 @@ export default function ImageUpload({ value, onChange, label = "Image", required
                 )}
               </div>
               <div className="text-center">
-                <p className="text-sm text-text-primary font-medium">
+                <p className="text-sm text-admin-text font-medium">
                   {dragging ? "Relâchez pour uploader" : "Cliquez ou glissez-déposez"}
                 </p>
-                <p className="text-xs text-text-muted mt-1">
+                <p className="text-xs text-admin-text-muted mt-1">
                   JPG, PNG, WebP, GIF, SVG - 5 Mo max
                 </p>
               </div>
@@ -162,7 +162,7 @@ export default function ImageUpload({ value, onChange, label = "Image", required
       {/* URL manual input fallback */}
       {!value && !uploading && (
         <div className="flex items-center gap-2 mt-2">
-          <span className="text-xs text-text-muted">ou</span>
+          <span className="text-xs text-admin-text-muted">ou</span>
           <input
             type="url"
             placeholder="Coller une URL d'image..."
@@ -180,7 +180,7 @@ export default function ImageUpload({ value, onChange, label = "Image", required
                 }
               }
             }}
-            className="flex-1 px-3 py-1.5 bg-dark border border-white/[0.10] rounded-lg text-xs text-text-primary placeholder-text-muted focus:outline-none focus:ring-1 focus:ring-accent/50 transition-all"
+            className="flex-1 px-3 py-1.5 bg-admin-input-bg border border-admin-input-border rounded-lg text-xs text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-1 focus:ring-accent/50 transition-all"
           />
         </div>
       )}

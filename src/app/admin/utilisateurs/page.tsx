@@ -36,7 +36,7 @@ function StatusBadge({ isActive }: { isActive: boolean }) {
       Actif
     </span>
   ) : (
-    <span className="inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border bg-gray-500/15 text-text-muted border-gray-500/20">
+    <span className="inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border bg-gray-500/15 text-admin-text-muted border-gray-500/20">
       Inactif
     </span>
   );
@@ -53,7 +53,7 @@ function RoleBadge({ role }: { role: string }) {
     client: "Client",
     editor: "Éditeur",
   };
-  const color = colors[role] || "bg-gray-500/15 text-text-muted border-gray-500/20";
+  const color = colors[role] || "bg-gray-500/15 text-admin-text-muted border-gray-500/20";
   return (
     <span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}>
       {labels[role] || role}
@@ -194,11 +194,11 @@ export default function UtilisateursPage() {
         subtitle="Gérez les utilisateurs et leurs rôles"
         actions={
           <>
-            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm">
               <Download size={16} />
               Exporter
             </button>
-            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm">
+            <button onClick={refetch} className="flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-all text-sm">
               <RefreshCw size={16} />
               Actualiser
             </button>
@@ -212,15 +212,15 @@ export default function UtilisateursPage() {
 
       {/* Filters & Search */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-4 space-y-4">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-4 space-y-4">
           <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-admin-text-muted" />
             <input
               type="text"
               placeholder="Rechercher par nom, email, entreprise..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -231,7 +231,7 @@ export default function UtilisateursPage() {
                 className={`px-3.5 py-1.5 text-sm font-medium transition-all ${
                   activeFilter === filter.key
                     ? "bg-accent-dim text-accent border border-accent/20 rounded-full"
-                    : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary rounded-full"
+                    : "bg-admin-card text-admin-text-secondary border border-admin-card-border hover:bg-admin-hover hover:text-admin-text rounded-full"
                 }`}
               >
                 {filter.label}
@@ -243,7 +243,7 @@ export default function UtilisateursPage() {
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-16">
               <Loader2 size={24} className="text-accent animate-spin" />
@@ -252,32 +252,32 @@ export default function UtilisateursPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Nom</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Email</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Rôle</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Entreprise</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Dernière connexion</th>
-                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Statut</th>
-                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">Actions</th>
+                  <tr className="border-b border-admin-card-border">
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Nom</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Email</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Rôle</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Entreprise</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Dernière connexion</th>
+                    <th className="text-left px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Statut</th>
+                    <th className="text-right px-6 py-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.06]">
+                <tbody className="divide-y divide-admin-card-border">
                   {users.length > 0 ? (
                     users.map((user) => (
-                      <tr key={user.id} className="hover:bg-white/[0.02] transition-colors">
+                      <tr key={user.id} className="hover:bg-admin-hover transition-colors">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-xs font-bold text-accent">
                               {(user.name || user.email).charAt(0).toUpperCase()}
                             </div>
-                            <span className="text-sm font-medium text-text-primary">{user.name || "-"}</span>
+                            <span className="text-sm font-medium text-admin-text">{user.name || "-"}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-secondary">{user.email}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text-secondary">{user.email}</span></td>
                         <td className="px-6 py-4"><RoleBadge role={user.role} /></td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-secondary">{user.company || "-"}</span></td>
-                        <td className="px-6 py-4"><span className="text-sm text-text-muted">{formatDate(user.last_login) || "Jamais"}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text-secondary">{user.company || "-"}</span></td>
+                        <td className="px-6 py-4"><span className="text-sm text-admin-text-muted">{formatDate(user.last_login) || "Jamais"}</span></td>
                         <td className="px-6 py-4">
                           <button onClick={() => toggleActive(user)}>
                             <StatusBadge isActive={user.is_active} />
@@ -285,13 +285,13 @@ export default function UtilisateursPage() {
                         </td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => { setSelectedUser(user); setShowDetail(true); }} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all">
+                            <button onClick={() => { setSelectedUser(user); setShowDetail(true); }} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-admin-text transition-all">
                               <Eye size={16} />
                             </button>
-                            <button onClick={() => openEdit(user)} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-text-primary transition-all">
+                            <button onClick={() => openEdit(user)} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-admin-text transition-all">
                               <Pencil size={16} />
                             </button>
-                            <button onClick={() => { setSelectedUser(user); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-all">
+                            <button onClick={() => { setSelectedUser(user); setShowDelete(true); }} className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-red-400 transition-all">
                               <Trash2 size={16} />
                             </button>
                           </div>
@@ -302,12 +302,12 @@ export default function UtilisateursPage() {
                     <tr>
                       <td colSpan={7} className="px-6 py-16 text-center">
                         <div className="flex flex-col items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-dark border border-white/[0.06] flex items-center justify-center">
-                            <Users size={24} className="text-text-muted" />
+                          <div className="w-12 h-12 rounded-2xl bg-admin-input-bg border border-admin-card-border flex items-center justify-center">
+                            <Users size={24} className="text-admin-text-muted" />
                           </div>
                           <div>
-                            <p className="text-text-muted font-medium">Aucun utilisateur</p>
-                            <p className="text-text-muted text-sm mt-1">Les utilisateurs enregistrés apparaîtront ici</p>
+                            <p className="text-admin-text-muted font-medium">Aucun utilisateur</p>
+                            <p className="text-admin-text-muted text-sm mt-1">Les utilisateurs enregistrés apparaîtront ici</p>
                           </div>
                           <button onClick={openCreate} className="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-accent-dim text-accent border border-accent/20 rounded-full hover:bg-accent/20 transition-all text-sm font-medium">
                             <Plus size={16} />
@@ -332,7 +332,7 @@ export default function UtilisateursPage() {
         size="md"
         footer={
           <>
-            <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all">
+            <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all">
               Annuler
             </button>
             <button onClick={handleSave} disabled={saving} className="px-4 py-2 text-sm font-semibold text-dark bg-accent rounded-full hover:bg-accent-hover transition-all disabled:opacity-50">
@@ -358,46 +358,46 @@ export default function UtilisateursPage() {
         title="Détails de l'utilisateur"
         size="md"
         footer={
-          <button onClick={() => setShowDetail(false)} className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all">
+          <button onClick={() => setShowDetail(false)} className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all">
             Fermer
           </button>
         }
       >
         {selectedUser && (
           <div className="space-y-4">
-            <div className="flex items-center gap-4 pb-4 border-b border-white/[0.06]">
+            <div className="flex items-center gap-4 pb-4 border-b border-admin-card-border">
               <div className="w-14 h-14 rounded-2xl bg-accent/20 flex items-center justify-center text-xl font-bold text-accent">
                 {(selectedUser.name || selectedUser.email).charAt(0).toUpperCase()}
               </div>
               <div>
-                <h3 className="text-lg font-serif text-text-primary">{selectedUser.name || "-"}</h3>
-                <p className="text-sm text-text-muted">{selectedUser.email}</p>
+                <h3 className="text-lg font-serif text-admin-text">{selectedUser.name || "-"}</h3>
+                <p className="text-sm text-admin-text-muted">{selectedUser.email}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-xs text-text-muted mb-1">Rôle</p>
+                <p className="text-xs text-admin-text-muted mb-1">Rôle</p>
                 <RoleBadge role={selectedUser.role} />
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Statut</p>
+                <p className="text-xs text-admin-text-muted mb-1">Statut</p>
                 <StatusBadge isActive={selectedUser.is_active} />
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Entreprise</p>
-                <p className="text-sm text-text-primary">{selectedUser.company || "-"}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Entreprise</p>
+                <p className="text-sm text-admin-text">{selectedUser.company || "-"}</p>
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Téléphone</p>
-                <p className="text-sm text-text-primary">{selectedUser.phone || "-"}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Téléphone</p>
+                <p className="text-sm text-admin-text">{selectedUser.phone || "-"}</p>
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Dernière connexion</p>
-                <p className="text-sm text-text-primary">{formatDate(selectedUser.last_login) || "Jamais"}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Dernière connexion</p>
+                <p className="text-sm text-admin-text">{formatDate(selectedUser.last_login) || "Jamais"}</p>
               </div>
               <div>
-                <p className="text-xs text-text-muted mb-1">Inscrit le</p>
-                <p className="text-sm text-text-primary">{formatDate(selectedUser.created_at)}</p>
+                <p className="text-xs text-admin-text-muted mb-1">Inscrit le</p>
+                <p className="text-sm text-admin-text">{formatDate(selectedUser.created_at)}</p>
               </div>
             </div>
           </div>

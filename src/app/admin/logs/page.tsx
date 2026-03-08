@@ -135,14 +135,14 @@ export default function LogsPage() {
             <div className="flex items-center gap-3">
               <button
                 onClick={exportCSV}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border text-admin-text-secondary rounded-full text-sm hover:bg-admin-hover hover:text-admin-text transition-colors"
               >
                 <Download size={16} />
                 Exporter
               </button>
               <button
                 onClick={refetch}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark-2 border border-white/[0.06] text-text-secondary rounded-full text-sm hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-admin-card border border-admin-card-border text-admin-text-secondary rounded-full text-sm hover:bg-admin-hover hover:text-admin-text transition-colors"
               >
                 <RefreshCw size={16} />
                 Actualiser
@@ -160,37 +160,37 @@ export default function LogsPage() {
               <Info size={16} className="text-blue-400" />
               <span className="text-xs font-medium text-blue-400 uppercase">Info</span>
             </div>
-            <p className="text-2xl font-bold text-text-primary">{severityCounts.info}</p>
+            <p className="text-2xl font-bold text-admin-text">{severityCounts.info}</p>
           </div>
           <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-2xl p-4">
             <div className="flex items-center gap-2 mb-1">
               <AlertTriangle size={16} className="text-yellow-400" />
               <span className="text-xs font-medium text-yellow-400 uppercase">Warning</span>
             </div>
-            <p className="text-2xl font-bold text-text-primary">{severityCounts.warning}</p>
+            <p className="text-2xl font-bold text-admin-text">{severityCounts.warning}</p>
           </div>
           <div className="bg-orange-500/5 border border-orange-500/20 rounded-2xl p-4">
             <div className="flex items-center gap-2 mb-1">
               <AlertOctagon size={16} className="text-orange-400" />
               <span className="text-xs font-medium text-orange-400 uppercase">Error</span>
             </div>
-            <p className="text-2xl font-bold text-text-primary">{severityCounts.error}</p>
+            <p className="text-2xl font-bold text-admin-text">{severityCounts.error}</p>
           </div>
           <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-4">
             <div className="flex items-center gap-2 mb-1">
               <XOctagon size={16} className="text-red-400" />
               <span className="text-xs font-medium text-red-400 uppercase">Critical</span>
             </div>
-            <p className="text-2xl font-bold text-text-primary">{severityCounts.critical}</p>
+            <p className="text-2xl font-bold text-admin-text">{severityCounts.critical}</p>
           </div>
         </div>
       </AnimatedSection>
 
       {/* Table */}
       <AnimatedSection>
-        <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+        <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <h2 className="font-serif text-lg text-text-primary">
+            <h2 className="font-serif text-lg text-admin-text">
               Journal d&apos;activite
             </h2>
             <div className="flex items-center gap-3">
@@ -198,14 +198,14 @@ export default function LogsPage() {
               <div className="relative">
                 <Search
                   size={15}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-admin-text-muted"
                 />
                 <input
                   type="text"
                   placeholder="Rechercher..."
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
-                  className="w-full sm:w-64 pl-9 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  className="w-full sm:w-64 pl-9 pr-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
                 />
               </div>
 
@@ -213,7 +213,7 @@ export default function LogsPage() {
               <div className="relative">
                 <button
                   onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-secondary hover:bg-white/[0.04] hover:text-text-primary transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text-secondary hover:bg-admin-hover hover:text-admin-text transition-colors"
                 >
                   <Filter size={14} />
                   {filterSeverity === "all"
@@ -223,7 +223,7 @@ export default function LogsPage() {
                 </button>
 
                 {showFilterDropdown && (
-                  <div className="absolute right-0 mt-2 w-52 bg-dark-2 border border-white/[0.06] rounded-xl shadow-xl z-10 py-1">
+                  <div className="absolute right-0 mt-2 w-52 bg-admin-card border border-admin-card-border rounded-xl shadow-xl z-10 py-1">
                     {severityOptions.map((option) => (
                       <button
                         key={option.value}
@@ -235,7 +235,7 @@ export default function LogsPage() {
                         className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
                           filterSeverity === option.value
                             ? "bg-accent/10 text-accent"
-                            : "text-text-secondary hover:bg-white/[0.04]"
+                            : "text-admin-text-secondary hover:bg-admin-hover"
                         }`}
                       >
                         {option.label}
@@ -256,57 +256,57 @@ export default function LogsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-white/[0.06]">
-                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                    <tr className="border-b border-admin-card-border">
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                         <span className="flex items-center gap-1.5">
                           <Clock size={12} />
                           Date / Heure
                         </span>
                       </th>
-                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                         <span className="flex items-center gap-1.5">
                           <User size={12} />
                           Utilisateur
                         </span>
                       </th>
-                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                         Action
                       </th>
-                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                         <span className="flex items-center gap-1.5">
                           <Globe size={12} />
                           IP
                         </span>
                       </th>
-                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                      <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                         Severite
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/[0.06]">
+                  <tbody className="divide-y divide-admin-card-border">
                     {logs.length > 0 ? (
                       logs.map((log) => (
                         <tr
                           key={log.id}
-                          className={`hover:bg-white/[0.04] transition-colors ${
+                          className={`hover:bg-admin-hover transition-colors ${
                             log.severity === "critical" ? "bg-red-500/[0.03]" : ""
                           }`}
                         >
                           <td className="py-3.5 px-4">
-                            <span className="text-sm text-text-muted font-mono">
+                            <span className="text-sm text-admin-text-muted font-mono">
                               {formatDateTime(log.created_at)}
                             </span>
                           </td>
                           <td className="py-3.5 px-4">
-                            <span className="text-sm text-text-secondary">
+                            <span className="text-sm text-admin-text-secondary">
                               {log.user_email || log.user_name || log.user_id || "systeme"}
                             </span>
                           </td>
                           <td className="py-3.5 px-4">
-                            <span className="text-sm text-text-primary">{log.action}</span>
+                            <span className="text-sm text-admin-text">{log.action}</span>
                           </td>
                           <td className="py-3.5 px-4">
-                            <span className="text-sm text-text-muted font-mono">
+                            <span className="text-sm text-admin-text-muted font-mono">
                               {log.ip_address || "-"}
                             </span>
                           </td>
@@ -318,8 +318,8 @@ export default function LogsPage() {
                     ) : (
                       <tr>
                         <td colSpan={5} className="text-center py-12">
-                          <ScrollText size={40} className="mx-auto text-text-muted mb-3" />
-                          <p className="text-text-muted">Aucun log trouve</p>
+                          <ScrollText size={40} className="mx-auto text-admin-text-muted mb-3" />
+                          <p className="text-admin-text-muted">Aucun log trouve</p>
                         </td>
                       </tr>
                     )}
@@ -328,8 +328,8 @@ export default function LogsPage() {
               </div>
 
               {/* Pagination */}
-              <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/[0.06]">
-                <p className="text-sm text-text-muted">
+              <div className="flex items-center justify-between mt-6 pt-4 border-t border-admin-card-border">
+                <p className="text-sm text-admin-text-muted">
                   {total} evenement{total !== 1 ? "s" : ""} au total
                   {totalPages > 1 && ` - Page ${page} / ${totalPages}`}
                 </p>
@@ -337,7 +337,7 @@ export default function LogsPage() {
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page <= 1}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-admin-input-bg border border-admin-card-border rounded-lg text-sm text-admin-text-muted hover:bg-admin-hover transition-colors disabled:opacity-50"
                   >
                     <ChevronLeft size={14} />
                     Precedent
@@ -348,7 +348,7 @@ export default function LogsPage() {
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page >= totalPages}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-dark border border-white/[0.06] rounded-lg text-sm text-text-muted hover:bg-white/[0.04] transition-colors disabled:opacity-50"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-admin-input-bg border border-admin-card-border rounded-lg text-sm text-admin-text-muted hover:bg-admin-hover transition-colors disabled:opacity-50"
                   >
                     Suivant
                     <ChevronRight size={14} />

@@ -63,7 +63,7 @@ function CampaignStatusBadge({ status }: { status: NewsletterCampaign["status"] 
   const config = {
     draft: {
       label: "Brouillon",
-      className: "bg-gray-500/10 text-text-muted border-gray-500/20",
+      className: "bg-gray-500/10 text-admin-text-muted border-gray-500/20",
     },
     sent: {
       label: "Envoyee",
@@ -301,47 +301,47 @@ export default function NewsletterPage() {
       {/* Stats */}
       <AnimatedSection>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <Users size={20} className="text-accent" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Total abonnes</p>
-                <p className="text-2xl font-bold text-text-primary">{subscribers.length}</p>
+                <p className="text-sm text-admin-text-muted">Total abonnes</p>
+                <p className="text-2xl font-bold text-admin-text">{subscribers.length}</p>
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-emerald-500/10 rounded-xl">
                 <CheckCircle size={20} className="text-emerald-400" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Actifs</p>
-                <p className="text-2xl font-bold text-text-primary">{totalActive}</p>
+                <p className="text-sm text-admin-text-muted">Actifs</p>
+                <p className="text-2xl font-bold text-admin-text">{totalActive}</p>
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-blue-500/10 rounded-xl">
                 <Send size={20} className="text-blue-400" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Campagnes envoyees</p>
-                <p className="text-2xl font-bold text-text-primary">{sentCampaigns.length}</p>
+                <p className="text-sm text-admin-text-muted">Campagnes envoyees</p>
+                <p className="text-2xl font-bold text-admin-text">{sentCampaigns.length}</p>
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-orange-500/10 rounded-xl">
                 <Eye size={20} className="text-orange-400" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Taux d&apos;ouverture moy.</p>
-                <p className="text-2xl font-bold text-text-primary">{avgOpenRate}%</p>
+                <p className="text-sm text-admin-text-muted">Taux d&apos;ouverture moy.</p>
+                <p className="text-2xl font-bold text-admin-text">{avgOpenRate}%</p>
               </div>
             </div>
           </div>
@@ -350,13 +350,13 @@ export default function NewsletterPage() {
 
       {/* Tabs */}
       <AnimatedSection>
-        <div className="flex gap-2 border-b border-white/[0.06] pb-0">
+        <div className="flex gap-2 border-b border-admin-card-border pb-0">
           <button
             onClick={() => setActiveTab("abonnes")}
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
               activeTab === "abonnes"
                 ? "border-accent text-accent"
-                : "border-transparent text-text-secondary hover:text-text-primary"
+                : "border-transparent text-admin-text-secondary hover:text-admin-text"
             }`}
           >
             <span className="flex items-center gap-2">
@@ -369,7 +369,7 @@ export default function NewsletterPage() {
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
               activeTab === "campagnes"
                 ? "border-accent text-accent"
-                : "border-transparent text-text-secondary hover:text-text-primary"
+                : "border-transparent text-admin-text-secondary hover:text-admin-text"
             }`}
           >
             <span className="flex items-center gap-2">
@@ -383,26 +383,26 @@ export default function NewsletterPage() {
       {/* Abonnes Section */}
       {activeTab === "abonnes" && (
         <AnimatedSection>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-              <h2 className="text-lg font-semibold text-text-primary">Liste des abonnes</h2>
+              <h2 className="text-lg font-semibold text-admin-text">Liste des abonnes</h2>
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <Search
                     size={16}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-admin-text-muted"
                   />
                   <input
                     type="text"
                     placeholder="Rechercher un abonne..."
                     value={searchQuery}
                     onChange={(e) => handleSearch(e.target.value)}
-                    className="w-full sm:w-72 pl-10 pr-4 py-2.5 bg-dark border border-white/[0.06] rounded-full text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
+                    className="w-full sm:w-72 pl-10 pr-4 py-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-sm text-admin-text placeholder-admin-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50"
                   />
                 </div>
                 <button
                   onClick={refetchSubs}
-                  className="p-2.5 bg-dark border border-white/[0.06] rounded-full text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-colors"
+                  className="p-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-admin-text-muted hover:text-admin-text hover:bg-admin-hover transition-colors"
                   title="Actualiser"
                 >
                   <RefreshCw size={16} />
@@ -419,48 +419,48 @@ export default function NewsletterPage() {
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
-                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                      <tr className="border-b border-admin-card-border">
+                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Email
                         </th>
-                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Nom
                         </th>
-                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Source
                         </th>
-                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Statut
                         </th>
-                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Date inscription
                         </th>
-                        <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.06]">
+                    <tbody className="divide-y divide-admin-card-border">
                       {subscribers.length > 0 ? (
                         subscribers.map((sub) => (
                           <tr
                             key={sub.id}
-                            className="hover:bg-white/[0.02] transition-colors"
+                            className="hover:bg-admin-hover transition-colors"
                           >
                             <td className="py-3.5 px-4">
-                              <span className="text-sm text-text-primary">{sub.email}</span>
+                              <span className="text-sm text-admin-text">{sub.email}</span>
                             </td>
                             <td className="py-3.5 px-4">
-                              <span className="text-sm text-text-secondary">{sub.name || "-"}</span>
+                              <span className="text-sm text-admin-text-secondary">{sub.name || "-"}</span>
                             </td>
                             <td className="py-3.5 px-4">
-                              <span className="text-sm text-text-muted">{sub.source}</span>
+                              <span className="text-sm text-admin-text-muted">{sub.source}</span>
                             </td>
                             <td className="py-3.5 px-4">
                               <SubscriberStatusBadge status={sub.status} />
                             </td>
                             <td className="py-3.5 px-4">
-                              <span className="text-sm text-text-muted">
+                              <span className="text-sm text-admin-text-muted">
                                 {formatDateTime(sub.subscribed_at)}
                               </span>
                             </td>
@@ -468,7 +468,7 @@ export default function NewsletterPage() {
                               <div className="flex items-center justify-end gap-1">
                                 <button
                                   onClick={() => openEditSub(sub)}
-                                  className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-accent transition-colors"
+                                  className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-accent transition-colors"
                                   title="Modifier"
                                 >
                                   <Pencil size={14} />
@@ -478,7 +478,7 @@ export default function NewsletterPage() {
                                     setSelectedSub(sub);
                                     setShowSubDelete(true);
                                   }}
-                                  className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-colors"
+                                  className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-red-400 transition-colors"
                                   title="Supprimer"
                                 >
                                   <Trash2 size={14} />
@@ -490,8 +490,8 @@ export default function NewsletterPage() {
                       ) : (
                         <tr>
                           <td colSpan={6} className="text-center py-12">
-                            <Mail size={40} className="mx-auto text-text-muted mb-3" />
-                            <p className="text-text-muted">Aucun abonne trouve</p>
+                            <Mail size={40} className="mx-auto text-admin-text-muted mb-3" />
+                            <p className="text-admin-text-muted">Aucun abonne trouve</p>
                           </td>
                         </tr>
                       )}
@@ -507,13 +507,13 @@ export default function NewsletterPage() {
       {/* Campagnes Section */}
       {activeTab === "campagnes" && (
         <AnimatedSection>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-text-primary">Campagnes</h2>
+              <h2 className="text-lg font-semibold text-admin-text">Campagnes</h2>
               <div className="flex items-center gap-3">
                 <button
                   onClick={refetchCamps}
-                  className="p-2.5 bg-dark border border-white/[0.06] rounded-full text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-colors"
+                  className="p-2.5 bg-admin-input-bg border border-admin-card-border rounded-full text-admin-text-muted hover:text-admin-text hover:bg-admin-hover transition-colors"
                   title="Actualiser"
                 >
                   <RefreshCw size={16} />
@@ -537,48 +537,48 @@ export default function NewsletterPage() {
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
-                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                      <tr className="border-b border-admin-card-border">
+                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Sujet
                         </th>
-                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Statut
                         </th>
-                        <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           <span className="flex items-center justify-center gap-1">
                             <Send size={12} />
                             Envoyes
                           </span>
                         </th>
-                        <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           <span className="flex items-center justify-center gap-1">
                             <Eye size={12} />
                             Ouverts
                           </span>
                         </th>
-                        <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-center py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           <span className="flex items-center justify-center gap-1">
                             <MousePointerClick size={12} />
                             Clics
                           </span>
                         </th>
-                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-left py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Date
                         </th>
-                        <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-right py-3 px-4 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.06]">
+                    <tbody className="divide-y divide-admin-card-border">
                       {campaigns.length > 0 ? (
                         campaigns.map((campaign) => (
                           <tr
                             key={campaign.id}
-                            className="hover:bg-white/[0.02] transition-colors"
+                            className="hover:bg-admin-hover transition-colors"
                           >
                             <td className="py-3.5 px-4">
-                              <span className="text-sm text-text-primary font-medium">
+                              <span className="text-sm text-admin-text font-medium">
                                 {campaign.subject}
                               </span>
                             </td>
@@ -586,27 +586,27 @@ export default function NewsletterPage() {
                               <CampaignStatusBadge status={campaign.status} />
                             </td>
                             <td className="py-3.5 px-4 text-center">
-                              <span className="text-sm text-text-secondary">
+                              <span className="text-sm text-admin-text-secondary">
                                 {campaign.sent_count.toLocaleString("fr-FR")}
                               </span>
                             </td>
                             <td className="py-3.5 px-4 text-center">
-                              <span className="text-sm text-text-secondary">
+                              <span className="text-sm text-admin-text-secondary">
                                 {campaign.open_count.toLocaleString("fr-FR")}
                                 {campaign.sent_count > 0 && (
-                                  <span className="text-xs text-text-muted ml-1">
+                                  <span className="text-xs text-admin-text-muted ml-1">
                                     ({((campaign.open_count / campaign.sent_count) * 100).toFixed(1)}%)
                                   </span>
                                 )}
                               </span>
                             </td>
                             <td className="py-3.5 px-4 text-center">
-                              <span className="text-sm text-text-secondary">
+                              <span className="text-sm text-admin-text-secondary">
                                 {campaign.click_count.toLocaleString("fr-FR")}
                               </span>
                             </td>
                             <td className="py-3.5 px-4">
-                              <span className="text-sm text-text-muted">
+                              <span className="text-sm text-admin-text-muted">
                                 {formatDateTime(campaign.sent_at || campaign.scheduled_at || campaign.created_at)}
                               </span>
                             </td>
@@ -614,7 +614,7 @@ export default function NewsletterPage() {
                               <div className="flex items-center justify-end gap-1">
                                 <button
                                   onClick={() => openEditCamp(campaign)}
-                                  className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-accent transition-colors"
+                                  className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-accent transition-colors"
                                   title="Modifier"
                                 >
                                   <Pencil size={14} />
@@ -624,7 +624,7 @@ export default function NewsletterPage() {
                                     setSelectedCamp(campaign);
                                     setShowCampDelete(true);
                                   }}
-                                  className="p-1.5 rounded-lg hover:bg-white/[0.04] text-text-muted hover:text-red-400 transition-colors"
+                                  className="p-1.5 rounded-lg hover:bg-admin-hover text-admin-text-muted hover:text-red-400 transition-colors"
                                   title="Supprimer"
                                 >
                                   <Trash2 size={14} />
@@ -636,8 +636,8 @@ export default function NewsletterPage() {
                       ) : (
                         <tr>
                           <td colSpan={7} className="text-center py-12">
-                            <Send size={40} className="mx-auto text-text-muted mb-3" />
-                            <p className="text-text-muted">Aucune campagne creee</p>
+                            <Send size={40} className="mx-auto text-admin-text-muted mb-3" />
+                            <p className="text-admin-text-muted">Aucune campagne creee</p>
                           </td>
                         </tr>
                       )}
@@ -660,7 +660,7 @@ export default function NewsletterPage() {
           <>
             <button
               onClick={() => setShowSubModal(false)}
-              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+              className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all"
             >
               Annuler
             </button>
@@ -732,7 +732,7 @@ export default function NewsletterPage() {
           <>
             <button
               onClick={() => setShowCampModal(false)}
-              className="px-4 py-2 text-sm text-text-secondary hover:text-text-primary border border-white/[0.06] rounded-full hover:bg-white/[0.04] transition-all"
+              className="px-4 py-2 text-sm text-admin-text-secondary hover:text-admin-text border border-admin-card-border rounded-full hover:bg-admin-hover transition-all"
             >
               Annuler
             </button>

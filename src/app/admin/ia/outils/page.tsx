@@ -130,16 +130,16 @@ export default function AIOutilsPage() {
       {/* Stats Overview */}
       <AnimatedSection>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-accent/10 rounded-xl">
                 <FileText size={20} className="text-accent" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Articles IA generes</p>
-                <p className="text-2xl font-bold text-text-primary">
+                <p className="text-sm text-admin-text-muted">Articles IA generes</p>
+                <p className="text-2xl font-bold text-admin-text">
                   {loadingStats ? (
-                    <Loader2 size={20} className="animate-spin text-text-muted" />
+                    <Loader2 size={20} className="animate-spin text-admin-text-muted" />
                   ) : (
                     aiPostsCount
                   )}
@@ -147,25 +147,25 @@ export default function AIOutilsPage() {
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-blue-500/10 rounded-xl">
                 <Search size={20} className="text-blue-400" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Meta descriptions</p>
-                <p className="text-2xl font-bold text-text-primary">0</p>
+                <p className="text-sm text-admin-text-muted">Meta descriptions</p>
+                <p className="text-2xl font-bold text-admin-text">0</p>
               </div>
             </div>
           </div>
-          <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+          <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
             <div className="flex items-center gap-3">
               <div className="p-2.5 bg-emerald-500/10 rounded-xl">
                 <RefreshCw size={20} className="text-emerald-400" />
               </div>
               <div>
-                <p className="text-sm text-text-muted">Contenus reecrits</p>
-                <p className="text-2xl font-bold text-text-primary">0</p>
+                <p className="text-sm text-admin-text-muted">Contenus reecrits</p>
+                <p className="text-2xl font-bold text-admin-text">0</p>
               </div>
             </div>
           </div>
@@ -178,7 +178,7 @@ export default function AIOutilsPage() {
           {tools.map((tool) => (
             <div
               key={tool.id}
-              className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6 flex flex-col justify-between group hover:border-white/[0.12] transition-all"
+              className="bg-admin-card border border-admin-card-border rounded-2xl p-6 flex flex-col justify-between group hover:border-admin-input-border transition-all"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -193,15 +193,15 @@ export default function AIOutilsPage() {
                   )}
                 </div>
 
-                <h3 className="text-lg font-serif text-text-primary mb-2">
+                <h3 className="text-lg font-serif text-admin-text mb-2">
                   {tool.title}
                 </h3>
-                <p className="text-sm text-text-muted mb-4">
+                <p className="text-sm text-admin-text-muted mb-4">
                   {tool.description}
                 </p>
 
                 {/* Stat */}
-                <div className="flex items-center gap-2 text-xs text-text-muted mb-4">
+                <div className="flex items-center gap-2 text-xs text-admin-text-muted mb-4">
                   <Sparkles size={12} className="text-accent" />
                   <span>
                     {getStatValue(tool)} {getStatLabel(tool)}
@@ -213,7 +213,7 @@ export default function AIOutilsPage() {
                 {tool.coming_soon ? (
                   <button
                     disabled
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-dark border border-white/[0.06] text-text-muted rounded-full text-sm opacity-60 cursor-not-allowed"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-admin-input-bg border border-admin-card-border text-admin-text-muted rounded-full text-sm opacity-60 cursor-not-allowed"
                   >
                     Bientot disponible
                   </button>

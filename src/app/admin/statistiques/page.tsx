@@ -27,9 +27,9 @@ function MetricCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-5">
+    <div className="bg-admin-card border border-admin-card-border rounded-2xl p-5">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-text-muted">{icon}</span>
+        <span className="text-admin-text-muted">{icon}</span>
         {change && (
           <span className="flex items-center gap-1 text-xs text-emerald-400">
             <ArrowUpRight size={12} />
@@ -37,8 +37,8 @@ function MetricCard({
           </span>
         )}
       </div>
-      <p className="text-2xl font-bold text-text-primary">{value}</p>
-      <p className="text-sm text-text-muted mt-1">{label}</p>
+      <p className="text-2xl font-bold text-admin-text">{value}</p>
+      <p className="text-sm text-admin-text-muted mt-1">{label}</p>
     </div>
   );
 }
@@ -113,7 +113,7 @@ export default function StatistiquesPage() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all ${
                     period === p.value
                       ? "bg-accent-dim text-accent border border-accent/20"
-                      : "bg-dark-2 text-text-secondary border border-white/[0.06] hover:bg-white/[0.04] hover:text-text-primary"
+                      : "bg-admin-card text-admin-text-secondary border border-admin-card-border hover:bg-admin-hover hover:text-admin-text"
                   }`}
                 >
                   {p.value === period && <Calendar size={16} />}
@@ -122,7 +122,7 @@ export default function StatistiquesPage() {
               ))}
               <button
                 onClick={() => fetchStats(period)}
-                className="p-2.5 bg-dark-2 border border-white/[0.06] rounded-full text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-colors"
+                className="p-2.5 bg-admin-card border border-admin-card-border rounded-full text-admin-text-muted hover:text-admin-text hover:bg-admin-hover transition-colors"
                 title="Actualiser"
               >
                 <RefreshCw size={16} />
@@ -166,26 +166,26 @@ export default function StatistiquesPage() {
 
           {/* Daily Views Table */}
           <AnimatedSection>
-            <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
-              <h3 className="font-serif text-lg text-text-primary mb-4">Visites par jour</h3>
+            <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
+              <h3 className="font-serif text-lg text-admin-text mb-4">Visites par jour</h3>
               {stats.dailyViews.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
-                        <th className="text-left px-5 py-3 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                      <tr className="border-b border-admin-card-border">
+                        <th className="text-left px-5 py-3 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Date
                         </th>
-                        <th className="text-right px-5 py-3 text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="text-right px-5 py-3 text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Vues
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.06]">
+                    <tbody className="divide-y divide-admin-card-border">
                       {stats.dailyViews.map((day, i) => (
-                        <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                        <tr key={i} className="hover:bg-admin-hover transition-colors">
                           <td className="px-5 py-3">
-                            <span className="text-sm text-text-secondary">
+                            <span className="text-sm text-admin-text-secondary">
                               {new Date(day.date).toLocaleDateString("fr-FR", {
                                 weekday: "short",
                                 day: "2-digit",
@@ -195,7 +195,7 @@ export default function StatistiquesPage() {
                           </td>
                           <td className="px-5 py-3 text-right">
                             <div className="flex items-center justify-end gap-3">
-                              <div className="w-32 h-2 bg-dark rounded-full overflow-hidden">
+                              <div className="w-32 h-2 bg-admin-input-bg rounded-full overflow-hidden">
                                 <div
                                   className="h-full bg-accent/60 rounded-full"
                                   style={{
@@ -207,7 +207,7 @@ export default function StatistiquesPage() {
                                   }}
                                 />
                               </div>
-                              <span className="text-sm font-medium text-text-primary min-w-[3rem] text-right">
+                              <span className="text-sm font-medium text-admin-text min-w-[3rem] text-right">
                                 {day.views.toLocaleString("fr-FR")}
                               </span>
                             </div>
@@ -218,10 +218,10 @@ export default function StatistiquesPage() {
                   </table>
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-48 border border-dashed border-white/[0.06] rounded-xl">
+                <div className="flex items-center justify-center h-48 border border-dashed border-admin-card-border rounded-xl">
                   <div className="text-center">
-                    <BarChart3 size={32} className="text-text-muted mx-auto mb-2" />
-                    <p className="text-text-muted text-sm">
+                    <BarChart3 size={32} className="text-admin-text-muted mx-auto mb-2" />
+                    <p className="text-admin-text-muted text-sm">
                       Aucune donnee de visite pour cette periode
                     </p>
                   </div>
@@ -232,49 +232,49 @@ export default function StatistiquesPage() {
 
           {/* Top Pages Table */}
           <AnimatedSection>
-            <div className="bg-dark-2 border border-white/[0.06] rounded-2xl p-6">
-              <h3 className="font-serif text-lg text-text-primary mb-4">
+            <div className="bg-admin-card border border-admin-card-border rounded-2xl p-6">
+              <h3 className="font-serif text-lg text-admin-text mb-4">
                 Pages les plus visitees
               </h3>
               {stats.topPages.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
-                        <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                      <tr className="border-b border-admin-card-border">
+                        <th className="px-5 py-3 text-left text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Page
                         </th>
-                        <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Vues
                         </th>
-                        <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Visiteurs uniques
                         </th>
-                        <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-text-muted uppercase tracking-wider">
+                        <th className="px-5 py-3 text-right text-[0.65rem] font-mono font-semibold text-admin-text-muted uppercase tracking-wider">
                           Temps moyen
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.06]">
+                    <tbody className="divide-y divide-admin-card-border">
                       {stats.topPages.map((page, i) => (
-                        <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                        <tr key={i} className="hover:bg-admin-hover transition-colors">
                           <td className="px-5 py-3">
-                            <span className="text-sm text-text-primary font-medium">
+                            <span className="text-sm text-admin-text font-medium">
                               {page.path}
                             </span>
                           </td>
                           <td className="px-5 py-3 text-right">
-                            <span className="text-sm text-text-secondary">
+                            <span className="text-sm text-admin-text-secondary">
                               {page.views.toLocaleString("fr-FR")}
                             </span>
                           </td>
                           <td className="px-5 py-3 text-right">
-                            <span className="text-sm text-text-secondary">
+                            <span className="text-sm text-admin-text-secondary">
                               {page.uniqueVisitors.toLocaleString("fr-FR")}
                             </span>
                           </td>
                           <td className="px-5 py-3 text-right">
-                            <span className="text-sm text-text-muted">
+                            <span className="text-sm text-admin-text-muted">
                               {page.avgTime || "-"}
                             </span>
                           </td>
@@ -284,10 +284,10 @@ export default function StatistiquesPage() {
                   </table>
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-48 border border-dashed border-white/[0.06] rounded-xl">
+                <div className="flex items-center justify-center h-48 border border-dashed border-admin-card-border rounded-xl">
                   <div className="text-center">
-                    <FileText size={32} className="text-text-muted mx-auto mb-2" />
-                    <p className="text-text-muted text-sm">
+                    <FileText size={32} className="text-admin-text-muted mx-auto mb-2" />
+                    <p className="text-admin-text-muted text-sm">
                       Aucune donnee de pages pour cette periode
                     </p>
                   </div>

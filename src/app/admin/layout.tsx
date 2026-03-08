@@ -15,7 +15,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-dark flex items-center justify-center">
+      <div className="min-h-screen bg-admin-bg flex items-center justify-center">
         <Loader2 className="w-8 h-8 text-accent animate-spin" />
       </div>
     );
@@ -28,19 +28,16 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-dark text-text-primary">
-      {/* Ambient glow */}
-      <div className="fixed top-0 right-0 w-[600px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
-
+    <div className="min-h-screen bg-dark text-admin-text">
       <GlassSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Main content */}
-      <div className="lg:pl-[270px]">
+      <div className="lg:pl-[270px] min-h-screen bg-admin-bg">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 h-14 bg-dark/80 backdrop-blur-2xl border-b border-white/[0.08] flex items-center px-4 lg:px-8">
+        <header className="sticky top-0 z-30 h-14 bg-white/80 backdrop-blur-2xl border-b border-admin-card-border flex items-center px-4 lg:px-8">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="lg:hidden text-text-secondary hover:text-text-primary mr-4 transition-colors"
+            className="lg:hidden text-admin-text-secondary hover:text-admin-text mr-4 transition-colors"
           >
             <Menu size={22} />
           </button>
@@ -49,14 +46,14 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2 text-sm">
             <Link
               href="/admin"
-              className="text-text-muted hover:text-text-primary transition-colors"
+              className="text-admin-text-muted hover:text-admin-text transition-colors"
             >
               <Home size={15} />
             </Link>
             {pathname !== "/admin" && (
               <>
-                <ChevronRight size={13} className="text-text-muted" />
-                <span className="text-text-secondary capitalize text-[0.82rem]">
+                <ChevronRight size={13} className="text-admin-text-muted" />
+                <span className="text-admin-text-secondary capitalize text-[0.82rem]">
                   {pathname.split("/").pop()?.replace(/-/g, " ")}
                 </span>
               </>
@@ -68,7 +65,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
             <Link
               href="/"
               target="_blank"
-              className="text-xs text-text-muted hover:text-text-primary transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.06] hover:border-white/[0.12]"
+              className="text-xs text-admin-text-muted hover:text-admin-text transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-admin-card-border hover:border-admin-input-border"
             >
               <Globe size={13} />
               Voir le site
