@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import {
   DEFAULT_THEME,
   buildThemeVariables,
@@ -33,6 +33,7 @@ export default function ThemeProvider({
   children: React.ReactNode;
 }) {
   const [presetId, setPresetId] = useState(DEFAULT_PRESET_ID);
+  const mounted = useRef(false);
 
   /* ── On mount: read stored preset, apply it ── */
   useEffect(() => {
@@ -73,30 +74,38 @@ export default function ThemeProvider({
         })
         .catch(() => {});
     }
+
+    mounted.current = true;
   }, []);
+
+  /* ── Apply theme whenever presetId changes (after mount) ── */
+  useEffect(() => {
+    if (!mounted.current) return;
+
+    const preset = getPresetById(presetId);
+    applyVars(buildFullThemeVariables(preset.colors));
+
+    // Smooth transition class
+    document.documentElement.classList.add("theme-transitioning");
+    const timer = setTimeout(() => {
+      document.documentElement.classList.remove("theme-transitioning");
+    }, 500);
+
+    try {
+      localStorage.setItem(PRESET_STORAGE_KEY, presetId);
+    } catch {
+      // Ignore
+    }
+
+    return () => clearTimeout(timer);
+  }, [presetId]);
 
   /* ── Toggle between presets ── */
   const toggleTheme = useCallback(() => {
     setPresetId((current) => {
       const currentIdx = THEME_PRESETS.findIndex((p) => p.id === current);
       const nextIdx = (currentIdx + 1) % THEME_PRESETS.length;
-      const next = THEME_PRESETS[nextIdx];
-
-      // Smooth transition class
-      document.documentElement.classList.add("theme-transitioning");
-      setTimeout(() => {
-        document.documentElement.classList.remove("theme-transitioning");
-      }, 500);
-
-      applyVars(buildFullThemeVariables(next.colors));
-
-      try {
-        localStorage.setItem(PRESET_STORAGE_KEY, next.id);
-      } catch {
-        // Ignore
-      }
-
-      return next.id;
+      return THEME_PRESETS[nextIdx].id;
     });
   }, []);
 
