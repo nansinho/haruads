@@ -19,6 +19,10 @@ import {
   Globe,
   Sparkles,
   GripVertical,
+  Camera,
+  ImagePlus,
+  Brain,
+  CircleDot,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
@@ -101,6 +105,7 @@ export default function ProjetsAdminPage() {
   const [activeFormTab, setActiveFormTab] = useState("general");
   const [savedTags, setSavedTags] = useState<Tag[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
+  const [analysisStep, setAnalysisStep] = useState(0); // 0=idle, 1=analyzing, 2=screenshots, 3=featured, 4=done
   const [capturingScreenshot, setCapturingScreenshot] = useState(false);
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [dragOverId, setDragOverId] = useState<string | null>(null);
@@ -395,7 +400,9 @@ export default function ProjetsAdminPage() {
       return;
     }
     setAnalyzing(true);
+    setAnalysisStep(1);
     try {
+      // Step 1: AI Analysis
       const res = await fetch("/api/admin/ia/analyze-project", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -414,7 +421,8 @@ export default function ProjetsAdminPage() {
 
       const data = await res.json();
 
-      // Capture screenshots for gallery + featured image
+      // Step 2: Capture screenshots + featured image
+      setAnalysisStep(2);
       let galleryUrls: string[] = [];
       let featuredImageUrl = "";
       try {
@@ -440,6 +448,8 @@ export default function ProjetsAdminPage() {
         console.error("[screenshot]", screenshotErr);
       }
 
+      // Step 3: Finalizing
+      setAnalysisStep(3);
       setForm({
         ...emptyForm,
         title: data.title || "",
@@ -458,6 +468,11 @@ export default function ProjetsAdminPage() {
         gallery: galleryUrls,
         image_url: featuredImageUrl,
       });
+
+      // Step 4: Done
+      setAnalysisStep(4);
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
       setShowUrlPrompt(false);
       setShowModal(true);
       toast({ type: "success", message: galleryUrls.length > 0 ? `Fiche projet remplie par l'IA avec ${galleryUrls.length} screenshots !` : "Fiche projet remplie par l'IA ! Ajoutez une image et validez." });
@@ -465,6 +480,7 @@ export default function ProjetsAdminPage() {
       toast({ type: "error", message: err instanceof Error ? err.message : "Erreur lors de l'analyse IA" });
     } finally {
       setAnalyzing(false);
+      setAnalysisStep(0);
     }
   };
 
@@ -1024,68 +1040,142 @@ export default function ProjetsAdminPage() {
         isOpen={showUrlPrompt}
         onClose={() => { if (!analyzing) setShowUrlPrompt(false); }}
         title="Nouveau projet"
-        description="Collez l'URL du site et l'IA remplit tout automatiquement"
+        description={analyzing ? undefined : "Collez l'URL du site et l'IA remplit tout automatiquement"}
         size="md"
       >
         <div className="space-y-6">
-          {/* AI mode */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-accent/5 via-purple-500/5 to-accent/5 border border-accent/15">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2.5 bg-accent/10 rounded-xl">
-                <Sparkles size={20} className="text-accent" />
+          {analyzing ? (
+            /* Interactive progress steps */
+            <div className="py-2">
+              <div className="flex items-center gap-3 mb-6 px-1">
+                <div className="p-2.5 bg-accent/10 rounded-xl">
+                  <Sparkles size={20} className="text-accent animate-pulse" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-text-primary">Import en cours</h3>
+                  <p className="text-xs text-text-muted truncate max-w-[300px]">{promptUrl}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-sm font-semibold text-text-primary">Analyse IA</h3>
-                <p className="text-xs text-text-muted">L&apos;IA analyse le site et remplit tous les champs</p>
+
+              {/* Progress bar */}
+              <div className="mb-6 mx-1">
+                <div className="h-1 bg-dark rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-accent to-orange-400 rounded-full transition-all duration-700 ease-out"
+                    style={{ width: `${analysisStep === 1 ? 25 : analysisStep === 2 ? 55 : analysisStep === 3 ? 85 : analysisStep === 4 ? 100 : 0}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Steps */}
+              <div className="space-y-1">
+                {[
+                  { step: 1, icon: Brain, label: "Analyse IA du site", activeLabel: "L'IA analyse le contenu du site..." },
+                  { step: 2, icon: Camera, label: "Capture des screenshots", activeLabel: "Capture des pages du site..." },
+                  { step: 3, icon: ImagePlus, label: "Montage image principale", activeLabel: "Composition de l'image mise en avant..." },
+                  { step: 4, icon: CheckCircle, label: "Terminé !", activeLabel: "Fiche projet prête !" },
+                ].map(({ step, icon: Icon, label, activeLabel }) => {
+                  const isActive = analysisStep === step;
+                  const isDone = analysisStep > step;
+                  const isPending = analysisStep < step;
+
+                  return (
+                    <div
+                      key={step}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+                        isActive
+                          ? "bg-accent/8 border border-accent/15"
+                          : isDone
+                            ? "bg-emerald-500/5 border border-emerald-500/10"
+                            : "border border-transparent opacity-40"
+                      }`}
+                    >
+                      <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                        isActive
+                          ? "bg-accent/15"
+                          : isDone
+                            ? "bg-emerald-500/15"
+                            : "bg-white/5"
+                      }`}>
+                        {isDone ? (
+                          <CheckCircle size={16} className="text-emerald-400" />
+                        ) : isActive ? (
+                          <Loader2 size={16} className="text-accent animate-spin" />
+                        ) : (
+                          <CircleDot size={16} className="text-text-muted" />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className={`text-sm font-medium transition-colors duration-300 ${
+                          isActive ? "text-accent" : isDone ? "text-emerald-400" : "text-text-muted"
+                        }`}>
+                          {isDone ? label : isActive ? activeLabel : label}
+                        </p>
+                      </div>
+                      {isActive && step < 4 && (
+                        <div className="flex gap-1">
+                          <span className="w-1 h-1 bg-accent rounded-full animate-bounce [animation-delay:0ms]" />
+                          <span className="w-1 h-1 bg-accent rounded-full animate-bounce [animation-delay:150ms]" />
+                          <span className="w-1 h-1 bg-accent rounded-full animate-bounce [animation-delay:300ms]" />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
-            <div className="space-y-3">
-              <input
-                type="url"
-                value={promptUrl}
-                onChange={(e) => setPromptUrl(e.target.value)}
-                placeholder="https://mon-site-client.com"
-                disabled={analyzing}
-                className="w-full px-4 py-3 bg-dark border border-white/[0.10] rounded-xl text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all disabled:opacity-50"
-                onKeyDown={(e) => { if (e.key === "Enter" && promptUrl) handleAIAnalyze(); }}
-                autoFocus
-              />
-              <button
-                onClick={handleAIAnalyze}
-                disabled={analyzing || !promptUrl}
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-accent text-dark font-semibold rounded-xl hover:bg-accent-hover transition-all shadow-lg shadow-accent/20 disabled:opacity-50"
-              >
-                {analyzing ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    Analyse en cours...
-                  </>
-                ) : (
-                  <>
+          ) : (
+            /* Normal input state */
+            <>
+              {/* AI mode */}
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-accent/5 via-purple-500/5 to-accent/5 border border-accent/15">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2.5 bg-accent/10 rounded-xl">
+                    <Sparkles size={20} className="text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-text-primary">Analyse IA</h3>
+                    <p className="text-xs text-text-muted">L&apos;IA analyse le site et remplit tous les champs</p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <input
+                    type="url"
+                    value={promptUrl}
+                    onChange={(e) => setPromptUrl(e.target.value)}
+                    placeholder="https://mon-site-client.com"
+                    className="w-full px-4 py-3 bg-dark border border-white/[0.10] rounded-xl text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+                    onKeyDown={(e) => { if (e.key === "Enter" && promptUrl) handleAIAnalyze(); }}
+                    autoFocus
+                  />
+                  <button
+                    onClick={handleAIAnalyze}
+                    disabled={!promptUrl}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-accent text-dark font-semibold rounded-xl hover:bg-accent-hover transition-all shadow-lg shadow-accent/20 disabled:opacity-50"
+                  >
                     <Sparkles size={18} />
                     Analyser et remplir
-                  </>
-                )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="flex items-center gap-4">
+                <div className="flex-1 h-px bg-white/[0.08]" />
+                <span className="text-xs text-text-muted">ou</span>
+                <div className="flex-1 h-px bg-white/[0.08]" />
+              </div>
+
+              {/* Manual mode */}
+              <button
+                onClick={openCreateManual}
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-dark border border-white/[0.10] text-text-secondary rounded-xl hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm"
+              >
+                <FileText size={16} />
+                Créer manuellement
               </button>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4">
-            <div className="flex-1 h-px bg-white/[0.08]" />
-            <span className="text-xs text-text-muted">ou</span>
-            <div className="flex-1 h-px bg-white/[0.08]" />
-          </div>
-
-          {/* Manual mode */}
-          <button
-            onClick={openCreateManual}
-            disabled={analyzing}
-            className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-dark border border-white/[0.10] text-text-secondary rounded-xl hover:bg-white/[0.04] hover:text-text-primary transition-all text-sm disabled:opacity-50"
-          >
-            <FileText size={16} />
-            Créer manuellement
-          </button>
+            </>
+          )}
         </div>
       </Modal>
 
