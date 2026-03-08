@@ -10,6 +10,19 @@ export function slugify(text: string): string {
     .replace(/^-|-$/g, "");
 }
 
+const FRENCH_MONTHS = [
+  "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+  "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre",
+];
+
+export function formatCompletedAt(value: string | null | undefined): string {
+  if (!value) return "";
+  const [year, month] = value.split("-");
+  const m = parseInt(month, 10);
+  if (!m || m < 1 || m > 12) return year || "";
+  return `${FRENCH_MONTHS[m - 1]} ${year}`;
+}
+
 export function formatDate(date: string | null | undefined): string {
   if (!date) return "-";
   return new Date(date).toLocaleDateString("fr-FR", {

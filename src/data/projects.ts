@@ -1,7 +1,7 @@
 export interface ProjectData {
   title: string;
   category: string;
-  year: string;
+  completed_at: string;
   client: string;
   description: string;
   challenge: string;
@@ -16,7 +16,7 @@ export const projectsData: Record<string, ProjectData> = {
   "aiako-ecommerce": {
     title: "AIAKO E-Commerce",
     category: "E-Commerce",
-    year: "2024",
+    completed_at: "2024-01",
     client: "AIAKO",
     description: "Migration complète d\u2019une boutique WooCommerce vers une stack moderne Next.js + Supabase. Refonte de l\u2019expérience d\u2019achat avec intégration du paiement Monetico.",
     challenge: "Le site existant souffrait de lenteurs importantes, d\u2019une interface datée et d\u2019un taux d\u2019abandon de panier élevé. Le client souhaitait une expérience fluide et moderne sans perdre son catalogue de 500+ produits.",
@@ -34,7 +34,7 @@ export const projectsData: Record<string, ProjectData> = {
   "dashboard-cco": {
     title: "Dashboard C&CO",
     category: "Application Web",
-    year: "2024",
+    completed_at: "2024-01",
     client: "C&CO Formation",
     description: "Plateforme SaaS de formation en ligne multi-tenant avec dashboard admin, suivi de progression des apprenants et gestion des contenus pédagogiques.",
     challenge: "C&CO avait besoin d\u2019une plateforme centralisant la gestion de plusieurs organismes de formation, avec des espaces cloisonnés par organisme et un suivi détaillé de la progression.",
@@ -52,7 +52,7 @@ export const projectsData: Record<string, ProjectData> = {
   "landing-fintech": {
     title: "Landing Fintech",
     category: "Design UI/UX",
-    year: "2023",
+    completed_at: "2023-06",
     client: "FinPay",
     description: "Refonte complète de l\u2019identité visuelle et du site vitrine d\u2019une startup fintech. Création d\u2019un design system complet et d\u2019animations immersives.",
     challenge: "La startup avait une identité visuelle incohérente et un site qui ne convertissait pas. Il fallait crédibiliser la marque et améliorer le taux de conversion des leads.",
@@ -70,7 +70,7 @@ export const projectsData: Record<string, ProjectData> = {
   "systeme-reservation": {
     title: "Système de Réservation",
     category: "Application Web",
-    year: "2024",
+    completed_at: "2024-01",
     client: "BookEasy",
     description: "Application de réservation en ligne avec calendrier interactif, paiement intégré via Stripe et notifications en temps réel par email et SMS.",
     challenge: "Le client gérait ses réservations manuellement par téléphone et email, ce qui entraînait des doubles réservations et une perte de temps considérable.",

@@ -54,7 +54,7 @@ function JsonLd({ slug, project }: { slug: string; project: (typeof projectsData
     description: project.description,
     creator: { "@id": `${siteUrl}/#organization` },
     image: project.image ? `${siteUrl}${project.image}` : undefined,
-    dateCreated: project.year,
+    dateCreated: project.completed_at,
     url: `${siteUrl}/projets/${slug}`,
     keywords: project.tags.join(", "),
   };

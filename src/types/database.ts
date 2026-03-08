@@ -51,7 +51,7 @@ export interface Project {
   image_url: string;
   tags: string[];
   client: string | null;
-  year: number | null;
+  completed_at: string | null;
   category: string | null;
   challenge: string | null;
   solution: string | null;
