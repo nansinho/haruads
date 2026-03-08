@@ -12,37 +12,8 @@ interface Project {
   slug: string;
 }
 
-// Static fallback when Supabase isn't connected
-const fallbackProjects: Project[] = [
-  {
-    id: "1",
-    title: "AIAKO E-Commerce",
-    description:
-      "Migration WooCommerce vers Next.js + Supabase avec paiement Monetico. Performance x3 et +45% de conversions.",
-    image_url: "/images/projects/project-dashboard.jpg",
-    tags: ["Next.js", "Supabase", "E-Commerce"],
-    slug: "aiako-ecommerce",
-  },
-  {
-    id: "2",
-    title: "Dashboard C&CO",
-    description: "Plateforme SaaS de formation multi-tenant avec gestion complète des apprenants et reporting avancé.",
-    image_url: "/images/projects/neuralia-project.webp",
-    tags: ["React", "Node.js", "SaaS"],
-    slug: "dashboard-cco",
-  },
-  {
-    id: "3",
-    title: "Landing Fintech",
-    description: "Refonte UI/UX complète et design system pour une startup fintech. +60% d'engagement utilisateur.",
-    image_url: "/images/projects/project-landing.jpg",
-    tags: ["Figma", "GSAP", "UI/UX"],
-    slug: "landing-fintech",
-  },
-];
-
 export default function HeroCarousel() {
-  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [progress, setProgress] = useState(0);
@@ -123,7 +94,11 @@ export default function HeroCarousel() {
   };
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-white/[0.06] shadow-[0_30px_100px_rgba(0,0,0,0.5)]">
+    <a
+      href={`/projets/${project.slug}`}
+      title={`Voir le projet ${project.title}`}
+      className="block relative w-full rounded-2xl overflow-hidden border border-white/[0.06] shadow-[0_30px_100px_rgba(0,0,0,0.5)] group/card cursor-pointer"
+    >
       {/* Image area — fully visible */}
       <div className="relative aspect-[16/9] overflow-hidden bg-dark-2">
         <AnimatePresence custom={direction} mode="wait">
@@ -161,7 +136,7 @@ export default function HeroCarousel() {
         {projects.length > 1 && (
           <>
             <button
-              onClick={prev}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); prev(); }}
               className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/30 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/70 hover:bg-black/50 hover:text-white transition-all duration-300 cursor-pointer z-10"
               aria-label="Projet précédent"
             >
@@ -170,7 +145,7 @@ export default function HeroCarousel() {
               </svg>
             </button>
             <button
-              onClick={next}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); next(); }}
               className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/30 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/70 hover:bg-black/50 hover:text-white transition-all duration-300 cursor-pointer z-10"
               aria-label="Projet suivant"
             >
@@ -222,17 +197,13 @@ export default function HeroCarousel() {
               </div>
 
               {/* Right: CTA */}
-              <a
-                href={`/projets/${project.slug}`}
-                title={`Voir le projet ${project.title}`}
-                className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] transition-shadow duration-300"
-              >
+              <span className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium group-hover/card:shadow-[0_0_30px_rgba(249,115,22,0.3)] transition-shadow duration-300">
                 En savoir plus
                 <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-dark fill-none stroke-2">
                   <line x1="5" y1="12" x2="19" y2="12" />
                   <polyline points="12 5 19 12 12 19" />
                 </svg>
-              </a>
+              </span>
             </div>
           </motion.div>
         </AnimatePresence>
@@ -243,7 +214,9 @@ export default function HeroCarousel() {
             {projects.map((_, i) => (
               <button
                 key={i}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
                   setDirection(i > current ? 1 : -1);
                   setCurrent(i);
                   setProgress(0);
@@ -262,6 +235,6 @@ export default function HeroCarousel() {
           </div>
         )}
       </div>
-    </div>
+    </a>
   );
 }
