@@ -1,13 +1,36 @@
 import type { MetadataRoute } from "next";
 import { servicesSlugs } from "@/data/services";
-import { projectsSlugs } from "@/data/projects";
-import { articlesSlugs } from "@/data/articles";
+import { supabase } from "@/lib/supabase";
 
 import { seoConfig } from "@/lib/seo-config";
 
+export const revalidate = 3600;
+
 const siteUrl = seoConfig.siteUrl;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Fetch published projects from Supabase
+  let dbProjects: { slug: string; updated_at: string }[] = [];
+  if (supabase) {
+    const { data } = await supabase
+      .from("projects")
+      .select("slug, updated_at")
+      .eq("status", "published")
+      .order("sort_order", { ascending: true });
+    if (data) dbProjects = data;
+  }
+
+  // Fetch published blog articles from Supabase
+  let dbArticles: { slug: string; updated_at: string }[] = [];
+  if (supabase) {
+    const { data } = await supabase
+      .from("blog_posts")
+      .select("slug, updated_at")
+      .eq("status", "published")
+      .order("published_at", { ascending: false });
+    if (data) dbArticles = data;
+  }
+
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
@@ -84,16 +107,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const projetPages: MetadataRoute.Sitemap = projectsSlugs.map((slug) => ({
-    url: `${siteUrl}/projets/${slug}`,
-    lastModified: new Date(),
+  const projetPages: MetadataRoute.Sitemap = dbProjects.map((p) => ({
+    url: `${siteUrl}/projets/${p.slug}`,
+    lastModified: new Date(p.updated_at),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
-  const blogPages: MetadataRoute.Sitemap = articlesSlugs.map((slug) => ({
-    url: `${siteUrl}/blog/${slug}`,
-    lastModified: new Date(),
+  const blogPages: MetadataRoute.Sitemap = dbArticles.map((a) => ({
+    url: `${siteUrl}/blog/${a.slug}`,
+    lastModified: new Date(a.updated_at),
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));

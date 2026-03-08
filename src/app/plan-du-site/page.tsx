@@ -4,8 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import { servicesData } from "@/data/services";
-import { projectsData } from "@/data/projects";
-import { articlesData } from "@/data/articles";
+import { supabase } from "@/lib/supabase";
 
 export const metadata: Metadata = {
   title: "Plan du Site",
@@ -45,21 +44,39 @@ const staticPages = [
   { label: "Politique de Confidentialité & Cookies", href: "/politique-confidentialite" },
 ];
 
-export default function PlanDuSitePage() {
+export const revalidate = 3600;
+
+export default async function PlanDuSitePage() {
   const services = Object.entries(servicesData).map(([slug, data]) => ({
     label: data.title,
     href: `/services/${slug}`,
   }));
 
-  const projects = Object.entries(projectsData).map(([slug, data]) => ({
-    label: data.title,
-    href: `/projets/${slug}`,
-  }));
+  // Fetch published projects from Supabase
+  let projects: { label: string; href: string }[] = [];
+  if (supabase) {
+    const { data } = await supabase
+      .from("projects")
+      .select("title, slug")
+      .eq("status", "published")
+      .order("sort_order", { ascending: true });
+    if (data) {
+      projects = data.map((p) => ({ label: p.title, href: `/projets/${p.slug}` }));
+    }
+  }
 
-  const articles = Object.entries(articlesData).map(([slug, data]) => ({
-    label: data.title,
-    href: `/blog/${slug}`,
-  }));
+  // Fetch published blog articles from Supabase
+  let articles: { label: string; href: string }[] = [];
+  if (supabase) {
+    const { data } = await supabase
+      .from("blog_posts")
+      .select("title, slug")
+      .eq("status", "published")
+      .order("published_at", { ascending: false });
+    if (data) {
+      articles = data.map((a) => ({ label: a.title, href: `/blog/${a.slug}` }));
+    }
+  }
 
   return (
     <>
