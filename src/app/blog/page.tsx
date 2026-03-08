@@ -78,7 +78,7 @@ export default function BlogPage() {
                 <span className="font-light">Actualités & </span>
                 <span className="font-serif italic">ressources.</span>
               </h1>
-              <p className="text-[0.95rem] text-white/40 mt-5 max-w-[500px] leading-[1.8] font-light">
+              <p className="text-[0.95rem] text-text-muted mt-5 max-w-[500px] leading-[1.8] font-light">
                 Conseils, tendances et retours d&apos;expérience sur le développement web,
                 le design et le marketing digital.
               </p>
@@ -196,7 +196,7 @@ export default function BlogPage() {
                   <span className="font-light">Restez </span>
                   <span className="font-serif italic">informé.</span>
                 </h2>
-                <p className="text-[0.9rem] text-white/70 mt-4 leading-[1.7]">
+                <p className="text-[0.9rem] text-text-secondary mt-4 leading-[1.7]">
                   Recevez nos derniers articles et conseils directement dans votre boîte mail.
                 </p>
                 <div className="flex gap-3 mt-8 max-w-[400px] mx-auto">

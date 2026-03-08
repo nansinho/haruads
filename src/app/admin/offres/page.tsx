@@ -265,7 +265,7 @@ export default function OffresAdminPage() {
                               Populaire
                             </span>
                           ) : (
-                            <span className="inline-flex px-2.5 py-1 bg-gray-500/15 text-gray-400 border border-gray-500/20 rounded-lg text-xs font-medium">
+                            <span className="inline-flex px-2.5 py-1 bg-gray-500/15 text-text-muted border border-gray-500/20 rounded-lg text-xs font-medium">
                               -
                             </span>
                           )}
@@ -276,7 +276,7 @@ export default function OffresAdminPage() {
                               Actif
                             </span>
                           ) : (
-                            <span className="inline-flex px-2.5 py-1 bg-gray-500/15 text-gray-400 border border-gray-500/20 rounded-lg text-xs font-medium">
+                            <span className="inline-flex px-2.5 py-1 bg-gray-500/15 text-text-muted border border-gray-500/20 rounded-lg text-xs font-medium">
                               Inactif
                             </span>
                           )}

@@ -85,7 +85,7 @@ export default function AProposPage() {
                   C&apos;est Ma Vie.
                 </span>
               </h1>
-              <p className="text-[0.95rem] text-white/40 mt-5 max-w-[520px] leading-[1.8] font-light">
+              <p className="text-[0.95rem] text-text-muted mt-5 max-w-[520px] leading-[1.8] font-light">
                 Du Geek passionn&eacute; de Call of Duty 2 &agrave;
                 l&apos;entrepreneur digital, l&apos;histoire d&apos;une passion
                 devenue r&eacute;alit&eacute;.
@@ -227,7 +227,7 @@ export default function AProposPage() {
                   <span className="font-light">Les Mots qui </span>
                   <span className="font-serif italic text-accent">Restent.</span>
                 </h2>
-                <p className="text-[0.9rem] text-white/40 mt-4 leading-[1.7]">
+                <p className="text-[0.9rem] text-text-muted mt-4 leading-[1.7]">
                   Des messages pr&eacute;cieux qui continuent de guider mon chemin.
                 </p>
               </div>
@@ -246,7 +246,7 @@ export default function AProposPage() {
                     />
                   </div>
                   <div className="p-6">
-                    <p className="text-[0.9rem] text-white/70 italic font-serif leading-[1.7]">
+                    <p className="text-[0.9rem] text-text-secondary italic font-serif leading-[1.7]">
                       &ldquo;Un grand MERCI encore !! Je t&apos;aime tr&egrave;s
                       fort. J&apos;esp&egrave;re que tout va aller pour toi, les
                       amours.&rdquo;
@@ -270,7 +270,7 @@ export default function AProposPage() {
                     />
                   </div>
                   <div className="p-6">
-                    <p className="text-[0.9rem] text-white/70 italic font-serif leading-[1.7]">
+                    <p className="text-[0.9rem] text-text-secondary italic font-serif leading-[1.7]">
                       &ldquo;Le travail, je te souhaite que du bonheur. Bisous
                       Maman.&rdquo;
                     </p>
@@ -366,7 +366,7 @@ export default function AProposPage() {
                         <h3 className="text-[1.1rem] font-semibold text-white mb-2">
                           {value.title}
                         </h3>
-                        <p className="text-[0.82rem] text-white/50 leading-[1.7]">
+                        <p className="text-[0.82rem] text-text-muted leading-[1.7]">
                           {value.desc}
                         </p>
                       </div>
@@ -392,7 +392,7 @@ export default function AProposPage() {
                     <h3 className="text-[1.3rem] font-semibold text-white mb-2">
                       Notre Mission
                     </h3>
-                    <p className="text-[0.9rem] text-white/60 leading-[1.8]">
+                    <p className="text-[0.9rem] text-text-muted leading-[1.8]">
                       Transformer les id&eacute;es en solutions digitales
                       performantes et sur mesure, en combinant expertise technique,
                       innovation constante et un accompagnement personnalis&eacute;
@@ -447,7 +447,7 @@ export default function AProposPage() {
                   <span className="font-light">Envie de </span>
                   <span className="font-serif italic">collaborer ?</span>
                 </h2>
-                <p className="text-[0.9rem] text-white/70 mt-4 leading-[1.7]">
+                <p className="text-[0.9rem] text-text-secondary mt-4 leading-[1.7]">
                   Discutons de votre projet autour d&apos;un caf&eacute; (virtuel ou
                   r&eacute;el).
                 </p>

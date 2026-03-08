@@ -61,7 +61,7 @@ export default function ProjectDetail() {
         <main className="bg-dark text-white min-h-screen flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-[2rem] font-serif italic text-accent">Projet introuvable</h1>
-            <p className="text-white/40 mt-4">
+            <p className="text-text-muted mt-4">
               Ce projet n&apos;existe pas ou n&apos;est plus disponible.
             </p>
             <a href="/projets" className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-full bg-accent text-dark font-medium text-[0.9rem]">
@@ -111,19 +111,19 @@ export default function ProjectDetail() {
                   </span>
                 )}
                 {project.year && (
-                  <span className="text-[0.72rem] text-white/30">{project.year}</span>
+                  <span className="text-[0.72rem] text-text-muted">{project.year}</span>
                 )}
                 {project.client && (
                   <>
-                    <span className="text-[0.72rem] text-white/30">&bull;</span>
-                    <span className="text-[0.72rem] text-white/30">{project.client}</span>
+                    <span className="text-[0.72rem] text-text-muted">&bull;</span>
+                    <span className="text-[0.72rem] text-text-muted">{project.client}</span>
                   </>
                 )}
               </div>
               <h1 className="text-[2rem] sm:text-[2.8rem] lg:text-[3.5rem] leading-[1.08] tracking-[-0.02em]">
                 <span className="font-semibold">{project.title}</span>
               </h1>
-              <p className="text-[0.95rem] text-white/40 mt-5 max-w-[600px] leading-[1.8] font-light">
+              <p className="text-[0.95rem] text-text-muted mt-5 max-w-[600px] leading-[1.8] font-light">
                 {project.description}
               </p>
               {project.external_url && (
@@ -233,7 +233,7 @@ export default function ProjectDetail() {
                       <span className="text-[2.5rem] lg:text-[3rem] font-serif text-white leading-none block">
                         {r.value}
                       </span>
-                      <span className="text-[0.8rem] text-white/60 mt-2 block">
+                      <span className="text-[0.8rem] text-text-muted mt-2 block">
                         {r.label}
                       </span>
                     </motion.div>
@@ -289,7 +289,7 @@ export default function ProjectDetail() {
             onClick={() => setGalleryIndex(null)}
           >
             <button
-              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
+              className="absolute top-6 right-6 text-text-muted hover:text-white transition-colors"
               onClick={() => setGalleryIndex(null)}
             >
               <svg viewBox="0 0 24 24" className="w-8 h-8 stroke-current fill-none stroke-2">
@@ -323,7 +323,7 @@ export default function ProjectDetail() {
               className="max-w-full max-h-[85vh] object-contain rounded-lg"
               onClick={(e) => e.stopPropagation()}
             />
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-sm">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-text-muted text-sm">
               {galleryIndex + 1} / {allImages.length}
             </div>
           </div>
@@ -426,7 +426,7 @@ export default function ProjectDetail() {
                   <span className="font-light">Un projet </span>
                   <span className="font-serif italic text-accent">similaire ?</span>
                 </h2>
-                <p className="text-[0.9rem] text-white/40 mt-4 leading-[1.7]">
+                <p className="text-[0.9rem] text-text-muted mt-4 leading-[1.7]">
                   Discutons de la meilleure approche pour votre projet.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center mt-8">
@@ -444,7 +444,7 @@ export default function ProjectDetail() {
                   </motion.a>
                   <motion.a
                     href="/services"
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white/70 font-medium text-[0.9rem] cursor-pointer hover:border-white/40 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-text-secondary font-medium text-[0.9rem] cursor-pointer hover:border-white/40 hover:text-white transition-colors"
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}
                   >

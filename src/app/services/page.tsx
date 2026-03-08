@@ -113,7 +113,7 @@ export default function ServicesPage() {
                 <span className="font-light">Des solutions </span>
                 <span className="font-serif italic text-accent">sur mesure.</span>
               </h1>
-              <p className="text-[0.95rem] text-white/40 mt-5 max-w-[500px] leading-[1.8] font-light">
+              <p className="text-[0.95rem] text-text-muted mt-5 max-w-[500px] leading-[1.8] font-light">
                 De la conception au déploiement, nous vous accompagnons à chaque étape
                 pour créer des expériences digitales performantes.
               </p>
@@ -168,7 +168,7 @@ export default function ServicesPage() {
                   <span className="font-light">Un projet en </span>
                   <span className="font-serif italic">tête ?</span>
                 </h2>
-                <p className="text-[0.9rem] text-white/70 mt-4 leading-[1.7]">
+                <p className="text-[0.9rem] text-text-secondary mt-4 leading-[1.7]">
                   Discutons de vos besoins. Premier rendez-vous gratuit et sans engagement.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center mt-10">

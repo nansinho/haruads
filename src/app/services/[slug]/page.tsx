@@ -714,7 +714,7 @@ export default function ServiceDetail() {
             <h1 className="text-[2rem] font-serif italic text-accent">
               Service introuvable
             </h1>
-            <p className="text-white/40 mt-4">
+            <p className="text-text-muted mt-4">
               <a href="/services" className="text-accent hover:underline">
                 Retour aux services
               </a>
@@ -772,7 +772,7 @@ export default function ServiceDetail() {
                   </h1>
                 </div>
               </div>
-              <p className="text-[1rem] text-white/40 max-w-[550px] leading-[1.8] font-light">
+              <p className="text-[1rem] text-text-muted max-w-[550px] leading-[1.8] font-light">
                 {service.subtitle}
               </p>
 
@@ -789,7 +789,7 @@ export default function ServiceDetail() {
                 </motion.a>
                 <a
                   href="#faq"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/10 text-white/60 font-medium text-[0.88rem] hover:border-white/20 hover:text-white transition-all"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/10 text-text-muted font-medium text-[0.88rem] hover:border-white/20 hover:text-white transition-all"
                 >
                   <MessageSquare size={16} />
                   Questions fréquentes
@@ -870,7 +870,7 @@ export default function ServiceDetail() {
                     <span className="text-[2.2rem] lg:text-[2.8rem] font-serif text-accent leading-none block">
                       {m.value}
                     </span>
-                    <span className="text-[0.78rem] text-white/40 mt-2 block">
+                    <span className="text-[0.78rem] text-text-muted mt-2 block">
                       {m.label}
                     </span>
                   </motion.div>
@@ -969,7 +969,7 @@ export default function ServiceDetail() {
                     <h4 className="text-[1rem] font-semibold text-white mt-3">
                       {p.title}
                     </h4>
-                    <p className="text-[0.8rem] text-white/60 leading-[1.7] mt-2">
+                    <p className="text-[0.8rem] text-text-muted leading-[1.7] mt-2">
                       {p.desc}
                     </p>
                   </div>
@@ -1060,7 +1060,7 @@ export default function ServiceDetail() {
                     service ?
                   </span>
                 </h2>
-                <p className="text-[0.9rem] text-white/40 mt-4 leading-[1.7]">
+                <p className="text-[0.9rem] text-text-muted mt-4 leading-[1.7]">
                   Parlons de votre projet. Premier rendez-vous gratuit et sans
                   engagement.
                 </p>
@@ -1076,7 +1076,7 @@ export default function ServiceDetail() {
                   </motion.a>
                   <motion.a
                     href="/services"
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/10 text-white/60 font-medium text-[0.9rem] hover:border-white/20 hover:text-white transition-all cursor-pointer"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/10 text-text-muted font-medium text-[0.9rem] hover:border-white/20 hover:text-white transition-all cursor-pointer"
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}
                   >

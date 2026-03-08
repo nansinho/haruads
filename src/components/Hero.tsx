@@ -63,7 +63,7 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.1, ease }}
             >
               <span className="w-2 h-2 rounded-full bg-accent" />
-              <span className="text-[0.72rem] uppercase tracking-[3px] text-white/40 font-medium">
+              <span className="text-[0.72rem] uppercase tracking-[3px] text-text-muted font-medium">
                 Agence Web Cr&eacute;ative &mdash; Aix-en-Provence
               </span>
             </motion.div>
@@ -101,7 +101,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              className="text-[0.95rem] lg:text-[1.05rem] text-white/35 mt-7 max-w-[420px] leading-[1.8] font-light"
+              className="text-[0.95rem] lg:text-[1.05rem] text-text-muted mt-7 max-w-[420px] leading-[1.8] font-light"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.35, ease }}

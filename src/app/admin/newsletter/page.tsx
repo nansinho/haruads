@@ -63,7 +63,7 @@ function CampaignStatusBadge({ status }: { status: NewsletterCampaign["status"] 
   const config = {
     draft: {
       label: "Brouillon",
-      className: "bg-gray-500/10 text-gray-400 border-gray-500/20",
+      className: "bg-gray-500/10 text-text-muted border-gray-500/20",
     },
     sent: {
       label: "Envoyee",

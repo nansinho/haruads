@@ -108,7 +108,7 @@ export default function TarifsPage() {
                 <span className="font-light">Des formules </span>
                 <span className="font-serif italic text-accent">transparentes.</span>
               </h1>
-              <p className="text-[0.95rem] text-white/40 mt-5 max-w-[500px] leading-[1.8] font-light">
+              <p className="text-[0.95rem] text-text-muted mt-5 max-w-[500px] leading-[1.8] font-light">
                 Chaque projet est unique. Nos tarifs s&apos;adaptent à vos besoins
                 et à votre budget, sans surprise.
               </p>
@@ -134,16 +134,16 @@ export default function TarifsPage() {
                         Populaire
                       </span>
                     )}
-                    <div className={`text-[0.85rem] font-medium mb-4 ${plan.featured ? "text-white/70" : "text-text-body"}`}>
+                    <div className={`text-[0.85rem] font-medium mb-4 ${plan.featured ? "text-text-secondary" : "text-text-body"}`}>
                       {plan.name}
                     </div>
                     <div className="flex items-baseline gap-1 mb-2">
                       <span className={`text-[2.8rem] font-serif leading-none ${plan.featured ? "text-white" : "text-text-dark"}`}>
                         {plan.price}&euro;
                       </span>
-                      <span className={`text-[0.8rem] ${plan.featured ? "text-white/60" : "text-text-body"}`}>/mois</span>
+                      <span className={`text-[0.8rem] ${plan.featured ? "text-text-muted" : "text-text-body"}`}>/mois</span>
                     </div>
-                    <p className={`text-[0.8rem] leading-[1.6] mb-6 ${plan.featured ? "text-white/70" : "text-text-body"}`}>
+                    <p className={`text-[0.8rem] leading-[1.6] mb-6 ${plan.featured ? "text-text-secondary" : "text-text-body"}`}>
                       {plan.desc}
                     </p>
 
@@ -216,7 +216,7 @@ export default function TarifsPage() {
                   <span className="font-light">Besoin d&apos;un devis </span>
                   <span className="font-serif italic">personnalisé ?</span>
                 </h2>
-                <p className="text-[0.9rem] text-white/70 mt-4 leading-[1.7]">
+                <p className="text-[0.9rem] text-text-secondary mt-4 leading-[1.7]">
                   Chaque projet est unique. Contactez-nous pour un devis adapté à vos besoins.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center mt-10">

@@ -44,38 +44,38 @@ const sections = [
         <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
             <p>
-              <span className="text-white/40 text-xs uppercase tracking-wider">
+              <span className="text-text-muted text-xs uppercase tracking-wider">
                 Raison sociale
               </span>
               <br />
               <strong className="text-white">Agence HDS</strong> (Harua Digital Studio)
             </p>
             <p>
-              <span className="text-white/40 text-xs uppercase tracking-wider">
+              <span className="text-text-muted text-xs uppercase tracking-wider">
                 Repr&eacute;sentant
               </span>
               <br />
               <strong className="text-white">Nans</strong>, G&eacute;rant
             </p>
             <p>
-              <span className="text-white/40 text-xs uppercase tracking-wider">SIRET</span>
+              <span className="text-text-muted text-xs uppercase tracking-wider">SIRET</span>
               <br />
               810 696 096 00041
             </p>
             <p>
-              <span className="text-white/40 text-xs uppercase tracking-wider">Adresse</span>
+              <span className="text-text-muted text-xs uppercase tracking-wider">Adresse</span>
               <br />
               Gardanne (13120), France
             </p>
             <p>
-              <span className="text-white/40 text-xs uppercase tracking-wider">Email</span>
+              <span className="text-text-muted text-xs uppercase tracking-wider">Email</span>
               <br />
               <a href="mailto:contact@agencehds.fr" className="text-accent hover:underline">
                 contact@agencehds.fr
               </a>
             </p>
             <p>
-              <span className="text-white/40 text-xs uppercase tracking-wider">
+              <span className="text-text-muted text-xs uppercase tracking-wider">
                 T&eacute;l&eacute;phone
               </span>
               <br />
@@ -101,48 +101,48 @@ const sections = [
 
         <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 space-y-2">
           <h4 className="text-white font-medium text-sm">Formulaire de contact</h4>
-          <ul className="list-disc list-inside space-y-1 text-white/60">
+          <ul className="list-disc list-inside space-y-1 text-text-muted">
             <li>Nom et pr&eacute;nom</li>
             <li>Adresse email</li>
             <li>Num&eacute;ro de t&eacute;l&eacute;phone (facultatif)</li>
             <li>Message / description du projet</li>
           </ul>
-          <p className="text-white/40 text-xs">
+          <p className="text-text-muted text-xs">
             Base l&eacute;gale : consentement (article 6.1.a du RGPD)
           </p>
         </div>
 
         <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 space-y-2">
           <h4 className="text-white font-medium text-sm">Espace client</h4>
-          <ul className="list-disc list-inside space-y-1 text-white/60">
+          <ul className="list-disc list-inside space-y-1 text-text-muted">
             <li>Nom complet</li>
             <li>Adresse email</li>
             <li>Mot de passe (stock&eacute; sous forme chiffr&eacute;e avec bcrypt)</li>
             <li>T&eacute;l&eacute;phone, adresse, ville, entreprise</li>
           </ul>
-          <p className="text-white/40 text-xs">
+          <p className="text-text-muted text-xs">
             Base l&eacute;gale : ex&eacute;cution contractuelle (article 6.1.b du RGPD)
           </p>
         </div>
 
         <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 space-y-2">
           <h4 className="text-white font-medium text-sm">Newsletter</h4>
-          <ul className="list-disc list-inside space-y-1 text-white/60">
+          <ul className="list-disc list-inside space-y-1 text-text-muted">
             <li>Adresse email</li>
           </ul>
-          <p className="text-white/40 text-xs">
+          <p className="text-text-muted text-xs">
             Base l&eacute;gale : consentement (article 6.1.a du RGPD)
           </p>
         </div>
 
         <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-5 space-y-2">
           <h4 className="text-white font-medium text-sm">Donn&eacute;es de navigation</h4>
-          <ul className="list-disc list-inside space-y-1 text-white/60">
+          <ul className="list-disc list-inside space-y-1 text-text-muted">
             <li>Adresse IP (anonymis&eacute;e)</li>
             <li>Type de navigateur et syst&egrave;me d&apos;exploitation</li>
             <li>Pages visit&eacute;es et dur&eacute;e de visite</li>
           </ul>
-          <p className="text-white/40 text-xs">
+          <p className="text-text-muted text-xs">
             Base l&eacute;gale : int&eacute;r&ecirc;t l&eacute;gitime (article 6.1.f du RGPD)
           </p>
         </div>
@@ -168,7 +168,7 @@ const sections = [
               <p>
                 <strong className="text-white">{title}</strong>
                 <br />
-                <span className="text-white/60">{desc}</span>
+                <span className="text-text-muted">{desc}</span>
               </p>
             </li>
           ))}
@@ -190,15 +190,15 @@ const sections = [
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-white/[0.08]">
-                <th className="text-left py-3 pr-4 text-white/50 font-medium text-xs uppercase tracking-wider">
+                <th className="text-left py-3 pr-4 text-text-muted font-medium text-xs uppercase tracking-wider">
                   Donn&eacute;es
                 </th>
-                <th className="text-left py-3 text-white/50 font-medium text-xs uppercase tracking-wider">
+                <th className="text-left py-3 text-text-muted font-medium text-xs uppercase tracking-wider">
                   Dur&eacute;e de conservation
                 </th>
               </tr>
             </thead>
-            <tbody className="text-white/60">
+            <tbody className="text-text-muted">
               <tr className="border-b border-white/[0.04]">
                 <td className="py-3 pr-4">Formulaire de contact</td>
                 <td className="py-3">3 ans apr&egrave;s le dernier contact</td>
@@ -240,18 +240,18 @@ const sections = [
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-white/[0.08]">
-                <th className="text-left py-3 pr-4 text-white/50 font-medium text-xs uppercase tracking-wider">
+                <th className="text-left py-3 pr-4 text-text-muted font-medium text-xs uppercase tracking-wider">
                   Sous-traitant
                 </th>
-                <th className="text-left py-3 pr-4 text-white/50 font-medium text-xs uppercase tracking-wider">
+                <th className="text-left py-3 pr-4 text-text-muted font-medium text-xs uppercase tracking-wider">
                   Mission
                 </th>
-                <th className="text-left py-3 text-white/50 font-medium text-xs uppercase tracking-wider">
+                <th className="text-left py-3 text-text-muted font-medium text-xs uppercase tracking-wider">
                   Localisation
                 </th>
               </tr>
             </thead>
-            <tbody className="text-white/60">
+            <tbody className="text-text-muted">
               <tr className="border-b border-white/[0.04]">
                 <td className="py-3 pr-4">Hostinger</td>
                 <td className="py-3 pr-4">H&eacute;bergement du site</td>
@@ -301,7 +301,7 @@ const sections = [
               className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4"
             >
               <h4 className="text-white font-medium text-sm mb-1">{title}</h4>
-              <p className="text-white/50 text-xs leading-relaxed">{desc}</p>
+              <p className="text-text-muted text-xs leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
@@ -315,7 +315,7 @@ const sections = [
             en pr&eacute;cisant votre nom, email et la nature de votre demande. Nous
             nous engageons &agrave; r&eacute;pondre dans un d&eacute;lai de 30 jours.
           </p>
-          <p className="text-white/50 text-xs">
+          <p className="text-text-muted text-xs">
             Vous pouvez &eacute;galement adresser une r&eacute;clamation &agrave; la
             CNIL (Commission Nationale de l&apos;Informatique et des Libert&eacute;s) —
             cnil.fr.
@@ -341,18 +341,18 @@ const sections = [
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-white/[0.08]">
-                <th className="text-left py-3 pr-4 text-white/50 font-medium text-xs uppercase tracking-wider">
+                <th className="text-left py-3 pr-4 text-text-muted font-medium text-xs uppercase tracking-wider">
                   Type
                 </th>
-                <th className="text-left py-3 pr-4 text-white/50 font-medium text-xs uppercase tracking-wider">
+                <th className="text-left py-3 pr-4 text-text-muted font-medium text-xs uppercase tracking-wider">
                   Finalit&eacute;
                 </th>
-                <th className="text-left py-3 text-white/50 font-medium text-xs uppercase tracking-wider">
+                <th className="text-left py-3 text-text-muted font-medium text-xs uppercase tracking-wider">
                   Dur&eacute;e
                 </th>
               </tr>
             </thead>
-            <tbody className="text-white/60">
+            <tbody className="text-text-muted">
               <tr className="border-b border-white/[0.04]">
                 <td className="py-3 pr-4">
                   <strong className="text-white/80">Essentiels</strong>
@@ -416,7 +416,7 @@ const sections = [
               className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4"
             >
               <h4 className="text-white font-medium text-sm mb-1">{browser}</h4>
-              <p className="text-white/50 text-xs leading-relaxed">{instructions}</p>
+              <p className="text-text-muted text-xs leading-relaxed">{instructions}</p>
             </div>
           ))}
         </div>
@@ -513,7 +513,7 @@ export default function PolitiqueConfidentialitePage() {
               <span className="font-light">Politique de </span>
               <span className="font-serif italic text-accent">confidentialit&eacute;.</span>
             </h1>
-            <p className="text-white/50 text-[0.88rem] mt-4 max-w-[550px] leading-[1.7]">
+            <p className="text-text-muted text-[0.88rem] mt-4 max-w-[550px] leading-[1.7]">
               D&eacute;couvrez comment nous prot&eacute;geons vos donn&eacute;es
               personnelles et g&eacute;rons les cookies sur notre site, en toute
               transparence et conform&eacute;ment au RGPD.
@@ -522,7 +522,7 @@ export default function PolitiqueConfidentialitePage() {
         </section>
 
         {/* Content */}
-        <section className="bg-dark text-white/70 border-t border-white/[0.04]">
+        <section className="bg-dark text-text-secondary border-t border-white/[0.04]">
           <div className="max-w-[900px] mx-auto px-5 py-[80px] lg:px-12">
             <div className="space-y-0">
               {sections.map((section, index) => (
@@ -549,7 +549,7 @@ export default function PolitiqueConfidentialitePage() {
 
             {/* Cross links */}
             <div className="mt-12 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-white/30 text-[0.75rem]">
+              <p className="text-text-muted text-[0.75rem]">
                 Derni&egrave;re mise &agrave; jour : F&eacute;vrier 2026
               </p>
               <Link

@@ -458,7 +458,7 @@ export default function ProjetsAdminPage() {
                             {project.featured ? (
                               <CheckCircle size={18} className="text-emerald-400" />
                             ) : (
-                              <X size={18} className="text-gray-500" />
+                              <X size={18} className="text-text-muted" />
                             )}
                           </button>
                         </td>
@@ -467,7 +467,7 @@ export default function ProjetsAdminPage() {
                             {project.hero_visible ? (
                               <CheckCircle size={18} className="text-emerald-400" />
                             ) : (
-                              <X size={18} className="text-gray-500" />
+                              <X size={18} className="text-text-muted" />
                             )}
                           </button>
                         </td>

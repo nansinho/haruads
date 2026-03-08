@@ -13,7 +13,7 @@ export default function CTA() {
               <span className="font-light">Pr&ecirc;t &agrave; cr&eacute;er quelque chose d&apos;</span>
               <span className="font-serif italic">exceptionnel ?</span>
             </h2>
-            <p className="text-[0.9rem] text-white/70 mt-5 leading-[1.7]">
+            <p className="text-[0.9rem] text-text-secondary mt-5 leading-[1.7]">
               Discutons de votre projet. Premier rendez-vous gratuit et sans engagement.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mt-10">

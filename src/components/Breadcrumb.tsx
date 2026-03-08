@@ -13,12 +13,12 @@ export default function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
             {item.href ? (
               <a
                 href={item.href}
-                className="text-white/40 hover:text-accent transition-colors"
+                className="text-text-muted hover:text-accent transition-colors"
               >
                 {item.label}
               </a>
             ) : (
-              <span className="text-white/70">{item.label}</span>
+              <span className="text-text-secondary">{item.label}</span>
             )}
           </li>
         ))}

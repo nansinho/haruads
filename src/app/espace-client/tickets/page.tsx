@@ -46,11 +46,11 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   waiting_client: { label: "En attente", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
   waiting_internal: { label: "En traitement", color: "bg-purple-500/20 text-purple-300 border-purple-500/30" },
   resolved: { label: "Résolu", color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30" },
-  closed: { label: "Fermé", color: "bg-gray-500/20 text-gray-300 border-gray-500/30" },
+  closed: { label: "Fermé", color: "bg-gray-500/20 text-text-secondary border-gray-500/30" },
 };
 
 const priorityConfig: Record<TicketPriority, { label: string; color: string }> = {
-  low: { label: "Basse", color: "bg-gray-500/20 text-gray-300 border-gray-500/30" },
+  low: { label: "Basse", color: "bg-gray-500/20 text-text-secondary border-gray-500/30" },
   medium: { label: "Moyenne", color: "bg-blue-500/20 text-blue-300 border-blue-500/30" },
   high: { label: "Haute", color: "bg-orange-500/20 text-orange-300 border-orange-500/30" },
   urgent: { label: "Urgente", color: "bg-red-500/20 text-red-300 border-red-500/30" },

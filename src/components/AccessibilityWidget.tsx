@@ -155,7 +155,7 @@ export default function AccessibilityWidget() {
 
             {/* Font Size */}
             <div className="mb-5">
-              <label className="text-[0.75rem] text-white/50 uppercase tracking-wider font-medium block mb-2">
+              <label className="text-[0.75rem] text-text-muted uppercase tracking-wider font-medium block mb-2">
                 Taille du texte
               </label>
               <div className="flex gap-2">
@@ -166,7 +166,7 @@ export default function AccessibilityWidget() {
                     className={`flex-1 py-2 rounded-lg text-[0.75rem] font-medium cursor-pointer border transition-all ${
                       settings.fontSize === i
                         ? "bg-accent text-dark border-accent"
-                        : "bg-white/5 text-white/60 border-white/10 hover:border-white/20"
+                        : "bg-white/5 text-text-muted border-white/10 hover:border-white/20"
                     }`}
                   >
                     {label}
@@ -205,7 +205,7 @@ export default function AccessibilityWidget() {
 
             {/* Color filter */}
             <div>
-              <label className="text-[0.75rem] text-white/50 uppercase tracking-wider font-medium block mb-2">
+              <label className="text-[0.75rem] text-text-muted uppercase tracking-wider font-medium block mb-2">
                 Filtre daltonien
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -216,7 +216,7 @@ export default function AccessibilityWidget() {
                     className={`py-2 px-3 rounded-lg text-[0.7rem] font-medium cursor-pointer border transition-all ${
                       settings.colorFilter === opt.value
                         ? "bg-accent text-dark border-accent"
-                        : "bg-white/5 text-white/60 border-white/10 hover:border-white/20"
+                        : "bg-white/5 text-text-muted border-white/10 hover:border-white/20"
                     }`}
                   >
                     {opt.label}
@@ -246,7 +246,7 @@ function ToggleOption({
       className="w-full flex items-center justify-between py-2.5 px-3 rounded-lg bg-white/5 border border-white/10 cursor-pointer transition-all hover:border-white/20"
     >
       <span
-        className="text-[0.8rem] text-white/70 font-medium"
+        className="text-[0.8rem] text-text-secondary font-medium"
         dangerouslySetInnerHTML={{ __html: label }}
       />
       <div

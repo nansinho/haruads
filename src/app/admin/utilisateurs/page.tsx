@@ -36,7 +36,7 @@ function StatusBadge({ isActive }: { isActive: boolean }) {
       Actif
     </span>
   ) : (
-    <span className="inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border bg-gray-500/15 text-gray-400 border-gray-500/20">
+    <span className="inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border bg-gray-500/15 text-text-muted border-gray-500/20">
       Inactif
     </span>
   );
@@ -53,7 +53,7 @@ function RoleBadge({ role }: { role: string }) {
     client: "Client",
     editor: "Éditeur",
   };
-  const color = colors[role] || "bg-gray-500/15 text-gray-400 border-gray-500/20";
+  const color = colors[role] || "bg-gray-500/15 text-text-muted border-gray-500/20";
   return (
     <span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}>
       {labels[role] || role}

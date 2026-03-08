@@ -39,7 +39,7 @@ function StatusBadge({ status }: { status: string }) {
     waiting_client: "bg-orange-500/15 text-orange-400 border-orange-500/20",
     waiting_internal: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
     resolved: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-    closed: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+    closed: "bg-gray-500/15 text-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     open: "Ouvert",
@@ -50,7 +50,7 @@ function StatusBadge({ status }: { status: string }) {
     closed: "Ferme",
   };
   const color =
-    colors[status] || "bg-gray-500/15 text-gray-400 border-gray-500/20";
+    colors[status] || "bg-gray-500/15 text-text-muted border-gray-500/20";
   return (
     <span
       className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}
@@ -65,7 +65,7 @@ function PriorityBadge({ priority }: { priority: string }) {
     urgent: "bg-red-500/15 text-red-400 border-red-500/20",
     high: "bg-orange-500/15 text-orange-400 border-orange-500/20",
     medium: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
-    low: "bg-gray-500/15 text-gray-400 border-gray-500/20",
+    low: "bg-gray-500/15 text-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     urgent: "Urgent",
@@ -74,7 +74,7 @@ function PriorityBadge({ priority }: { priority: string }) {
     low: "Basse",
   };
   const color =
-    colors[priority] || "bg-gray-500/15 text-gray-400 border-gray-500/20";
+    colors[priority] || "bg-gray-500/15 text-text-muted border-gray-500/20";
   return (
     <span
       className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}

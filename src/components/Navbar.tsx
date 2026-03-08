@@ -88,7 +88,7 @@ export default function Navbar() {
             <li key={link.label}>
               <Link
                 href={link.href}
-                className="text-[0.82rem] font-medium text-white/40 hover:text-white transition-colors duration-300 relative group"
+                className="text-[0.82rem] font-medium text-text-muted hover:text-white transition-colors duration-300 relative group"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
@@ -100,7 +100,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-3">
           <motion.a
             href={buttonHref}
-            className="flex items-center gap-2 border border-white/[0.12] text-white/60 hover:text-white hover:border-white/[0.25] px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer transition-colors duration-300"
+            className="flex items-center gap-2 border border-white/[0.12] text-text-muted hover:text-white hover:border-white/[0.25] px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer transition-colors duration-300"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
@@ -174,7 +174,7 @@ export default function Navbar() {
                   >
                     <Link
                       href={link.href}
-                      className="block py-3 text-[0.95rem] font-medium text-white/60 hover:text-accent transition-colors"
+                      className="block py-3 text-[0.95rem] font-medium text-text-muted hover:text-accent transition-colors"
                       onClick={() => setMenuOpen(false)}
                     >
                       {link.label}
@@ -185,7 +185,7 @@ export default function Navbar() {
               <div className="flex flex-col gap-3 mt-4 relative z-10">
                 <Link
                   href={buttonHref}
-                  className="block border border-white/[0.12] text-white/60 px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center"
+                  className="block border border-white/[0.12] text-text-muted px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center"
                   onClick={() => setMenuOpen(false)}
                 >
                   {buttonLabel}

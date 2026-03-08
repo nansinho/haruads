@@ -231,7 +231,7 @@ export default function BlogArticle() {
         <main className="bg-dark text-white min-h-screen flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-[2rem] font-serif italic text-accent">Article introuvable</h1>
-            <p className="text-white/40 mt-4">
+            <p className="text-text-muted mt-4">
               <a href="/blog" className="text-accent hover:underline">
                 Retour au blog
               </a>
@@ -271,7 +271,7 @@ export default function BlogArticle() {
                 <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-[0.72rem] font-medium">
                   {article.category}
                 </span>
-                <span className="text-[0.72rem] text-white/30">
+                <span className="text-[0.72rem] text-text-muted">
                   {article.date} &bull; {article.readTime} de lecture
                 </span>
               </div>
@@ -282,7 +282,7 @@ export default function BlogArticle() {
                 <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-dark text-[0.7rem] font-semibold">
                   H
                 </div>
-                <span className="text-[0.82rem] text-white/50">{article.author}</span>
+                <span className="text-[0.82rem] text-text-muted">{article.author}</span>
               </div>
             </motion.div>
           </div>
@@ -374,7 +374,7 @@ export default function BlogArticle() {
                   <span className="font-light">Un projet en </span>
                   <span className="font-serif italic">tête ?</span>
                 </h2>
-                <p className="text-[0.9rem] text-white/70 mt-4 leading-[1.7]">
+                <p className="text-[0.9rem] text-text-secondary mt-4 leading-[1.7]">
                   Discutons de vos besoins. Premier rendez-vous gratuit.
                 </p>
                 <div className="mt-8">

@@ -128,7 +128,7 @@ export default function Testimonials() {
                       <div className="text-[0.9rem] font-medium">
                         {testimonials[current].name}
                       </div>
-                      <div className="text-[0.78rem] text-white/35">
+                      <div className="text-[0.78rem] text-text-muted">
                         {testimonials[current].role}
                       </div>
                     </div>

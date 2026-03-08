@@ -325,7 +325,7 @@ export default function Chatbot() {
                   <div className="text-[0.85rem] font-semibold text-white">
                     Assistant HDS
                   </div>
-                  <div className="text-[0.65rem] text-white/40">
+                  <div className="text-[0.65rem] text-text-muted">
                     En ligne
                   </div>
                 </div>
@@ -388,7 +388,7 @@ export default function Chatbot() {
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.2, delay: 0.1 }}
                           onClick={() => handleOption(opt)}
-                          className="px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-[0.75rem] text-white/70 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-all cursor-pointer text-left"
+                          className="px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-[0.75rem] text-text-secondary hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-all cursor-pointer text-left"
                         >
                           {opt.label}
                         </motion.button>
@@ -401,7 +401,7 @@ export default function Chatbot() {
 
             {/* Footer */}
             <div className="px-4 py-3 border-t border-white/[0.06] shrink-0">
-              <p className="text-[0.65rem] text-white/25 text-center">
+              <p className="text-[0.65rem] text-text-muted text-center">
                 Agence HDS &mdash; Assistant guid&eacute;
               </p>
             </div>

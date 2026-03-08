@@ -290,7 +290,7 @@ export default function VillesAdminPage() {
                                 Actif
                               </span>
                             ) : (
-                              <span className="inline-flex px-2.5 py-1 bg-gray-500/15 text-gray-400 border border-gray-500/20 rounded-lg text-xs font-medium cursor-pointer hover:bg-gray-500/25 transition-all">
+                              <span className="inline-flex px-2.5 py-1 bg-gray-500/15 text-text-muted border border-gray-500/20 rounded-lg text-xs font-medium cursor-pointer hover:bg-gray-500/25 transition-all">
                                 Inactif
                               </span>
                             )}

@@ -24,7 +24,7 @@ interface Project {
 }
 
 const statusConfig: Record<ProjectStatus, { label: string; color: string }> = {
-  pending: { label: "En attente", color: "bg-gray-500/20 text-gray-300 border-gray-500/30" },
+  pending: { label: "En attente", color: "bg-gray-500/20 text-text-secondary border-gray-500/30" },
   in_progress: { label: "En cours", color: "bg-blue-500/20 text-blue-300 border-blue-500/30" },
   review: { label: "En revue", color: "bg-orange-500/20 text-orange-300 border-orange-500/30" },
   completed: { label: "Terminé", color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30" },
