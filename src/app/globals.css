@@ -1,20 +1,56 @@
 @import "tailwindcss";
 
+/* ===== Source color variables (changed by theme switcher) ===== */
+:root {
+  --t-dark: #0a0a0a;
+  --t-dark-2: #111111;
+  --t-dark-3: #1a1a1a;
+  --t-accent: #f97316;
+  --t-accent-hover: #ea580c;
+  --t-accent-dim: rgba(249, 115, 22, 0.06);
+  --t-cyan: #fb923c;
+  --t-text-primary: #ffffff;
+  --t-text-secondary: #c8c8d0;
+  --t-text-muted: #94949e;
+  --t-light: #f8f8f8;
+  --t-text-dark: #1a1a1a;
+  --t-text-body: #94949e;
+  --t-border-dark: rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="bleu"] {
+  --t-dark: #001F4F;
+  --t-dark-2: #002a5c;
+  --t-dark-3: #003570;
+  --t-accent: #087BCA;
+  --t-accent-hover: #0668ab;
+  --t-accent-dim: rgba(8, 123, 202, 0.06);
+  --t-cyan: #3DA5E0;
+  --t-text-primary: #ffffff;
+  --t-text-secondary: #c8d8eb;
+  --t-text-muted: #8899b4;
+  --t-light: #f0f4f8;
+  --t-text-dark: #1a1a1a;
+  --t-text-body: #8899b4;
+  --t-border-dark: rgba(255, 255, 255, 0.08);
+}
+
+/* ===== Tailwind theme: references source vars so utilities use var() ===== */
 @theme inline {
-  --color-dark: #0a0a0a;
-  --color-dark-2: #111111;
-  --color-dark-3: #1a1a1a;
-  --color-accent: #f97316;
-  --color-accent-hover: #ea580c;
-  --color-accent-dim: rgba(249, 115, 22, 0.06);
-  --color-cyan: #fb923c;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #c8c8d0;
-  --color-text-muted: #94949e;
-  --color-light: #f8f8f8;
-  --color-text-dark: #1a1a1a;
-  --color-text-body: #94949e;
-  --color-border-dark: rgba(255, 255, 255, 0.06);
+  --color-dark: var(--t-dark);
+  --color-dark-2: var(--t-dark-2);
+  --color-dark-3: var(--t-dark-3);
+  --color-accent: var(--t-accent);
+  --color-accent-hover: var(--t-accent-hover);
+  --color-accent-dim: var(--t-accent-dim);
+  --color-cyan: var(--t-cyan);
+  --color-text-primary: var(--t-text-primary);
+  --color-text-secondary: var(--t-text-secondary);
+  --color-text-muted: var(--t-text-muted);
+  --color-light: var(--t-light);
+  --color-text-dark: var(--t-text-dark);
+  --color-text-body: var(--t-text-body);
+  --color-border-dark: var(--t-border-dark);
 
   --font-sans: var(--font-plus-jakarta, "Plus Jakarta Sans"), sans-serif;
   --font-serif: var(--font-dm-serif, "DM Serif Display"), serif;
@@ -149,20 +185,3 @@ html.theme-transitioning *::after {
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, fill 0.4s ease !important;
 }
 
-/* ===== Anti-flash: Bleu theme CSS variables (applied before JS hydrates) ===== */
-html[data-theme="bleu"] {
-  --color-dark: #001F4F;
-  --color-dark-2: #002a5c;
-  --color-dark-3: #003570;
-  --color-accent: #087BCA;
-  --color-accent-hover: #0668ab;
-  --color-accent-dim: rgba(8, 123, 202, 0.06);
-  --color-cyan: #3DA5E0;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #c8d8eb;
-  --color-text-muted: #8899b4;
-  --color-light: #f0f4f8;
-  --color-text-dark: #1a1a1a;
-  --color-text-body: #8899b4;
-  --color-border-dark: rgba(255, 255, 255, 0.08);
-}
