@@ -367,7 +367,7 @@ export default function BlogArticle() {
 
         {/* CTA */}
         <section className="bg-accent text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[500px] mx-auto">
                 <h2 className="text-[1.6rem] sm:text-[2rem] lg:text-[2.5rem] leading-[1.08] tracking-[-0.02em]">

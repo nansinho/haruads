@@ -67,7 +67,7 @@ export default function ContactPage() {
               backgroundSize: "24px 24px",
             }}
           />
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+          <div className="max-w-[1400px] mx-auto px-5 lg:px-12 relative z-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export default function ContactPage() {
 
         {/* Contact form + info */}
         <section className="bg-white text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <div className="grid lg:grid-cols-[1fr_0.8fr] gap-12 lg:gap-20">
               {/* Form */}
               <ScrollReveal>

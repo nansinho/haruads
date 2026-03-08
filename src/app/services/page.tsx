@@ -100,7 +100,7 @@ export default function ServicesPage() {
               backgroundSize: "24px 24px",
             }}
           />
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+          <div className="max-w-[1400px] mx-auto px-5 lg:px-12 relative z-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -123,7 +123,7 @@ export default function ServicesPage() {
 
         {/* Services list */}
         <section className="bg-light text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <div className="space-y-6">
               {services.map((service, i) => (
                 <ScrollReveal key={service.slug} delay={i * 80}>
@@ -161,7 +161,7 @@ export default function ServicesPage() {
 
         {/* CTA */}
         <section className="bg-accent text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto">
                 <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em]">
