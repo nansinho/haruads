@@ -100,7 +100,7 @@ export default function ProjetsPage() {
                 <p className="text-text-body text-lg">Aucun projet pour le moment.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 auto-rows-fr">
                 {filtered.map((project, i) => (
                   <ScrollReveal key={project.id} delay={i * 80} className="h-full">
                     <ProjectCard project={project} />

@@ -1,32 +1,16 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 import ProjectCard from "./ProjectCard";
 import type { Project } from "@/types/database";
 
 const VISIBLE_COUNT = 6;
-const SWAP_INTERVAL = 4000;
-
-function shuffle<T>(array: T[]): T[] {
-  const arr = [...array];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
 
 export default function Projects() {
-  const [allProjects, setAllProjects] = useState<Project[]>([]);
-  const [visibleSlots, setVisibleSlots] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const gridRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(gridRef, { amount: 0.2 });
-  const isPausedRef = useRef(false);
-  const queueRef = useRef<number[]>([]);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -34,11 +18,8 @@ export default function Projects() {
         const res = await fetch("/api/projects");
         if (res.ok) {
           const data = await res.json();
-          const projects: Project[] = Array.isArray(data) ? data : [];
-          setAllProjects(projects);
-          // Initialize with first 6 (or fewer) shuffled projects
-          const shuffled = shuffle(projects);
-          setVisibleSlots(shuffled.slice(0, VISIBLE_COUNT));
+          const all: Project[] = Array.isArray(data) ? data : [];
+          setProjects(all.slice(0, VISIBLE_COUNT));
         }
       } catch {
         // API not available
@@ -48,59 +29,6 @@ export default function Projects() {
     }
     fetchProjects();
   }, []);
-
-  // Build the replacement queue when allProjects changes
-  const buildQueue = useCallback(
-    (currentVisible: Project[]) => {
-      const visibleIds = new Set(currentVisible.map((p) => p.id));
-      const remaining = allProjects
-        .map((_, i) => i)
-        .filter((i) => !visibleIds.has(allProjects[i].id));
-      queueRef.current = shuffle(remaining);
-    },
-    [allProjects]
-  );
-
-  // Progressive replacement interval
-  useEffect(() => {
-    if (allProjects.length <= VISIBLE_COUNT) return;
-
-    // Initialize queue
-    buildQueue(visibleSlots);
-
-    const interval = setInterval(() => {
-      if (!isInView || isPausedRef.current) return;
-
-      setVisibleSlots((prev) => {
-        // Refill queue if empty
-        if (queueRef.current.length === 0) {
-          const visibleIds = new Set(prev.map((p) => p.id));
-          const refill = allProjects
-            .map((_, i) => i)
-            .filter((i) => !visibleIds.has(allProjects[i].id));
-          queueRef.current = shuffle(refill);
-        }
-
-        if (queueRef.current.length === 0) return prev;
-
-        const slotToReplace = Math.floor(Math.random() * prev.length);
-        const nextIndex = queueRef.current.shift()!;
-
-        // Preload next image
-        if (queueRef.current.length > 0) {
-          const img = new Image();
-          img.src = allProjects[queueRef.current[0]].image_url;
-        }
-
-        const next = [...prev];
-        next[slotToReplace] = allProjects[nextIndex];
-        return next;
-      });
-    }, SWAP_INTERVAL);
-
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allProjects, isInView, buildQueue]);
 
   return (
     <section className="bg-dark text-white relative overflow-hidden" id="projects">
@@ -129,33 +57,25 @@ export default function Projects() {
           <div className="flex justify-center py-20">
             <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
           </div>
-        ) : allProjects.length === 0 ? (
+        ) : projects.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-text-muted text-[0.95rem]">Aucun projet pour le moment.</p>
           </div>
         ) : (
-          <div
-            ref={gridRef}
-            onMouseEnter={() => (isPausedRef.current = true)}
-            onMouseLeave={() => (isPausedRef.current = false)}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          >
-            {visibleSlots.map((project, slotIndex) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
+            {projects.map((project, index) => (
               <div
-                key={`slot-${slotIndex}`}
-                className={slotIndex >= 3 ? "hidden sm:block" : ""}
+                key={project.id}
+                className={`${index >= 3 ? "hidden sm:block" : ""} h-full`}
               >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 40, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -40, filter: "blur(4px)" }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <ProjectCard project={project} />
-                  </motion.div>
-                </AnimatePresence>
+                <motion.div
+                  className="h-full"
+                  initial={{ opacity: 0, y: 40, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <ProjectCard project={project} />
+                </motion.div>
               </div>
             ))}
           </div>
