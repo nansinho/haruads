@@ -4,6 +4,7 @@ import "./globals.css";
 import ClientWidgets from "@/components/ClientWidgets";
 import ThemeProvider from "@/components/ThemeProvider";
 import SessionProvider from "@/components/providers/SessionProvider";
+import PageTracker from "@/components/PageTracker";
 import JsonLd from "@/components/seo/JsonLd";
 import { seoConfig, pageSeo } from "@/lib/seo-config";
 
@@ -300,6 +301,7 @@ export default function RootLayout({
         <SessionProvider>
           <ThemeProvider>
             {children}
+            <PageTracker />
             <ClientWidgets />
           </ThemeProvider>
         </SessionProvider>

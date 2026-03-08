@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import PromoBanner from "./PromoBanner";
 
 const navLinks = [
   { label: "Accueil", href: "/" },
@@ -18,6 +19,11 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [bannerVisible, setBannerVisible] = useState(false);
+
+  const handleBannerVisibility = useCallback((visible: boolean) => {
+    setBannerVisible(visible);
+  }, []);
 
   useEffect(() => {
     fetch("/api/auth/session")
@@ -57,11 +63,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const bannerOffset = bannerVisible ? "top-[36px]" : "top-0";
+
   return (
     <>
+      <PromoBanner onVisibilityChange={handleBannerVisibility} />
+
       {/* Scroll progress bar — hidden on mobile to avoid layout recalculations */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent to-cyan origin-left z-[200] hidden md:block"
+        className={`fixed ${bannerOffset} left-0 right-0 h-[2px] bg-gradient-to-r from-accent to-cyan origin-left z-[200] hidden md:block transition-all duration-300`}
         style={{ scaleX }}
       />
 
@@ -69,7 +79,7 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className={`fixed top-0 left-0 right-0 z-[150] flex items-center justify-between px-5 py-4 lg:px-12 transition-all duration-500 ${
+        className={`fixed ${bannerOffset} left-0 right-0 z-[150] flex items-center justify-between px-5 py-4 lg:px-12 transition-all duration-500 ${
           scrolled
             ? "py-3 lg:py-3 bg-dark/80 backdrop-blur-2xl border-b border-white/[0.04] shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
             : "bg-transparent"
@@ -83,7 +93,7 @@ export default function Navbar() {
           <Image src="/images/logos/logo-hds-2026-blanc.svg" alt="Agence HDS - Agence web créative à Aix-en-Provence" width={120} height={32} className="h-8 w-auto" priority />
         </Link>
 
-        <ul className="hidden lg:flex gap-8 list-none">
+        <ul className="hidden lg:flex gap-8 list-none absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => (
             <li key={link.label}>
               <Link
