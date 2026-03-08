@@ -414,8 +414,9 @@ export default function ProjetsAdminPage() {
 
       const data = await res.json();
 
-      // Capture screenshot for gallery
+      // Capture screenshots for gallery + featured image
       let galleryUrls: string[] = [];
+      let featuredImageUrl = "";
       try {
         const screenshotRes = await fetch("/api/admin/screenshot", {
           method: "POST",
@@ -426,6 +427,9 @@ export default function ProjetsAdminPage() {
           const screenshotData = await screenshotRes.json();
           if (screenshotData.urls?.length) {
             galleryUrls = screenshotData.urls;
+          }
+          if (screenshotData.featured) {
+            featuredImageUrl = screenshotData.featured;
           }
         } else {
           const errData = await screenshotRes.json().catch(() => ({}));
@@ -452,6 +456,7 @@ export default function ProjetsAdminPage() {
         seo_description: data.seo_description || "",
         external_url: promptUrl,
         gallery: galleryUrls,
+        image_url: featuredImageUrl,
       });
       setShowUrlPrompt(false);
       setShowModal(true);
