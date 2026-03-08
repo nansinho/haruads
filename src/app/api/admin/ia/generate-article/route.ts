@@ -89,13 +89,15 @@ Tu dois répondre UNIQUEMENT avec un objet JSON valide (sans backticks ni markdo
     }
 
     const data = await response.json();
-    const text = data.content?.[0]?.text;
+    let text = data.content?.[0]?.text;
 
     if (!text) {
       return errorResponse("Réponse vide de l'API Anthropic.", 502);
     }
 
-    // Parse the JSON response from Claude
+    // Strip markdown code blocks if Claude wraps the JSON
+    text = text.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim();
+
     const parsed = JSON.parse(text);
 
     return Response.json({
