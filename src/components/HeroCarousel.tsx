@@ -198,7 +198,7 @@ export default function HeroCarousel() {
               </div>
 
               {/* Right: CTA */}
-              <span className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium group-hover/card:shadow-[0_0_30px_rgba(249,115,22,0.3)] transition-shadow duration-300">
+              <span className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-dark text-[0.78rem] font-medium group-hover/card:shadow-accent/30 transition-shadow duration-300">
                 En savoir plus
                 <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-dark fill-none stroke-2">
                   <line x1="5" y1="12" x2="19" y2="12" />

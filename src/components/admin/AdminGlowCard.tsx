@@ -112,7 +112,7 @@ export default function AdminGlowCard({
           className="pointer-events-none absolute inset-0 transition-opacity duration-500"
           style={{
             opacity: isFocused ? 1 : 0,
-            background: `radial-gradient(350px circle at ${position.x}px ${position.y}px, rgba(249,115,22,0.07), transparent 40%)`,
+            background: `radial-gradient(350px circle at ${position.x}px ${position.y}px, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent 40%)`,
           }}
         />
 

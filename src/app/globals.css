@@ -73,7 +73,7 @@ body { -webkit-font-smoothing: antialiased; overflow-x: hidden; background: var(
 ::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-accent) 30%, transparent); border-radius: 2px; }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-cyan), #fbbf24);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-cyan), var(--color-accent));
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -139,4 +139,30 @@ html[data-color-filter="tritanopia"] { filter: url('#tritanopia'); }
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1;
+}
+
+/* ===== Theme switching transition ===== */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, fill 0.4s ease !important;
+}
+
+/* ===== Anti-flash: Bleu theme CSS variables (applied before JS hydrates) ===== */
+html[data-theme="bleu"] {
+  --color-dark: #001F4F;
+  --color-dark-2: #002a5c;
+  --color-dark-3: #003570;
+  --color-accent: #087BCA;
+  --color-accent-hover: #0668ab;
+  --color-accent-dim: rgba(8, 123, 202, 0.06);
+  --color-cyan: #3DA5E0;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #c8d8eb;
+  --color-text-muted: #8899b4;
+  --color-light: #f0f4f8;
+  --color-text-dark: #1a1a1a;
+  --color-text-body: #8899b4;
+  --color-border-dark: rgba(255, 255, 255, 0.08);
 }

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import PromoBanner from "./PromoBanner";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const navLinks = [
   { label: "Accueil", href: "/" },
@@ -105,6 +106,7 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden lg:flex items-center gap-3">
+          <ThemeSwitcher />
           <motion.a
             href={buttonHref}
             className="flex items-center gap-2 border border-white/[0.12] text-text-muted hover:text-white hover:border-white/[0.25] px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer transition-colors duration-300"
@@ -126,7 +128,7 @@ export default function Navbar() {
           <motion.a
             href="/contact"
             className="flex items-center gap-2 bg-accent text-dark px-5 py-2.5 rounded-full font-medium text-[0.8rem] cursor-pointer relative overflow-hidden"
-            whileHover={{ scale: 1.03, boxShadow: "0 0 30px rgba(249,115,22,0.4), 0 0 60px rgba(249,115,22,0.1)" }}
+            whileHover={{ scale: 1.03, boxShadow: "0 0 30px color-mix(in srgb, var(--color-accent) 40%, transparent), 0 0 60px color-mix(in srgb, var(--color-accent) 10%, transparent)" }}
             whileTap={{ scale: 0.97 }}
           >
             <span className="relative z-10">Contactez-nous</span>
@@ -189,7 +191,10 @@ export default function Navbar() {
                   </motion.li>
                 ))}
               </ul>
-              <div className="flex flex-col gap-3 mt-4 relative z-10">
+              <div className="flex items-center gap-3 mt-4 relative z-10">
+                <ThemeSwitcher />
+              </div>
+              <div className="flex flex-col gap-3 mt-3 relative z-10">
                 <Link
                   href={buttonHref}
                   className="block border border-white/[0.12] text-text-muted px-5 py-3 rounded-full font-semibold text-[0.85rem] text-center"

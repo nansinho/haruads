@@ -292,6 +292,12 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${plusJakarta.variable} ${dmSerif.variable} ${spaceMono.variable}`} suppressHydrationWarning>
       <head>
+        {/* Anti-flash: apply stored theme preset before React hydrates */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var id=localStorage.getItem("theme-preset-id");if(id&&id!=="noir-orange"){document.documentElement.setAttribute("data-theme",id)}}catch(e){}})()`,
+          }}
+        />
         {process.env.NEXT_PUBLIC_SUPABASE_URL && (
           <link rel="preconnect" href={process.env.NEXT_PUBLIC_SUPABASE_URL} />
         )}
