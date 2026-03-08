@@ -2,8 +2,6 @@ import { NextRequest } from "next/server";
 import { getAdminUser, unauthorizedResponse, errorResponse } from "@/lib/api-auth";
 import { supabaseAdmin, supabase } from "@/lib/supabase";
 import puppeteer, { type Page } from "puppeteer-core";
-import fs from "fs";
-import path from "path";
 
 type DB = NonNullable<typeof supabaseAdmin | typeof supabase>;
 
@@ -52,105 +50,24 @@ async function cleanPage(page: Page) {
   });
 }
 
-async function uploadImage(db: DB, buffer: Uint8Array): Promise<string | null> {
-  const timestamp = Date.now();
-  const randomId = Math.random().toString(36).substring(2, 8);
-  const filename = `projects/${timestamp}-${randomId}.png`;
-
-  const { error } = await db.storage
-    .from("images")
-    .upload(filename, buffer, { contentType: "image/png", upsert: false });
-
-  if (error) {
-    console.error("[screenshot] Upload error:", error);
-    return null;
-  }
-
-  const { data } = db.storage.from("images").getPublicUrl(filename);
-  return data.publicUrl;
-}
-
 async function captureAndUpload(page: Page, db: DB): Promise<string | null> {
   await cleanPage(page);
   await new Promise((resolve) => setTimeout(resolve, 300));
   const buffer = await page.screenshot({ type: "png" });
-  return uploadImage(db, new Uint8Array(buffer));
-}
 
-// Generate a composite featured image: hero left + full page right
-// Uses temp files to avoid base64 memory issues, reuses same page
-async function generateFeaturedImage(
-  page: Page,
-  db: DB,
-  url: string,
-): Promise<string | null> {
-  const tmpDir = "/tmp";
-  const heroPath = path.join(tmpDir, `hero-${Date.now()}.png`);
-  const fullPath = path.join(tmpDir, `full-${Date.now()}.png`);
-  const compositePath = path.join(tmpDir, `composite-${Date.now()}.html`);
+  const imageBuffer = new Uint8Array(buffer);
+  const timestamp = Date.now();
+  const randomId = Math.random().toString(36).substring(2, 8);
+  const filename = `projects/${timestamp}-${randomId}.png`;
 
-  try {
-    // Navigate to homepage and clean
-    await page.goto(url, { waitUntil: "networkidle2", timeout: 20000 });
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    await cleanPage(page);
-    await new Promise((resolve) => setTimeout(resolve, 300));
+  const { error: uploadError } = await db.storage
+    .from("images")
+    .upload(filename, imageBuffer, { contentType: "image/png", upsert: false });
 
-    // Capture hero (viewport) to temp file
-    const heroBuffer = await page.screenshot({ type: "png" });
-    fs.writeFileSync(heroPath, heroBuffer);
+  if (uploadError) return null;
 
-    // Capture full page to temp file (limited to reasonable height via clip)
-    // First get page height
-    const pageHeight = await page.evaluate(() => {
-      return Math.min(document.body.scrollHeight, 4000);
-    });
-
-    const fullBuffer = await page.screenshot({
-      type: "png",
-      clip: { x: 0, y: 0, width: 1280, height: pageHeight },
-    });
-    fs.writeFileSync(fullPath, fullBuffer);
-
-    // Create composite HTML using file:// references
-    const compositeHtml = `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
-<body style="margin:0;padding:0;width:1280px;height:720px;overflow:hidden;background:#0a0a0a;display:flex;font-size:0;">
-  <!-- Left: hero cropped & zoomed -->
-  <div style="width:750px;height:720px;overflow:hidden;position:relative;flex-shrink:0;">
-    <img src="file://${heroPath}"
-         style="width:920px;height:auto;position:absolute;top:-10px;left:-30px;display:block;" />
-    <div style="position:absolute;top:0;right:0;width:150px;height:100%;
-                background:linear-gradient(to right,transparent,#0a0a0a);"></div>
-  </div>
-  <!-- Right: full page screenshot -->
-  <div style="width:530px;height:720px;overflow:hidden;position:relative;
-              display:flex;flex-direction:column;padding:20px 20px 0 0;box-sizing:border-box;">
-    <img src="file://${fullPath}"
-         style="width:510px;height:auto;border-radius:10px;display:block;
-                box-shadow:0 8px 32px rgba(0,0,0,0.6);" />
-  </div>
-</body>
-</html>`;
-
-    fs.writeFileSync(compositePath, compositeHtml);
-
-    // Render composite on the same page using file:// protocol
-    await page.goto(`file://${compositePath}`, { waitUntil: "load", timeout: 10000 });
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    const compositeBuffer = await page.screenshot({ type: "png" });
-    return uploadImage(db, new Uint8Array(compositeBuffer));
-  } catch (err) {
-    console.error("[screenshot] Featured image generation failed:", err);
-    return null;
-  } finally {
-    // Cleanup temp files
-    for (const f of [heroPath, fullPath, compositePath]) {
-      try { fs.unlinkSync(f); } catch { /* ignore */ }
-    }
-  }
+  const { data: urlData } = db.storage.from("images").getPublicUrl(filename);
+  return urlData.publicUrl;
 }
 
 export async function POST(request: NextRequest) {
@@ -196,7 +113,7 @@ export async function POST(request: NextRequest) {
     await page.goto(url, { waitUntil: "networkidle2", timeout: 20000 });
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // 2. Extract internal links FIRST (before any navigation)
+    // 2. Extract internal links
     const baseUrl = new URL(url);
     const internalLinks: string[] = await page.evaluate((hostname: string) => {
       const anchors = Array.from(document.querySelectorAll("a[href]"));
@@ -227,26 +144,18 @@ export async function POST(request: NextRequest) {
       return links;
     }, baseUrl.hostname);
 
-    // 3. Capture homepage screenshot for gallery
+    // 3. Capture homepage first
     const uploadedUrls: string[] = [];
     const homepageUrl = await captureAndUpload(page, db);
     if (homepageUrl) uploadedUrls.push(homepageUrl);
 
-    // 4. Generate featured composite image (hero + full page)
-    // This navigates the page internally, so we do it after extracting links
-    let featuredUrl: string | null = null;
-    try {
-      featuredUrl = await generateFeaturedImage(page, db, url);
-    } catch (err) {
-      console.error("[screenshot] Featured image error:", err);
-    }
-
-    // 5. Capture internal pages for gallery
+    // 4. Capture internal pages
     const pagesToVisit = internalLinks.slice(0, count - 1);
     for (const pageUrl of pagesToVisit) {
       try {
         await page.goto(pageUrl, { waitUntil: "networkidle2", timeout: 15000 });
         await new Promise((resolve) => setTimeout(resolve, 1500));
+
         const capturedUrl = await captureAndUpload(page, db);
         if (capturedUrl) uploadedUrls.push(capturedUrl);
       } catch {
@@ -257,7 +166,7 @@ export async function POST(request: NextRequest) {
     await browser.close();
     browser = undefined;
 
-    return Response.json({ urls: uploadedUrls, featured: featuredUrl });
+    return Response.json({ urls: uploadedUrls });
   } catch (error) {
     const msg = error instanceof Error ? error.message : "Erreur lors de la capture";
     console.error("[screenshot]", error);
