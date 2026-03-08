@@ -40,7 +40,7 @@ const services = [
 export default function Services() {
   return (
     <section className="bg-light text-text-dark relative overflow-hidden" id="services">
-      <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12">
+      <div className="max-w-[1400px] mx-auto px-5 py-[120px] lg:px-12">
         <ScrollReveal>
           <div className="text-center max-w-[600px] mx-auto mb-16">
             <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">

@@ -112,7 +112,7 @@ export default function Projects() {
         }}
       />
 
-      <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12 relative z-2">
+      <div className="max-w-[1400px] mx-auto px-5 py-[120px] lg:px-12 relative z-2">
         <ScrollReveal>
           <div className="text-center max-w-[600px] mx-auto mb-16">
             <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">

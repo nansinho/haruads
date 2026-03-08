@@ -94,9 +94,9 @@ export default function Testimonials() {
         }}
       />
 
-      <div className="max-w-[1200px] mx-auto px-5 py-[120px] lg:px-12 relative z-2">
+      <div className="max-w-[1400px] mx-auto px-5 py-[120px] lg:px-12 relative z-2">
         <ScrollReveal animation="blur">
-          <div className="max-w-[900px] mx-auto">
+          <div className="max-w-[1100px] mx-auto">
             <div className="text-center mb-12">
               <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
                 T&eacute;moignages

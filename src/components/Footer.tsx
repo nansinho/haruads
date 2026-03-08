@@ -32,7 +32,7 @@ export default function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
 
       {/* Pre-footer SEO content */}
-      <div className="max-w-[1200px] mx-auto px-5 pt-14 lg:px-12">
+      <div className="max-w-[1400px] mx-auto px-5 pt-14 lg:px-12">
         <div className="border-b border-white/[0.04] pb-10">
           <h2 className="text-[1rem] font-semibold text-white/80 mb-4">
             Agence web &agrave; <span className="font-serif italic text-accent">Aix-en-Provence</span>
@@ -53,7 +53,7 @@ export default function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="max-w-[1200px] mx-auto px-5 pt-10 pb-8 lg:px-12 relative z-2">
+      <div className="max-w-[1400px] mx-auto px-5 pt-10 pb-8 lg:px-12 relative z-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
           <div>
             <Logo className="h-8 w-auto mb-4" />
