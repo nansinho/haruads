@@ -112,6 +112,20 @@ export interface Offer {
   updated_at: string;
 }
 
+export interface Testimonial {
+  id: string;
+  author_name: string;
+  author_role: string | null;
+  author_avatar: string | null;
+  content: string;
+  rating: number;
+  source: string;
+  is_active: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface City {
   id: string;
   name: string;
