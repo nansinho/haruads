@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
-import { formatCompletedAt } from "@/lib/utils";
+import ProjectCard from "@/components/ProjectCard";
 import type { Project } from "@/types/database";
 
 export default function ProjetsPage() {
@@ -102,67 +102,8 @@ export default function ProjetsPage() {
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {filtered.map((project, i) => (
-                  <ScrollReveal key={project.id} delay={i * 80}>
-                    <a
-                      href={`/projets/${project.slug}`}
-                      className="flex flex-col h-full group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl hover:shadow-accent/5 transition-all duration-500"
-                    >
-                      <div className="aspect-[1884/1148] relative overflow-hidden">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={project.image_url}
-                          alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        {project.category && (
-                          <div className="absolute top-4 left-4">
-                            <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[0.7rem] font-medium text-text-dark">
-                              {project.category}
-                            </span>
-                          </div>
-                        )}
-                        {project.completed_at && (
-                          <div className="absolute top-4 right-4">
-                            <span className="px-3 py-1 rounded-full bg-dark/70 backdrop-blur-sm text-[0.7rem] font-medium text-white">
-                              {formatCompletedAt(project.completed_at)}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-6 lg:p-8 flex-1 flex flex-col">
-                        <div className="flex items-start justify-between gap-4">
-                          <div>
-                            <h3 className="text-[1.2rem] lg:text-[1.4rem] font-semibold text-text-dark">
-                              {project.title}
-                            </h3>
-                            {project.client && (
-                              <p className="text-[0.75rem] text-text-body/60 mt-1">
-                                Client : {project.client}
-                              </p>
-                            )}
-                          </div>
-                          <div className="shrink-0 w-9 h-9 rounded-full bg-accent/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-accent fill-none stroke-2">
-                              <line x1="5" y1="12" x2="19" y2="12" />
-                              <polyline points="12 5 19 12 12 19" />
-                            </svg>
-                          </div>
-                        </div>
-                        <p className="text-[0.85rem] text-text-body leading-[1.7] mt-2 line-clamp-2">
-                          {project.description}
-                        </p>
-                        <div className="flex flex-wrap gap-2 mt-auto pt-4">
-                          {project.tags?.map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-2.5 py-1 rounded-full bg-accent/10 text-[0.7rem] font-medium text-accent"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </a>
+                  <ScrollReveal key={project.id} delay={i * 80} className="h-full">
+                    <ProjectCard project={project} />
                   </ScrollReveal>
                 ))}
               </div>
