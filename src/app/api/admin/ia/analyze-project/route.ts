@@ -113,7 +113,13 @@ Notes pour les résultats : fournis 3 à 4 KPIs réalistes (ex: "+45% de convers
     // Strip markdown code blocks if Claude wraps the JSON
     text = text.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim();
 
-    const parsed = JSON.parse(text);
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      console.error("[analyze-project] JSON parse failed. Raw response:", text.substring(0, 500));
+      return errorResponse(`Réponse IA invalide (non-JSON). Début: ${text.substring(0, 200)}`, 502);
+    }
 
     return Response.json({
       title: parsed.title || "",
@@ -130,6 +136,7 @@ Notes pour les résultats : fournis 3 à 4 KPIs réalistes (ex: "+45% de convers
     });
   } catch (error) {
     const msg = error instanceof Error ? error.message : "Erreur lors de l'analyse";
+    console.error("[analyze-project]", error);
     return errorResponse(msg);
   }
 }

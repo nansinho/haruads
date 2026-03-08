@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
+
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -14,6 +14,7 @@ export default function ProjectDetail() {
   const params = useParams();
   const slug = params.slug as string;
   const [project, setProject] = useState<Project | null>(null);
+  const [relatedProjects, setRelatedProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
 
@@ -28,6 +29,17 @@ export default function ProjectDetail() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
+
+    // Fetch related projects
+    fetch("/api/projects")
+      .then((r) => r.ok ? r.json() : [])
+      .then((data) => {
+        const others = (Array.isArray(data) ? data : data.projects || [])
+          .filter((p: Project) => p.slug !== slug && p.status === "published")
+          .slice(0, 3);
+        setRelatedProjects(others);
+      })
+      .catch(() => {});
   }, [slug]);
 
   if (loading) {
@@ -109,7 +121,7 @@ export default function ProjectDetail() {
                 )}
               </div>
               <h1 className="text-[2rem] sm:text-[2.8rem] lg:text-[3.5rem] leading-[1.08] tracking-[-0.02em]">
-                <span className="font-serif italic">{project.title}</span>
+                <span className="font-semibold">{project.title}</span>
               </h1>
               <p className="text-[0.95rem] text-white/40 mt-5 max-w-[600px] leading-[1.8] font-light">
                 {project.description}
@@ -141,13 +153,10 @@ export default function ProjectDetail() {
             <div className="max-w-[1200px] mx-auto px-5 lg:px-12">
               <ScrollReveal>
                 <div className="rounded-2xl overflow-hidden aspect-video relative">
-                  <Image
+                  <img
                     src={project.image_url}
                     alt={project.title}
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="(max-width: 1200px) 100vw, 1200px"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </ScrollReveal>
@@ -260,12 +269,10 @@ export default function ProjectDetail() {
                       whileHover={{ scale: 1.02 }}
                       onClick={() => setGalleryIndex(i)}
                     >
-                      <Image
+                      <img
                         src={img}
                         alt={`${project.title} - Image ${i + 1}`}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </motion.div>
                   ))}
@@ -310,11 +317,9 @@ export default function ProjectDetail() {
                 </svg>
               </button>
             )}
-            <Image
+            <img
               src={allImages[galleryIndex]}
               alt={`${project.title} - Image ${galleryIndex + 1}`}
-              width={1200}
-              height={800}
               className="max-w-full max-h-[85vh] object-contain rounded-lg"
               onClick={(e) => e.stopPropagation()}
             />
@@ -351,6 +356,67 @@ export default function ProjectDetail() {
           </section>
         )}
 
+        {/* Autres projets */}
+        {relatedProjects.length > 0 && (
+          <section className="bg-white text-text-dark">
+            <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+              <ScrollReveal>
+                <div className="text-center mb-12">
+                  <h2 className="text-[1.6rem] lg:text-[2rem] leading-[1.08] tracking-[-0.02em]">
+                    <span className="font-light">Découvrez d&apos;autres </span>
+                    <span className="font-serif italic">projets.</span>
+                  </h2>
+                </div>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {relatedProjects.map((p) => (
+                    <motion.a
+                      key={p.id}
+                      href={`/projets/${p.slug}`}
+                      className="group rounded-2xl overflow-hidden bg-light border border-gray-100 hover:shadow-lg transition-shadow"
+                      whileHover={{ y: -4 }}
+                    >
+                      {p.image_url && (
+                        <div className="aspect-video overflow-hidden">
+                          <img
+                            src={p.image_url}
+                            alt={p.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                      )}
+                      <div className="p-5">
+                        {p.category && (
+                          <span className="text-[0.7rem] uppercase tracking-[2px] text-accent font-semibold">
+                            {p.category}
+                          </span>
+                        )}
+                        <h3 className="text-[1.05rem] font-semibold mt-1 leading-tight">
+                          {p.title}
+                        </h3>
+                        <p className="text-[0.82rem] text-text-dark/50 mt-2 line-clamp-2">
+                          {p.description}
+                        </p>
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
+                <div className="text-center mt-10">
+                  <a
+                    href="/projets"
+                    className="inline-flex items-center gap-2 text-accent text-[0.85rem] font-medium hover:underline"
+                  >
+                    Voir tous nos projets
+                    <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-accent fill-none stroke-2">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </a>
+                </div>
+              </ScrollReveal>
+            </div>
+          </section>
+        )}
+
         {/* CTA */}
         <section className="bg-dark text-white">
           <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
@@ -375,6 +441,14 @@ export default function ProjectDetail() {
                       <line x1="5" y1="12" x2="19" y2="12" />
                       <polyline points="12 5 19 12 12 19" />
                     </svg>
+                  </motion.a>
+                  <motion.a
+                    href="/services"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white/70 font-medium text-[0.9rem] cursor-pointer hover:border-white/40 hover:text-white transition-colors"
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    Découvrir nos services
                   </motion.a>
                 </div>
               </div>
