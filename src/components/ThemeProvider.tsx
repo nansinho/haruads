@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import {
   DEFAULT_THEME,
   buildThemeVariables,
-  buildFullThemeVariables,
-  getPresetById,
   DEFAULT_PRESET_ID,
   type ThemeColors,
 } from "@/lib/theme";
@@ -30,20 +28,20 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  /* ── On mount: read stored preset, apply it ── */
   useEffect(() => {
     let storedId = DEFAULT_PRESET_ID;
     try {
       storedId = localStorage.getItem(PRESET_STORAGE_KEY) || DEFAULT_PRESET_ID;
     } catch {
-      // Ignore localStorage errors
+      // Ignore
     }
 
-    // Apply the preset immediately
-    const preset = getPresetById(storedId);
-    applyVars(buildFullThemeVariables(preset.colors));
+    // Ensure data-theme attribute is set (backup for anti-flash script)
+    if (storedId === "bleu") {
+      document.documentElement.setAttribute("data-theme", "bleu");
+    }
 
-    // For noir-orange, also fetch admin-level customisation
+    // For noir-orange, fetch admin-level colour customisations
     if (storedId === "noir-orange") {
       try {
         const cached = localStorage.getItem(ADMIN_THEME_KEY);
