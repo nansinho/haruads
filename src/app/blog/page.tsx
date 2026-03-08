@@ -120,7 +120,7 @@ export default function BlogPage() {
                     <p className="text-[0.9rem] text-text-body leading-[1.7] mt-4">
                       {featured.excerpt}
                     </p>
-                    <span className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-full bg-accent text-white text-[0.82rem] font-medium group-hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] transition-all duration-300">
+                    <span className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-full bg-accent text-white text-[0.82rem] font-medium group-hover:shadow-accent/20 transition-all duration-300">
                       Lire l&apos;article
                       <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-white fill-none stroke-2">
                         <line x1="5" y1="12" x2="19" y2="12" />

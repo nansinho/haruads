@@ -70,7 +70,7 @@ export default function About() {
                 className="inline-flex items-center gap-2 mt-10 px-7 py-3.5 rounded-full bg-accent text-white font-medium text-[0.85rem] cursor-pointer"
                 whileHover={{
                   scale: 1.04,
-                  boxShadow: "0 0 40px rgba(249,115,22,0.25)",
+                  boxShadow: "0 0 40px color-mix(in srgb, var(--color-accent) 25%, transparent)",
                 }}
                 whileTap={{ scale: 0.97 }}
               >

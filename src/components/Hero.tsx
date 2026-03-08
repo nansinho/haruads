@@ -123,7 +123,7 @@ export default function Hero() {
                 whileHover={{
                   scale: 1.04,
                   boxShadow:
-                    "0 0 50px rgba(249,115,22,0.3), 0 0 100px rgba(249,115,22,0.08)",
+                    "0 0 50px color-mix(in srgb, var(--color-accent) 30%, transparent), 0 0 100px color-mix(in srgb, var(--color-accent) 8%, transparent)",
                 }}
                 whileTap={{ scale: 0.97 }}
               >

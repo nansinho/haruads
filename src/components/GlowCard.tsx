@@ -26,8 +26,8 @@ export default function GlowCard({
 
   const glowColor =
     variant === "light"
-      ? "rgba(249,115,22,0.08)"
-      : "rgba(249,115,22,0.07)";
+      ? "color-mix(in srgb, var(--color-accent) 8%, transparent)"
+      : "color-mix(in srgb, var(--color-accent) 7%, transparent)";
 
   const baseClasses =
     variant === "light"
