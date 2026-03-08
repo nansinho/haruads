@@ -101,6 +101,7 @@ export default function ProjetsAdminPage() {
   const [activeFormTab, setActiveFormTab] = useState("general");
   const [savedTags, setSavedTags] = useState<Tag[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
+  const [capturingScreenshot, setCapturingScreenshot] = useState(false);
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [dragOverId, setDragOverId] = useState<string | null>(null);
   const [reordering, setReordering] = useState(false);
@@ -302,6 +303,31 @@ export default function ProjetsAdminPage() {
   const removeGalleryImage = (index: number) => {
     setForm((prev) => ({ ...prev, gallery: prev.gallery.filter((_, i) => i !== index) }));
   };
+  const handleCaptureScreenshot = async () => {
+    if (!form.external_url) return;
+    setCapturingScreenshot(true);
+    try {
+      const res = await fetch("/api/admin/screenshot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: form.external_url }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.url) {
+          addGalleryImage(data.url);
+          toast({ type: "success", message: "Screenshot capturé et ajouté à la galerie !" });
+        }
+      } else {
+        const err = await res.json().catch(() => ({}));
+        toast({ type: "error", message: err.error || "Erreur lors de la capture du screenshot" });
+      }
+    } catch {
+      toast({ type: "error", message: "Erreur lors de la capture du screenshot" });
+    } finally {
+      setCapturingScreenshot(false);
+    }
+  };
 
   // Drag-and-drop reordering
   const handleDragStart = (e: React.DragEvent, projectId: string) => {
@@ -387,6 +413,25 @@ export default function ProjetsAdminPage() {
       }
 
       const data = await res.json();
+
+      // Capture screenshot for gallery (non-blocking if it fails)
+      let galleryUrls: string[] = [];
+      try {
+        const screenshotRes = await fetch("/api/admin/screenshot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: promptUrl }),
+        });
+        if (screenshotRes.ok) {
+          const screenshotData = await screenshotRes.json();
+          if (screenshotData.url) {
+            galleryUrls = [screenshotData.url];
+          }
+        }
+      } catch {
+        // Screenshot capture failed silently — not critical
+      }
+
       setForm({
         ...emptyForm,
         title: data.title || "",
@@ -402,10 +447,11 @@ export default function ProjetsAdminPage() {
         seo_title: data.seo_title || "",
         seo_description: data.seo_description || "",
         external_url: promptUrl,
+        gallery: galleryUrls,
       });
       setShowUrlPrompt(false);
       setShowModal(true);
-      toast({ type: "success", message: "Fiche projet remplie par l'IA ! Ajoutez une image et validez." });
+      toast({ type: "success", message: galleryUrls.length > 0 ? "Fiche projet remplie par l'IA avec screenshot !" : "Fiche projet remplie par l'IA ! Ajoutez une image et validez." });
     } catch (err) {
       toast({ type: "error", message: err instanceof Error ? err.message : "Erreur lors de l'analyse IA" });
     } finally {
@@ -887,6 +933,28 @@ export default function ProjetsAdminPage() {
                   </div>
                 ))}
               </div>
+            )}
+
+            {/* Capture screenshot button */}
+            {form.external_url && (
+              <button
+                type="button"
+                onClick={handleCaptureScreenshot}
+                disabled={capturingScreenshot}
+                className="w-full flex items-center justify-center gap-2 py-2.5 border border-dashed border-accent/30 rounded-xl text-sm text-accent hover:bg-accent/5 transition-all disabled:opacity-50"
+              >
+                {capturingScreenshot ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Capture en cours...
+                  </>
+                ) : (
+                  <>
+                    <Globe size={16} />
+                    Capturer le screenshot du site (1280×720)
+                  </>
+                )}
+              </button>
             )}
 
             {/* Upload new gallery image */}
