@@ -1,20 +1,72 @@
 "use client";
 
+import { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useThemePreset } from "@/lib/theme-context";
-import { getPresetById, THEME_PRESETS } from "@/lib/theme";
+import {
+  THEME_PRESETS,
+  DEFAULT_PRESET_ID,
+  getPresetById,
+  buildFullThemeVariables,
+} from "@/lib/theme";
+
+const PRESET_STORAGE_KEY = "theme-preset-id";
+
+function readStoredPresetId(): string {
+  try {
+    return localStorage.getItem(PRESET_STORAGE_KEY) || DEFAULT_PRESET_ID;
+  } catch {
+    return DEFAULT_PRESET_ID;
+  }
+}
 
 export default function ThemeSwitcher() {
-  const { presetId, toggleTheme } = useThemePreset();
+  const [presetId, setPresetId] = useState(DEFAULT_PRESET_ID);
+
+  // Sync with localStorage after mount
+  useEffect(() => {
+    setPresetId(readStoredPresetId());
+  }, []);
+
   const current = getPresetById(presetId);
   const nextIdx =
     (THEME_PRESETS.findIndex((p) => p.id === presetId) + 1) %
     THEME_PRESETS.length;
   const next = THEME_PRESETS[nextIdx];
 
+  const handleToggle = useCallback(() => {
+    // Read current from localStorage (source of truth) to avoid stale state
+    const currentId = readStoredPresetId();
+    const curIdx = THEME_PRESETS.findIndex((p) => p.id === currentId);
+    const nxtIdx = (curIdx + 1) % THEME_PRESETS.length;
+    const nextPreset = THEME_PRESETS[nxtIdx];
+
+    // Apply CSS variables directly on <html>
+    const html = document.documentElement;
+    const vars = buildFullThemeVariables(nextPreset.colors);
+    for (const [prop, value] of Object.entries(vars)) {
+      html.style.setProperty(prop, value);
+    }
+
+    // Update data-theme attribute for anti-flash CSS
+    html.setAttribute("data-theme", nextPreset.id);
+
+    // Smooth transition
+    html.classList.add("theme-transitioning");
+    setTimeout(() => html.classList.remove("theme-transitioning"), 500);
+
+    // Persist to localStorage
+    try {
+      localStorage.setItem(PRESET_STORAGE_KEY, nextPreset.id);
+    } catch {
+      // Ignore
+    }
+
+    setPresetId(nextPreset.id);
+  }, []);
+
   return (
     <motion.button
-      onClick={toggleTheme}
+      onClick={handleToggle}
       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/[0.12] text-text-muted hover:text-white hover:border-white/[0.25] cursor-pointer transition-colors duration-300"
       whileHover={{ scale: 1.08 }}
       whileTap={{ scale: 0.92 }}
