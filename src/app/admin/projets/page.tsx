@@ -282,6 +282,8 @@ export default function ProjetsAdminPage() {
   const { data: projects, loading, refetch } = useAdminData<Project>("/api/admin/projects", {
     status: activeFilter,
     search: debouncedSearch,
+    sortBy: "sort_order",
+    sortOrder: "asc",
   });
 
   // Fetch saved tags
