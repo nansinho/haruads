@@ -152,7 +152,7 @@ export const projectsService = {
       query = query.eq("hero_visible", true);
     }
 
-    query = query.order(filters.sortBy || "sort_order", { ascending: true });
+    query = query.order(filters.sortBy || "sort_order", { ascending: filters.sortOrder !== "desc" });
     return paginate(query, filters);
   },
 
