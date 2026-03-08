@@ -746,7 +746,7 @@ export default function ServiceDetail() {
           {/* Ambient glow */}
           <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-accent/[0.04] rounded-full blur-[120px] pointer-events-none" />
 
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+          <div className="max-w-[1400px] mx-auto px-5 lg:px-12 relative z-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -801,7 +801,7 @@ export default function ServiceDetail() {
 
         {/* Description + Features */}
         <section className="bg-white text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <div className="grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20">
               <ScrollReveal>
                 <div>
@@ -844,7 +844,7 @@ export default function ServiceDetail() {
 
         {/* Metrics */}
         <section className="bg-dark text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
             <ScrollReveal>
               <div className="text-center mb-12">
                 <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
@@ -882,7 +882,7 @@ export default function ServiceDetail() {
 
         {/* Advantages - Pourquoi nous choisir */}
         <section className="bg-white text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto mb-14">
                 <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
@@ -919,7 +919,7 @@ export default function ServiceDetail() {
 
         {/* Technologies */}
         <section className="bg-light text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
             <ScrollReveal>
               <div className="text-center mb-12">
                 <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
@@ -946,7 +946,7 @@ export default function ServiceDetail() {
 
         {/* Process */}
         <section className="bg-accent text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto mb-14">
                 <h2 className="text-[1.6rem] sm:text-[2rem] lg:text-[2.5rem] leading-[1.08] tracking-[-0.02em]">
@@ -1006,7 +1006,7 @@ export default function ServiceDetail() {
 
         {/* Related Services */}
         <section className="bg-light text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto mb-14">
                 <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
@@ -1051,7 +1051,7 @@ export default function ServiceDetail() {
 
         {/* CTA */}
         <section className="bg-dark text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto">
                 <h2 className="text-[1.6rem] sm:text-[2rem] lg:text-[2.5rem] leading-[1.08] tracking-[-0.02em]">

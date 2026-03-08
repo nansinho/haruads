@@ -43,7 +43,7 @@ export default function ProjetsPage() {
               backgroundSize: "24px 24px",
             }}
           />
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+          <div className="max-w-[1400px] mx-auto px-5 lg:px-12 relative z-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export default function ProjetsPage() {
 
         {/* Projects grid */}
         <section className="bg-dark text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             {loading ? (
               <div className="flex justify-center py-20">
                 <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
@@ -113,7 +113,7 @@ export default function ProjetsPage() {
 
         {/* CTA */}
         <section className="bg-accent text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto">
                 <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em]">

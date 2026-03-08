@@ -66,7 +66,7 @@ export default function BlogPage() {
               backgroundSize: "24px 24px",
             }}
           />
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+          <div className="max-w-[1400px] mx-auto px-5 lg:px-12 relative z-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -89,7 +89,7 @@ export default function BlogPage() {
 
         {/* Featured article */}
         <section className="bg-white text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
             <ScrollReveal>
               <a
                 href={`/blog/${featured.slug}`}
@@ -136,7 +136,7 @@ export default function BlogPage() {
 
         {/* Other articles */}
         <section className="bg-light text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
             <ScrollReveal>
               <h3 className="text-[1.3rem] lg:text-[1.6rem] leading-[1.1] tracking-[-0.02em] mb-10">
                 <span className="font-light">Tous les </span>
@@ -192,7 +192,7 @@ export default function BlogPage() {
 
         {/* Newsletter CTA */}
         <section className="bg-accent text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[500px] mx-auto">
                 <h2 className="text-[1.6rem] sm:text-[2rem] lg:text-[2.5rem] leading-[1.08] tracking-[-0.02em]">

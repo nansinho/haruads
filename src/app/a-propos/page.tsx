@@ -70,7 +70,7 @@ export default function AProposPage() {
               backgroundSize: "24px 24px",
             }}
           />
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+          <div className="max-w-[1400px] mx-auto px-5 lg:px-12 relative z-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -96,7 +96,7 @@ export default function AProposPage() {
 
         {/* ── Section 2 : Les Origines — COD2 & Geek ── */}
         <section className="bg-white text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-center">
               <ScrollReveal animation="fadeLeft">
                 <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
@@ -143,7 +143,7 @@ export default function AProposPage() {
 
         {/* ── Section 3 : Fondation — Depuis 2015 ── */}
         <section className="bg-light text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-20 items-center">
               <ScrollReveal animation="fadeLeft">
                 <div className="rounded-2xl overflow-hidden">
@@ -212,7 +212,7 @@ export default function AProposPage() {
               backgroundSize: "24px 24px",
             }}
           />
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12 relative z-2">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12 relative z-2">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto mb-14">
                 <div className="w-12 h-12 rounded-full bg-accent/20 mx-auto flex items-center justify-center mb-5">
@@ -286,7 +286,7 @@ export default function AProposPage() {
 
         {/* ── Section 5 : Partenaires & Remerciements ── */}
         <section className="bg-light text-text-dark">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[700px] mx-auto mb-14">
                 <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
@@ -339,7 +339,7 @@ export default function AProposPage() {
 
         {/* ── Section 6 : Valeurs & Mission ── */}
         <section className="bg-dark text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto mb-14">
                 <span className="text-[0.72rem] uppercase tracking-[3px] text-accent font-semibold">
@@ -440,7 +440,7 @@ export default function AProposPage() {
 
         {/* ── Section 8 : CTA ── */}
         <section className="bg-accent text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto">
                 <h2 className="text-fluid-h2 leading-[1.08] tracking-[-0.02em]">

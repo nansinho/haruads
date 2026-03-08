@@ -499,7 +499,7 @@ export default function PolitiqueConfidentialitePage() {
               backgroundSize: "24px 24px",
             }}
           />
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+          <div className="max-w-[1400px] mx-auto px-5 lg:px-12 relative z-2">
             <Breadcrumb
               items={[
                 { label: "Accueil", href: "/" },

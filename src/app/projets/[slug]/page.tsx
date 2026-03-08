@@ -95,7 +95,7 @@ export default function ProjectDetail() {
               backgroundSize: "24px 24px",
             }}
           />
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-12 relative z-2">
+          <div className="max-w-[1400px] mx-auto px-5 lg:px-12 relative z-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -150,7 +150,7 @@ export default function ProjectDetail() {
         {/* Featured image */}
         {project.image_url && (
           <section className="bg-dark text-white pb-20">
-            <div className="max-w-[1200px] mx-auto px-5 lg:px-12">
+            <div className="max-w-[1400px] mx-auto px-5 lg:px-12">
               <ScrollReveal>
                 <div className="rounded-2xl overflow-hidden aspect-[1884/1148] relative">
                   <img
@@ -167,7 +167,7 @@ export default function ProjectDetail() {
         {/* Challenge & Solution */}
         {(project.challenge || project.solution) && (
           <section className="bg-white text-text-dark">
-            <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+            <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
                 {project.challenge && (
                   <ScrollReveal>
@@ -206,7 +206,7 @@ export default function ProjectDetail() {
         {/* Results */}
         {project.results && project.results.length > 0 && (
           <section className="bg-accent text-white">
-            <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+            <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
               <ScrollReveal>
                 <div className="text-center mb-12">
                   <span className="text-[0.72rem] uppercase tracking-[3px] text-white/70 font-semibold">
@@ -255,7 +255,7 @@ export default function ProjectDetail() {
         {/* Gallery */}
         {project.gallery && project.gallery.length > 0 && (
           <section className="bg-white text-text-dark">
-            <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+            <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
               <ScrollReveal>
                 <div className="text-center mb-10">
                   <h3 className="text-[1.3rem] lg:text-[1.6rem] leading-[1.1] tracking-[-0.02em]">
@@ -340,7 +340,7 @@ export default function ProjectDetail() {
         {/* Technologies */}
         {project.tags && project.tags.length > 0 && (
           <section className="bg-light text-text-dark">
-            <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+            <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
               <ScrollReveal>
                 <div className="text-center mb-10">
                   <h3 className="text-[1.3rem] lg:text-[1.6rem] leading-[1.1] tracking-[-0.02em]">
@@ -367,7 +367,7 @@ export default function ProjectDetail() {
         {/* Autres projets */}
         {relatedProjects.length > 0 && (
           <section className="bg-white text-text-dark">
-            <div className="max-w-[1200px] mx-auto px-5 py-[80px] lg:px-12">
+            <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
               <ScrollReveal>
                 <div className="text-center mb-12">
                   <h2 className="text-[1.6rem] lg:text-[2rem] leading-[1.08] tracking-[-0.02em]">
@@ -427,7 +427,7 @@ export default function ProjectDetail() {
 
         {/* CTA */}
         <section className="bg-dark text-white">
-          <div className="max-w-[1200px] mx-auto px-5 py-[100px] lg:px-12">
+          <div className="max-w-[1400px] mx-auto px-5 py-[100px] lg:px-12">
             <ScrollReveal>
               <div className="text-center max-w-[600px] mx-auto">
                 <h2 className="text-[1.6rem] sm:text-[2rem] lg:text-[2.5rem] leading-[1.08] tracking-[-0.02em]">
