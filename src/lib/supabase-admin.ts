@@ -220,6 +220,57 @@ export const offersService = {
   },
 };
 
+// --- Offer Categories ---
+export const offerCategoriesService = {
+  async list() {
+    const db = getClient();
+    return db.from("offer_categories").select("*").eq("is_active", true).order("sort_order", { ascending: true });
+  },
+
+  async getById(id: string) {
+    const db = getClient();
+    return db.from("offer_categories").select("*").eq("id", id).single();
+  },
+
+  async create(data: { name: string; slug: string; description?: string; icon?: string; sort_order?: number }) {
+    const db = getClient();
+    return db.from("offer_categories").insert(data).select().single();
+  },
+
+  async update(id: string, data: { name?: string; slug?: string; description?: string; icon?: string; sort_order?: number; is_active?: boolean }) {
+    const db = getClient();
+    return db.from("offer_categories").update(data).eq("id", id).select().single();
+  },
+
+  async delete(id: string) {
+    const db = getClient();
+    return db.from("offer_categories").delete().eq("id", id);
+  },
+};
+
+// --- Offer Options ---
+export const offerOptionsService = {
+  async listByOffer(offerId: string) {
+    const db = getClient();
+    return db.from("offer_options").select("*").eq("offer_id", offerId).order("sort_order", { ascending: true });
+  },
+
+  async create(data: { offer_id: string; category: string; icon?: string; name: string; description?: string; is_included?: boolean; sort_order?: number }) {
+    const db = getClient();
+    return db.from("offer_options").insert(data).select().single();
+  },
+
+  async update(id: string, data: { category?: string; icon?: string; name?: string; description?: string; is_included?: boolean; sort_order?: number }) {
+    const db = getClient();
+    return db.from("offer_options").update(data).eq("id", id).select().single();
+  },
+
+  async delete(id: string) {
+    const db = getClient();
+    return db.from("offer_options").delete().eq("id", id);
+  },
+};
+
 // --- Testimonials ---
 export const testimonialsService = {
   async list(filters: QueryFilters) {

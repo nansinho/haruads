@@ -97,6 +97,17 @@ export interface Service {
   updated_at: string;
 }
 
+export interface OfferCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  icon: string | null;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+}
+
 export interface Offer {
   id: string;
   name: string;
@@ -108,8 +119,25 @@ export interface Offer {
   is_popular: boolean;
   is_active: boolean;
   sort_order: number;
+  category_id: string | null;
+  tier: "essentiel" | "business" | "premium";
   created_at: string;
   updated_at: string;
+  // Joined
+  offer_categories?: OfferCategory;
+  offer_options?: OfferOption[];
+}
+
+export interface OfferOption {
+  id: string;
+  offer_id: string;
+  category: string;
+  icon: string | null;
+  name: string;
+  description: string | null;
+  is_included: boolean;
+  sort_order: number;
+  created_at: string;
 }
 
 export interface Testimonial {

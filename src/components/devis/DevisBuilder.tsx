@@ -4,11 +4,29 @@ import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import StepProgress from "./StepProgress";
 import StepFormule from "./StepFormule";
-import StepOptions from "./StepOptions";
+import OptionsPopup from "./OptionsPopup";
 import StepProjet from "./StepProjet";
 import StepContact from "./StepContact";
 import StepRecap from "./StepRecap";
 import DevisSuccess from "./DevisSuccess";
+
+interface OfferCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  icon: string | null;
+}
+
+interface OfferOption {
+  id: string;
+  category: string;
+  icon: string | null;
+  name: string;
+  description: string | null;
+  is_included: boolean;
+  sort_order: number;
+}
 
 interface Offer {
   id: string;
@@ -16,6 +34,9 @@ interface Offer {
   description: string;
   features: string[];
   is_popular: boolean;
+  category_id: string | null;
+  tier: string;
+  offer_options?: OfferOption[];
 }
 
 interface Attachment {
@@ -27,6 +48,8 @@ interface FormData {
   selectedOfferId: string | null;
   selectedOfferName: string;
   offerFeatures: string[];
+  offerOptions: OfferOption[];
+  selectedOptionIds: string[];
   selectedOptions: string[];
   customOptions: string[];
   description: string;
@@ -41,6 +64,8 @@ const initialFormData: FormData = {
   selectedOfferId: null,
   selectedOfferName: "",
   offerFeatures: [],
+  offerOptions: [],
+  selectedOptionIds: [],
   selectedOptions: [],
   customOptions: [],
   description: "",
@@ -71,16 +96,24 @@ export default function DevisBuilder() {
   const [direction, setDirection] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [offers, setOffers] = useState<Offer[]>([]);
+  const [categories, setCategories] = useState<OfferCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [successReference, setSuccessReference] = useState("");
+  const [showOptionsPopup, setShowOptionsPopup] = useState(false);
 
   useEffect(() => {
     fetch("/api/offers")
       .then((res) => res.json())
-      .then((data) => setOffers(data.data || []))
-      .catch(() => setOffers([]))
+      .then((data) => {
+        setOffers(data.data || []);
+        setCategories(data.categories || []);
+      })
+      .catch(() => {
+        setOffers([]);
+        setCategories([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -102,23 +135,54 @@ export default function DevisBuilder() {
     setCurrentStep((s) => Math.max(s - 1, 1));
   }, []);
 
-  const handleSelectOffer = useCallback((id: string, name: string, features: string[]) => {
+  const handleSelectOffer = useCallback((id: string, name: string, features: string[], options: OfferOption[]) => {
+    // Pre-select included options
+    const includedIds = options.filter((o) => o.is_included).map((o) => o.id);
+    const includedNames = options.filter((o) => o.is_included).map((o) => o.name);
+
     setFormData((prev) => ({
       ...prev,
       selectedOfferId: id,
       selectedOfferName: name,
       offerFeatures: features,
-      selectedOptions: features,
+      offerOptions: options,
+      selectedOptionIds: includedIds,
+      selectedOptions: includedNames,
     }));
   }, []);
 
-  const handleToggleOption = useCallback((option: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      selectedOptions: prev.selectedOptions.includes(option)
-        ? prev.selectedOptions.filter((o) => o !== option)
-        : [...prev.selectedOptions, option],
-    }));
+  // When user clicks "Personnaliser mes options" after selecting formula
+  const handleFormuleNext = useCallback(() => {
+    if (formData.offerOptions.length > 0) {
+      setShowOptionsPopup(true);
+    } else {
+      // No detailed options from DB, skip to project step
+      setDirection(1);
+      setCurrentStep(3);
+    }
+  }, [formData.offerOptions]);
+
+  const handleToggleOption = useCallback((optionId: string) => {
+    setFormData((prev) => {
+      const option = prev.offerOptions.find((o) => o.id === optionId);
+      if (!option) return prev;
+
+      const isSelected = prev.selectedOptionIds.includes(optionId);
+      const newIds = isSelected
+        ? prev.selectedOptionIds.filter((id) => id !== optionId)
+        : [...prev.selectedOptionIds, optionId];
+
+      // Rebuild selectedOptions (names) from IDs
+      const newNames = prev.offerOptions
+        .filter((o) => newIds.includes(o.id))
+        .map((o) => o.name);
+
+      return {
+        ...prev,
+        selectedOptionIds: newIds,
+        selectedOptions: newNames,
+      };
+    });
   }, []);
 
   const handleAddCustomOption = useCallback((option: string) => {
@@ -133,6 +197,17 @@ export default function DevisBuilder() {
       ...prev,
       customOptions: prev.customOptions.filter((_, i) => i !== index),
     }));
+  }, []);
+
+  const handleOptionsValidate = useCallback(() => {
+    setShowOptionsPopup(false);
+    // Go directly to step 3 (Projet)
+    setDirection(1);
+    setCurrentStep(3);
+  }, []);
+
+  const handleOptionsClose = useCallback(() => {
+    setShowOptionsPopup(false);
   }, []);
 
   const handleDescriptionChange = useCallback((value: string) => {
@@ -205,15 +280,32 @@ export default function DevisBuilder() {
     );
   }
 
+  // Progress display: show step 2 when popup is open
+  const displayStep = showOptionsPopup ? 2 : currentStep <= 1 ? 1 : currentStep;
+
   return (
     <div>
-      <StepProgress currentStep={currentStep} />
+      <StepProgress currentStep={displayStep} />
 
       {submitError && (
         <div className="max-w-[600px] mx-auto mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-[0.85rem] text-red-600">
           {submitError}
         </div>
       )}
+
+      {/* Full-page Options Popup */}
+      <OptionsPopup
+        isOpen={showOptionsPopup}
+        offerName={formData.selectedOfferName}
+        offerOptions={formData.offerOptions}
+        selectedOptionIds={formData.selectedOptionIds}
+        customOptions={formData.customOptions}
+        onToggleOption={handleToggleOption}
+        onAddCustomOption={handleAddCustomOption}
+        onRemoveCustomOption={handleRemoveCustomOption}
+        onClose={handleOptionsClose}
+        onValidate={handleOptionsValidate}
+      />
 
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
@@ -228,22 +320,10 @@ export default function DevisBuilder() {
           {currentStep === 1 && (
             <StepFormule
               offers={offers}
+              categories={categories}
               selectedOfferId={formData.selectedOfferId}
               onSelect={handleSelectOffer}
-              onNext={nextStep}
-            />
-          )}
-
-          {currentStep === 2 && (
-            <StepOptions
-              offerFeatures={formData.offerFeatures}
-              selectedOptions={formData.selectedOptions}
-              customOptions={formData.customOptions}
-              onToggleOption={handleToggleOption}
-              onAddCustomOption={handleAddCustomOption}
-              onRemoveCustomOption={handleRemoveCustomOption}
-              onNext={nextStep}
-              onBack={prevStep}
+              onNext={handleFormuleNext}
             />
           )}
 
@@ -255,7 +335,10 @@ export default function DevisBuilder() {
               onAddAttachment={handleAddAttachment}
               onRemoveAttachment={handleRemoveAttachment}
               onNext={nextStep}
-              onBack={prevStep}
+              onBack={() => {
+                // Go back: show options popup
+                setShowOptionsPopup(true);
+              }}
             />
           )}
 
@@ -287,7 +370,14 @@ export default function DevisBuilder() {
                 company: formData.company,
               }}
               isSubmitting={isSubmitting}
-              onGoToStep={goToStep}
+              onGoToStep={(step) => {
+                if (step === 2) {
+                  // Open options popup instead
+                  setShowOptionsPopup(true);
+                } else {
+                  goToStep(step);
+                }
+              }}
               onSubmit={handleSubmit}
             />
           )}
