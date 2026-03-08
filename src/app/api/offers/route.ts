@@ -7,17 +7,33 @@ export async function GET() {
   }
 
   try {
-    const { data, error } = await db
-      .from("offers")
-      .select("id, name, slug, description, features, is_popular, sort_order")
+    // Fetch categories
+    const { data: categories, error: catError } = await db
+      .from("offer_categories")
+      .select("*")
       .eq("is_active", true)
       .order("sort_order", { ascending: true });
 
-    if (error) {
-      return Response.json({ error: error.message }, { status: 400 });
+    if (catError) {
+      // Fallback: categories table might not exist yet
+      console.warn("offer_categories not found, falling back:", catError.message);
     }
 
-    return Response.json({ data: data || [] });
+    // Fetch offers with their options
+    const { data: offers, error: offersError } = await db
+      .from("offers")
+      .select("id, name, slug, description, features, is_popular, sort_order, category_id, tier, offer_options(id, category, icon, name, description, is_included, sort_order)")
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true });
+
+    if (offersError) {
+      return Response.json({ error: offersError.message }, { status: 400 });
+    }
+
+    return Response.json({
+      data: offers || [],
+      categories: categories || [],
+    });
   } catch (error) {
     const msg = error instanceof Error ? error.message : "Erreur serveur";
     return Response.json({ error: msg }, { status: 500 });
