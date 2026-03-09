@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Globe, ShoppingCart, Code, Cloud, Brain, Palette,
+  Globe, ShoppingCart, Code, Cloud, Brain, Palette, PenTool,
   ArrowLeft, Sparkles, Crown, Briefcase,
 } from "lucide-react";
 
@@ -45,7 +45,7 @@ interface StepFormuleProps {
 }
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Globe, ShoppingCart, Code, Cloud, Brain, Palette,
+  Globe, ShoppingCart, Code, Cloud, Brain, Palette, PenTool,
 };
 
 const tierConfig = {
