@@ -13,6 +13,8 @@ import {
   Upload,
   X,
   Image as ImageIcon,
+  Calendar,
+  Clock,
 } from "lucide-react";
 import PageHeader from "@/components/admin/PageHeader";
 import PageTransition, { AnimatedSection } from "@/components/admin/PageTransition";
@@ -22,31 +24,37 @@ import FormField from "@/components/admin/FormField";
 import TagInput from "@/components/admin/TagInput";
 import { useToast } from "@/components/admin/Toast";
 import { useAdminData } from "@/hooks/useAdminData";
-import { formatDate, slugify } from "@/lib/utils";
+import { formatDate, formatDateTime, slugify } from "@/lib/utils";
 import type { BlogPost } from "@/types/database";
 
 const filterTabs = [
   { key: "all", label: "Tous" },
   { key: "draft", label: "Brouillons" },
   { key: "published", label: "Publiés" },
+  { key: "scheduled", label: "Programmés" },
   { key: "archived", label: "Archivés" },
 ];
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({ status, publishedAt }: { status: string; publishedAt?: string | null }) {
+  const isScheduled = status === "published" && publishedAt && new Date(publishedAt) > new Date();
+  const displayStatus = isScheduled ? "scheduled" : status;
   const colors: Record<string, string> = {
     draft: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
     published: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
+    scheduled: "bg-blue-500/15 text-blue-400 border-blue-500/20",
     archived: "bg-gray-500/15 text-admin-text-muted border-gray-500/20",
   };
   const labels: Record<string, string> = {
     draft: "Brouillon",
     published: "Publié",
+    scheduled: "Programmé",
     archived: "Archivé",
   };
-  const color = colors[status] || "bg-gray-500/15 text-admin-text-muted border-gray-500/20";
+  const color = colors[displayStatus] || "bg-gray-500/15 text-admin-text-muted border-gray-500/20";
   return (
-    <span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}>
-      {labels[status] || status}
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border ${color}`}>
+      {isScheduled && <Clock size={12} />}
+      {labels[displayStatus] || displayStatus}
     </span>
   );
 }
@@ -60,6 +68,7 @@ const emptyForm = {
   category: "",
   tags: [] as string[],
   status: "draft",
+  published_at: "",
   seo_title: "",
   seo_description: "",
   seo_keywords: [] as string[],
@@ -133,6 +142,16 @@ export default function BlogAdminPage() {
 
   const openEdit = (post: BlogPost) => {
     setEditingPost(post);
+    // Convert ISO date to datetime-local format for the input
+    let publishedAtLocal = "";
+    if (post.published_at) {
+      const d = new Date(post.published_at);
+      publishedAtLocal = d.getFullYear() + "-" +
+        String(d.getMonth() + 1).padStart(2, "0") + "-" +
+        String(d.getDate()).padStart(2, "0") + "T" +
+        String(d.getHours()).padStart(2, "0") + ":" +
+        String(d.getMinutes()).padStart(2, "0");
+    }
     setForm({
       title: post.title,
       slug: post.slug,
@@ -142,6 +161,7 @@ export default function BlogAdminPage() {
       category: post.category || "",
       tags: post.tags || [],
       status: post.status,
+      published_at: publishedAtLocal,
       seo_title: post.seo_title || "",
       seo_description: post.seo_description || "",
       seo_keywords: post.seo_keywords || [],
@@ -222,6 +242,7 @@ export default function BlogAdminPage() {
         category: data.category || "",
         tags: data.tags || [],
         status: "draft",
+        published_at: "",
         seo_title: data.seo_title || "",
         seo_description: data.seo_description || "",
         seo_keywords: data.seo_keywords || [],
@@ -251,10 +272,15 @@ export default function BlogAdminPage() {
     try {
       const url = editingPost ? `/api/admin/blog/${editingPost.id}` : "/api/admin/blog";
       const method = editingPost ? "PUT" : "POST";
+      // Convert datetime-local to ISO string for the API
+      const payload = {
+        ...form,
+        published_at: form.published_at ? new Date(form.published_at).toISOString() : null,
+      };
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -398,10 +424,19 @@ export default function BlogAdminPage() {
                           <span className="text-sm text-admin-text-secondary">{post.category || "-"}</span>
                         </td>
                         <td className="px-6 py-4">
-                          <StatusBadge status={post.status} />
+                          <StatusBadge status={post.status} publishedAt={post.published_at} />
                         </td>
                         <td className="px-6 py-4">
-                          <span className="text-sm text-admin-text-muted">{formatDate(post.published_at)}</span>
+                          {post.published_at ? (
+                            <div className="flex items-center gap-1.5">
+                              <Calendar size={13} className={`shrink-0 ${new Date(post.published_at) > new Date() ? "text-blue-400" : "text-admin-text-muted"}`} />
+                              <span className={`text-sm ${new Date(post.published_at) > new Date() ? "text-blue-400" : "text-admin-text-muted"}`}>
+                                {new Date(post.published_at) > new Date() ? formatDateTime(post.published_at) : formatDate(post.published_at)}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-sm text-admin-text-muted">-</span>
+                          )}
                         </td>
                         <td className="px-6 py-4">
                           <span className="text-sm text-admin-text-secondary">{post.views_count}</span>
@@ -688,13 +723,54 @@ export default function BlogAdminPage() {
             name="status"
             type="select"
             value={form.status}
-            onChange={(v) => setForm({ ...form, status: v })}
+            onChange={(v) => {
+              const updates: Partial<typeof form> = { status: v };
+              // Auto-fill published_at with current datetime when switching to published
+              if (v === "published" && !form.published_at) {
+                const now = new Date();
+                updates.published_at = now.getFullYear() + "-" +
+                  String(now.getMonth() + 1).padStart(2, "0") + "-" +
+                  String(now.getDate()).padStart(2, "0") + "T" +
+                  String(now.getHours()).padStart(2, "0") + ":" +
+                  String(now.getMinutes()).padStart(2, "0");
+              }
+              setForm((prev) => ({ ...prev, ...updates }));
+            }}
             options={[
               { value: "draft", label: "Brouillon" },
               { value: "published", label: "Publié" },
               { value: "archived", label: "Archivé" },
             ]}
           />
+
+          {/* Publication Date */}
+          {form.status === "published" && (
+            <div>
+              <label className="block text-sm font-medium text-admin-text-secondary mb-1.5">
+                Date de publication
+              </label>
+              <div className="relative">
+                <input
+                  type="datetime-local"
+                  value={form.published_at}
+                  onChange={(e) => setForm({ ...form, published_at: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-admin-input-bg border border-admin-input-border rounded-xl text-sm text-admin-text focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+                />
+              </div>
+              {form.published_at && new Date(form.published_at) > new Date() && (
+                <p className="text-xs text-blue-400 mt-1.5 flex items-center gap-1">
+                  <Clock size={12} />
+                  Publication programmée — l&apos;article sera visible à cette date
+                </p>
+              )}
+              {form.published_at && new Date(form.published_at) <= new Date() && (
+                <p className="text-xs text-emerald-400 mt-1.5 flex items-center gap-1">
+                  <Calendar size={12} />
+                  L&apos;article sera publié immédiatement
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Tags with suggestions */}
           <div className="sm:col-span-2">
