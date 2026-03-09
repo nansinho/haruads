@@ -186,6 +186,66 @@ export const blogService = {
   },
 };
 
+// --- Blog Likes ---
+export const blogLikesService = {
+  async getCount(postId: string) {
+    const db = getClient();
+    const { count, error } = await db
+      .from("blog_likes")
+      .select("*", { count: "exact", head: true })
+      .eq("post_id", postId);
+    if (error) throw error;
+    return count || 0;
+  },
+
+  async hasLiked(postId: string, visitorId: string) {
+    const db = getClient();
+    const { data } = await db
+      .from("blog_likes")
+      .select("id")
+      .eq("post_id", postId)
+      .eq("visitor_id", visitorId)
+      .maybeSingle();
+    return !!data;
+  },
+
+  async toggle(postId: string, visitorId: string) {
+    const db = getClient();
+    const { data: existing } = await db
+      .from("blog_likes")
+      .select("id")
+      .eq("post_id", postId)
+      .eq("visitor_id", visitorId)
+      .maybeSingle();
+
+    if (existing) {
+      await db.from("blog_likes").delete().eq("id", existing.id);
+      return false; // unliked
+    } else {
+      await db.from("blog_likes").insert({ post_id: postId, visitor_id: visitorId });
+      return true; // liked
+    }
+  },
+};
+
+// --- Blog Comments ---
+export const blogCommentsService = {
+  async list(postId: string) {
+    const db = getClient();
+    return db
+      .from("blog_comments")
+      .select("*")
+      .eq("post_id", postId)
+      .eq("status", "approved")
+      .order("created_at", { ascending: false });
+  },
+
+  async create(data: { post_id: string; author_name: string; author_email?: string; content: string }) {
+    const db = getClient();
+    return db.from("blog_comments").insert(data).select().single();
+  },
+};
+
 // --- Projects ---
 export const projectsService = {
   async list(filters: QueryFilters) {

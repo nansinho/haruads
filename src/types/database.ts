@@ -45,6 +45,23 @@ export interface BlogPost {
   updated_at: string;
 }
 
+export interface BlogComment {
+  id: string;
+  post_id: string;
+  author_name: string;
+  author_email: string | null;
+  content: string;
+  status: "pending" | "approved" | "rejected";
+  created_at: string;
+}
+
+export interface BlogLike {
+  id: string;
+  post_id: string;
+  visitor_id: string;
+  created_at: string;
+}
+
 export interface Project {
   id: string;
   title: string;
