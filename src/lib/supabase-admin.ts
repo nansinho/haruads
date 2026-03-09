@@ -109,7 +109,9 @@ export const blogService = {
     if (filters.search) {
       query = query.or(`title.ilike.%${filters.search}%,category.ilike.%${filters.search}%`);
     }
-    if (filters.status && filters.status !== "all") {
+    if (filters.status === "scheduled") {
+      query = query.eq("status", "published").gt("published_at", new Date().toISOString());
+    } else if (filters.status && filters.status !== "all") {
       query = query.eq("status", filters.status);
     }
 
@@ -143,12 +145,19 @@ export const blogService = {
       .from("blog_posts")
       .select("id, title, slug, excerpt, cover_image, category, tags, published_at, views_count, content")
       .eq("status", "published")
+      .lte("published_at", new Date().toISOString())
       .order("published_at", { ascending: false });
   },
 
   async getBySlug(slug: string) {
     const db = getClient();
-    return db.from("blog_posts").select("*").eq("slug", slug).eq("status", "published").single();
+    return db
+      .from("blog_posts")
+      .select("*")
+      .eq("slug", slug)
+      .eq("status", "published")
+      .lte("published_at", new Date().toISOString())
+      .single();
   },
 
   async getDistinctCategories() {
@@ -179,6 +188,7 @@ export const blogService = {
       .from("blog_posts")
       .select("id, title, slug, excerpt, cover_image, category, published_at")
       .eq("status", "published")
+      .lte("published_at", new Date().toISOString())
       .eq("category", category)
       .neq("slug", excludeSlug)
       .order("published_at", { ascending: false })

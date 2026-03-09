@@ -19,6 +19,15 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   try {
     const { id } = await params;
     const body = await request.json();
+
+    // Auto-set published_at when publishing without a date
+    if (body.status === "published" && !body.published_at) {
+      const { data: existing } = await blogService.getById(id);
+      if (!existing?.published_at) {
+        body.published_at = new Date().toISOString();
+      }
+    }
+
     const { data, error } = await blogService.update(id, body);
     if (error) return errorResponse(error.message, 400);
 
