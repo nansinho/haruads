@@ -37,6 +37,8 @@ export interface BlogPost {
   seo_title: string | null;
   seo_description: string | null;
   seo_keywords: string[];
+  sea_keywords: string[] | null;
+  aeo_answer: string | null;
   published_at: string | null;
   views_count: number;
   created_at: string;

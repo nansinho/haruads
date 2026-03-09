@@ -1,230 +1,147 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
+import { Loader2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import Breadcrumb from "@/components/Breadcrumb";
 
-const articlesData: Record<
-  string,
-  {
-    title: string;
-    category: string;
-    date: string;
-    readTime: string;
-    image: string;
-    author: string;
-    content: { type: "paragraph" | "heading" | "list"; text: string; items?: string[] }[];
-    related: { slug: string; title: string; category: string }[];
-  }
-> = {
-  "pourquoi-nextjs-en-2024": {
-    title: "Pourquoi choisir Next.js en 2024 ?",
-    category: "Développement",
-    date: "15 Janvier 2024",
-    readTime: "5 min",
-    image: "/images/projects/project-dashboard.jpg",
-    author: "Agence HDS",
-    content: [
-      {
-        type: "paragraph",
-        text: "Next.js s\u2019est imposé comme le framework React de référence pour le développement web moderne. Avec sa version 14, il apporte des innovations majeures qui changent la donne pour les développeurs et les entreprises.",
-      },
-      {
-        type: "heading",
-        text: "Performance et SEO natifs",
-      },
-      {
-        type: "paragraph",
-        text: "Grâce au Server-Side Rendering (SSR) et à la génération statique (SSG), Next.js offre des temps de chargement ultra-rapides et un référencement naturel optimal. Google indexe parfaitement les pages générées côté serveur, un avantage considérable par rapport aux SPA classiques.",
-      },
-      {
-        type: "heading",
-        text: "Les avantages clés",
-      },
-      {
-        type: "list",
-        text: "",
-        items: [
-          "Rendu hybride : SSR, SSG et ISR selon les besoins de chaque page",
-          "App Router : système de routing intuitif basé sur le file system",
-          "Server Components : réduction drastique du JavaScript côté client",
-          "Image Optimization : optimisation automatique des images",
-          "Edge Runtime : déploiement au plus proche des utilisateurs",
-        ],
-      },
-      {
-        type: "heading",
-        text: "L\u2019écosystème React",
-      },
-      {
-        type: "paragraph",
-        text: "Next.js bénéficie de l\u2019immense écosystème React : des milliers de bibliothèques, une communauté massive et des outils de développement matures. C\u2019est un investissement sûr pour vos projets à long terme.",
-      },
-      {
-        type: "paragraph",
-        text: "Chez Agence HDS, nous utilisons Next.js pour tous nos projets web, des sites vitrines aux applications SaaS complexes. Sa flexibilité et ses performances en font le choix idéal pour des solutions pérennes et évolutives.",
-      },
-    ],
-    related: [
-      { slug: "ux-design-conversions", title: "Comment le design UX booste vos conversions", category: "Design" },
-      { slug: "seo-erreurs-courantes", title: "5 erreurs SEO qui plombent votre visibilité", category: "SEO" },
-    ],
-  },
-  "ux-design-conversions": {
-    title: "Comment le design UX booste vos conversions",
-    category: "Design",
-    date: "8 Janvier 2024",
-    readTime: "4 min",
-    image: "/images/projects/project-landing.jpg",
-    author: "Agence HDS",
-    content: [
-      {
-        type: "paragraph",
-        text: "Le design UX (User Experience) va bien au-delà de l\u2019esthétique. C\u2019est une discipline stratégique qui influence directement vos résultats business. Un site bien conçu peut multiplier votre taux de conversion par 2 ou 3.",
-      },
-      {
-        type: "heading",
-        text: "L\u2019impact mesurable du design",
-      },
-      {
-        type: "paragraph",
-        text: "Selon une étude Forrester, chaque euro investi en UX rapporte entre 10 et 100 euros. Les utilisateurs forment leur première impression en 50 millisecondes. Si votre interface est confuse ou datée, vous perdez des clients avant même qu\u2019ils ne découvrent votre offre.",
-      },
-      {
-        type: "heading",
-        text: "Les principes qui convertissent",
-      },
-      {
-        type: "list",
-        text: "",
-        items: [
-          "Hiérarchie visuelle claire : guidez le regard vers les actions importantes",
-          "Réduction des frictions : simplifiez chaque étape du parcours utilisateur",
-          "Social proof : témoignages et chiffres clés placés stratégiquement",
-          "Call-to-action : boutons visibles, texte orienté bénéfice utilisateur",
-          "Mobile-first : 60% du trafic est mobile, concevez pour le smartphone d\u2019abord",
-        ],
-      },
-      {
-        type: "paragraph",
-        text: "Chez Agence HDS, chaque design que nous créons est pensé pour convertir. Nous testons, itérons et optimisons jusqu\u2019à obtenir les résultats que vous méritez.",
-      },
-    ],
-    related: [
-      { slug: "pourquoi-nextjs-en-2024", title: "Pourquoi choisir Next.js en 2024 ?", category: "Développement" },
-      { slug: "ecommerce-tendances", title: "E-commerce : les tendances à suivre", category: "E-Commerce" },
-    ],
-  },
-  "seo-erreurs-courantes": {
-    title: "5 erreurs SEO qui plombent votre visibilité",
-    category: "SEO",
-    date: "2 Janvier 2024",
-    readTime: "6 min",
-    image: "/images/projects/neuralia-project.webp",
-    author: "Agence HDS",
-    content: [
-      {
-        type: "paragraph",
-        text: "Le référencement naturel est un levier incontournable pour votre visibilité en ligne. Pourtant, de nombreuses entreprises commettent des erreurs qui pénalisent leur positionnement sur Google.",
-      },
-      {
-        type: "heading",
-        text: "Erreur #1 : Ignorer les performances",
-      },
-      {
-        type: "paragraph",
-        text: "Google prend en compte les Core Web Vitals dans son algorithme de classement. Un site lent, avec un mauvais score Lighthouse, sera systématiquement pénalisé. Optimisez vos images, utilisez le lazy loading et choisissez un hébergement performant.",
-      },
-      {
-        type: "heading",
-        text: "Erreur #2 : Pas de stratégie de contenu",
-      },
-      {
-        type: "paragraph",
-        text: "Publier du contenu sans stratégie est inefficace. Identifiez vos mots-clés cibles, créez un calendrier éditorial et produisez du contenu de qualité qui répond aux questions de vos utilisateurs.",
-      },
-      {
-        type: "heading",
-        text: "Les 5 erreurs à éviter",
-      },
-      {
-        type: "list",
-        text: "",
-        items: [
-          "Performances médiocres (Core Web Vitals)",
-          "Absence de stratégie de contenu et de mots-clés",
-          "Balises meta manquantes ou dupliquées",
-          "Pas de données structurées (Schema.org)",
-          "Négliger le maillage interne et les backlinks",
-        ],
-      },
-      {
-        type: "paragraph",
-        text: "Un audit SEO complet est la première étape pour identifier et corriger ces erreurs. Contactez-nous pour un diagnostic gratuit de votre site.",
-      },
-    ],
-    related: [
-      { slug: "pourquoi-nextjs-en-2024", title: "Pourquoi choisir Next.js en 2024 ?", category: "Développement" },
-      { slug: "ux-design-conversions", title: "Comment le design UX booste vos conversions", category: "Design" },
-    ],
-  },
-  "ecommerce-tendances": {
-    title: "E-commerce : les tendances à suivre",
-    category: "E-Commerce",
-    date: "20 Décembre 2023",
-    readTime: "7 min",
-    image: "/images/projects/reservation-system.webp",
-    author: "Agence HDS",
-    content: [
-      {
-        type: "paragraph",
-        text: "Le e-commerce évolue à une vitesse folle. Pour rester compétitif, il est essentiel d\u2019anticiper les tendances qui façonneront le commerce en ligne dans les prochaines années.",
-      },
-      {
-        type: "heading",
-        text: "Le commerce mobile domine",
-      },
-      {
-        type: "paragraph",
-        text: "Plus de 70% des achats en ligne se font depuis un mobile. Les boutiques qui n\u2019offrent pas une expérience mobile irréprochable perdent la majorité de leurs clients potentiels. Le responsive ne suffit plus : il faut concevoir mobile-first.",
-      },
-      {
-        type: "heading",
-        text: "Tendances clés",
-      },
-      {
-        type: "list",
-        text: "",
-        items: [
-          "Commerce social : achat direct depuis Instagram, TikTok et Pinterest",
-          "IA et personnalisation : recommandations produits ultra-ciblées",
-          "Paiement fractionné : BNPL (Buy Now Pay Later) en forte croissance",
-          "Livraison ultra-rapide : attentes de livraison J+1 voire J+0",
-          "Durabilité : les consommateurs privilégient les marques responsables",
-        ],
-      },
-      {
-        type: "paragraph",
-        text: "Chez Agence HDS, nous intégrons ces tendances dans chaque projet e-commerce que nous réalisons, pour vous positionner en avance sur votre marché.",
-      },
-    ],
-    related: [
-      { slug: "seo-erreurs-courantes", title: "5 erreurs SEO qui plombent votre visibilité", category: "SEO" },
-      { slug: "ux-design-conversions", title: "Comment le design UX booste vos conversions", category: "Design" },
-    ],
-  },
-};
+interface BlogArticle {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string;
+  cover_image: string | null;
+  category: string | null;
+  tags: string[];
+  published_at: string | null;
+  views_count: number;
+  seo_title: string | null;
+  seo_description: string | null;
+  aeo_answer: string | null;
+}
+
+interface RelatedPost {
+  id: string;
+  title: string;
+  slug: string;
+  category: string | null;
+  cover_image: string | null;
+}
+
+function markdownToHtml(md: string): string {
+  if (!md) return "";
+
+  let html = md
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  // Links: [text](url)
+  html = html.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-accent underline hover:text-accent/80 transition-colors">$1</a>'
+  );
+
+  // Bold: **text**
+  html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+
+  // Italic: *text*
+  html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+
+  // Underline: __text__
+  html = html.replace(/__([^_]+)__/g, "<u>$1</u>");
+
+  // Unordered lists
+  html = html.replace(/((?:^|\n)- .+(?:\n- .+)*)/g, (match) => {
+    const items = match.trim().split("\n").map((line) =>
+      `<li class="flex items-start gap-3 text-[0.9rem] text-text-body leading-[1.8]"><span class="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0"></span><span>${line.replace(/^- /, "")}</span></li>`
+    ).join("");
+    return `<ul class="space-y-2 my-6">${items}</ul>`;
+  });
+
+  // Ordered lists
+  html = html.replace(/((?:^|\n)\d+\. .+(?:\n\d+\. .+)*)/g, (match) => {
+    const items = match.trim().split("\n").map((line, i) =>
+      `<li class="flex items-start gap-3 text-[0.9rem] text-text-body leading-[1.8]"><span class="text-accent font-semibold mt-0.5 shrink-0">${i + 1}.</span><span>${line.replace(/^\d+\. /, "")}</span></li>`
+    ).join("");
+    return `<ol class="space-y-2 my-6">${items}</ol>`;
+  });
+
+  // Paragraphs (double newlines)
+  html = html.replace(/\n\n/g, '</p><p class="text-[0.9rem] text-text-body leading-[1.9] my-4">');
+
+  // Single line breaks
+  html = html.replace(/\n/g, "<br>");
+
+  // Wrap in paragraph
+  html = `<p class="text-[0.9rem] text-text-body leading-[1.9] my-4">${html}</p>`;
+
+  // Bold as section titles (standalone bold lines)
+  html = html.replace(
+    /<p([^>]*)><strong>([^<]+)<\/strong><\/p>/g,
+    '<h2 class="text-[1.3rem] lg:text-[1.5rem] font-serif text-text-dark mt-10 mb-4">$2</h2>'
+  );
+
+  // Clean up empty paragraphs
+  html = html.replace(/<p[^>]*>\s*<\/p>/g, "");
+  html = html.replace(/<p[^>]*><br><\/p>/g, "");
+
+  return html;
+}
+
+function readTime(content: string): string {
+  const words = content?.split(/\s+/).length || 0;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min`;
+}
+
+function formatDate(dateStr: string | null): string {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+}
 
 export default function BlogArticle() {
   const params = useParams();
   const slug = params.slug as string;
-  const article = articlesData[slug];
+  const [article, setArticle] = useState<BlogArticle | null>(null);
+  const [related, setRelated] = useState<RelatedPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-  if (!article) {
+  useEffect(() => {
+    fetch(`/api/blog/${slug}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Not found");
+        return res.json();
+      })
+      .then((json) => {
+        setArticle(json.data);
+        setRelated(json.related || []);
+      })
+      .catch(() => setNotFound(true))
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <main className="bg-dark text-white min-h-screen flex items-center justify-center">
+          <Loader2 size={32} className="text-accent animate-spin" />
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  if (notFound || !article) {
     return (
       <>
         <Navbar />
@@ -243,10 +160,52 @@ export default function BlogArticle() {
     );
   }
 
+  const contentHtml = markdownToHtml(article.content);
+
   return (
     <>
       <Navbar />
       <main>
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              headline: article.seo_title || article.title,
+              description: article.seo_description || article.excerpt || "",
+              image: article.cover_image || "",
+              datePublished: article.published_at,
+              author: {
+                "@type": "Organization",
+                name: "Agence HDS",
+                url: "https://agencehds.com",
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Agence HDS",
+              },
+              mainEntityOfPage: {
+                "@type": "WebPage",
+                "@id": `https://agencehds.com/blog/${article.slug}`,
+              },
+              ...(article.aeo_answer
+                ? {
+                    mainEntity: {
+                      "@type": "Question",
+                      name: article.title,
+                      acceptedAnswer: {
+                        "@type": "Answer",
+                        text: article.aeo_answer,
+                      },
+                    },
+                  }
+                : {}),
+            }),
+          }}
+        />
+
         {/* Hero */}
         <section className="bg-dark text-white relative overflow-hidden pt-32 pb-12">
           <div
@@ -268,11 +227,13 @@ export default function BlogArticle() {
                 { label: article.title },
               ]} />
               <div className="flex items-center gap-3 mb-5">
-                <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-[0.72rem] font-medium">
-                  {article.category}
-                </span>
+                {article.category && (
+                  <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-[0.72rem] font-medium">
+                    {article.category}
+                  </span>
+                )}
                 <span className="text-[0.72rem] text-text-muted">
-                  {article.date} &bull; {article.readTime} de lecture
+                  {formatDate(article.published_at)} &bull; {readTime(article.content)} de lecture
                 </span>
               </div>
               <h1 className="text-fluid-h2 leading-[1.15] tracking-[-0.02em] font-serif">
@@ -282,88 +243,86 @@ export default function BlogArticle() {
                 <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-dark text-[0.7rem] font-semibold">
                   H
                 </div>
-                <span className="text-[0.82rem] text-text-muted">{article.author}</span>
+                <span className="text-[0.82rem] text-text-muted">Agence HDS</span>
               </div>
             </motion.div>
           </div>
         </section>
 
         {/* Featured image */}
-        <section className="bg-dark text-white pb-16">
-          <div className="max-w-[800px] mx-auto px-5 lg:px-12">
-            <div className="rounded-2xl overflow-hidden">
-              <Image
-                src={article.image}
-                alt={article.title}
-                width={800}
-                height={450}
-                className="w-full h-auto object-cover"
-              />
+        {article.cover_image && (
+          <section className="bg-dark text-white pb-16">
+            <div className="max-w-[800px] mx-auto px-5 lg:px-12">
+              <div className="rounded-2xl overflow-hidden">
+                <Image
+                  src={article.cover_image}
+                  alt={article.title}
+                  width={800}
+                  height={450}
+                  className="w-full h-auto object-cover"
+                  unoptimized
+                />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Content */}
         <section className="bg-white text-text-dark">
           <div className="max-w-[700px] mx-auto px-5 py-[80px] lg:px-12">
-            <div className="space-y-6">
-              {article.content.map((block, i) => {
-                if (block.type === "heading") {
-                  return (
-                    <h2 key={i} className="text-[1.3rem] lg:text-[1.5rem] font-serif text-text-dark mt-10 mb-4">
-                      {block.text}
-                    </h2>
-                  );
-                }
-                if (block.type === "list" && block.items) {
-                  return (
-                    <ul key={i} className="space-y-2 my-6">
-                      {block.items.map((item, j) => (
-                        <li key={j} className="flex items-start gap-3 text-[0.9rem] text-text-body leading-[1.8]">
-                          <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  );
-                }
-                return (
-                  <p key={i} className="text-[0.9rem] text-text-body leading-[1.9]">
-                    {block.text}
-                  </p>
-                );
-              })}
-            </div>
+            <div
+              className="blog-content space-y-1"
+              dangerouslySetInnerHTML={{ __html: contentHtml }}
+            />
           </div>
         </section>
 
-        {/* Related articles */}
-        <section className="bg-light text-text-dark">
-          <div className="max-w-[800px] mx-auto px-5 py-[80px] lg:px-12">
-            <ScrollReveal>
-              <h3 className="text-[1.3rem] lg:text-[1.5rem] leading-[1.1] tracking-[-0.02em] mb-8">
-                <span className="font-light">Articles </span>
-                <span className="font-serif italic">similaires.</span>
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {article.related.map((rel) => (
-                  <a
-                    key={rel.slug}
-                    href={`/blog/${rel.slug}`}
-                    className="block p-5 bg-white rounded-xl border border-gray-100 hover:border-accent/20 hover:shadow-sm transition-all duration-300 group"
-                  >
-                    <span className="text-[0.7rem] text-accent font-medium uppercase tracking-wider">
-                      {rel.category}
-                    </span>
-                    <h4 className="text-[0.95rem] font-serif text-text-dark mt-2 leading-[1.3]">
-                      {rel.title}
-                    </h4>
-                  </a>
+        {/* Tags */}
+        {article.tags && article.tags.length > 0 && (
+          <section className="bg-white text-text-dark border-t border-gray-100">
+            <div className="max-w-[700px] mx-auto px-5 py-6 lg:px-12">
+              <div className="flex flex-wrap gap-2">
+                {article.tags.map((tag) => (
+                  <span key={tag} className="px-3 py-1 rounded-full bg-gray-100 text-text-body text-[0.75rem] font-medium">
+                    {tag}
+                  </span>
                 ))}
               </div>
-            </ScrollReveal>
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
+
+        {/* Related articles */}
+        {related.length > 0 && (
+          <section className="bg-light text-text-dark">
+            <div className="max-w-[800px] mx-auto px-5 py-[80px] lg:px-12">
+              <ScrollReveal>
+                <h3 className="text-[1.3rem] lg:text-[1.5rem] leading-[1.1] tracking-[-0.02em] mb-8">
+                  <span className="font-light">Articles </span>
+                  <span className="font-serif italic">similaires.</span>
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {related.map((rel) => (
+                    <a
+                      key={rel.id}
+                      href={`/blog/${rel.slug}`}
+                      className="block p-5 bg-white rounded-xl border border-gray-100 hover:border-accent/20 hover:shadow-sm transition-all duration-300 group"
+                    >
+                      {rel.category && (
+                        <span className="text-[0.7rem] text-accent font-medium uppercase tracking-wider">
+                          {rel.category}
+                        </span>
+                      )}
+                      <h4 className="text-[0.95rem] font-serif text-text-dark mt-2 leading-[1.3]">
+                        {rel.title}
+                      </h4>
+                    </a>
+                  ))}
+                </div>
+              </ScrollReveal>
+            </div>
+          </section>
+        )}
 
         {/* CTA */}
         <section className="bg-accent text-white">
