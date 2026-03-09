@@ -56,7 +56,6 @@ const navigation: NavGroup[] = [
   {
     title: "Intelligence Artificielle",
     items: [
-      { label: "Blog IA", href: "/admin/ia/blog", icon: <Sparkles size={18} /> },
       { label: "Outils IA", href: "/admin/ia/outils", icon: <Wrench size={18} /> },
     ],
   },

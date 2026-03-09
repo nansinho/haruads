@@ -136,6 +136,54 @@ export const blogService = {
     const db = getClient();
     return db.from("blog_posts").delete().eq("id", id);
   },
+
+  async listPublished() {
+    const db = getClient();
+    return db
+      .from("blog_posts")
+      .select("id, title, slug, excerpt, cover_image, category, tags, published_at, views_count, content")
+      .eq("status", "published")
+      .order("published_at", { ascending: false });
+  },
+
+  async getBySlug(slug: string) {
+    const db = getClient();
+    return db.from("blog_posts").select("*").eq("slug", slug).eq("status", "published").single();
+  },
+
+  async getDistinctCategories() {
+    const db = getClient();
+    const { data, error } = await db
+      .from("blog_posts")
+      .select("category")
+      .not("category", "is", null)
+      .neq("category", "");
+    if (error) throw error;
+    const categories = [...new Set((data || []).map((d: { category: string }) => d.category).filter(Boolean))];
+    return categories as string[];
+  },
+
+  async getDistinctTags() {
+    const db = getClient();
+    const { data, error } = await db
+      .from("blog_posts")
+      .select("tags");
+    if (error) throw error;
+    const allTags = (data || []).flatMap((d: { tags: string[] }) => d.tags || []);
+    return [...new Set(allTags)] as string[];
+  },
+
+  async getRelatedPosts(category: string, excludeSlug: string, limit = 3) {
+    const db = getClient();
+    return db
+      .from("blog_posts")
+      .select("id, title, slug, excerpt, cover_image, category, published_at")
+      .eq("status", "published")
+      .eq("category", category)
+      .neq("slug", excludeSlug)
+      .order("published_at", { ascending: false })
+      .limit(limit);
+  },
 };
 
 // --- Projects ---

@@ -1,55 +1,49 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Tag } from "lucide-react";
+import { Tag, Loader2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 
-const articles = [
-  {
-    slug: "pourquoi-nextjs-en-2024",
-    title: "Pourquoi choisir Next.js en 2024 ?",
-    excerpt:
-      "Next.js s\u2019est imposé comme le framework React de référence. Découvrez pourquoi nous l\u2019utilisons pour tous nos projets web.",
-    category: "Développement",
-    date: "15 Jan 2024",
-    readTime: "5 min",
-    image: "/images/projects/project-dashboard.jpg",
-  },
-  {
-    slug: "ux-design-conversions",
-    title: "Comment le design UX booste vos conversions",
-    excerpt:
-      "Un bon design ne se limite pas à l\u2019esthétique. Découvrez comment l\u2019UX peut transformer votre taux de conversion.",
-    category: "Design",
-    date: "8 Jan 2024",
-    readTime: "4 min",
-    image: "/images/projects/project-landing.jpg",
-  },
-  {
-    slug: "seo-erreurs-courantes",
-    title: "5 erreurs SEO qui plombent votre visibilité",
-    excerpt:
-      "Le référencement naturel est essentiel pour votre visibilité. Voici les erreurs les plus courantes et comment les éviter.",
-    category: "SEO",
-    date: "2 Jan 2024",
-    readTime: "6 min",
-    image: "/images/projects/neuralia-project.webp",
-  },
-  {
-    slug: "ecommerce-tendances",
-    title: "E-commerce : les tendances à suivre",
-    excerpt:
-      "Le e-commerce évolue rapidement. Paiement mobile, personnalisation IA, commerce social : ce qui va changer.",
-    category: "E-Commerce",
-    date: "20 Dec 2023",
-    readTime: "7 min",
-    image: "/images/projects/reservation-system.webp",
-  },
-];
+interface Article {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  cover_image: string | null;
+  category: string | null;
+  tags: string[];
+  published_at: string | null;
+  views_count: number;
+  content: string;
+}
+
+function readTime(content: string): string {
+  const words = content?.split(/\s+/).length || 0;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min`;
+}
+
+function formatDate(dateStr: string | null): string {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
+}
 
 export default function BlogPage() {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/blog")
+      .then((res) => res.json())
+      .then((json) => setArticles(json.data || []))
+      .catch(() => setArticles([]))
+      .finally(() => setLoading(false));
+  }, []);
+
   const featured = articles[0];
   const others = articles.slice(1);
 
@@ -87,108 +81,142 @@ export default function BlogPage() {
           </div>
         </section>
 
-        {/* Featured article */}
-        <section className="bg-white text-text-dark">
-          <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
-            <ScrollReveal>
-              <a
-                href={`/blog/${featured.slug}`}
-                className="block group"
-              >
-                <div className="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 items-center">
-                  <div className="rounded-2xl overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={featured.image}
-                      alt={featured.title}
-                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent text-white text-[0.72rem] font-medium">
-                        <Tag className="w-3 h-3" />
-                        {featured.category}
-                      </span>
-                      <span className="text-[0.72rem] text-text-body">
-                        {featured.date} &bull; {featured.readTime} de lecture
-                      </span>
-                    </div>
-                    <h2 className="text-[1.4rem] lg:text-[2rem] font-semibold text-text-dark leading-[1.2]">
-                      {featured.title}
-                    </h2>
-                    <p className="text-[0.9rem] text-text-body leading-[1.7] mt-4">
-                      {featured.excerpt}
-                    </p>
-                    <span className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-full bg-accent text-white text-[0.82rem] font-medium group-hover:shadow-accent/20 transition-all duration-300">
-                      Lire l&apos;article
-                      <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-white fill-none stroke-2">
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                        <polyline points="12 5 19 12 12 19" />
-                      </svg>
-                    </span>
+        {loading ? (
+          <section className="bg-white text-text-dark">
+            <div className="flex justify-center py-20">
+              <Loader2 size={32} className="text-accent animate-spin" />
+            </div>
+          </section>
+        ) : articles.length === 0 ? (
+          <section className="bg-white text-text-dark">
+            <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12 text-center">
+              <p className="text-text-body text-lg">Aucun article publié pour le moment.</p>
+              <p className="text-text-body/60 mt-2">Revenez bientôt pour découvrir nos actualités !</p>
+            </div>
+          </section>
+        ) : (
+          <>
+            {/* Featured article */}
+            {featured && (
+              <section className="bg-white text-text-dark">
+                <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
+                  <ScrollReveal>
+                    <a href={`/blog/${featured.slug}`} className="block group">
+                      <div className="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 items-center">
+                        <div className="rounded-2xl overflow-hidden bg-gray-100 aspect-[16/10]">
+                          {featured.cover_image ? (
+                            /* eslint-disable-next-line @next/next/no-img-element */
+                            <img
+                              src={featured.cover_image}
+                              alt={featured.title}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center">
+                              <span className="text-accent/40 text-6xl font-serif italic">{featured.title[0]}</span>
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-3 mb-4">
+                            {featured.category && (
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent text-white text-[0.72rem] font-medium">
+                                <Tag className="w-3 h-3" />
+                                {featured.category}
+                              </span>
+                            )}
+                            <span className="text-[0.72rem] text-text-body">
+                              {formatDate(featured.published_at)} &bull; {readTime(featured.content)} de lecture
+                            </span>
+                          </div>
+                          <h2 className="text-[1.4rem] lg:text-[2rem] font-semibold text-text-dark leading-[1.2]">
+                            {featured.title}
+                          </h2>
+                          <p className="text-[0.9rem] text-text-body leading-[1.7] mt-4">
+                            {featured.excerpt}
+                          </p>
+                          <span className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-full bg-accent text-white text-[0.82rem] font-medium group-hover:shadow-accent/20 transition-all duration-300">
+                            Lire l&apos;article
+                            <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-white fill-none stroke-2">
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                              <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </a>
+                  </ScrollReveal>
+                </div>
+              </section>
+            )}
+
+            {/* Other articles */}
+            {others.length > 0 && (
+              <section className="bg-light text-text-dark">
+                <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
+                  <ScrollReveal>
+                    <h3 className="text-[1.3rem] lg:text-[1.6rem] leading-[1.1] tracking-[-0.02em] mb-10">
+                      <span className="font-light">Tous les </span>
+                      <span className="font-serif italic">articles.</span>
+                    </h3>
+                  </ScrollReveal>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {others.map((article, i) => (
+                      <ScrollReveal key={article.id} delay={i * 80}>
+                        <a
+                          href={`/blog/${article.slug}`}
+                          className="flex flex-col h-full group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300"
+                        >
+                          <div className="aspect-[16/10] relative overflow-hidden shrink-0 bg-gray-100">
+                            {article.cover_image ? (
+                              /* eslint-disable-next-line @next/next/no-img-element */
+                              <img
+                                src={article.cover_image}
+                                alt={article.title}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center">
+                                <span className="text-accent/40 text-4xl font-serif italic">{article.title[0]}</span>
+                              </div>
+                            )}
+                            {article.category && (
+                              <div className="absolute top-3 left-3">
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent text-white text-[0.65rem] font-medium shadow-sm">
+                                  <Tag className="w-3 h-3" />
+                                  {article.category}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex flex-col flex-1 p-5 lg:p-6">
+                            <div className="text-[0.7rem] text-text-body mb-3">
+                              {formatDate(article.published_at)} &bull; {readTime(article.content)} de lecture
+                            </div>
+                            <h4 className="text-[1rem] font-semibold text-text-dark leading-[1.3]">
+                              {article.title}
+                            </h4>
+                            <p className="text-[0.8rem] text-text-body leading-[1.7] mt-2 line-clamp-2">
+                              {article.excerpt}
+                            </p>
+                            <span className="inline-flex items-center gap-2 text-[0.78rem] text-accent font-medium mt-auto pt-4 group-hover:gap-3 transition-all duration-300">
+                              Lire la suite
+                              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-accent fill-none stroke-2">
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                                <polyline points="12 5 19 12 12 19" />
+                              </svg>
+                            </span>
+                          </div>
+                        </a>
+                      </ScrollReveal>
+                    ))}
                   </div>
                 </div>
-              </a>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* Other articles */}
-        <section className="bg-light text-text-dark">
-          <div className="max-w-[1400px] mx-auto px-5 py-[80px] lg:px-12">
-            <ScrollReveal>
-              <h3 className="text-[1.3rem] lg:text-[1.6rem] leading-[1.1] tracking-[-0.02em] mb-10">
-                <span className="font-light">Tous les </span>
-                <span className="font-serif italic">articles.</span>
-              </h3>
-            </ScrollReveal>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {others.map((article, i) => (
-                <ScrollReveal key={article.slug} delay={i * 80}>
-                  <a
-                    href={`/blog/${article.slug}`}
-                    className="flex flex-col h-full group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300"
-                  >
-                    <div className="aspect-[16/10] relative overflow-hidden shrink-0">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={article.image}
-                        alt={article.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute top-3 left-3">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent text-white text-[0.65rem] font-medium shadow-sm">
-                          <Tag className="w-3 h-3" />
-                          {article.category}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col flex-1 p-5 lg:p-6">
-                      <div className="text-[0.7rem] text-text-body mb-3">
-                        {article.date} &bull; {article.readTime} de lecture
-                      </div>
-                      <h4 className="text-[1rem] font-semibold text-text-dark leading-[1.3]">
-                        {article.title}
-                      </h4>
-                      <p className="text-[0.8rem] text-text-body leading-[1.7] mt-2 line-clamp-2">
-                        {article.excerpt}
-                      </p>
-                      <span className="inline-flex items-center gap-2 text-[0.78rem] text-accent font-medium mt-auto pt-4 group-hover:gap-3 transition-all duration-300">
-                        Lire la suite
-                        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-accent fill-none stroke-2">
-                          <line x1="5" y1="12" x2="19" y2="12" />
-                          <polyline points="12 5 19 12 12 19" />
-                        </svg>
-                      </span>
-                    </div>
-                  </a>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
+              </section>
+            )}
+          </>
+        )}
 
         {/* Newsletter CTA */}
         <section className="bg-accent text-white">
