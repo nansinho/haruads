@@ -30,7 +30,6 @@ import PromoBanner from "./PromoBanner";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { servicesData } from "@/data/services";
 import { plans } from "@/data/pricing";
-import { articlesData } from "@/data/articles";
 
 /* ─── Types ─── */
 
@@ -88,15 +87,6 @@ const tarifsChildren: NavChild[] = [
   },
 ];
 
-const blogChildren: NavChild[] = Object.entries(articlesData)
-  .slice(0, 4)
-  .map(([slug, article]) => ({
-    label: article.title,
-    href: `/blog/${slug}`,
-    description: `${article.category} · ${article.readTime}`,
-    icon: BookOpen,
-  }));
-
 const navLinks: NavLink[] = [
   { label: "Accueil", href: "/" },
   {
@@ -129,7 +119,7 @@ const navLinks: NavLink[] = [
     label: "Blog",
     href: "/blog",
     megaType: "blog",
-    children: blogChildren,
+    children: [],
   },
 ];
 
@@ -287,52 +277,79 @@ function TarifsMegaContent({
 }
 
 function BlogMegaContent({
-  children,
   onClose,
 }: {
   children: NavChild[];
   onClose: () => void;
 }) {
-  const categories = ["Développement", "Design", "SEO", "E-Commerce"];
+  const [blogArticles, setBlogArticles] = useState<{ title: string; slug: string; category: string | null; content: string }[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (loaded) return;
+    fetch("/api/blog")
+      .then((res) => res.json())
+      .then((json) => {
+        const articles = (json.data || []).slice(0, 4);
+        setBlogArticles(articles);
+        const cats = [...new Set(articles.map((a: { category: string | null }) => a.category).filter(Boolean))] as string[];
+        setCategories(cats);
+        setLoaded(true);
+      })
+      .catch(() => setLoaded(true));
+  }, [loaded]);
 
   return (
     <div className="p-6 w-[520px]">
-      <div className="flex flex-wrap gap-1.5 mb-4">
-        {categories.map((cat) => (
-          <Link
-            key={cat}
-            href="/blog"
-            onClick={onClose}
-            className="text-[0.68rem] font-medium px-2.5 py-1 rounded-full border border-white/[0.08] text-text-muted/70 hover:border-accent/40 hover:text-accent transition-all duration-200"
-          >
-            <Tag className="w-2.5 h-2.5 inline mr-1" />
-            {cat}
-          </Link>
-        ))}
-      </div>
-      <div className="flex flex-col gap-0.5">
-        {children.map((child) => (
-          <motion.div key={child.href} variants={megaItemVariants}>
+      {categories.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {categories.map((cat) => (
             <Link
-              href={child.href}
+              key={cat}
+              href="/blog"
               onClick={onClose}
-              className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/[0.05] transition-colors duration-200 group/item"
+              className="text-[0.68rem] font-medium px-2.5 py-1 rounded-full border border-white/[0.08] text-text-muted/70 hover:border-accent/40 hover:text-accent transition-all duration-200"
             >
-              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
-                <BookOpen className="w-3.5 h-3.5 text-accent" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-[0.78rem] font-medium text-white/90 group-hover/item:text-white transition-colors line-clamp-1">
-                  {child.label}
-                </p>
-                <p className="text-[0.68rem] text-text-muted/60 flex items-center gap-1.5 mt-0.5">
-                  <Clock className="w-2.5 h-2.5" />
-                  {child.description}
-                </p>
-              </div>
+              <Tag className="w-2.5 h-2.5 inline mr-1" />
+              {cat}
             </Link>
-          </motion.div>
-        ))}
+          ))}
+        </div>
+      )}
+      <div className="flex flex-col gap-0.5">
+        {blogArticles.length > 0 ? (
+          blogArticles.map((article) => {
+            const words = article.content?.split(/\s+/).length || 0;
+            const mins = Math.max(1, Math.ceil(words / 200));
+            return (
+              <motion.div key={article.slug} variants={megaItemVariants}>
+                <Link
+                  href={`/blog/${article.slug}`}
+                  onClick={onClose}
+                  className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/[0.05] transition-colors duration-200 group/item"
+                >
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+                    <BookOpen className="w-3.5 h-3.5 text-accent" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[0.78rem] font-medium text-white/90 group-hover/item:text-white transition-colors line-clamp-1">
+                      {article.title}
+                    </p>
+                    <p className="text-[0.68rem] text-text-muted/60 flex items-center gap-1.5 mt-0.5">
+                      <Clock className="w-2.5 h-2.5" />
+                      {article.category || "Blog"} · {mins} min
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })
+        ) : (
+          <p className="text-[0.78rem] text-text-muted/60 py-4 text-center">
+            {loaded ? "Aucun article publié" : "Chargement..."}
+          </p>
+        )}
       </div>
       <motion.div
         variants={megaItemVariants}
