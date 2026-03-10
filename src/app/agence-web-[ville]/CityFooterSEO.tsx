@@ -1,6 +1,6 @@
 import Link from "next/link";
-import type { City } from "@/lib/cities";
-import { cities } from "@/lib/cities";
+import type { CityData } from "@/lib/cities";
+import { cityLinks } from "@/lib/cities";
 
 function getNearbyCities(currentSlug: string): string[] {
   const nearbyMap: Record<string, string[]> = {
@@ -13,10 +13,10 @@ function getNearbyCities(currentSlug: string): string[] {
     "salon-de-provence": ["Aix-en-Provence", "Martigues", "Vitrolles", "Gardanne"],
     "la-ciotat": ["Aubagne", "Marseille", "Gardanne", "Aix-en-Provence"],
   };
-  return nearbyMap[currentSlug] || cities.filter((c) => c.slug !== currentSlug).slice(0, 4).map((c) => c.name);
+  return nearbyMap[currentSlug] || cityLinks.filter((c) => c.slug !== currentSlug).slice(0, 4).map((c) => c.name);
 }
 
-export default function CityFooterSEO({ city }: { city: City }) {
+export default function CityFooterSEO({ city }: { city: CityData }) {
   const nearby = getNearbyCities(city.slug);
 
   return (

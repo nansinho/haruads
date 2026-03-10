@@ -1,0 +1,12 @@
+-- Add SEO page content fields to cities table
+ALTER TABLE public.cities
+  ADD COLUMN IF NOT EXISTS postal_code TEXT,
+  ADD COLUMN IF NOT EXISTS lat DOUBLE PRECISION,
+  ADD COLUMN IF NOT EXISTS lng DOUBLE PRECISION,
+  ADD COLUMN IF NOT EXISTS hero_title TEXT,
+  ADD COLUMN IF NOT EXISTS hero_subtitle TEXT,
+  ADD COLUMN IF NOT EXISTS intro_paragraph TEXT,
+  ADD COLUMN IF NOT EXISTS local_context TEXT,
+  ADD COLUMN IF NOT EXISTS faq_answer TEXT,
+  ADD COLUMN IF NOT EXISTS meta_title TEXT,
+  ADD COLUMN IF NOT EXISTS meta_description TEXT;

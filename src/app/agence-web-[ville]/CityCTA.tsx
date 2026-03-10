@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
-import type { City } from "@/lib/cities";
+import type { CityData } from "@/lib/cities";
 
-export default function CityCTA({ city }: { city: City }) {
+export default function CityCTA({ city }: { city: CityData }) {
   return (
     <section className="bg-accent text-white relative overflow-hidden" id="contact">
       <div className="max-w-[1400px] mx-auto px-5 py-[120px] lg:px-12">

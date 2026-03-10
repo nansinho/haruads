@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
-import type { City } from "@/lib/cities";
+import type { CityData } from "@/lib/cities";
 
 const baseFaqs = [
   {
@@ -25,7 +25,7 @@ const baseFaqs = [
   },
 ];
 
-export default function CityFAQ({ city }: { city: City }) {
+export default function CityFAQ({ city }: { city: CityData }) {
   const [openIndex, setOpenIndex] = useState(0);
 
   const faqs = [

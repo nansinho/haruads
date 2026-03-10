@@ -181,6 +181,16 @@ export interface City {
   region: string | null;
   population: number | null;
   description: string | null;
+  postal_code: string | null;
+  lat: number | null;
+  lng: number | null;
+  hero_title: string | null;
+  hero_subtitle: string | null;
+  intro_paragraph: string | null;
+  local_context: string | null;
+  faq_answer: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
   seo_title: string | null;
   seo_description: string | null;
   seo_content: string | null;
