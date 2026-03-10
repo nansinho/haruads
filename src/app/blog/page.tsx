@@ -38,9 +38,18 @@ export default function BlogPage() {
 
   useEffect(() => {
     fetch("/api/blog")
-      .then((res) => res.json())
-      .then((json) => setArticles(json.data || []))
-      .catch(() => setArticles([]))
+      .then((res) => {
+        if (!res.ok) console.error(`[Blog] API returned ${res.status}`);
+        return res.json();
+      })
+      .then((json) => {
+        if (json.error) console.error("[Blog] API error:", json.error);
+        setArticles(json.data || []);
+      })
+      .catch((err) => {
+        console.error("[Blog] Fetch failed:", err);
+        setArticles([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 
