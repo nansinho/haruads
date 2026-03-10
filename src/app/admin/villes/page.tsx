@@ -35,6 +35,16 @@ const emptyForm = {
   region: "",
   population: 0,
   description: "",
+  postal_code: "",
+  lat: 0,
+  lng: 0,
+  hero_title: "",
+  hero_subtitle: "",
+  intro_paragraph: "",
+  local_context: "",
+  faq_answer: "",
+  meta_title: "",
+  meta_description: "",
   seo_title: "",
   seo_description: "",
   seo_keywords: [] as string[],
@@ -80,6 +90,16 @@ export default function VillesAdminPage() {
       region: city.region || "",
       population: city.population || 0,
       description: city.description || "",
+      postal_code: city.postal_code || "",
+      lat: city.lat || 0,
+      lng: city.lng || 0,
+      hero_title: city.hero_title || "",
+      hero_subtitle: city.hero_subtitle || "",
+      intro_paragraph: city.intro_paragraph || "",
+      local_context: city.local_context || "",
+      faq_answer: city.faq_answer || "",
+      meta_title: city.meta_title || "",
+      meta_description: city.meta_description || "",
       seo_title: city.seo_title || "",
       seo_description: city.seo_description || "",
       seo_keywords: [],
@@ -358,12 +378,41 @@ export default function VillesAdminPage() {
             <FormField label="Slug" name="slug" value={form.slug} onChange={(v) => setForm({ ...form, slug: v })} placeholder="nom-de-la-ville" />
             <p className="text-xs text-admin-text-muted mt-1">Auto-généré depuis le nom</p>
           </div>
-          <FormField label="Département" name="department" value={form.department} onChange={(v) => setForm({ ...form, department: v })} placeholder="Ex: Rhône" />
-          <FormField label="Région" name="region" value={form.region} onChange={(v) => setForm({ ...form, region: v })} placeholder="Ex: Auvergne-Rhône-Alpes" />
+          <FormField label="Département" name="department" value={form.department} onChange={(v) => setForm({ ...form, department: v })} placeholder="Ex: Bouches-du-Rhône" />
+          <FormField label="Région" name="region" value={form.region} onChange={(v) => setForm({ ...form, region: v })} placeholder="Ex: PACA" />
+          <FormField label="Code postal" name="postal_code" value={form.postal_code} onChange={(v) => setForm({ ...form, postal_code: v })} placeholder="Ex: 13120" />
           <FormField label="Population" name="population" type="number" value={form.population} onChange={(v) => setForm({ ...form, population: parseInt(v) || 0 })} placeholder="0" />
-          <div />
+          <FormField label="Latitude" name="lat" type="number" value={form.lat} onChange={(v) => setForm({ ...form, lat: parseFloat(v) || 0 })} placeholder="43.4558" />
+          <FormField label="Longitude" name="lng" type="number" value={form.lng} onChange={(v) => setForm({ ...form, lng: parseFloat(v) || 0 })} placeholder="5.4722" />
           <div className="sm:col-span-2">
             <FormField label="Description" name="description" type="textarea" value={form.description} onChange={(v) => setForm({ ...form, description: v })} placeholder="Description de la ville..." rows={3} />
+          </div>
+
+          {/* Page SEO locale */}
+          <div className="sm:col-span-2 border-t border-admin-card-border pt-4 mt-2">
+            <p className="text-xs font-mono font-semibold text-accent uppercase tracking-wider mb-4">Page SEO locale (/agence-web-slug)</p>
+          </div>
+          <div className="sm:col-span-2">
+            <FormField label="Hero Title" name="hero_title" value={form.hero_title} onChange={(v) => setForm({ ...form, hero_title: v })} placeholder="Nous créons votre présence digitale à [Ville]." />
+          </div>
+          <div className="sm:col-span-2">
+            <FormField label="Hero Subtitle" name="hero_subtitle" value={form.hero_subtitle} onChange={(v) => setForm({ ...form, hero_subtitle: v })} placeholder="Design UI/UX, développement web et solutions..." />
+          </div>
+          <div className="sm:col-span-2">
+            <FormField label="Paragraphe d'introduction" name="intro_paragraph" type="textarea" value={form.intro_paragraph} onChange={(v) => setForm({ ...form, intro_paragraph: v })} placeholder="Texte unique sur l'agence et la ville..." rows={4} />
+          </div>
+          <div className="sm:col-span-2">
+            <FormField label="Contexte local" name="local_context" type="textarea" value={form.local_context} onChange={(v) => setForm({ ...form, local_context: v })} placeholder="2-3 phrases sur le tissu économique local..." rows={3} />
+          </div>
+          <div className="sm:col-span-2">
+            <FormField label="Réponse FAQ locale" name="faq_answer" type="textarea" value={form.faq_answer} onChange={(v) => setForm({ ...form, faq_answer: v })} placeholder="Oui, l'Agence HDS intervient à [Ville]..." rows={3} />
+          </div>
+          <FormField label="Meta Title" name="meta_title" value={form.meta_title} onChange={(v) => setForm({ ...form, meta_title: v })} placeholder="Agence Web [Ville] — Création Site Internet | Agence HDS" />
+          <FormField label="Meta Description" name="meta_description" value={form.meta_description} onChange={(v) => setForm({ ...form, meta_description: v })} placeholder="Agence web à [Ville]. Création de sites internet..." />
+
+          {/* SEO classique */}
+          <div className="sm:col-span-2 border-t border-admin-card-border pt-4 mt-2">
+            <p className="text-xs font-mono font-semibold text-admin-text-muted uppercase tracking-wider mb-4">SEO classique</p>
           </div>
           <FormField label="Titre SEO" name="seo_title" value={form.seo_title} onChange={(v) => setForm({ ...form, seo_title: v })} placeholder="Titre pour les moteurs de recherche" />
           <FormField label="Description SEO" name="seo_description" value={form.seo_description} onChange={(v) => setForm({ ...form, seo_description: v })} placeholder="Description meta" />

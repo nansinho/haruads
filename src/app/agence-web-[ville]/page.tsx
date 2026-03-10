@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
-import { getCityBySlug, getAllCitySlugs } from "@/lib/cities";
+import { fetchCityBySlug, fetchAllCitySlugs } from "@/lib/cities";
 import { seoConfig } from "@/lib/seo-config";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,12 +21,13 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  return getAllCitySlugs().map((slug) => ({ ville: slug }));
+  const slugs = await fetchAllCitySlugs();
+  return slugs.map((slug) => ({ ville: slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { ville } = await params;
-  const city = getCityBySlug(ville);
+  const city = await fetchCityBySlug(ville);
   if (!city) return {};
 
   const url = `${seoConfig.siteUrl}/agence-web-${city.slug}`;
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CityPage({ params }: Props) {
   const { ville } = await params;
-  const city = getCityBySlug(ville);
+  const city = await fetchCityBySlug(ville);
   if (!city) notFound();
 
   return (

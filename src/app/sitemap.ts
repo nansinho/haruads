@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { servicesSlugs } from "@/data/services";
 import { supabase } from "@/lib/supabase";
-import { getAllCitySlugs } from "@/lib/cities";
+import { fetchAllCitySlugs } from "@/lib/cities";
 
 import { seoConfig } from "@/lib/seo-config";
 
@@ -122,7 +122,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  const cityPages: MetadataRoute.Sitemap = getAllCitySlugs().map((slug) => ({
+  // Fetch active city slugs from DB
+  const citySlugs = await fetchAllCitySlugs();
+  const cityPages: MetadataRoute.Sitemap = citySlugs.map((slug) => ({
     url: `${siteUrl}/agence-web-${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,

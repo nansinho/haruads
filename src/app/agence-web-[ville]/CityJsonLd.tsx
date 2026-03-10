@@ -1,6 +1,6 @@
-import type { City } from "@/lib/cities";
+import type { CityData } from "@/lib/cities";
 
-export default function CityJsonLd({ city }: { city: City }) {
+export default function CityJsonLd({ city }: { city: CityData }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",

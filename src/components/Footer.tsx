@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Logo from "./Logo";
+import { cityLinks } from "@/lib/cities";
 
 const links = {
   navigation: [
@@ -54,7 +55,7 @@ export default function Footer() {
 
       {/* Main footer */}
       <div className="max-w-[1400px] mx-auto px-5 pt-10 pb-8 lg:px-12 relative z-2">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1fr] gap-10 lg:gap-12 mb-12">
           <div>
             <Logo className="h-8 w-auto mb-4" />
             <p className="text-[0.8rem] text-text-muted leading-[1.7] max-w-[260px]">
@@ -107,6 +108,16 @@ export default function Footer() {
               {links.contact.map((link) => (
                 <li key={link.label} className="mb-2.5">
                   <a href={link.href} className="text-[0.8rem] text-text-muted hover:text-accent transition-colors duration-300">{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-[0.8rem] font-medium mb-4 text-text-muted uppercase tracking-wider">Nos villes</h3>
+            <ul className="list-none">
+              {cityLinks.map((city) => (
+                <li key={city.slug} className="mb-2.5">
+                  <Link href={`/agence-web-${city.slug}`} className="text-[0.8rem] text-text-muted hover:text-accent transition-colors duration-300">{city.name}</Link>
                 </li>
               ))}
             </ul>

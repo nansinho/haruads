@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
 import CountUp from "@/components/CountUp";
 import TypingQuote from "@/components/TypingQuote";
-import type { City } from "@/lib/cities";
+import type { CityData } from "@/lib/cities";
 
 const stats = [
   { num: "50+", label: "Projets réalisés" },
@@ -15,7 +15,7 @@ const stats = [
   { num: "100%", label: "Satisfaction" },
 ];
 
-export default function CityAbout({ city }: { city: City }) {
+export default function CityAbout({ city }: { city: CityData }) {
   const [quoteDone, setQuoteDone] = useState(false);
 
   return (

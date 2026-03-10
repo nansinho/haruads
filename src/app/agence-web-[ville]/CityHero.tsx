@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import type { City } from "@/lib/cities";
+import type { CityData } from "@/lib/cities";
 import HeroCarousel from "@/components/HeroCarousel";
 
 const ease: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
@@ -30,7 +30,7 @@ function splitHeroTitle(title: string) {
   return { line1, line2, accent: lastWord + "." };
 }
 
-export default function CityHero({ city }: { city: City }) {
+export default function CityHero({ city }: { city: CityData }) {
   const sectionRef = useRef<HTMLElement>(null);
   const [isMobile, setIsMobile] = useState(true);
 
