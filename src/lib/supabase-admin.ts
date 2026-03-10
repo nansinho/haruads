@@ -145,8 +145,8 @@ export const blogService = {
       .from("blog_posts")
       .select("id, title, slug, excerpt, cover_image, category, tags, published_at, views_count, content")
       .eq("status", "published")
-      .lte("published_at", new Date().toISOString())
-      .order("published_at", { ascending: false });
+      .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
+      .order("published_at", { ascending: false, nullsFirst: false });
   },
 
   async getBySlug(slug: string) {
@@ -156,7 +156,7 @@ export const blogService = {
       .select("*")
       .eq("slug", slug)
       .eq("status", "published")
-      .lte("published_at", new Date().toISOString())
+      .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
       .single();
   },
 
@@ -188,10 +188,10 @@ export const blogService = {
       .from("blog_posts")
       .select("id, title, slug, excerpt, cover_image, category, published_at")
       .eq("status", "published")
-      .lte("published_at", new Date().toISOString())
+      .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
       .eq("category", category)
       .neq("slug", excludeSlug)
-      .order("published_at", { ascending: false })
+      .order("published_at", { ascending: false, nullsFirst: false })
       .limit(limit);
   },
 };
