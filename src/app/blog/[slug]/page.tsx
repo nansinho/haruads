@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useParams } from "next/navigation";
@@ -152,7 +152,6 @@ function getAvatarColor(name: string): string {
 export default function BlogArticle() {
   const params = useParams();
   const slug = params.slug as string;
-  const contentRef = useRef<HTMLElement>(null);
 
   const [article, setArticle] = useState<BlogArticle | null>(null);
   const [related, setRelated] = useState<RelatedPost[]>([]);
@@ -174,8 +173,8 @@ export default function BlogArticle() {
   // Share
   const [copied, setCopied] = useState(false);
 
-  // Reading progress
-  const { scrollYProgress } = useScroll({ target: contentRef, offset: ["start start", "end end"] });
+  // Reading progress — track full page scroll (no target ref needed)
+  const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
   // Fetch article
@@ -312,7 +311,7 @@ export default function BlogArticle() {
         style={{ scaleX }}
       />
 
-      <main ref={contentRef}>
+      <main>
         {/* JSON-LD */}
         <script
           type="application/ld+json"
