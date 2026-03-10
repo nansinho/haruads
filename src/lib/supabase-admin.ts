@@ -141,23 +141,33 @@ export const blogService = {
 
   async listPublished() {
     const db = getClient();
-    return db
+    const { data, error } = await db
       .from("blog_posts")
       .select("id, title, slug, excerpt, cover_image, category, tags, published_at, views_count, content")
       .eq("status", "published")
-      .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
       .order("published_at", { ascending: false, nullsFirst: false });
+    if (error) return { data: null, error };
+    const now = new Date().toISOString();
+    return {
+      data: (data || []).filter(a => !a.published_at || a.published_at <= now),
+      error: null,
+    };
   },
 
   async getBySlug(slug: string) {
     const db = getClient();
-    return db
+    const { data, error } = await db
       .from("blog_posts")
       .select("*")
       .eq("slug", slug)
       .eq("status", "published")
-      .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
       .single();
+    if (error || !data) return { data, error };
+    const now = new Date().toISOString();
+    if (data.published_at && data.published_at > now) {
+      return { data: null, error: { message: "Article pas encore publié" } };
+    }
+    return { data, error: null };
   },
 
   async getDistinctCategories() {
@@ -184,15 +194,19 @@ export const blogService = {
 
   async getRelatedPosts(category: string, excludeSlug: string, limit = 3) {
     const db = getClient();
-    return db
+    const { data, error } = await db
       .from("blog_posts")
       .select("id, title, slug, excerpt, cover_image, category, published_at")
       .eq("status", "published")
-      .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
       .eq("category", category)
       .neq("slug", excludeSlug)
-      .order("published_at", { ascending: false, nullsFirst: false })
-      .limit(limit);
+      .order("published_at", { ascending: false, nullsFirst: false });
+    if (error) return { data: null, error };
+    const now = new Date().toISOString();
+    return {
+      data: (data || []).filter(a => !a.published_at || a.published_at <= now).slice(0, limit),
+      error: null,
+    };
   },
 };
 
