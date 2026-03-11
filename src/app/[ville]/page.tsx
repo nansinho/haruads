@@ -18,13 +18,23 @@ const Projects = nextDynamic(() => import("@/components/Projects"));
 
 export const dynamic = "force-dynamic";
 
+const ROUTE_PREFIX = "agence-web-";
+
+/** Extract city slug from route param (e.g. "agence-web-gardanne" → "gardanne") */
+function extractSlug(ville: string): string | null {
+  if (!ville.startsWith(ROUTE_PREFIX)) return null;
+  return ville.slice(ROUTE_PREFIX.length) || null;
+}
+
 type Props = {
   params: Promise<{ ville: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { ville } = await params;
-  const city = await fetchCityBySlug(ville);
+  const slug = extractSlug(ville);
+  if (!slug) return {};
+  const city = await fetchCityBySlug(slug);
   if (!city) return {};
 
   const url = `${seoConfig.siteUrl}/agence-web-${city.slug}`;
@@ -53,7 +63,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CityPage({ params }: Props) {
   const { ville } = await params;
-  const city = await fetchCityBySlug(ville);
+  const slug = extractSlug(ville);
+  if (!slug) notFound();
+  const city = await fetchCityBySlug(slug);
   if (!city) notFound();
 
   return (
