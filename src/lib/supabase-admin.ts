@@ -250,6 +250,21 @@ export const blogLikesService = {
       return true; // liked
     }
   },
+
+  async getCountsByPostIds(postIds: string[]): Promise<Record<string, number>> {
+    if (postIds.length === 0) return {};
+    const db = getClient();
+    const { data, error } = await db
+      .from("blog_likes")
+      .select("post_id")
+      .in("post_id", postIds);
+    if (error) throw error;
+    const counts: Record<string, number> = {};
+    for (const row of data || []) {
+      counts[row.post_id] = (counts[row.post_id] || 0) + 1;
+    }
+    return counts;
+  },
 };
 
 // --- Blog Comments ---
