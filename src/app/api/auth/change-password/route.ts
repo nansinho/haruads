@@ -1,6 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decode } from "@auth/core/jwt";
 
+// Rate limiting: max 5 attempts per 15 minutes per IP
+const passwordAttempts = new Map<string, { count: number; resetAt: number }>();
+const PW_RATE_LIMIT_WINDOW = 15 * 60_000; // 15 minutes
+const PW_RATE_LIMIT_MAX = 5;
+
+function isPasswordRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = passwordAttempts.get(ip);
+  if (!entry || now > entry.resetAt) {
+    passwordAttempts.set(ip, { count: 1, resetAt: now + PW_RATE_LIMIT_WINDOW });
+    return false;
+  }
+  entry.count++;
+  return entry.count > PW_RATE_LIMIT_MAX;
+}
+
 async function getUserFromToken(request: NextRequest) {
   const secret = process.env.AUTH_SECRET;
   if (!secret) return null;
@@ -21,6 +37,14 @@ async function getUserFromToken(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isPasswordRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Trop de tentatives. Réessayez dans 15 minutes." },
+      { status: 429 }
+    );
+  }
+
   try {
     const user = await getUserFromToken(request);
     if (!user?.id) {

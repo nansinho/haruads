@@ -56,15 +56,29 @@ export function errorResponse(message: string, status = 500) {
   return Response.json({ error: message }, { status });
 }
 
+const ALLOWED_SORT_COLUMNS = [
+  "created_at", "updated_at", "name", "email", "title", "status",
+  "role", "published_at", "order_index", "slug", "city", "priority",
+];
+
 export function getQueryParams(request: NextRequest) {
   const { searchParams } = new URL(request.url);
+
+  const page = Math.max(1, parseInt(searchParams.get("page") || "1") || 1);
+  const pageSize = Math.min(100, Math.max(1, parseInt(searchParams.get("pageSize") || "20") || 20));
+  const search = (searchParams.get("search") || "").slice(0, 200);
+  const sortBy = ALLOWED_SORT_COLUMNS.includes(searchParams.get("sortBy") || "")
+    ? searchParams.get("sortBy")!
+    : "created_at";
+  const sortOrder = searchParams.get("sortOrder") === "asc" ? "asc" : "desc";
+
   return {
-    page: parseInt(searchParams.get("page") || "1"),
-    pageSize: parseInt(searchParams.get("pageSize") || "20"),
-    search: searchParams.get("search") || "",
+    page,
+    pageSize,
+    search,
     status: searchParams.get("status") || "",
     role: searchParams.get("role") || "",
-    sortBy: searchParams.get("sortBy") || "created_at",
-    sortOrder: (searchParams.get("sortOrder") || "desc") as "asc" | "desc",
+    sortBy,
+    sortOrder,
   };
 }
