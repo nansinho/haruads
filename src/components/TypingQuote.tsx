@@ -3,16 +3,28 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
-interface TypingQuoteProps {
+export interface QuoteSegment {
   text: string;
+  highlight?: boolean;
+  italic?: boolean;
+}
+
+interface TypingQuoteProps {
+  /** Plain string (legacy) */
+  text?: string;
+  /** Rich segments with optional highlight/italic */
+  segments?: QuoteSegment[];
   className?: string;
+  highlightClassName?: string;
   charDelay?: number;
   onComplete?: () => void;
 }
 
 export default function TypingQuote({
   text,
+  segments,
   className = "",
+  highlightClassName = "text-accent",
   charDelay = 0.03,
   onComplete,
 }: TypingQuoteProps) {
@@ -20,7 +32,9 @@ export default function TypingQuote({
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [cursorVisible, setCursorVisible] = useState(true);
 
-  const totalDuration = text.length * charDelay;
+  // Build flat character list with style info
+  const chars = buildChars(text, segments);
+  const totalDuration = chars.length * charDelay;
 
   useEffect(() => {
     if (!isInView) return;
@@ -33,17 +47,13 @@ export default function TypingQuote({
 
   const containerVariants = {
     hidden: {},
-    visible: {
-      transition: { staggerChildren: charDelay },
-    },
+    visible: { transition: { staggerChildren: charDelay } },
   };
 
   const charVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.05 } },
   };
-
-  const characters = text.split("");
 
   return (
     <motion.p
@@ -52,12 +62,26 @@ export default function TypingQuote({
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
+      style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
     >
-      {characters.map((char, i) => (
-        <motion.span key={i} variants={charVariants}>
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
+      {chars.map((c, i) => {
+        const extraClass = [
+          c.highlight ? highlightClassName : "",
+          c.italic ? "italic" : "",
+        ]
+          .filter(Boolean)
+          .join(" ");
+
+        return (
+          <motion.span
+            key={i}
+            variants={charVariants}
+            className={extraClass || undefined}
+          >
+            {c.char}
+          </motion.span>
+        );
+      })}
       {cursorVisible && (
         <motion.span
           className="text-accent"
@@ -69,4 +93,24 @@ export default function TypingQuote({
       )}
     </motion.p>
   );
+}
+
+function buildChars(
+  text?: string,
+  segments?: QuoteSegment[]
+): { char: string; highlight: boolean; italic: boolean }[] {
+  if (segments) {
+    return segments.flatMap((seg) =>
+      seg.text.split("").map((char) => ({
+        char,
+        highlight: !!seg.highlight,
+        italic: !!seg.italic,
+      }))
+    );
+  }
+  return (text ?? "").split("").map((char) => ({
+    char,
+    highlight: false,
+    italic: false,
+  }));
 }

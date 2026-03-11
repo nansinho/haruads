@@ -90,10 +90,21 @@ export default function CityAbout({ city }: { city: CityData }) {
         </div>
 
         {/* Founder quote */}
-        <div className="mt-20 py-16 lg:py-20 text-center max-w-[800px] mx-auto">
+        <div className="mt-20 py-16 lg:py-20 text-center max-w-[900px] mx-auto">
           <TypingQuote
-            text={"\u201CNotre mission est de rendre le digital accessible \u00e0 toutes les entreprises, avec des solutions qui font vraiment la diff\u00e9rence.\u201D"}
-            className="font-serif italic text-fluid-h2 leading-[1.3] tracking-[-0.01em] text-text-dark"
+            segments={[
+              { text: "\u201CNotre mission est de rendre le " },
+              { text: "digital", highlight: true, italic: true },
+              { text: " accessible \u00e0 toutes les " },
+              { text: "entreprises", highlight: true, italic: true },
+              { text: ", avec des " },
+              { text: "solutions", highlight: true },
+              { text: " qui font vraiment la " },
+              { text: "diff\u00e9rence", italic: true, highlight: true },
+              { text: ".\u201D" },
+            ]}
+            className="font-serif text-fluid-h2 leading-[1.3] tracking-[-0.01em] text-text-dark"
+            highlightClassName="text-accent"
             charDelay={0.03}
             onComplete={() => setQuoteDone(true)}
           />
