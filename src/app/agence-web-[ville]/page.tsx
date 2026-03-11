@@ -21,8 +21,8 @@ export const dynamicParams = true;
 const ROUTE_PREFIX = "agence-web-";
 
 /** Extract city slug from the route segment (e.g. "agence-web-gardanne" → "gardanne") */
-function extractSlug(ville: string): string | null {
-  if (!ville.startsWith(ROUTE_PREFIX)) return null;
+function extractSlug(ville: string | undefined): string | null {
+  if (!ville || !ville.startsWith(ROUTE_PREFIX)) return null;
   return ville.slice(ROUTE_PREFIX.length) || null;
 }
 
