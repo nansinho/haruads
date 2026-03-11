@@ -21,6 +21,14 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["framer-motion", "lucide-react"],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/agence-web-:ville",
+        destination: "/villes/:ville",
+      },
+    ];
+  },
   async redirects() {
     return [
       // Old WordPress URLs → proper Next.js routes (301 permanent)
