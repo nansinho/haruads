@@ -70,7 +70,7 @@ export function getQueryParams(request: NextRequest) {
   const sortBy = ALLOWED_SORT_COLUMNS.includes(searchParams.get("sortBy") || "")
     ? searchParams.get("sortBy")!
     : "created_at";
-  const sortOrder = searchParams.get("sortOrder") === "asc" ? "asc" : "desc";
+  const sortOrder: "asc" | "desc" = searchParams.get("sortOrder") === "asc" ? "asc" : "desc";
 
   return {
     page,
