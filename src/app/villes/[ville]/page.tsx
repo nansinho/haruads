@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import dynamic from "next/dynamic";
-import { fetchCityBySlug, fetchAllCitySlugs } from "@/lib/cities";
+import nextDynamic from "next/dynamic";
+import { fetchCityBySlug } from "@/lib/cities";
 import { seoConfig } from "@/lib/seo-config";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -12,20 +12,15 @@ import CityCTA from "./CityCTA";
 import CityFooterSEO from "./CityFooterSEO";
 import CityJsonLd from "./CityJsonLd";
 
-const Services = dynamic(() => import("@/components/Services"));
-const HowWeWork = dynamic(() => import("@/components/HowWeWork"));
-const Projects = dynamic(() => import("@/components/Projects"));
+const Services = nextDynamic(() => import("@/components/Services"));
+const HowWeWork = nextDynamic(() => import("@/components/HowWeWork"));
+const Projects = nextDynamic(() => import("@/components/Projects"));
 
-export const dynamicParams = true;
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ ville: string }>;
 };
-
-export async function generateStaticParams() {
-  const slugs = await fetchAllCitySlugs();
-  return slugs.map((slug) => ({ ville: slug }));
-}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { ville } = await params;
