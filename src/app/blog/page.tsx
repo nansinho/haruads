@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Tag, Loader2 } from "lucide-react";
+import { Tag, Loader2, Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -18,6 +18,7 @@ interface Article {
   published_at: string | null;
   views_count: number;
   content: string;
+  likes_count: number;
 }
 
 function readTime(content: string): string {
@@ -137,6 +138,12 @@ export default function BlogPage() {
                             <span className="text-[0.72rem] text-text-body">
                               {formatDate(featured.published_at)} &bull; {readTime(featured.content)} de lecture
                             </span>
+                            {featured.likes_count > 0 && (
+                              <span className="inline-flex items-center gap-1 text-[0.72rem] text-text-body">
+                                <Heart className="w-3 h-3 text-red-400" />
+                                {featured.likes_count}
+                              </span>
+                            )}
                           </div>
                           <h2 className="text-[1.4rem] lg:text-[2rem] font-semibold text-text-dark leading-[1.2]">
                             {featured.title}
@@ -200,8 +207,14 @@ export default function BlogPage() {
                             )}
                           </div>
                           <div className="flex flex-col flex-1 p-5 lg:p-6">
-                            <div className="text-[0.7rem] text-text-body mb-3">
-                              {formatDate(article.published_at)} &bull; {readTime(article.content)} de lecture
+                            <div className="flex items-center gap-2 text-[0.7rem] text-text-body mb-3">
+                              <span>{formatDate(article.published_at)} &bull; {readTime(article.content)} de lecture</span>
+                              {article.likes_count > 0 && (
+                                <span className="inline-flex items-center gap-1 ml-auto">
+                                  <Heart className="w-3 h-3 text-red-400" />
+                                  {article.likes_count}
+                                </span>
+                              )}
                             </div>
                             <h4 className="text-[1rem] font-semibold text-text-dark leading-[1.3]">
                               {article.title}

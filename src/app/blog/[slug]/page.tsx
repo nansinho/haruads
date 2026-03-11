@@ -192,12 +192,16 @@ export default function BlogArticle() {
     const vid = getVisitorId();
     const url = vid ? `/api/blog/${slug}/like?visitor_id=${encodeURIComponent(vid)}` : `/api/blog/${slug}/like`;
     fetch(url)
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) console.error(`[Likes] GET failed: ${r.status}`);
+        return r.json();
+      })
       .then((d) => {
-        setLikes(d.count || 0);
+        if (d.error) { console.error("[Likes] API error:", d.error); return; }
+        setLikes(d.count ?? 0);
         if (d.liked !== undefined) setLiked(d.liked);
       })
-      .catch(() => {});
+      .catch((err) => console.error("[Likes] Fetch error:", err));
   }, [article, slug]);
 
   // Fetch comments
@@ -219,10 +223,12 @@ export default function BlogArticle() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ visitor_id: vid }),
       });
+      if (!res.ok) console.error(`[Likes] POST failed: ${res.status}`);
       const data = await res.json();
+      if (data.error) { console.error("[Likes] Toggle error:", data.error); return; }
       setLiked(data.liked);
       setLikes(data.count);
-    } catch {}
+    } catch (err) { console.error("[Likes] Toggle fetch error:", err); }
     setTimeout(() => setLikeAnimating(false), 600);
   }, [slug]);
 
