@@ -40,6 +40,7 @@ export async function POST(
       author_name: body.author_name.trim(),
       author_email: body.author_email?.trim() || undefined,
       content: body.content.trim(),
+      status: "pending",
     });
 
     if (error) return Response.json({ error: error.message }, { status: 400 });

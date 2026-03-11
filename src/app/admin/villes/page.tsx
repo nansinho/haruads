@@ -102,7 +102,7 @@ export default function VillesAdminPage() {
       meta_description: city.meta_description || "",
       seo_title: city.seo_title || "",
       seo_description: city.seo_description || "",
-      seo_keywords: [],
+      seo_keywords: city.seo_content ? city.seo_content.split(", ").filter(Boolean) : [],
       is_active: city.is_active,
     });
     setShowModal(true);
@@ -127,9 +127,7 @@ export default function VillesAdminPage() {
       const method = editingCity ? "PUT" : "POST";
       const payload: Record<string, unknown> = { ...form };
       // Map seo_keywords to seo_content for DB compatibility
-      if (form.seo_keywords.length > 0) {
-        payload.seo_content = form.seo_keywords.join(", ");
-      }
+      payload.seo_content = form.seo_keywords.length > 0 ? form.seo_keywords.join(", ") : "";
       delete payload.seo_keywords;
 
       const res = await fetch(url, {
