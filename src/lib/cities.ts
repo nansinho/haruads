@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import type { City as DBCity } from "@/types/database";
 
 /** Frontend city interface with camelCase fields */
@@ -39,39 +39,54 @@ function mapCity(row: DBCity): CityData {
 
 /** Fetch all active cities from DB */
 export async function fetchAllCities(): Promise<CityData[]> {
-  if (!supabase) return [];
+  const supabase = getSupabase();
   const { data, error } = await supabase
     .from("cities")
     .select("*")
     .eq("is_active", true)
     .order("name", { ascending: true });
-  if (error || !data) return [];
-  return data.map(mapCity);
+  if (error) {
+    console.error("[cities] fetchAllCities error:", error.message);
+    return [];
+  }
+  return (data ?? []).map(mapCity);
 }
 
 /** Fetch a single city by slug */
 export async function fetchCityBySlug(slug: string): Promise<CityData | null> {
-  if (!supabase) return null;
+  const supabase = getSupabase();
   const { data, error } = await supabase
     .from("cities")
     .select("*")
     .eq("slug", slug)
     .eq("is_active", true)
     .single();
-  if (error || !data) return null;
-  return mapCity(data);
+  if (error) {
+    // PGRST116 = "no rows found" → genuine 404, not a server error
+    if (error.code === "PGRST116") return null;
+    console.error("[cities] fetchCityBySlug error:", error.message, { slug });
+    throw new Error(`Database error while fetching city "${slug}"`);
+  }
+  return data ? mapCity(data) : null;
 }
 
-/** Fetch all active city slugs (for generateStaticParams) */
+/** Fetch all active city slugs (for sitemap / static params) */
 export async function fetchAllCitySlugs(): Promise<string[]> {
-  if (!supabase) return cityLinks.map((c) => c.slug);
-  const { data, error } = await supabase
-    .from("cities")
-    .select("slug")
-    .eq("is_active", true)
-    .order("name", { ascending: true });
-  if (error || !data) return cityLinks.map((c) => c.slug);
-  return data.map((c) => c.slug);
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("cities")
+      .select("slug")
+      .eq("is_active", true)
+      .order("name", { ascending: true });
+    if (error || !data) {
+      console.error("[cities] fetchAllCitySlugs error:", error?.message);
+      return cityLinks.map((c) => c.slug);
+    }
+    return data.map((c) => c.slug);
+  } catch {
+    return cityLinks.map((c) => c.slug);
+  }
 }
 
 /**
