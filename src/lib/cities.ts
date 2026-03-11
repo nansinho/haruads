@@ -64,13 +64,13 @@ export async function fetchCityBySlug(slug: string): Promise<CityData | null> {
 
 /** Fetch all active city slugs (for generateStaticParams) */
 export async function fetchAllCitySlugs(): Promise<string[]> {
-  if (!supabase) return [];
+  if (!supabase) return cityLinks.map((c) => c.slug);
   const { data, error } = await supabase
     .from("cities")
     .select("slug")
     .eq("is_active", true)
     .order("name", { ascending: true });
-  if (error || !data) return [];
+  if (error || !data) return cityLinks.map((c) => c.slug);
   return data.map((c) => c.slug);
 }
 

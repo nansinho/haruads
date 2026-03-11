@@ -16,6 +16,8 @@ const Services = dynamic(() => import("@/components/Services"));
 const HowWeWork = dynamic(() => import("@/components/HowWeWork"));
 const Projects = dynamic(() => import("@/components/Projects"));
 
+export const dynamicParams = true;
+
 type Props = {
   params: Promise<{ ville: string }>;
 };
