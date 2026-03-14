@@ -279,7 +279,7 @@ export const blogCommentsService = {
       .order("created_at", { ascending: false });
   },
 
-  async create(data: { post_id: string; author_name: string; author_email?: string; content: string }) {
+  async create(data: { post_id: string; author_name: string; author_email?: string; content: string; status?: "pending" | "approved" | "rejected" }) {
     const db = getClient();
     return db.from("blog_comments").insert(data).select().single();
   },
